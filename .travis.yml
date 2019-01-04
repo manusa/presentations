@@ -12,7 +12,7 @@ before_deploy:
 # Allow public static pages in npm package
 - echo "" > "${TRAVIS_BUILD_DIR}"/.gitignore
 # Leave only runtime dependencies
-- "${TRAVIS_BUILD_DIR}"/replaceDependencies.sh
+- "${TRAVIS_BUILD_DIR}/replaceDependencies.sh"
 deploy:
 - provider: pages
   skip-cleanup: true
