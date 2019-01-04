@@ -9,7 +9,8 @@ before_install:
 script:
 - npm run build
 before_deploy:
-- "rm /.gitignore"
+- "ls -la"
+- "rm ./presentations/.gitignore"
 deploy:
 - provider: pages
   skip-cleanup: true
