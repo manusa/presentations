@@ -15,7 +15,7 @@ deploy:
 - provider: npm
   email: marc@marcnuri.com
   api_key: "$NPMJS_TOKEN"
-    skip-cleanup: true
+  skip-cleanup: true
 - provider: pages
   skip-cleanup: true
   github-token: "$GITHUB_TOKEN"
