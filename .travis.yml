@@ -9,8 +9,7 @@ before_install:
 script:
 - npm run build
 before_deploy:
-- "ls -la ${TRAVIS_BUILD_DIR}"
-- "rm ${TRAVIS_BUILD_DIR}/presentations/.gitignore"
+- "rm ${TRAVIS_BUILD_DIR}/.gitignore"
 deploy:
 - provider: pages
   skip-cleanup: true
