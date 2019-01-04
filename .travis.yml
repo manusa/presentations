@@ -8,6 +8,8 @@ before_install:
 - npm install
 script:
 - npm run build
+before_deploy:
+- rm .gitignore
 deploy:
 - provider: pages
   skip-cleanup: true
