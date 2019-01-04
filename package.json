@@ -1,6 +1,6 @@
 {
   "name": "@marcnuri/presentations",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Marc Nuri Tech Talks presentations",
   "main": "index.jsx",
   "scripts": {
@@ -13,6 +13,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "public/"
+  ],
   "keywords": [],
   "author": {
     "name": "Marc Nuri",
