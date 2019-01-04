@@ -1,0 +1,49 @@
+{
+  "name": "@marcnuri/presentations",
+  "version": "0.0.1",
+  "description": "Marc Nuri Tech Talks presentations",
+  "main": "index.jsx",
+  "scripts": {
+    "build": "rm -rf ./public && gatsby build",
+    "dev": "gatsby develop",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Marc Nuri",
+    "url": "https://blog.marcnuri.com"
+  },
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manusa/presentations.git"
+  },
+  "bugs": {
+    "url": "https://github.com/manusa/presentations/issues"
+  },
+  "homepage": "https://github.com/manusa/presentations#readme",
+  "dependencies": {
+    "gatsby": "^2.0.75",
+    "gatsby-plugin-react-helmet": "^3.0.5",
+    "gatsby-plugin-sass": "^2.0.7",
+    "node-sass": "^4.11.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-helmet": "^5.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.11.0",
+    "eslint-plugin-jest": "^22.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
+    "prop-types": "^15.6.2"
+  }
+}
