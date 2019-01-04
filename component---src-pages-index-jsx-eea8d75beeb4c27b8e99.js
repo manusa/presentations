@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{133:function(e,t,n){"use strict";n.r(t);var a=n(0),l=n.n(a),r=n(136);t.default=function(){return l.a.createElement("div",null,l.a.createElement(r.Helmet,null,l.a.createElement("meta",{charSet:"UTF-8"}),l.a.createElement("title",null,"Marc Nuri Tech Talks")),l.a.createElement("p",null,"Work in progress"))}}}]);
+//# sourceMappingURL=component---src-pages-index-jsx-eea8d75beeb4c27b8e99.js.map
