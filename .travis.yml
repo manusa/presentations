@@ -9,7 +9,7 @@ before_install:
 script:
 - npm run build
 before_deploy:
-- rm .gitignore
+- "rm /.gitignore"
 deploy:
 - provider: pages
   skip-cleanup: true
