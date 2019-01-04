@@ -11,11 +11,9 @@ script:
 before_deploy:
 # Allow public static pages in npm package
 - echo "" > "${TRAVIS_BUILD_DIR}"/.gitignore
+# Leave only runtime dependencies
+- cat "${TRAVIS_BUILD_DIR}"/package.json | jq -r '.dependencies = {"express": "^4.16.14"}' > "${TRAVIS_BUILD_DIR}"/package.json
 deploy:
-- provider: npm
-  email: marc@marcnuri.com
-  api_key: "$NPMJS_TOKEN"
-  skip-cleanup: true
 - provider: pages
   skip-cleanup: true
   github-token: "$GITHUB_TOKEN"
@@ -23,6 +21,10 @@ deploy:
   local-dir: public
   on:
     branch: master
+- provider: npm
+  email: marc@marcnuri.com
+  api_key: "$NPMJS_TOKEN"
+  skip-cleanup: true
 env:
   global:
   - secure: UbUakOqWSRl4XlbhiimDM5YEvRtTMFL5zpB4xLSZh63kjLwLpTHLj0536ZZmoaOeBCerq1Wkjw+zlzWTyO2UMai8K9TMVWowrNxe9ORR1ptzqibLfi+JVeMy335V4jJfYWHojj5fioDg5zFmn+zp957KTfJo81klWG0CsfwjYTtHz25U+SisSlVV8FdOUz91Bia3Nrh8qhow9ZrOfZzGel8oEBvqQZNvp5cXyqRvEuAi9lKdzepLpsD1bwntpcgxj117KdSdJBxrosYZlmwRIcKtYioVbbhO3jgGu4LL/G8QfGiS7wOUk0fT4kjr/cfZg550zhd9zSUB5KXdKItD9jyc/kCUnb6oigcw4nTFJu/S0R0UoDUSIDTWXfbFbwzvwYu3NSugD7lfhk5sHxex3jAPVorpQ53hBjST6mdddxdGiaC3n9XV9RFUi+LdFWiS+R+/Ly53BxtEm3RQ/EMgbaKlHGtqYoWSDH2bE8DeA1wffWXLG5rAVaFtVzzYO/PuIouN9jUfhWA8d8QrYBPZsCMiQy1TnP/IhbEjBbxkou+FPe/bhVF/YED7LSTCEQCDrkv4+Vx7jQ+29ImPSL7IdfhTdkiuSdse28FG5gs2OpD/fjc8gKyEFiYxSAhu8XLD9A/bCKCVfHkaK40VGjQbBy944rTsPYIyCHUQiPnYrQU=
