@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #78BCDA url('./background.svg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+div.main {
+  margin: 16px;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+    font-family: 'Oswald';
+    font-size: 60px;
+    color: #3C5E6D;
+  }
+}

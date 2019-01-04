@@ -1,0 +1,21 @@
+// Fonts
+$font-weight-lighter: lighter;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+$font-weight-bolder: bolder;
+$font-size-body: 1rem;
+$font-size-body-2: 0.875 * $font-size-body;
+
+// Base
+$base-spacing: 16px;
+$base-background-color: #d9dadb;
+$base-color: #333333;
+$base-font-size: $font-size-body;
+$base-font-weight: $font-weight-normal;
+$base-font-family: 'Montserrat';
+
+
+// Overrides
+$mdc-theme-primary: $econo-color;
+$mdc-theme-secondary: #f9d957;
