@@ -10,6 +10,9 @@
     "start": "npm run develop",
     "test": "jest"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [],
   "author": {
     "name": "Marc Nuri",
