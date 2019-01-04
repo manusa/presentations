@@ -1,20 +1,21 @@
 {
   "name": "@marcnuri/presentations",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Marc Nuri Tech Talks presentations",
-  "main": "index.jsx",
+  "main": "index.js",
   "scripts": {
     "build": "rm -rf ./public && gatsby build",
     "dev": "gatsby develop",
     "develop": "gatsby develop",
     "start": "npm run develop",
+    "local-server": "node index.js",
     "test": "jest"
   },
   "publishConfig": {
     "access": "public"
   },
   "files": [
-    "public/"
+    "public/*"
   ],
   "keywords": [],
   "author": {
