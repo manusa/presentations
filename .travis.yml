@@ -7,9 +7,10 @@ node_js:
 before_install:
 - npm install
 script:
+# Allow public static pages in npm package
+- echo "" > "${TRAVIS_BUILD_DIR}"/.gitignore
 - npm run build
 before_deploy:
-- echo "" > "${TRAVIS_BUILD_DIR}"/.gitignore
 deploy:
 - provider: pages
   skip-cleanup: true
