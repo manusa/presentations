@@ -1,0 +1,34 @@
+
+.isotope-introduction {
+  animation: fade-in .5s linear backwards;
+  margin: -1px 0 0 0;
+  padding: 1px 0 0 0;
+  box-sizing: border-box;
+  height: 100vh;
+  min-height: 100%;
+  background: rgb(40,44,52);
+  background: radial-gradient(circle, rgba(40,44,52,1) 90%, rgba(37,40,47,1) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .title {
+    font-size: 4rem;
+    font-family: 'Roboto';
+    color: white;
+    margin-top: 0px;
+    text-align: center;
+  }
+  .subtitle {
+    font-size: 2.5rem;
+    font-family: 'Oswald';
+    color: white;
+    margin-top: 0px;
+    text-align: center;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
