@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{133:function(e,n,a){"use strict";a.r(n);var t=a(0),l=a.n(t),c=a(136);a(144),a(145);n.default=function(){return l.a.createElement("div",{className:"main"},l.a.createElement(c.Helmet,null,l.a.createElement("meta",{charSet:"UTF-8"}),l.a.createElement("title",null,"Marc Nuri Tech Talks")),l.a.createElement("h1",null,"Marc Nuri's Tech Talks"),l.a.createElement("p",null,"Work in progress"))}},144:function(e,n,a){},145:function(e,n,a){}}]);
-//# sourceMappingURL=component---src-pages-index-jsx-6b4a8b52135d944ce7e3.js.map
