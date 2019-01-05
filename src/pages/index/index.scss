@@ -1,18 +1,26 @@
-body {
-  margin: 0;
-  padding: 0;
-  background: #78BCDA url('./background.svg') no-repeat center center fixed;
-  background-size: cover;
-}
 
-div.main {
-  margin: 16px;
+html{
+  height: 100%;
+  min-height: 100%;
 
-  h1 {
-    margin: 0;
-    padding: 0;
-    font-family: 'Oswald';
-    font-size: 60px;
-    color: #3C5E6D;
+  body {
+    // When using SVG Background, don't check Responsive in Illustrator, else image won't resize in IE11
+    background: #78BCDA url('./background.svg') no-repeat center center fixed;
+    background-size: cover;
+
+    div#___gatsby {
+
+      div.main {
+        margin: 16px;
+
+        h1 {
+          margin: 0;
+          padding: 0;
+          font-family: 'Oswald';
+          font-size: 60px;
+          color: #3C5E6D;
+        }
+      }
+    }
   }
 }
