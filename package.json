@@ -1,6 +1,6 @@
 {
   "name": "@marcnuri/presentations",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Marc Nuri Tech Talks presentations",
   "bin": {
     "mn-presentations": "index.js"
