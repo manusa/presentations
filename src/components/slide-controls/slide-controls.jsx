@@ -1,22 +1,26 @@
 import React from 'react';
 import {navigate} from 'gatsby';
 
-function slideControls(WrappedComponent, previousPage, nextPage) {
+function slideControls(WrappedComponent, previousPage, nextPage, totalSteps = 1) {
   return class extends React.Component {
     constructor(props) {
       super(props);
+      this.state = {
+        currentStep: 1
+      };
+      this.handleOnKeyDown = this.onKeyDown.bind(this);
     }
 
     render() {
-      return <WrappedComponent {...this.props} />
+      return <WrappedComponent {...this.props} currentStep={this.state.currentStep} />;
     }
 
-    componentDidMount(){
-      document.addEventListener('keydown', this.onKeyDown, false);
+    componentDidMount() {
+      document.addEventListener('keydown', this.handleOnKeyDown, false);
     }
 
-    componentWillUnmount(){
-      document.removeEventListener('keydown', this.onKeyDown, false);
+    componentWillUnmount() {
+      document.removeEventListener('keydown', this.handleOnKeyDown, false);
     }
 
     onKeyDown(event) {
@@ -27,7 +31,11 @@ function slideControls(WrappedComponent, previousPage, nextPage) {
           break;
         case 'Right':
         case 'ArrowRight':
-          navigate(nextPage);
+          if (this.state.currentStep < totalSteps) {
+            this.setState({currentStep: this.state.currentStep + 1});
+          } else {
+            navigate(nextPage);
+          }
           break;
         case 'Esc':
         case 'Escape':
