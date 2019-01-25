@@ -1,0 +1,11 @@
+
+.hidden {
+  visibility: hidden;
+  margin-left: 100%;
+  list-style: none;
+}
+.visible {
+  visibility: visible;
+  margin-left: 0;
+  transition: margin-left 0.3s;
+}

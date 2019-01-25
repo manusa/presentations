@@ -27,7 +27,11 @@ function slideControls(WrappedComponent, previousPage, nextPage, totalSteps = 1)
       switch (event.key) {
         case 'Left':
         case 'ArrowLeft':
-          navigate(previousPage);
+          if (this.state.currentStep > 1) {
+            this.setState({currentStep: this.state.currentStep - 1});
+          } else {
+            navigate(previousPage);
+          }
           break;
         case 'Right':
         case 'ArrowRight':
