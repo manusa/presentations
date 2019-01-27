@@ -12,13 +12,19 @@ const Slide1 = ({currentStep}) => {
   return (
     <div className={'slide'}>
       <div className={'title'}>Why?</div>
-      <ul>
-        <li className={classNameVisibleFrom(2)}>Big Brother</li>
-        <li className={classNameVisibleFrom(3)}>Alternatives lack features</li>
-        <li className={classNameVisibleFrom(4)}>Personal interest</li>
+      <ul className={'content'}>
+        <li className={classNameVisibleFrom(2)}>
+          Big Brother
+          <ul>
+            <li>Privacy</li>
+            <li className={classNameVisibleFrom(3)}>Missing features</li>
+          </ul>
+        </li>
+        <li className={classNameVisibleFrom(4)}>Alternatives lack features</li>
+        <li className={classNameVisibleFrom(5)}>Personal interest</li>
       </ul>
     </div>
   );
 };
 
-export default slideControls(Slide1, '/presentations/isotope-introduction', '/', 4);
+export default slideControls(Slide1, '/presentations/isotope-introduction', '/', 5);
