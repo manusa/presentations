@@ -1,6 +1,11 @@
 import React from 'react';
 import {navigate} from 'gatsby';
 
+
+// eslint-disable-next-line no-confusing-arrow
+export const visibleClassNameFromStep = currentStep => step =>
+  ((currentStep < step) ? 'hidden' : 'visible');
+
 function slideControls(WrappedComponent, previousPage, nextPage, totalSteps = 1) {
   return class extends React.Component {
     constructor(props) {

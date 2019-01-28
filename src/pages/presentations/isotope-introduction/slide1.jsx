@@ -1,16 +1,13 @@
 import React from 'react';
-import slideControls from '../../../components/slide-controls/slide-controls';
+import slideControls, {visibleClassNameFromStep} from '../../../components/slide-controls/slide-controls';
 import './slide1.scss';
 import '../../../styles/main.scss';
 
-// eslint-disable-next-line no-confusing-arrow
-const visibilityClassForStep = currentStep => step =>
-  ((currentStep < step) ? 'hidden' : 'visible');
 
 const Slide1 = ({currentStep}) => {
-  const classNameVisibleFrom = visibilityClassForStep(currentStep);
+  const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   return (
-    <div className={'slide'}>
+    <div className={'slide slide1'}>
       <div className={'title'}>Why?</div>
       <ul className={'content'}>
         <li className={classNameVisibleFrom(2)}>
@@ -27,4 +24,4 @@ const Slide1 = ({currentStep}) => {
   );
 };
 
-export default slideControls(Slide1, '/presentations/isotope-introduction', '/', 5);
+export default slideControls(Slide1, '/presentations/isotope-introduction', '/presentations/isotope-introduction/slide2', 5);
