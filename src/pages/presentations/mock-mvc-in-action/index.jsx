@@ -2,7 +2,6 @@ import React from 'react';
 import {Helmet} from 'react-helmet';
 import slideControls from '../../../components/slide-controls/slide-controls';
 import './index.scss';
-import '../../../styles/main.scss';
 
 const TITLE = 'MockMVC in Action!';
 

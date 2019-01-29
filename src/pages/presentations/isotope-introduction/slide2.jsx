@@ -1,7 +1,6 @@
 import React from 'react';
 import slideControls, {visibleClassNameFromStep} from '../../../components/slide-controls/slide-controls';
 import './slide2.scss';
-import '../../../styles/main.scss';
 
 const Slide2 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);

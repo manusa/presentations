@@ -1,6 +1,5 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
-import '../../../styles/main.scss';
 
 const Slide3 = () => (
   <div className={'slide'}>
