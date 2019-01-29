@@ -1,5 +1,6 @@
 import React from 'react';
 import slideControls, {visibleClassNameFromStep} from '../../../components/slide-controls/slide-controls';
+import webMailTrend from './assets/webmail-trend.png';
 import './slide1.scss';
 
 
@@ -8,6 +9,7 @@ const Slide1 = ({currentStep}) => {
   return (
     <div className={'slide slide1'}>
       <div className={'title'}>Why?</div>
+      <div className={'webmail-trend'}><img src={webMailTrend}/></div>
       <ul className={'content'}>
         <li className={classNameVisibleFrom(2)}>
           Big Brother

@@ -4,35 +4,57 @@ $red: #f26350;
 $light-red: #ffe5e1;
 $blue: #77a8da;
 $light-blue: #f2f8ff;
+$yellow: #f9c748;
+$light-yellow: #f3f3f3;
+$purple: #8b65ab;
+$light-purple: #e0d7eb;
+$blue2: #689bb9;
+$light-blue2: #dbebf7;
 
 .slide2 {
   padding: 60px;
 
   .title {
-    margin-bottom: 30px;
+    margin-bottom: 90px;
   }
   .multi-box {
     display: flex;
   }
   .box {
-    padding: 16px;
+    height: 60px;
+    line-height: 60px;
     border: 12px solid transparent;
     text-align:center;
 
-    &.green {
-      color: $green;
-      border-color: $green;
-      background-color: $light-green;
-    }
     &.red {
       color: $red;
       border-color: $red;
       background-color: $light-red;
     }
+    &.green {
+      color: $green;
+      border-color: $green;
+      background-color: $light-green;
+    }
     &.blue {
       color: $blue;
       border-color: $blue;
       background-color: $light-blue;
+    }
+    &.blue2 {
+      color: $blue2;
+      border-color: $blue2;
+      background-color: $light-blue2;
+    }
+    &.yellow {
+      color: $yellow;
+      border-color: $yellow;
+      background-color: $light-yellow;
+    }
+    &.purple {
+      color: $purple;
+      border-color: $purple;
+      background-color: $light-purple;
     }
     &.inline {
       display:inline-block;

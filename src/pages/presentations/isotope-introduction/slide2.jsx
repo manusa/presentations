@@ -6,15 +6,15 @@ const Slide2 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   return (
     <div className={'slide slide2'}>
-      <div className={'title'}>Architecture</div>
+      <div className={'title'}>Architecture (High level)</div>
       <div className={`${classNameVisibleFrom(4)} multi-box`}>
-        <div className={'box inline'}>IMAP Server</div>
-        <div className={'box inline'}>SMTP Server</div>
+        <div className={'box blue2 inline'}>IMAP Server</div>
+        <div className={'box yellow inline'}>SMTP Server</div>
       </div>
       <div className={`${classNameVisibleFrom(3)} box red`}>Java Mail</div>
       <div className={`${classNameVisibleFrom(3)} box green`}>Spring</div>
       <div className={`${classNameVisibleFrom(2)} box blue`}>Reverse Proxy [Traefik]</div>
-      <div className={`${classNameVisibleFrom(5)} box`}>ReactJS</div>
+      <div className={`${classNameVisibleFrom(5)} box purple`}>ReactJS</div>
     </div>
   );
 };
