@@ -17,4 +17,4 @@ const MockMvcInAction = () => (
   </div>
 );
 
-export default slideControls(MockMvcInAction, '/', '/');
+export default slideControls(MockMvcInAction, '/', '/presentations/mock-mvc-in-action/slide1');

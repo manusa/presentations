@@ -18,6 +18,7 @@ const LandingPage = () => {
         </header>
         <div className={'content'}>
           <Card onClick={() => navigate('/presentations/isotope-introduction')} >Work in progress</Card>
+          <Card onClick={() => navigate('/presentations/mock-mvc-in-action')} >Work in progress</Card>
         </div>
       </div>
     </div>
