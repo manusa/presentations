@@ -1,0 +1,15 @@
+.slide2 {
+  .wrapper {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .pyramid-of-testing {
+      flex: 1;
+      min-height: 1px;
+      background: url('./assets/pyramid-of-testing.png') no-repeat 50% 50%;
+      background-size: contain;
+    }
+  }
+}

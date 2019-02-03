@@ -1,4 +1,6 @@
-$green: #94d2b9;
+$box-height: 60px;
+
+$green: #6db33f;
 $light-green: #eafff6;
 $red: #f26350;
 $light-red: #ffe5e1;
@@ -17,48 +19,75 @@ $light-blue2: #dbebf7;
   .title {
     margin-bottom: 90px;
   }
-  .multi-box {
-    display: flex;
-  }
-  .box {
-    height: 60px;
-    line-height: 60px;
-    border: 12px solid transparent;
-    text-align:center;
 
-    &.red {
-      color: $red;
-      border-color: $red;
-      background-color: $light-red;
+  .spacer {
+    margin-top: 6px;
+  }
+
+  .row {
+    display: flex;
+
+    .row-title {
+      display: inline-block;
+      width: 300px;
+      font-size: 2rem;
+      height: $box-height + 24px;
+      line-height: $box-height + 24px;
+      //margin-right: 16px;
+      //border-right: #DDD solid 2px;
     }
-    &.green {
-      color: $green;
-      border-color: $green;
-      background-color: $light-green;
-    }
-    &.blue {
-      color: $blue;
-      border-color: $blue;
-      background-color: $light-blue;
-    }
-    &.blue2 {
-      color: $blue2;
-      border-color: $blue2;
-      background-color: $light-blue2;
-    }
-    &.yellow {
-      color: $yellow;
-      border-color: $yellow;
-      background-color: $light-yellow;
-    }
-    &.purple {
-      color: $purple;
-      border-color: $purple;
-      background-color: $light-purple;
-    }
-    &.inline {
-      display:inline-block;
+
+
+    .multi-box {
       flex: 1;
+      display: flex;
+    }
+
+    .box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: $box-height;
+      line-height: $box-height;
+      border: 12px solid transparent;
+      text-align:center;
+
+      &.red {
+        color: $red;
+        border-color: $red;
+        background-color: $light-red;
+      }
+      &.green {
+        color: $green;
+        border-color: $green;
+        background-color: $light-green;
+      }
+      &.blue {
+        color: $blue;
+        border-color: $blue;
+        background-color: $light-blue;
+      }
+      &.blue2 {
+        color: $blue2;
+        border-color: $blue2;
+        background-color: $light-blue2;
+      }
+      &.yellow {
+        color: $yellow;
+        border-color: $yellow;
+        background-color: $light-yellow;
+      }
+      &.purple {
+        color: $purple;
+        border-color: $purple;
+        background-color: $light-purple;
+      }
+
+      img {
+        max-height: 80%;
+        margin-right: 16px;
+      }
     }
   }
 }
