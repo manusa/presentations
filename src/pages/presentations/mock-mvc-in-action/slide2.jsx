@@ -6,7 +6,7 @@ const Slide2 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   return (
     <div className={'slide slide2'}>
-      <div className={'wrapper'}>
+      <div className={'pyramid-wrapper'}>
         <div className={'title'}>Pyramid of testing and MockMVC</div>
         <div className={'pyramid-of-testing'}></div>
       </div>
