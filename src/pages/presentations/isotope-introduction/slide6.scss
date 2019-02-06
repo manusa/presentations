@@ -1,0 +1,14 @@
+
+.slide6 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .content {
+    flex: 1;
+    margin-top: 48px;
+    min-height: 1px;
+    background: url('./assets/autoscaling.png') no-repeat 50% 50%;
+    background-size: contain;
+  }
+}

@@ -12,4 +12,4 @@ const Slide3 = () => (
   </div>
 );
 
-export default slideControls(Slide3, '/presentations/isotope-introduction/slide2', '/');
+export default slideControls(Slide3, '/presentations/isotope-introduction/slide2', '/presentations/isotope-introduction/slide4');
