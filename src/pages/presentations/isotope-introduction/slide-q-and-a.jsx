@@ -10,4 +10,4 @@ const SlideQAndA = () => (
   </div>
 );
 
-export default slideControls(SlideQAndA, '/presentations/isotope-introduction/slide6', '/presentations/isotope-introduction/slide4');
+export default slideControls(SlideQAndA, '/presentations/isotope-introduction/slide6', '/presentations/isotope-introduction/summary');
