@@ -1,9 +1,9 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
-import './slide6.scss';
+import './scaling.scss';
 
 const Slide6 = () => (
-  <div className={'slide slide6'}>
+  <div className={'slide slide-scaling'}>
     <div className={'title'}>Scaling Isotope Mail</div>
     <div className={'content'}>
     </div>

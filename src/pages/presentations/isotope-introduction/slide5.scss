@@ -1,69 +1,16 @@
-$box-height: 120px;
-$border-color: #77a8da;
-$indexeddb-color: #e44d26;
-$indexeddb-background: #ffffff;
-$redux-color: #764abc;
-$redux-background: #e0d7eb;
-$imap-color: #df0607;
-$imap-background: #fff6f6;
+
+$linkColor: #FFFFFF;
 
 .slide5 {
+
   .content {
-    display: flex;
-    margin-top: 64px;
+    ul.columns-2 {
+      columns: 2;
+    }
 
-    .group {
-      flex: 1;
-      border: 3px dashed $border-color;
-      border-radius: 30px;
-      padding: 128px 30px;
-      display: flex;
-      position: relative;
-
-      &:not(:last-child) {
-        margin-right: 30px;
-      }
-
-      .group-title {
-        position: absolute;
-        top: 16px;
-      }
-
-      .box {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 16px;
-        height: $box-height;
-        line-height: $box-height;
-        border: 3px solid transparent;
-        border-radius: 12px;
-        text-align: center;
-
-        &.indexed-db {
-          color: $indexeddb-color;
-          background: $indexeddb-background;
-          border-color: $indexeddb-color;
-        }
-
-        &.redux {
-          color: $redux-color;
-          background: $redux-background;
-          border-color: $redux-color;
-        }
-
-        &.imap-server {
-          color: $imap-color;
-          background: $imap-background;
-          border-color: $imap-color;
-        }
-
-        img {
-          max-height: 60%;
-          margin-right: 16px;
-        }
-      }
+    ul {
+      margin-top: 16px;
     }
   }
 }
+

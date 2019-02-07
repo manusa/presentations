@@ -1,35 +1,37 @@
 import React from 'react';
-import slideControls from '../../../components/slide-controls/slide-controls';
-import html5Logo from './assets/html5.png';
-import reduxLogo from './assets/redux.png';
-import envelopeIcon from './assets/envelope.png';
+import slideControls, {visibleClassNameFromStep} from '../../../components/slide-controls/slide-controls';
 import './slide5.scss';
 
-const Slide5 = () => (
-  <div className={'slide slide5'}>
-    <div className={'title'}>Isotope storage model</div>
-    <div className={'content'}>
-      <div className={'group browser'}>
-        <div className={'group-title'}>Browser</div>
-        <div className={'box indexed-db'}>
-          <div className={'encrypted'}></div>
-          <img src={html5Logo} />
-          IndexedDB
-        </div>
-        <div className={'box redux'}>
-          <img src={reduxLogo} />
-          Redux
-        </div>
+const Slide5 = ({currentStep}) => {
+  const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
+  return (
+    <div className={'slide slide5'}>
+      <div className={`${classNameVisibleFrom(1)} title`}>Back-end Architecture</div>
+      <div className={`${classNameVisibleFrom(1)} content`}>
+        <ul>
+          <li>Spring Boot</li>
+          <li>Spring HATEOAS</li>
+          <li>Spring Webflux -> Reactive endpoints -> Server Sent Events</li>
+          <li>JavaMail</li>
+          <li>JUnit + Mockito + Powermock</li>
+        </ul>
       </div>
-      <div className={'group backend'}>
-        <div className={'group-title'}>Back-end / Server-side</div>
-        <div className={'box imap-server'}>
-          <img src={envelopeIcon} />
-          IMAP Server
-        </div>
+      <div className={`${classNameVisibleFrom(2)} title`}>Front-end Architecture</div>
+      <div className={`${classNameVisibleFrom(2)} content`}>
+        <ul className={'columns-2'}>
+          <li>Redux</li>
+          <li>i18next</li>
+          <li>Web workers</li>
+          <li>SJCL (Stanford Javascript Crypto Library)</li>
+          <li>IndexedDB + IDB</li>
+          <li>TinyMCE</li>
+          <li>DOMPurify</li>
+          <li>Jest + Enzyme</li>
+          <li>HTML5 (Drag and Drop, Notifications...)</li>
+        </ul>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
-export default slideControls(Slide5, '/presentations/isotope-introduction/slide4', '/presentations/isotope-introduction/slide6');
+export default slideControls(Slide5, '/presentations/isotope-introduction/slide4', '/presentations/isotope-introduction/slide6', 2);
