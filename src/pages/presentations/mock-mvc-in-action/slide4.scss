@@ -1,0 +1,16 @@
+
+.slide4 {
+  .content {
+    pre {
+      width: 100%;
+    }
+    .hidden {
+      display: none !important;
+      margin-left: 0;
+    }
+    .visible {
+      transition: none;
+      margin-left: 0;
+    }
+  }
+}

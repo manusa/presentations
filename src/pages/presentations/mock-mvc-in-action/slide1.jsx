@@ -15,6 +15,7 @@ const Slide1 = ({currentStep}) => {
           Presentation
           <ul>
             <li>Test pyramid</li>
+            <li>The Beer CRUD</li>
             <li>Aspect oriented / Code coverage</li>
             <li>Configuration types</li>
             <li>

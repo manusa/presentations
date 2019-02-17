@@ -1,0 +1,46 @@
+.slide-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .content {
+    flex: 1;
+    display: flex;
+
+    .col {
+      flex: 1;
+
+      &.image {
+        background: url('./assets/mockingbird-silhouette.png') no-repeat 50% 50%;
+      }
+      &.links {
+        margin: 128px auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .thank-you {
+          flex: 1;
+          font-size: 8rem;
+        }
+
+        a {
+          display: flex;
+          align-items: center;
+          color: white;
+          text-decoration: none;
+          vertical-align: middle;
+
+          &:not(:last-child) {
+            margin-bottom: 24px;
+          }
+
+          img {
+            height: 40px;
+            margin: 6px 16px 0 0;
+          }
+        }
+      }
+    }
+  }
+}
