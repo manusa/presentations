@@ -10,4 +10,4 @@ const SlideQAndA = () => (
   </div>
 );
 
-export default slideControls(SlideQAndA, '/presentations/mock-mvc-in-action/slide3', '/presentations/mock-mvc-in-action/slide-summary');
+export default slideControls(SlideQAndA, '/presentations/mock-mvc-in-action/slide6', '/presentations/mock-mvc-in-action/slide-summary');

@@ -12,6 +12,7 @@
 
       &.image {
         background: url('./assets/mockingbird-silhouette.png') no-repeat 50% 50%;
+        background-size: contain;
       }
       &.links {
         margin: 128px auto;

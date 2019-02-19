@@ -1,16 +1,9 @@
-
 .slide4 {
   .content {
+    margin: 0;
     pre {
-      width: 100%;
-    }
-    .hidden {
-      display: none !important;
-      margin-left: 0;
-    }
-    .visible {
-      transition: none;
-      margin-left: 0;
+      margin-top: 100px;
+      overflow-x: hidden !important;
     }
   }
 }

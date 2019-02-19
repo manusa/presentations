@@ -16,12 +16,12 @@ const Slide1 = ({currentStep}) => {
           <ul>
             <li>Test pyramid</li>
             <li>The Beer CRUD</li>
-            <li>Aspect oriented / Code coverage</li>
             <li>Configuration types</li>
+            <li>Aspect oriented / Code coverage</li>
             <li>
               Examples
               <ul>
-                <li>Spring Boot (1) - Spring MVC 4 - Web</li>
+                <li>Spring Boot (1 / 2) - Spring MVC 4 - Web</li>
                 <li>Spring Boot 2 - Spring MVC 5 - Webflux / Project reactor</li>
                 <li>Bonus - WebTestClient</li>
               </ul>
