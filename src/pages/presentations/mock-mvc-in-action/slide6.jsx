@@ -37,4 +37,4 @@ const Slide4 = ({currentStep}) => {
   );
 };
 
-export default slideControls(Slide4, '/presentations/mock-mvc-in-action/slide5', '/presentations/mock-mvc-in-action/slide-q-and-a', 9);
+export default slideControls(Slide4, '/presentations/mock-mvc-in-action/slide5', '/presentations/mock-mvc-in-action/slide7', 9);
