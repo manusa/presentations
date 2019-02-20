@@ -11,9 +11,11 @@
       flex: 1;
 
       &.image {
+        animation: colorize 4s linear infinite;
         background: url('./assets/mockingbird-silhouette.png') no-repeat 50% 50%;
         background-size: contain;
       }
+
       &.links {
         margin: 128px auto;
         display: flex;
@@ -44,4 +46,10 @@
       }
     }
   }
+}
+//saturate(307%) brightness(95%)
+@keyframes colorize {
+  0% {filter: invert(10%) sepia(20%) }
+  50% {filter: invert(10%) sepia(70%)}
+  100% {filter: invert(10%) sepia(20%)}
 }

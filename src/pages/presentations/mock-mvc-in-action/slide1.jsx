@@ -23,7 +23,7 @@ const Slide1 = ({currentStep}) => {
               <ul>
                 <li>Spring Boot (1 / 2) - Spring MVC 4 - Web</li>
                 <li>Spring Boot 2 - Spring MVC 5 - Webflux / Project reactor</li>
-                <li>Bonus - WebTestClient</li>
+                <li>Bonus - Introducing WebTestClient</li>
               </ul>
             </li>
           </ul>

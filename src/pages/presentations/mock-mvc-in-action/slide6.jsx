@@ -1,6 +1,6 @@
 import React from 'react';
 import slideControls, {visibleClassNameFromStep} from '../../../components/slide-controls/slide-controls';
-// import './slide4.scss';
+import './slide6.scss';
 
 const Slide4 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
@@ -29,9 +29,12 @@ const Slide4 = ({currentStep}) => {
         <li className={classNameVisibleFrom(8)}>
           Exception handling
         </li>
+        <li className={classNameVisibleFrom(9)}>
+          Corner cases and configurations
+        </li>
       </ul>
     </div>
   );
 };
 
-export default slideControls(Slide4, '/presentations/mock-mvc-in-action/slide5', '/presentations/mock-mvc-in-action/slide-q-and-a', 8);
+export default slideControls(Slide4, '/presentations/mock-mvc-in-action/slide5', '/presentations/mock-mvc-in-action/slide-q-and-a', 9);
