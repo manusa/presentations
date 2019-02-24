@@ -26,6 +26,21 @@
     margin-top: 0px;
     text-align: center;
   }
+
+  /**  Prefetch all presentation images -> Animations **/
+  &::after {
+    position:absolute;
+    width:0;
+    height:0;
+    overflow:hidden;
+    z-index:-1;
+    content: url('assets/beer-bg.png')
+    url('assets/beer-bottle.png')
+    url('assets/mockingbird-silhouette.png')
+    url('assets/project-reactor.png')
+    url('assets/pyramid-of-testing.png')
+    url('assets/reactor.jpg');
+  }
 }
 
 @keyframes fade-in {

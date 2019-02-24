@@ -26,6 +26,24 @@
     margin-top: 0px;
     text-align: center;
   }
+  /**  Prefetch all presentation images -> Animations **/
+  &::after {
+    position:absolute;
+    width:0;
+    height:0;
+    overflow:hidden;
+    z-index:-1;
+    content: url('assets/autoscaling.png')
+    url('assets/envelope.png')
+    url('assets/html5.png')
+    url('assets/isotope-logo-v.png')
+    url('assets/java.png')
+    url('assets/react-hexagon.png')
+    url('assets/redux.png')
+    url('assets/spring.png')
+    url('assets/traefik.png')
+    url('assets/webmail-trend.png');
+  }
 }
 
 @keyframes fade-in {
