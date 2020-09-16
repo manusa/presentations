@@ -40,20 +40,20 @@
   },
   "homepage": "https://github.com/manusa/presentations#readme",
   "dependencies": {
-    "gatsby": "^2.0.75",
-    "gatsby-plugin-react-helmet": "^3.0.5",
-    "gatsby-plugin-sass": "^2.0.7",
-    "node-sass": "^4.11.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "react-helmet": "^5.2.0",
-    "react-syntax-highlighter": "^10.1.2"
+    "gatsby": "^2.24.58",
+    "gatsby-plugin-react-helmet": "^3.3.10",
+    "gatsby-plugin-sass": "^2.3.12",
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
+    "react-syntax-highlighter": "^12.2.1"
   },
   "devDependencies": {
-    "eslint": "^5.11.0",
-    "eslint-plugin-jest": "^22.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "jest": "^23.6.0",
-    "prop-types": "^15.6.2"
+    "eslint": "^7.9.0",
+    "eslint-plugin-jest": "^24.0.1",
+    "eslint-plugin-react": "^7.20.6",
+    "jest": "^26.4.2",
+    "prop-types": "^15.7.2"
   }
 }

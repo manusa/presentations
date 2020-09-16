@@ -3,7 +3,7 @@ import slideControls, {
   visibleClassNameInStep
 } from '../../../components/slide-controls/slide-controls';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import {androidstudio} from 'react-syntax-highlighter/dist/styles/hljs';
+import {androidstudio} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import './slide5.scss';
 
 const Slide5 = ({currentStep}) => {
@@ -59,8 +59,7 @@ public Beer updateBeerAsXML(
         <SyntaxHighlighter
           className={classNameVisibleIn(5)}
           language={'java'} style={androidstudio} wrapLines={true}
-          // eslint-disable-next-line no-confusing-arrow
-          lineProps={line => [2, 3, 4, 5, 6, 8].includes(line) ? {style: {'background-color': 'rgba(30, 255, 0, 0.36)'}} : {}}>
+          lineProps={line => ([2, 3, 4, 5, 6, 8].includes(line) ? {style: {backgroundColor: 'rgba(30, 255, 0, 0.36)'}} : {})}>
           {`
 @PutMapping(
     path = "/{externalId}",

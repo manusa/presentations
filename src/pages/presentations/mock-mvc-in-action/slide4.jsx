@@ -1,7 +1,7 @@
 import React from 'react';
 import slideControls, {visibleClassNameFromStep} from '../../../components/slide-controls/slide-controls';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import {androidstudio} from 'react-syntax-highlighter/dist/styles/hljs';
+import {androidstudio} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import './slide4.scss';
 
 const Slide4 = ({currentStep}) => {
