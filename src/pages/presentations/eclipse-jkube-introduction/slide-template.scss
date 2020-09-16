@@ -1,0 +1,60 @@
+@import 'variables';
+
+.eclipse-jkube-introduction-slide {
+  @import 'fonts';
+  $root: &;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 100%;
+  @include eclipse-background(rgba(0, 0, 0, 0.9));
+  &::before {
+    background: radial-gradient(circle, rgba(35, 35, 35, 0.95) 10%, rgba(10, 10, 10, 0.9) 100%);
+  }
+  & #{$root}__header {
+    display: flex;
+    align-items: center;
+    padding: $eclipse-header-padding;
+    height: $eclipse-header-height;
+    color: $eclipse-header-color;
+    font-family: $eclipse-header-font-family;
+    font-size: $eclipse-header-font-size;
+    background-color: $eclipse-orange;
+    .title {
+      display: flex;
+      align-items: center;
+      min-width: 1px;
+      width: 1px;
+      flex: 1;
+    }
+    .jkube-logo {
+      width: 10rem;
+      .icon, .text {
+        fill: rgba(255, 255, 255, 0.65);
+      }
+    }
+  }
+  & #{$root}__content {
+    flex: 1;
+    max-height: 100%;
+    padding: $eclipse-content-padding;
+    color: $eclipse-content-color;
+    font-size: $eclipse-content-font-size;
+    overflow: hidden;
+
+    .hidden {
+      visibility: hidden;
+      margin-left: 100%;
+      list-style: none;
+    }
+
+  }
+  & #{$root}__footer {
+    padding: 1rem;
+    height: $eclipse-footer-height;
+    img {
+      max-height: 100%;
+    }
+  }
+}
