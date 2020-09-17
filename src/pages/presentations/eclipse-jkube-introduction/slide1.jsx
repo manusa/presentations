@@ -16,7 +16,7 @@ const Slide1 = () => (
           <li>Fabric8 Kubernetes Client</li>
           <li>Eclipse JKube</li>
         </ul>
-        @MarcNuri
+        <i className='fab fa-twitter' /> @MarcNuri
       </div>
     </div>
   </SlideTemplate>
