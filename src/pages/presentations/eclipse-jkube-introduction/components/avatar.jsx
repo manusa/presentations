@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Avatar = props => (
-  <svg viewBox="0 0 220 219.996" height={219.996} width={220} {...props}>
+  <svg viewBox="0 0 220 219.996" {...props}>
     <defs>
       <clipPath id="prefix__e" clipPathUnits="userSpaceOnUse">
         <path d="M0 164.997h165V0H0z" />

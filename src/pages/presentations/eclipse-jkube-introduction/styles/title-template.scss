@@ -1,7 +1,6 @@
-@import 'variables';
+@import './variables';
 
-.eclipse-jkube-introduction-index {
-  animation: fade-in .5s linear backwards;
+.eclipse-jkube-introduction-title {
   margin: -1px 0 0 0;
   padding: 1px 0 0 0;
   box-sizing: border-box;
@@ -37,6 +36,7 @@
       }
       .subtitle {
         font-size: 2.5rem;
+        color: black;
       }
     }
 

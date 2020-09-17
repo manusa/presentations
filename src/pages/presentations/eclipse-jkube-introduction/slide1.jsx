@@ -1,8 +1,8 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
-import Avatar from './avatar';
-import SlideTemplate from './slide-template';
-import './slide1.scss';
+import Avatar from './components/avatar';
+import SlideTemplate from './components/slide-template';
+import './styles/slide1.scss';
 
 const Slide1 = () => (
   <SlideTemplate slide={1} title='About me'>
@@ -16,6 +16,7 @@ const Slide1 = () => (
           <li>Fabric8 Kubernetes Client</li>
           <li>Eclipse JKube</li>
         </ul>
+        @MarcNuri
       </div>
     </div>
   </SlideTemplate>

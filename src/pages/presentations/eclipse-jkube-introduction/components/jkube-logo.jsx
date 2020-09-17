@@ -1,7 +1,7 @@
 import React from 'react';
 
-const JKubeLogo = ({className = ''}) => (
-  <svg version="1.1" x="0px" y="0px" viewBox="0 0 291.2 88.5" className={className} >
+const JKubeLogo = ({className = '', ...props}) => (
+  <svg version="1.1" x="0px" y="0px" viewBox="0 0 291.2 88.5" className={className} {...props}>
     <style type="text/css" dangerouslySetInnerHTML={{__html: `
         .st0{fill - rule:evenodd;clip-rule:evenodd;fill:#0A4E9B;}
         .st1{fill:#0A4E9B;}

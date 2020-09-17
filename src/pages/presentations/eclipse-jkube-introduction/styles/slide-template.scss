@@ -1,7 +1,7 @@
-@import 'variables';
+@import './variables';
 
 .eclipse-jkube-introduction-slide {
-  @import 'fonts';
+  @import './fonts';
   $root: &;
   padding: 0;
   display: flex;
@@ -45,16 +45,28 @@
 
     .hidden {
       visibility: hidden;
-      margin-left: 100%;
+      transform: translate(100vw);
       list-style: none;
     }
-
+    .visible {
+      visibility: visible;
+      transform: translate(0%);
+      transition: transform 0.4s;
+    }
   }
   & #{$root}__footer {
     padding: 1rem;
     height: $eclipse-footer-height;
+    display: flex;
     img {
       max-height: 100%;
+    }
+    .page-number {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      color: white;
     }
   }
 }

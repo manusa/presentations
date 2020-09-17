@@ -1,4 +1,4 @@
-@import 'variables';
+@import './variables';
 
 h1 {
   margin: 1rem 0;
@@ -37,8 +37,9 @@ ul {
     content: '\2b22';
     color: $eclipse-orange;
     position: absolute;
-    left: 0;
-    line-height: $line-height;
+    display: inline-block;
+    margin-left: -2em;
+    width: 2em;
   }
 }
 
