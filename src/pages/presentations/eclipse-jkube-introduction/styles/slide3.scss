@@ -1,0 +1,58 @@
+.eclipse-jkube-introduction-slide__content {
+  .hidden {
+    display: none;
+  }
+  .cloud-native-definition {
+    &.hidden {
+      display: none;
+    }
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .dilbert-strip {
+      margin-top: 2rem;
+    }
+  }
+  .developer-workflow {
+    .technologies {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      .item {
+        padding: 15px;
+        $size: 200px;
+        height: $size;
+        width: $size;
+        &.hidden {
+          display: block;
+        }
+      }
+      .jkube-logo {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        opacity: 1;
+        transition: opacity 0.3s ease-in;
+        &.hidden {
+          display: block;
+          opacity: 0;
+        }
+        &__image {
+          max-height: 100%;
+          background: radial-gradient(ellipse at center, rgba(10, 10, 10, 0.75) 90%, rgba(10, 10, 10, 0.01) 100%);
+          .icon, .text {
+            fill: rgba(255, 255, 255, 0.95);
+          }
+          .icon {
+            fill: #326ce5;
+          }
+        }
+      }
+    }
+  }
+}
