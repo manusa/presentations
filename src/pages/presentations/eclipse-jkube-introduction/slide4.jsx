@@ -20,31 +20,24 @@ const Slide4 = ({currentStep}) => {
         <li>
           Tools and plugins
           <ul>
-            <li>Generate container images (Docker, S2I, JIB)</li>
+            <li>Generate container images</li>
             <li>Generate and deploy configuration manifests (Kubernetes / OpenShift)</li>
           </ul>
         </li>
         <li className={classNameVisibleFrom(2)}>
-          3 configuration modes
+          Standalone Java API (Kit) & Maven Plugins
           <ul>
-            <li><strong>Zero Config</strong>, Opinionated defaults</li>
-            <li><strong>XML</strong> plugin configuration</li>
-            <li><strong>Resource fragments</strong> enrich missing parts of opinionated defaults</li>
+            <li>Kubernetes Maven Plugin (k8s)</li>
+            <li>OpenShift Maven Plugin (oc)</li>
           </ul>
         </li>
         <li className={classNameVisibleFrom(3)}>
-          Support for multiple frameworks and technologies
-          <div className='framework-container'>
-            <img className='item' src={wildflyLogo} />
-            <img className='item' src={vertxLogo} />
-            <img className='item' src={quarkusLogo} />
-            <img className='item' src={springBootLogo} />
-            <img className='item' src={openLibertyLogo} />
-            <img className='item' src={thorntailLogo} />
-            <img className='item' src={tomcatLogo} />
-            <img className='item' src={jettyLogo} />
-            <img className='item' src={karafLogo} />
-          </div>
+          Build Strategies
+          <ul>
+            <li><strong>Docker:</strong> uses local Docker Daemon (k8s) or remote (oc)</li>
+            <li><strong>S2I:</strong> OC only plugin configuration</li>
+            <li><strong>JIB:</strong> delegates to build to JIB (Dockerless)</li>
+          </ul>
         </li>
       </ul>
     </SlideTemplate>

@@ -5,7 +5,7 @@ import './styles/index.scss';
 
 const Slide7 = () => (
   <TitleTemplate
-    title='Old school Java Web application ready for the cloud'
+    title='From zero to cloud with Maven and Eclipse JKube'
     subtitle='Demo'
   />
 );

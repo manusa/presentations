@@ -7,7 +7,8 @@ import slideControls, {
 import JKubeLogo from './components/jkube-logo';
 import KubernetesLogo from './components/kubernetes-logo';
 import OpenShiftLogo from './components/openshift-logo';
-import dilbertKubernetes from './assets/dilbert-kubernetes.png';
+import cncfLogo from './assets/cncf-logo.png';
+import oldMan from './assets/adult-elderly-face-man-old-person-side-view-square.jpg';
 import docker from './assets/docker-moby-logo.png';
 import namespace from './assets/kubernetes/ns-256.png';
 import deployment from './assets/kubernetes/deploy-256.png';
@@ -22,16 +23,25 @@ import './styles/slide3.scss';
 
 const CloudNativeDefinition = ({className = '', ...props}) => (
   <div className={`cloud-native-definition ${className}`} {...props}>
-    <blockquote>
-      <p>
-        Cloud native technologies empower organizations to build and run scalable applications in modern, dynamic
-        environments such as public, private, and hybrid clouds. Containers, service meshes, microservices, immutable
-        infrastructure, and declarative APIs exemplify this approach.
-      </p>
-      <cite>Cloud Native Computing Foundation (CNCF)</cite>
-    </blockquote>
-    <div className='dilbert-strip'>
-      <img src={dilbertKubernetes} />
+    <div className='quote'>
+      <blockquote>
+        <p>
+          Cloud native technologies empower organizations to build and run scalable applications in modern, dynamic
+          environments such as public, private, and hybrid clouds. Containers, service meshes, microservices, immutable
+          infrastructure, and declarative APIs exemplify this approach.
+        </p>
+        <cite>Cloud Native Computing Foundation (CNCF)</cite>
+      </blockquote>
+      <img src={cncfLogo} className='picture cncf-logo' />
+    </div>
+    <div className='quote'>
+      <blockquote className='text'>
+        <p>
+          Deploying my Java app into Kubernetes isn't stressing me out.
+        </p>
+        <cite>Benjamin Price, 23 years old.</cite>
+      </blockquote>
+      <img src={oldMan} className='picture' />
     </div>
   </div>
 );
@@ -48,7 +58,7 @@ const MicroserviceArchitecture = ({className = '', ...props}) => (
       <li>Distributed logging</li>
       <li>Monitoring</li>
       <li>Fault tolerance</li>
-      <li>...</li>
+      <li>Twelve-factor apps, design to fail, resilience, ...</li>
     </ul>
   </div>
 );

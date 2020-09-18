@@ -7,12 +7,32 @@
       display: none;
     }
     height: 100%;
+    padding: 0 2rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    .dilbert-strip {
-      margin-top: 2rem;
+    .quote {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      &:not(:first-child) {
+        margin-top: 2rem;
+      }
+      .text {
+        margin: 0;
+        flex: 1;
+      }
+      .picture {
+        margin-left: 8rem;
+        height: 18rem;
+        border-radius: 50%;
+        &.cncf-logo {
+          border-radius: 0;
+          padding: 3rem;
+          height: 12rem;
+        }
+      }
     }
   }
   .developer-workflow {

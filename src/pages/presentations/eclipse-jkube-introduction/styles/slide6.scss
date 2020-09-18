@@ -1,7 +1,7 @@
 .eclipse-jkube-introduction-slide__content {
   .workflow-container {
     @mixin fade-in-animation {
-      animation: fade-in 3s linear backwards;
+      animation: fade-in 5s linear backwards;
     }
     height: 100%;
     display: flex;
