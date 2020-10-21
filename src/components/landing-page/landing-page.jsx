@@ -33,6 +33,7 @@ const LandingPage = () => {
         <div className={'content'}>
           <Card onClick={() => navigate('/presentations/isotope-introduction')} >Isotope Mail Client Introduction</Card>
           <Card onClick={() => navigate('/presentations/mock-mvc-in-action')} >MockMVC in Action!</Card>
+          <Card onClick={() => navigate('/presentations/eclipse-jkube-introduction')} >Deploy your Java applications to the Cloud using Eclipse JKube</Card>
         </div>
       </div>
     </div>
