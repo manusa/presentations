@@ -1,0 +1,32 @@
+.eclipse-jkube-2020-bcn-jug-slide__content {
+  .diagram {
+    animation: fade-in 3s linear;
+    $spacing: 16px;
+    position: absolute;
+    top: $spacing;
+    bottom: $spacing;
+    left: $spacing;
+    right: $spacing;
+
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+
+    &__link {
+      height: 1px;
+      flex: 1;
+      max-height: 100%;
+      display: flex;
+
+      background: white;
+      border-radius: 1rem;
+      padding: $spacing;
+    }
+    &__image {
+      display: block;
+      margin: auto auto;
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+}

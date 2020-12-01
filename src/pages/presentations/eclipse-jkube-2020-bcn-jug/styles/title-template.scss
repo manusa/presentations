@@ -1,0 +1,45 @@
+@import './variables';
+
+.eclipse-jkube-2020-bcn-jug-title {
+  margin: -1px 0 0 0;
+  padding: 1px 0 0 0;
+  box-sizing: border-box;
+  height: 100vh;
+  min-height: 100%;
+  @include eclipse-background;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    .logo {
+      height: 33vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      img {
+        max-height: 20vh;
+      }
+    }
+    .title-band {
+      height: 33vh;
+      align-self: stretch;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: rgba($color-highlight-alternative, 0.3);
+      color: white;
+      text-align: center;
+      .title {
+        font-size: 3.5rem;
+      }
+      .subtitle {
+        font-size: 3rem;
+        color: rgba(white, 0.5);
+        -webkit-text-stroke: 1px rgba(black, 0.3);
+      }
+    }
+
+  }
+}
