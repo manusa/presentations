@@ -17,9 +17,9 @@ const Slide010 = () => (
           <li>Fabric8 Kubernetes Client</li>
           <li>Eclipse JKube</li>
         </ul>
-        <div><i className='fab fa-twitter' /> @MarcNuri</div>
-        <div><i className='fab fa-linkedin' /> MarcNuri</div>
-        <div><i className='fab fa-github' /> <i className='fab fa-gitter' /> manusa</div>
+        <div><a href='https://twitter.com/MarcNuri'><i className='fab fa-twitter' /> @MarcNuri</a></div>
+        <div><a href='https://linkedin.com/in/MarcNuri'><i className='fab fa-linkedin' /> MarcNuri</a></div>
+        <div><a href='https://github.com/manusa'><i className='fab fa-github' /> <i className='fab fa-gitter' /> manusa</a></div>
       </div>
     </div>
   </SlideTemplate>
