@@ -31,9 +31,10 @@ const LandingPage = () => {
           <h1>{TITLE}</h1>
         </header>
         <div className={'content'}>
-          <Card onClick={() => navigate('/presentations/isotope-introduction')} >Isotope Mail Client Introduction</Card>
+          <Card onClick={() => navigate('/presentations/eclipse-jkube-2020-bcn-jug')} >Microservice Containerization made easy using Eclipse JKube (BarcelonaJUG 2020)</Card>
+          <Card onClick={() => navigate('/presentations/eclipse-jkube-introduction')} >Deploy your Java applications to the Cloud using Eclipse JKube (EclipseCon 2020)</Card>
           <Card onClick={() => navigate('/presentations/mock-mvc-in-action')} >MockMVC in Action!</Card>
-          <Card onClick={() => navigate('/presentations/eclipse-jkube-introduction')} >Deploy your Java applications to the Cloud using Eclipse JKube</Card>
+          <Card onClick={() => navigate('/presentations/isotope-introduction')} >Isotope Mail Client Introduction</Card>
         </div>
       </div>
     </div>
