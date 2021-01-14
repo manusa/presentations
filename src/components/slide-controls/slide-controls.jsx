@@ -10,6 +10,10 @@ export const visibleClassNameFromStep = currentStep => step =>
 export const visibleClassNameInStep = currentStep => step =>
   ((currentStep !== step) ? 'hidden' : 'visible');
 
+// eslint-disable-next-line no-confusing-arrow
+export const visibleClassNameUntilStep = currentStep => step =>
+  ((currentStep > step) ? 'hidden' : 'visible');
+
 function slideControls(WrappedComponent, previousPage, nextPage, totalSteps = 1) {
   return class extends React.Component {
     constructor(props) {
