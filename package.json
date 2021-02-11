@@ -40,9 +40,9 @@
   },
   "homepage": "https://github.com/manusa/presentations#readme",
   "dependencies": {
-    "gatsby": "^2.30.2",
-    "gatsby-plugin-react-helmet": "^3.8.0",
-    "gatsby-plugin-sass": "^2.8.0",
+    "gatsby": "^2.32.3",
+    "gatsby-plugin-react-helmet": "^3.10.0",
+    "gatsby-plugin-sass": "^3.2.0",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
