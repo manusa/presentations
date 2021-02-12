@@ -1,0 +1,36 @@
+$background-image: '../assets/jumbotron-image.jpg';
+$color-highlight: #f89521;
+$color-highlight-alternative: lighten(#0A4E9B, 20%);
+$color-highlight-alternative-2: #b15b27;
+
+$eclipse-header-height: 90px;
+$eclipse-header-padding: 1rem 2rem;
+$eclipse-header-color: white;
+$eclipse-header-font-family: 'Oswald', 'Roboto', sans-serif;
+$eclipse-header-font-size: 4rem;
+
+$eclipse-content-padding: 1rem 2rem;
+$eclipse-content-color: white;
+$eclipse-content-font-size: 2.5rem;
+
+$eclipse-footer-height: 90px;
+
+@mixin slide-background($overlay-color: rgba(0, 0, 0, 0.1)) {
+  position: relative;
+  background: black url($background-image) no-repeat;
+  background-size: cover;
+  &::before {
+    z-index: 0;
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $overlay-color;
+  }
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+}

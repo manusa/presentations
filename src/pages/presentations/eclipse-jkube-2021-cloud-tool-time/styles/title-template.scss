@@ -1,0 +1,48 @@
+@import './variables';
+
+.eclipse-jkube-2021-cloud-tool-time-title {
+  margin: -1px 0 0 0;
+  padding: 1px 0 0 0;
+  box-sizing: border-box;
+  height: 100vh;
+  min-height: 100%;
+  @include slide-background;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    .logo__container {
+      height: 33vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .logo__image {
+        height: 17vh;
+        .ecd__label {
+          fill: white;
+        }
+      }
+    }
+    .title-band {
+      height: 33vh;
+      align-self: stretch;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: rgba($color-highlight, 0.8);
+      color: white;
+      text-align: center;
+      .title {
+        font-size: 3.5rem;
+      }
+      .subtitle {
+        font-size: 3rem;
+        color: rgba(black, 0.8);
+        -webkit-text-stroke: 1px rgba(black, 0.1);
+      }
+    }
+
+  }
+}

@@ -1,0 +1,16 @@
+.eclipse-jkube-2021-cloud-tool-time-slide__content {
+  .what-is-jkube {
+    .hidden {
+      display: block;
+    }
+    .framework-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      .item {
+        padding: 2rem;
+        height: 5rem;
+      }
+    }
+  }
+}
