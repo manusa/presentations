@@ -21,13 +21,11 @@ jobs:
       - name: Build
         run: npm run build
       - name: Replace dependencies
-        run: ./replaceDependencies.js
-      - name: Replace dependencies
         run: |
           # Allow public static pages in npm package
-          echo "" > "${TRAVIS_BUILD_DIR}"/.gitignore
+          echo "" > .gitignore
           # Leave only runtime dependencies
-          ./replaceDependencies.js
+          ./replaceDependencies.sh
       - name: Publish
         run: |
           export NPM_TOKEN=${{ secrets.NPM_TOKEN }}
