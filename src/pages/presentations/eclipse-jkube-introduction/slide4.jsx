@@ -1,15 +1,6 @@
 import React from 'react';
 import slideControls, {visibleClassNameFromStep} from '../../../components/slide-controls/slide-controls';
 import SlideTemplate from './components/slide-template';
-import jettyLogo from './assets/frameworks/jetty-logo.png';
-import karafLogo from './assets/frameworks/karaf-logo.png';
-import openLibertyLogo from './assets/frameworks/open-liberty-logo.png';
-import quarkusLogo from './assets/frameworks/quarkus-logo.png';
-import springBootLogo from './assets/frameworks/spring-boot-logo.png';
-import thorntailLogo from './assets/frameworks/thorntail-logo.png';
-import tomcatLogo from './assets/frameworks/tomcat-logo.png';
-import vertxLogo from './assets/frameworks/vertx-logo.png';
-import wildflyLogo from './assets/frameworks/wildfly-logo.png';
 import './styles/slide4.scss';
 
 const Slide4 = ({currentStep}) => {

@@ -1,11 +1,10 @@
 import React from 'react';
 import slideControls, {visibleClassNameInStep} from '../../../components/slide-controls/slide-controls';
 import SlideTemplate from './components/slide-template';
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import Code from '../../../components/code';
+import JKubeLogo from '../../../components/icons/jkube-logo';
 
 import './styles/slide-challenges.scss';
-import {androidstudio} from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-import JKubeLogo from "./components/jkube-logo";
 
 const Slide040 = ({currentStep}) => {
   const classNameVisibleIn = visibleClassNameInStep(currentStep);
@@ -14,9 +13,7 @@ const Slide040 = ({currentStep}) => {
       <div className='kubernetes-challenges'>
         <div className={`challenge-docker ${classNameVisibleIn(2)}`}>
           <h2>Dockerfile</h2>
-          <SyntaxHighlighter
-            language={'dockerfile'} style={androidstudio}>
-            {`
+          <Code language='dockerfile'>{`
 FROM openjdk:8-jdk-alpine
 EXPOSE 8080
 ARG JAR_FILE=target/*.jar
@@ -24,24 +21,18 @@ USER 1000:1000
 COPY \${JAR_FILE} /deployments/app.jar
 ENV JAVA_OPTIONS="-Xmx2G"
 ENTRYPOINT ["java","-jar","/deployments/app.jar"]
-          `}
-          </SyntaxHighlighter>
-          <SyntaxHighlighter
-            language={'shell'} style={androidstudio}>
-            {`
+          `}</Code>
+          <Code language='shell'>{`
 $ mvn package
 $ docker build -t user/app:tag ./
 $ docker login
 $ docker push user/app:tag
-          `}
-          </SyntaxHighlighter>
+          `}</Code>
         </div>
         <div className={`challenge-kubernetes ${classNameVisibleIn(3)}`}>
           <h2>YAML files</h2>
           <div className='yaml-files'>
-            <SyntaxHighlighter
-              language={'yaml'} style={androidstudio}>
-              {`
+            <Code language='yaml'>{`
 kind: Deployment
 metadata:
   name: app
@@ -49,37 +40,27 @@ spec:
   replicas: 1
   selector:
 # ...
-          `}
-            </SyntaxHighlighter>
-            <SyntaxHighlighter
-              language={'yaml'} style={androidstudio}>
-              {`
+          `}</Code>
+            <Code language='yaml'>{`
 kind: Service
 metadata:
   name: app
 spec:
   ports:
 # ...
-          `}
-            </SyntaxHighlighter>
-            <SyntaxHighlighter
-              language={'yaml'} style={androidstudio}>
-              {`
+          `}</Code>
+            <Code language='yaml'>{`
 kind: ConfigMap
 metadata:
   name: app
 data:
  application.yml: >-
 # ...
-          `}
-            </SyntaxHighlighter>
+          `}</Code>
           </div>
-          <SyntaxHighlighter
-            language={'shell'} style={androidstudio}>
-            {`
+          <Code language='shell'>{`
 $ kubectl apply -f ./your-yaml.yml
-          `}
-          </SyntaxHighlighter>
+          `}</Code>
         </div>
         <div className={`challenge-jkube ${classNameVisibleIn(4)}`}>
           <JKubeLogo className='jkube-logo' />

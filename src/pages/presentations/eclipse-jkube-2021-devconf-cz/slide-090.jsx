@@ -2,7 +2,7 @@ import React from 'react';
 import SlideTemplate from './components/slide-template';
 import slideControls from '../../../components/slide-controls/slide-controls';
 
-const Slide020 = () => (
+const Slide090 = () => (
   <SlideTemplate slide={9} title='Why should I choose Eclipse JKube?'>
     <ul>
       <li>Covers complete Workflow (from code to Kubernetes)</li>
@@ -14,4 +14,4 @@ const Slide020 = () => (
   </SlideTemplate>
 );
 
-export default slideControls(Slide020, '/presentations/eclipse-jkube-2021-devconf-cz/slide-080', '/presentations/eclipse-jkube-2021-devconf-cz/slide-100');
+export default slideControls(Slide090, '/presentations/eclipse-jkube-2021-devconf-cz/slide-080', '/presentations/eclipse-jkube-2021-devconf-cz/slide-100');

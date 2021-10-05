@@ -1,13 +1,13 @@
 import React from 'react';
 import SlideTemplate from './components/slide-template';
 import slideControls, {visibleClassNameFromStep, visibleClassNameInStep, visibleClassNameUntilStep} from '../../../components/slide-controls/slide-controls';
-import DockerLogo from './components/docker-logo';
-import JavaIcon from './components/java-icon';
-import KubernetesLogo from './components/kubernetes-logo';
-import RightArrow from './components/right-arrow';
+import DockerLogo from '../../../components/icons/docker-logo';
+import JavaIcon from '../../../components/icons/java-icon';
+import KubernetesLogo from '../../../components/icons/kubernetes-logo';
+import RightArrow from '../../../components/shapes/right-arrow';
 
-import ServerIcon from './components/server-icon';
-import VcsIcon from './components/vcs-icon';
+import ServerIcon from '../../../components/icons/server-icon';
+import VcsIcon from '../../../components/icons/vcs-icon';
 import './styles/slide-workflow.scss';
 
 const arrowSize = 120;
