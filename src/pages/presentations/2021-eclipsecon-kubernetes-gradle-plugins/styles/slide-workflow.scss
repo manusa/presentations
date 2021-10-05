@@ -1,0 +1,71 @@
+@import './variables';
+
+.eclipsecon-2021-slide__content {
+  .work-flow {
+    $icon-height: 10rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .visible {
+      transform: none;
+      opacity: 1;
+      transition: opacity 1s linear;
+    }
+    .hidden {
+      position: absolute;
+      height: 0;
+      transform: none;
+      opacity: 0;
+    }
+    .work-flow__content {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      .work-flow__icon {
+        max-height: $icon-height;
+        height: $icon-height;
+      }
+      .work-flow__code {
+        display: flex;
+        flex-direction: column;
+        width: 20rem;
+      }
+      .work-flow__package {
+        display: flex;
+        flex-direction: column;
+        width: 30rem;
+      }
+      .work-flow__server {
+        display: flex;
+        flex-direction: column;
+        width: 20rem;
+      }
+      .work-flow__description {
+        margin-top: 5rem;
+        height: 10rem;
+        text-align: center;
+      }
+      .work-flow__arrow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: $eclipse-content-font-size * 0.7;
+        font-style: italic;
+        color: lighten($color-highlight-alternative, 25%);
+      }
+      ul {
+        padding: 0;
+        margin: 0;
+        li:before {
+          content: '';
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.eclipsecon-2021-slide__content {
+  .roadmap {
+    height: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+
+    &__image {
+      max-height: 100%;
+    }
+  }
+}

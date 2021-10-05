@@ -1,0 +1,44 @@
+@import './variables';
+
+.eclipsecon-2021-title {
+  margin: -1px 0 0 0;
+  padding: 1px 0 0 0;
+  box-sizing: border-box;
+  height: 100vh;
+  min-height: 100%;
+  @include eclipse-background;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    .logo {
+      height: 33vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      img {
+        max-height: 20vh;
+      }
+    }
+    .title-band {
+      height: 33vh;
+      align-self: stretch;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: $eclipse-orange;
+      color: white;
+      text-align: center;
+      .title {
+        font-size: 3.5rem;
+      }
+      .subtitle {
+        font-size: 2.5rem;
+        color: black;
+      }
+    }
+
+  }
+}

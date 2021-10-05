@@ -1,0 +1,32 @@
+@import './variables';
+
+.eclipsecon-2021-slide__content {
+  .kubernetes-challenges {
+    .hidden {
+      height: 0;
+    }
+    .yaml-files {
+      display: flex;
+      justify-content: space-between;
+      pre {
+        min-width: 30rem;
+      }
+    }
+    .challenge-jkube {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      .jkube-logo {
+        width: 100%;
+        .text {
+          fill: opacify(white, 0.7);
+        }
+      }
+    }
+  }
+
+}
