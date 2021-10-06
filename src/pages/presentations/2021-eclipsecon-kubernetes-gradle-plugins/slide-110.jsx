@@ -14,6 +14,13 @@ const Slide110 = () => (
       <a href='https://www.eclipse.org/jkube'><i className='fas fa-home' /> www.eclipse.org/jkube</a>
       <JKubeLogo className='jkube-logo' />
     </div>
+    <div className='presentation-links'>
+      <ul>
+        <li><a href='https://presentations.marcnuri.com/presentations/2021-eclipsecon-kubernetes-gradle-plugins/'>
+          https://presentations.marcnuri.com/presentations/2021-eclipsecon-kubernetes-gradle-plugins
+        </a></li>
+      </ul>
+    </div>
   </TitleTemplate>
 );
 
