@@ -13,7 +13,7 @@ plugins {
       `}</Code>
       <Code language='kotlin'>{`
 plugins {
-  id("org.eclipse.jkube.kubernetes") version "1.5.0"
+  id("org.eclipse.jkube.openshift") version "1.5.0"
 }
       `}</Code>
       <Code language='shell'>{`
