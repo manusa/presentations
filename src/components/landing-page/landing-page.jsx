@@ -31,6 +31,7 @@ const LandingPage = () => {
           <h1>{TITLE}</h1>
         </header>
         <div className={'content'}>
+          <Card onClick={() => navigate('/presentations/2021-eclipsecon-kubernetes-gradle-plugins')} >Containerize and deploy into Kubernetes your Gradle Java project with Eclipse JKube (EclipseCon 2021)</Card>
           <Card onClick={() => navigate('/presentations/eclipse-jkube-2021-devconf-cz')} >Containerize your Java Applications using Eclipse JKube (DevConf.cz 2021)</Card>
           <Card onClick={() => navigate('/presentations/eclipse-jkube-2021-cloud-tool-time')} >Deploying a Quarkus application into Kubernetes using JKube (Eclipse Cloud Tool Time 2021)</Card>
           <Card onClick={() => navigate('/presentations/eclipse-jkube-2020-bcn-jug')} >Microservice Containerization made easy using Eclipse JKube (BarcelonaJUG 2020)</Card>
