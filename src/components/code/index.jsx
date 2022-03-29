@@ -13,4 +13,32 @@ const Index = ({
   </SyntaxHighlighter>
 );
 
+export const Code = ({
+  className,
+  language,
+  lineProps,
+  lineNumberStyle,
+  style = railscasts,
+  showLineNumbers = false,
+  children
+}) => {
+  let wrapLines = false;
+  if (lineProps) {
+    wrapLines = true;
+    if (!showLineNumbers) {
+      showLineNumbers = true;
+      lineNumberStyle = {display: 'none'};
+    }
+  }
+  return (
+    <SyntaxHighlighter
+      className={className} style={style} language={language}
+      showLineNumbers={showLineNumbers} wrapLines={wrapLines}
+      lineProps={lineProps} lineNumberStyle={lineNumberStyle}
+    >
+      {children.trim()}
+    </SyntaxHighlighter>
+  );
+};
+
 export default Index;
