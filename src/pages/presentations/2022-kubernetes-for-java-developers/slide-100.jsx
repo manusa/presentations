@@ -15,6 +15,8 @@ const Slide100 = () => (
           <li>Fabric8 Kubernetes Client</li>
         </ul>
       </li>
+      <li><ELink href='https://jbang.dev'>JBang</ELink></li>
+      <li>Kubectl plugins</li>
     </ul>
   </SlideTemplate>
 );
