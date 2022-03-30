@@ -1,7 +1,7 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
-import Card from '../../components/card/card';
 import {navigate} from 'gatsby';
+import {Card} from '../../components';
 
 export const TITLE = 'Marc Nuri\'s Tech Talks';
 export const DESCRIPTION = 'Presentation materials for my talks and presentations';

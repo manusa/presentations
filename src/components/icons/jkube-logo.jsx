@@ -1,6 +1,6 @@
 import React from 'react';
 
-const JKubeLogo = ({className = '', ...props}) => (
+export const JKubeLogo = ({className = '', ...props}) => (
   <svg version="1.1" x="0px" y="0px" viewBox="0 0 291.2 88.5" className={className} {...props}>
     <style type="text/css" dangerouslySetInnerHTML={{__html: `
         .st0{fill - rule:evenodd;clip-rule:evenodd;fill:#0A4E9B;}
@@ -21,5 +21,3 @@ const JKubeLogo = ({className = '', ...props}) => (
     <path className="icon st1" d="M39.2,17.8L17.8,30.1v24.7l21.4,12.3l21.4-12.3V30.1L39.2,17.8z M46.6,46.8c0,1.8-0.5,3.6-1.4,5.1 c-0.9,1.6-2.2,2.8-3.8,3.7c-1.6,0.9-3.3,1.4-5.2,1.4c-1.9,0-3.6-0.5-5.2-1.4c-1.6-0.9-2.9-2.2-3.8-3.7c-0.9-1.6-1.4-3.3-1.4-5.1h6.8 c0,0.9,0.3,1.7,1,2.4s1.5,1,2.5,1c1,0,1.8-0.3,2.5-1c0.7-0.7,1-1.5,1-2.4V36.5h-6.4v-6.8h13.3V46.8z"/>
   </svg>
 );
-
-export default JKubeLogo;

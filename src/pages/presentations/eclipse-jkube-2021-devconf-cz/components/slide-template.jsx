@@ -1,5 +1,5 @@
 import React from 'react';
-import JKubeLogo from './jkube-logo';
+import {JKubeLogo} from '../../../../components';
 import DevconfCzLogo from './devconf-cz-logo';
 import devConfCzLogo from '../assets/devconf-icon.svg';
 

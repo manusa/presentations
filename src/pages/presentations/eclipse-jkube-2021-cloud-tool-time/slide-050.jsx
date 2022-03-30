@@ -1,7 +1,7 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
+import {JKubeLogo} from '../../../components';
 import TitleTemplate from './components/title-template';
-import JKubeLogo from './components/jkube-logo';
 
 import './styles/slide-thank-you.scss';
 

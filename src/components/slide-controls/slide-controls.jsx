@@ -2,15 +2,12 @@ import React from 'react';
 import {navigate} from 'gatsby';
 
 
-// eslint-disable-next-line no-confusing-arrow
 export const visibleClassNameFromStep = currentStep => step =>
   ((currentStep < step) ? 'hidden' : 'visible');
 
-// eslint-disable-next-line no-confusing-arrow
 export const visibleClassNameInStep = currentStep => step =>
   ((currentStep !== step) ? 'hidden' : 'visible');
 
-// eslint-disable-next-line no-confusing-arrow
 export const visibleClassNameUntilStep = currentStep => step =>
   ((currentStep > step) ? 'hidden' : 'visible');
 

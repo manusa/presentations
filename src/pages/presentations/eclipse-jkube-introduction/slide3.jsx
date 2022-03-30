@@ -4,9 +4,7 @@ import slideControls, {
   visibleClassNameFromStep,
   visibleClassNameInStep
 } from '../../../components/slide-controls/slide-controls';
-import JKubeLogo from './components/jkube-logo';
-import KubernetesLogo from './components/kubernetes-logo';
-import OpenShiftLogo from './components/openshift-logo';
+import {JKubeLogo, KubernetesLogo, OpenShiftLogo} from '../../../components';
 import cncfLogo from './assets/cncf-logo.png';
 import oldMan from './assets/adult-elderly-face-man-old-person-side-view-square.jpg';
 import docker from './assets/docker-moby-logo.png';

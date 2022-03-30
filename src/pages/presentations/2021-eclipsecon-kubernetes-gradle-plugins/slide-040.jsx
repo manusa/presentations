@@ -1,8 +1,7 @@
 import React from 'react';
 import slideControls, {visibleClassNameInStep} from '../../../components/slide-controls/slide-controls';
 import SlideTemplate from './components/slide-template';
-import Code from '../../../components/code';
-import JKubeLogo from '../../../components/icons/jkube-logo';
+import {Code, JKubeLogo} from '../../../components';
 
 import './styles/slide-challenges.scss';
 

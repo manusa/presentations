@@ -1,9 +1,7 @@
 import React from 'react';
 import SlideTemplate from './components/slide-template';
 import slideControls, {visibleClassNameFromStep, visibleClassNameInStep, visibleClassNameUntilStep} from '../../../components/slide-controls/slide-controls';
-import DockerLogo from '../../../components/icons/docker-logo';
-import JavaIcon from '../../../components/icons/java-icon';
-import KubernetesLogo from '../../../components/icons/kubernetes-logo';
+import {DockerLogo, JavaIcon, KubernetesLogo} from '../../../components';
 import RightArrow from '../../../components/shapes/right-arrow';
 
 import ServerIcon from '../../../components/icons/server-icon';

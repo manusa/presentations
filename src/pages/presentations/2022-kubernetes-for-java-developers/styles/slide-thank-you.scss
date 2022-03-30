@@ -1,0 +1,35 @@
+@import 'variables';
+
+.kubernetes-java-developers-2022-thank-you {
+  .title-band {
+    display: none;
+  }
+  .thank-you {
+    margin: 0 0 4rem;
+    padding: 0;
+    font-size: 8rem;
+    color: $color-white;
+  }
+  .reach-out {
+    display: flex;
+    flex-direction: column;
+    a {
+      margin: 0.5rem;
+      color: $color-white;
+      text-decoration: none;
+      font-size:  3rem;
+    }
+  }
+  .presentation-links {
+    margin: 2rem 0 0 0;
+    align-self: start;
+    li {
+      list-style: none;
+    }
+    a {
+      color: rgba($color-white, 0.9);
+      text-decoration: none;
+      font-size:  1.5rem;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import JKubeLogo from './jkube-logo';
+import {JKubeLogo} from '../../../../components';
 import ECDToolsLogo from './ecdtools-logo';
 
 import '../styles/slide-template.scss';

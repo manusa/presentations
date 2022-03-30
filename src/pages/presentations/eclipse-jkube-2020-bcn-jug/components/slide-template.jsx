@@ -1,6 +1,6 @@
 import React from 'react';
+import {JKubeLogo} from '../../../../components';
 import bcnJugLogo from '../assets/bcn-jug-logo.png';
-import JKubeLogo from './jkube-logo';
 
 import '../styles/slide-template.scss';
 

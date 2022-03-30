@@ -1,5 +1,5 @@
 import React from 'react';
-import JKubeLogo from './jkube-logo';
+import {JKubeLogo} from '../../../../components';
 import logo from '../assets/eclipsecon-white.png';
 
 import '../styles/slide-template.scss';

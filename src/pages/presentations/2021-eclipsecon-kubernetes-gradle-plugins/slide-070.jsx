@@ -1,7 +1,7 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
 import SlideTemplate from './components/slide-template';
-import Code from '../../../components/code';
+import {Code} from '../../../components';
 
 const Slide070 = () => (
   <SlideTemplate slide={7} title='Kubernetes Gradle Plugin (Preview)'>
