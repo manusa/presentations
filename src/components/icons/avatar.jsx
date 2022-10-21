@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Avatar = props => (
+export const Avatar = props => (
   <svg viewBox="0 0 220 219.996" {...props}>
     <defs>
       <clipPath id="prefix__e" clipPathUnits="userSpaceOnUse">
@@ -237,5 +237,3 @@ const Avatar = props => (
     </g>
   </svg>
 );
-
-export default Avatar;

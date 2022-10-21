@@ -1,0 +1,130 @@
+@import './variables';
+
+$background: #000000;
+$ring-color: #CF331F;
+$ring-outline-color: #ffd6d3;
+$title-color: #ffd200;
+$title-shadow-color: #000000;
+$title-size: 15vh;
+$subtitle-size: 15vh;
+$subtitle-color: white;
+$subtitle-shadow-color: #000000;
+$producer-size: 8vh;
+$producer-color: #ffd200;
+$producer-shadow-color: #000000;
+
+@font-face {
+  font-family: 'Looney Tunes';
+  src: url('../assets/looney-tunes-tilt.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Looney Tunes Solid';
+  src: url('../assets/looney-tunes-solid.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Merrie Melodies';
+  src: url('../assets/merrie-melodies.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'That is All Folks';
+  src: url('../assets/that-is-all-folks.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.eclipsecon-2022-looney {
+  $root: &;
+  position: relative;
+  margin: -1px 0 0 0;
+  padding: 1px 0 0 0;
+  box-sizing: border-box;
+  height: 100vh;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: $background;
+  animation: fade-in .5s linear backwards;
+  & #{$root}__content {
+  }
+  & #{$root}__title,
+  & #{$root}__title-fill {
+    position: absolute;
+    top: 5vh;
+    text-align: center;
+    font-size: $title-size;
+    letter-spacing: -0.10em;
+  }
+  & #{$root}__title {
+    font-family: 'Looney Tunes';
+    color: $title-shadow-color;
+  }
+  & #{$root}__title-fill {
+    font-family: 'Looney Tunes Solid';
+    color: $title-color;
+    fill: $title-color;
+  }
+  & #{$root}__subtitle {
+    font-family: 'That is All Folks';
+    position: absolute;
+    bottom: 15vh;
+    color: $subtitle-color;
+    text-align: center;
+    font-size: $subtitle-size;
+    text-shadow: 2px 2px 5px $subtitle-shadow-color;
+  }
+  & #{$root}__producer {
+    font-family: 'Merrie Melodies';
+    position: absolute;
+    bottom: 5vh;
+    color: $producer-color;
+    font-size: $producer-size;
+    text-shadow:
+            1px 1px  $producer-shadow-color,
+            2px 2px  $producer-shadow-color,
+  ;
+  }
+  & #{$root}__icon {
+    position: absolute;
+    top: 3vh;
+    width: 40vh;
+  }
+  & #{$root}__ring {
+    position: absolute;
+    margin: 0 auto;
+    background: transparent;
+    border-radius: 100%;
+    outline: 1px solid darken($ring-color, 5%);
+    box-shadow:
+            0 0 5vw 0 $ring-outline-color,
+            0 0 0 100vw $ring-color;
+  }
+  & #{$root}__ring-1 {
+    height: 100vw;
+    width: 100vw;
+  }
+  & #{$root}__ring-2 {
+    height: 70vw;
+    width: 70vw;
+  }
+  & #{$root}__ring-3 {
+    height: 50vw;
+    width: 50vw;
+  }
+  & #{$root}__ring-4 {
+    height: 35vw;
+    width: 35vw;
+  }
+  & #{$root}__ring-5 {
+    height: 25vw;
+    width: 25vw;
+    outline: none;
+  }
+}

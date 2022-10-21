@@ -1,6 +1,7 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
 import {Avatar} from '../../../components';
+import {SLUG} from './';
 import SlideTemplate from './components/slide-template';
 
 import './styles/slide-about-me.scss';
@@ -25,4 +26,4 @@ const Slide010 = () => (
   </SlideTemplate>
 );
 
-export default slideControls(Slide010, '/presentations/2021-eclipsecon-kubernetes-gradle-plugins', '/presentations/2021-eclipsecon-kubernetes-gradle-plugins/slide-020');
+export default slideControls(Slide010, `/presentations/${SLUG}`, `/presentations/${SLUG}/slide-020`);
