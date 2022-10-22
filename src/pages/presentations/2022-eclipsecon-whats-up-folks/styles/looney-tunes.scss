@@ -93,8 +93,14 @@ $producer-shadow-color: #000000;
   }
   & #{$root}__icon {
     position: absolute;
-    top: 3vh;
+    bottom: 30vh;
     width: 40vh;
+    animation: sizer 3s linear infinite;
+    @keyframes sizer {
+      0% {width: 40vh}
+      50% {width: 46vh}
+      100% {width: 40vh}
+    }
   }
   & #{$root}__ring {
     position: absolute;
