@@ -1,0 +1,41 @@
+.eclipsecon-2022-slide__content {
+  .what-is-jkube {
+    height: 100%;
+    max-height: 100%;
+    .hidden {
+      position: absolute;
+    }
+    .workflow-container {
+      @mixin fade-in-animation {
+        animation: fade-in 5s linear backwards;
+      }
+      position: absolute;
+      top: 0.5rem;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex: 1;
+      justify-content: flex-start;
+      align-items: center;
+
+      .jkube-logo {
+        @include fade-in-animation;
+        height: 10rem;
+
+        .text {
+          fill: white;
+        }
+      }
+
+      .jkube-developer-workflow {
+        height: 100%;
+        font-family: 'Roboto';
+
+        .k8s-text {
+          @include fade-in-animation;
+        }
+      }
+    }
+  }
+}

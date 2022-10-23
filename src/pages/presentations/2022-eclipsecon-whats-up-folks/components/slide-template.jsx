@@ -7,7 +7,7 @@ import '../styles/slide-template.scss';
 
 const calcClassName = (element = '') => (`${CLASS_NAME}-slide${element ? `__${element}` : ''}`);
 
-const SlideTemplate = ({slide = 0, title = '', children}) => (
+export const SlideTemplate = ({slide = 0, title = '', children}) => (
   <div className={calcClassName()}>
     <div className={calcClassName('header')}>
       <div className='title'>
@@ -27,4 +27,4 @@ const SlideTemplate = ({slide = 0, title = '', children}) => (
   </div>
 );
 
-export default SlideTemplate;
+export default () => {};

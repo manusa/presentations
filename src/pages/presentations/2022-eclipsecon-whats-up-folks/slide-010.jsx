@@ -2,7 +2,7 @@ import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
 import {Avatar} from '../../../components';
 import {SLUG} from './';
-import SlideTemplate from './components/slide-template';
+import {SlideTemplate} from './components/slide-template';
 
 import './styles/slide-about-me.scss';
 

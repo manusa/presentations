@@ -1,6 +1,6 @@
 import React from 'react';
-import SlideTemplate from './components/slide-template';
 import slideControls from '../../../components/slide-controls/slide-controls';
+import {SlideTemplate} from './components/slide-template';
 import {SLUG} from './index';
 
 const Slide020 = () => (

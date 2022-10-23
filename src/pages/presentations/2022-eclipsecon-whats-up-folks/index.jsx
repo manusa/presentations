@@ -1,7 +1,7 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
 import slideControls from '../../../components/slide-controls/slide-controls';
-import {LooneyTunes} from './components/LooneyTunes';
+import {LooneyTunes} from './components/looney-tunes.jsx';
 
 import './styles/index.scss';
 

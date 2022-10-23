@@ -1,7 +1,7 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
-import {JKubeLogoSquare} from '../../../components/icons';
-import {LooneyTunes} from './components/LooneyTunes';
+import {JKubeLogoSquare} from '../../../components';
+import {LooneyTunes} from './components/looney-tunes';
 
 import './styles/index.scss';
 
