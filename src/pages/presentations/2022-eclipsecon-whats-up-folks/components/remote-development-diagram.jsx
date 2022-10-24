@@ -1357,41 +1357,41 @@ export const KubernetesDiagramRemote = (props) => (
       pointerEvents="none"
     />
     <path
-      d="M275.1 366.5v-20 5-13.63"
+      d="M275.08 366.5v-19.96 4.92-13.59"
       fill="none"
       stroke="#000"
       strokeMiterlimit={10}
       pointerEvents="none"
     />
     <path
-      d="m275.1 332.62 3.5 7-3.5-1.75-3.5 1.75Z"
+      d="m275.08 332.62 3.5 7-3.5-1.75-3.5 1.75Z"
       stroke="#000"
       strokeMiterlimit={10}
       pointerEvents="none"
     />
     <path
-      d="M272.82 296.5v-26.63"
+      d="M275.05 296.5v-28.63"
       fill="none"
       stroke="#ff8000"
       strokeMiterlimit={10}
       pointerEvents="none"
     />
     <path
-      d="m272.82 264.62 3.5 7-3.5-1.75-3.5 1.75Z"
+      d="m275.05 262.62 3.5 7-3.5-1.75-3.5 1.75Z"
       fill="#ff8000"
       stroke="#ff8000"
       strokeMiterlimit={10}
       pointerEvents="none"
     />
     <path
-      d="M506.6 178.5v-20l.09-.68"
+      d="M506.62 178.5v-19.96l.07-.71"
       fill="none"
       stroke="#000"
       strokeMiterlimit={10}
       pointerEvents="none"
     />
     <path
-      d="m507.36 152.61 2.58 7.39-3.25-2.18-3.7 1.29Z"
+      d="m507.26 152.61 2.72 7.34-3.29-2.12-3.67 1.36Z"
       stroke="#000"
       strokeMiterlimit={10}
       pointerEvents="none"
@@ -1477,14 +1477,14 @@ export const KubernetesDiagramRemote = (props) => (
       pointerEvents="none"
     />
     <path
-      d="M341.13 134H374v68.2l30.86.03"
+      d="M340.29 134.08H374v68.15l30.86.01"
       fill="none"
       stroke="#000"
       strokeMiterlimit={10}
       pointerEvents="none"
     />
     <path
-      d="m410.11 202.24-7 3.49 1.75-3.5-1.74-3.5Z"
+      d="m410.11 202.24-7 3.5 1.75-3.5-1.75-3.5Z"
       stroke="#000"
       strokeMiterlimit={10}
       pointerEvents="none"
@@ -1743,14 +1743,14 @@ export const KubernetesDiagramRemote = (props) => (
       pointerEvents="none"
     />
     <path
-      d="M341.13 134H374v96h330.9l.01-10.13"
+      d="m340.29 134 33.71.08v95.84h330.92v-10.05"
       fill="none"
       stroke="#000"
       strokeMiterlimit={10}
       pointerEvents="none"
     />
     <path
-      d="m704.91 214.62 3.5 7-3.5-1.75-3.5 1.75Z"
+      d="m704.91 214.62 3.51 7-3.5-1.75-3.5 1.75Z"
       stroke="#000"
       strokeMiterlimit={10}
       pointerEvents="none"
@@ -1929,14 +1929,14 @@ export const KubernetesDiagramRemote = (props) => (
       pointerEvents="none"
     />
     <path
-      d="m705.75 296.5.05-41.5-.75-35.13"
+      d="m705.75 296.5.1-41.5-.79-35.13"
       fill="none"
       stroke="#000"
       strokeMiterlimit={10}
       pointerEvents="none"
     />
     <path
-      d="m704.94 214.62 3.65 6.92-3.54-1.67-3.46 1.82Z"
+      d="m704.94 214.62 3.65 6.92-3.53-1.67-3.46 1.82Z"
       stroke="#000"
       strokeMiterlimit={10}
       pointerEvents="none"
@@ -1945,7 +1945,7 @@ export const KubernetesDiagramRemote = (props) => (
       fill="#dae8fc"
       stroke="#6c8ebf"
       pointerEvents="none"
-      d="M210.65 116.5h130.48v35H210.65z"
+      d="M209.81 116.5h130.48v35H209.81z"
     />
     <switch transform="translate(-.5 -.5)">
       <foreignObject
@@ -1967,7 +1967,7 @@ export const KubernetesDiagramRemote = (props) => (
             width: 128,
             height: 1,
             paddingTop: 134,
-            marginLeft: 212,
+            marginLeft: 211,
           }}
         >
           <div
@@ -1996,7 +1996,7 @@ export const KubernetesDiagramRemote = (props) => (
         </div>
       </foreignObject>
       <text
-        x={276}
+        x={275}
         y={140}
         fill="#333"
         fontFamily="Helvetica"
@@ -2007,25 +2007,53 @@ export const KubernetesDiagramRemote = (props) => (
       </text>
     </switch>
     <path
-      d="M202.69 112.29c-.4.03-.8.13-1.14.3l-15.57 7.42a3.01 3.01 0 0 0-1.61 2.01l-3.85 16.71c-.17.77-.02 1.59.4 2.26.07.07.12.15.17.25l10.78 13.37c.57.7 1.43 1.12 2.33 1.12h17.27c.9 0 1.77-.42 2.34-1.12l10.77-13.4c.55-.69.77-1.61.57-2.48l-3.85-16.71a3.01 3.01 0 0 0-1.61-2.01l-15.56-7.42c-.45-.22-.95-.32-1.44-.3Z"
+      d="M201.85 112.29c-.4.03-.8.13-1.14.3l-15.57 7.42a3.01 3.01 0 0 0-1.61 2.01l-3.85 16.71c-.17.77-.02 1.59.4 2.26.07.07.12.15.17.25l10.78 13.37c.57.7 1.43 1.12 2.33 1.12h17.27c.9 0 1.77-.42 2.34-1.12l10.77-13.4c.55-.69.77-1.61.57-2.48l-3.85-16.71a3.01 3.01 0 0 0-1.61-2.01l-15.56-7.42c-.45-.22-.95-.32-1.44-.3Z"
       fill="#fff"
       pointerEvents="none"
     />
     <path
-      d="M202.7 113.6c-.38.02-.75.11-1.08.28l-14.63 6.97c-.77.38-1.33 1.08-1.51 1.89l-3.62 15.7c-.16.73-.02 1.5.38 2.13.07.07.11.14.16.23l10.12 12.58c.54.65 1.36 1.05 2.2 1.05h16.24c.84 0 1.65-.4 2.19-1.05l10.13-12.6c.51-.66.72-1.52.53-2.34l-3.61-15.7c-.19-.81-.75-1.51-1.52-1.89l-14.63-6.97c-.42-.21-.89-.31-1.35-.28Z"
+      d="M201.86 113.6c-.38.02-.75.11-1.08.28l-14.63 6.97c-.77.38-1.33 1.08-1.51 1.89l-3.62 15.7c-.16.73-.02 1.5.38 2.13.07.07.11.14.16.23l10.12 12.58c.54.65 1.36 1.05 2.2 1.05h16.24c.84 0 1.65-.4 2.19-1.05l10.13-12.6c.51-.66.72-1.52.53-2.34l-3.61-15.7c-.19-.81-.75-1.51-1.52-1.89l-14.63-6.97c-.42-.21-.89-.31-1.35-.28Z"
       fill="#2875e2"
       pointerEvents="none"
     />
     <path
-      d="M216.35 126.04v14.36l-12.57 6.97-.07-17.57Zm-27 0v14.36l12.57 6.97.07-17.57Zm0-1.49 13.5-3.92 13.5 3.92-13.5 3.91Z"
+      d="M215.51 126.04v14.36l-12.57 6.97-.07-17.57Zm-27 0v14.36l12.57 6.97.07-17.57Zm0-1.49 13.5-3.92 13.5 3.92-13.5 3.91Z"
       fill="#fff"
+      pointerEvents="none"
+    />
+    <path
+      d="M340.29 244.08h166.33l-.06-24.21"
+      fill="none"
+      stroke="#ff8000"
+      strokeMiterlimit={10}
+      pointerEvents="none"
+    />
+    <path
+      d="m506.55 214.62 3.52 6.99-3.51-1.74-3.49 1.76Z"
+      fill="#ff8000"
+      stroke="#ff8000"
+      strokeMiterlimit={10}
+      pointerEvents="none"
+    />
+    <path
+      d="m340.29 244 332.02.08-.01-24.21"
+      fill="none"
+      stroke="#ff8000"
+      strokeMiterlimit={10}
+      pointerEvents="none"
+    />
+    <path
+      d="m672.29 214.62 3.51 7-3.5-1.75-3.5 1.75Z"
+      fill="#ff8000"
+      stroke="#ff8000"
+      strokeMiterlimit={10}
       pointerEvents="none"
     />
     <path
       fill="#dae8fc"
       stroke="#ff8000"
       pointerEvents="none"
-      d="M207.82 228.5h130v35h-130z"
+      d="M209.81 226.5h130.48v35H209.81z"
     />
     <switch transform="translate(-.5 -.5)">
       <foreignObject
@@ -2046,8 +2074,8 @@ export const KubernetesDiagramRemote = (props) => (
             justifyContent: "unsafe center",
             width: 128,
             height: 1,
-            paddingTop: 246,
-            marginLeft: 209,
+            paddingTop: 244,
+            marginLeft: 211,
           }}
         >
           <div
@@ -2061,7 +2089,7 @@ export const KubernetesDiagramRemote = (props) => (
             <div
               style={{
                 display: "inline-block",
-                fontSize: 16,
+                fontSize: 15,
                 fontFamily: "Helvetica",
                 color: "#333",
                 lineHeight: 1.2,
@@ -2076,68 +2104,40 @@ export const KubernetesDiagramRemote = (props) => (
         </div>
       </foreignObject>
       <text
-        x={273}
-        y={251}
+        x={275}
+        y={249}
         fill="#333"
         fontFamily="Helvetica"
-        fontSize={16}
+        fontSize={15}
         textAnchor="middle"
       >
         {"jkube-remote"}
       </text>
     </switch>
     <path
-      d="M199.85 222.29c-.4.03-.8.13-1.14.3l-15.57 7.42c-.81.4-1.41 1.15-1.61 2.01l-3.85 16.71c-.17.77-.02 1.59.4 2.26.08.07.12.15.17.25l10.78 13.37c.57.7 1.44 1.12 2.33 1.12h17.28c.89 0 1.76-.42 2.33-1.12l10.77-13.4c.55-.69.77-1.61.57-2.48l-3.85-16.71c-.19-.86-.79-1.61-1.61-2.01l-15.56-7.42c-.45-.22-.94-.32-1.44-.3Z"
+      d="M201.85 222.29c-.4.03-.8.13-1.14.3l-15.57 7.42a3.01 3.01 0 0 0-1.61 2.01l-3.85 16.71c-.17.77-.02 1.59.4 2.26.07.07.12.15.17.25l10.78 13.37c.57.7 1.43 1.12 2.33 1.12h17.27c.9 0 1.77-.42 2.34-1.12l10.77-13.4c.55-.69.77-1.61.57-2.48l-3.85-16.71a3.01 3.01 0 0 0-1.61-2.01l-15.56-7.42c-.45-.22-.95-.32-1.44-.3Z"
       fill="#fff"
       pointerEvents="none"
     />
     <path
-      d="M199.86 223.6c-.37.02-.75.11-1.07.28l-14.63 6.97c-.77.38-1.33 1.08-1.52 1.89l-3.62 15.7c-.16.73-.02 1.5.38 2.13.07.07.11.14.16.23l10.13 12.58c.53.65 1.35 1.05 2.19 1.05h16.24c.84 0 1.65-.4 2.19-1.05l10.13-12.6c.51-.66.72-1.52.53-2.34l-3.61-15.7c-.19-.81-.75-1.51-1.52-1.89l-14.63-6.97c-.42-.21-.89-.31-1.35-.28Z"
+      d="M201.86 223.6c-.38.02-.75.11-1.08.28l-14.63 6.97c-.77.38-1.33 1.08-1.51 1.89l-3.62 15.7c-.16.73-.02 1.5.38 2.13.07.07.11.14.16.23l10.12 12.58c.54.65 1.36 1.05 2.2 1.05h16.24c.84 0 1.65-.4 2.19-1.05l10.13-12.6c.51-.66.72-1.52.53-2.34l-3.61-15.7c-.19-.81-.75-1.51-1.52-1.89l-14.63-6.97c-.42-.21-.89-.31-1.35-.28Z"
       fill="#2875e2"
       pointerEvents="none"
     />
     <path
-      d="M213.51 236.04v14.36l-12.57 6.97-.07-17.57Zm-27 0v14.36l12.57 6.97.07-17.57Zm0-1.49 13.5-3.92 13.5 3.92-13.5 3.91Z"
+      d="M215.51 236.04v14.36l-12.57 6.97-.07-17.57Zm-27 0v14.36l12.57 6.97.07-17.57Zm0-1.49 13.5-3.92 13.5 3.92-13.5 3.91Z"
       fill="#fff"
       pointerEvents="none"
     />
     <path
-      d="M337.82 246H506.6l-.04-26.13"
-      fill="none"
-      stroke="#ff8000"
-      strokeMiterlimit={10}
-      pointerEvents="none"
-    />
-    <path
-      d="m506.55 214.62 3.51 6.99-3.5-1.74-3.5 1.75Z"
-      fill="#ff8000"
-      stroke="#ff8000"
-      strokeMiterlimit={10}
-      pointerEvents="none"
-    />
-    <path
-      d="M337.82 246H672.3l-.01-26.13"
-      fill="none"
-      stroke="#ff8000"
-      strokeMiterlimit={10}
-      pointerEvents="none"
-    />
-    <path
-      d="m672.29 214.62 3.5 7-3.5-1.75-3.5 1.75Z"
-      fill="#ff8000"
-      stroke="#ff8000"
-      strokeMiterlimit={10}
-      pointerEvents="none"
-    />
-    <path
-      d="M56.1 390.1h61.7l55.57.13"
+      d="M56.1 390.08h61.75l55.52.14"
       fill="none"
       stroke="#2875e2"
       strokeMiterlimit={10}
       pointerEvents="none"
     />
     <path
-      d="m178.62 390.24-7.01 3.48 1.76-3.49-1.75-3.51Z"
+      d="m178.62 390.24-7.01 3.48 1.76-3.5-1.75-3.5Z"
       fill="#2875e2"
       stroke="#2875e2"
       strokeMiterlimit={10}
@@ -2153,7 +2153,7 @@ export const KubernetesDiagramRemote = (props) => (
       pointerEvents="none"
     />
     <path
-      d="M161.8 244H65.92"
+      d="M163.8 244H65.92"
       fill="none"
       stroke="#ff8000"
       strokeWidth={6}
@@ -2161,7 +2161,7 @@ export const KubernetesDiagramRemote = (props) => (
       pointerEvents="none"
     />
     <path
-      d="m170.8 244-12 6 3-6-3-6ZM56.92 244l12-6-3 6 3 6Z"
+      d="m172.8 244-12 6 3-6-3-6ZM56.92 244l12-6-3 6 3 6Z"
       fill="#ff8000"
       stroke="#ff8000"
       strokeWidth={6}

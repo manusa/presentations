@@ -12,6 +12,7 @@ const Slide050 = ({}) => {
           <ul>
             <li>Run and debug code in your <strong>local</strong> machine</li>
             <li>While connected/exposed to the rest of the cluster services</li>
+            <li>Connect your local toolset to the cluster services</li>
           </ul>
         </li>
         <li>➰ Boosts inner-loop developer experience</li>
