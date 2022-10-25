@@ -5,7 +5,7 @@ import {LooneyTunes} from './components/looney-tunes.jsx';
 
 import './styles/index.scss';
 
-export const SLUG = '2022-eclipsecon-whats-up-folks';
+export const SLUG = '2022-eclipsecon-whats-up-doc';
 export const CLASS_NAME = 'eclipsecon-2022';
 const TITLE = 'Eclipse JKube - What\'s up, Doc?';
 

@@ -2,16 +2,17 @@ import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
 import {JKubeLogoSquare} from '../../../components';
 import {LooneyTunes} from './components/looney-tunes';
+import {SLUG, CLASS_NAME} from './index';
 
 import './styles/index.scss';
 
-export const SLUG = '2022-eclipsecon-whats-up-folks';
-export const CLASS_NAME = 'eclipsecon-2022';
+const WhiteLogo = () => <JKubeLogoSquare fillColor='#FFFFFF' />;
 
 const EclipseJKubeIntroduction = () => (
     <LooneyTunes
       className={`${CLASS_NAME}`} title='ecliPse JKUbE' subtitle={`"That's all Folks!"`}
-      Icon={JKubeLogoSquare} />
+      Icon={WhiteLogo}
+    />
 );
 
-export default slideControls(EclipseJKubeIntroduction, `/presentations/${SLUG}/slide-010`, `/presentations/${SLUG}`);
+export default slideControls(EclipseJKubeIntroduction, `/presentations/${SLUG}/slide-090`, `/presentations/${SLUG}`);
