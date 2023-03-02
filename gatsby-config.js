@@ -1,4 +1,5 @@
 module.exports = {
+  trailingSlash: 'never',
   siteMetadata: {
     title: 'Marc Nuri Tech Talks',
     siteUrl: 'https://presentations.marcnuri.com',
