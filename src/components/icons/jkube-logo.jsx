@@ -1,10 +1,16 @@
 import React from 'react';
 
-export const JKubeLogo = ({className = '', ...props}) => (
+export const JKubeLogo = ({
+  className = '',
+  iconColor = '#0A4E9B',
+  textColor = '#000000',
+  ...props
+}) => (
   <svg version="1.1" x="0px" y="0px" viewBox="0 0 291.2 88.5" className={className} {...props}>
     <style type="text/css" dangerouslySetInnerHTML={{__html: `
-        .st0{fill - rule:evenodd;clip-rule:evenodd;fill:#0A4E9B;}
-        .st1{fill:#0A4E9B;}
+        .st0{fill - rule:evenodd;clip-rule:evenodd;}
+        .icon{fill:${iconColor};}
+        .text{fill:${textColor};}
     `}}/>
     <g>
       <path className='text' d="M100.2,23.1h21.7v28.1c0,3-0.8,5.8-2.3,8.4c-1.5,2.6-3.6,4.6-6.2,6.1c-2.6,1.5-5.5,2.2-8.5,2.2c-3.1,0-5.9-0.7-8.5-2.2 c-2.6-1.5-4.7-3.5-6.2-6.1c-1.5-2.6-2.3-5.4-2.3-8.4h11.2c0,1.5,0.6,2.8,1.7,3.9s2.5,1.6,4.1,1.6c1.6,0,2.9-0.5,4.1-1.6 c1.1-1.1,1.7-2.4,1.7-3.9v-17h-10.5V23.1z"/>
@@ -22,7 +28,7 @@ export const JKubeLogo = ({className = '', ...props}) => (
   </svg>
 );
 
-export const JKubeLogoSquare = ({fillColor = '#0a4e9b', ...props}) => (
+export const JKubeLogoSquare = ({fillColor = '#0A4E9B', ...props}) => (
   <svg
     id="Layer_1"
     xmlns="http://www.w3.org/2000/svg"

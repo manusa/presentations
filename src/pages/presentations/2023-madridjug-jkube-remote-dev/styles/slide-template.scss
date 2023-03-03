@@ -1,6 +1,6 @@
 @import './variables';
 
-.eclipsecon-2022-slide {
+.madrid-jug-2023-slide {
   @import './fonts';
   $root: &;
   padding: 0;
@@ -27,6 +27,12 @@
       min-width: 1px;
       width: 1px;
       flex: 1;
+    }
+    .jkube-logo {
+      width: 10rem;
+      .icon, .text {
+        fill: rgba(255, 255, 255, 0.65);
+      }
     }
   }
   & #{$root}__content {

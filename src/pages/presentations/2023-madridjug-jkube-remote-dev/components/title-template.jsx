@@ -1,13 +1,12 @@
 import React from 'react';
-import {TitleSlideTemplate} from "../../../../components";
 import {CLASS_NAME} from '../';
-import logo from '../assets/eclipsecon2022-white.png';
+import {MadridJugLogo, TitleSlideTemplate} from '../../../../components';
 import '../styles/title-template.scss';
 
 export const TitleTemplate = ({className = '', ...props}) =>
   <TitleSlideTemplate
     classNamePrefix={CLASS_NAME}
-    logoContent={<img src={logo} alt='An image of the EclipseCon logo' />}
+    logoContent={<MadridJugLogo gray='#FAFAFA' fruitColor='#082941' style={{height: '60%'}} />}
     {...props}
   />;
 
