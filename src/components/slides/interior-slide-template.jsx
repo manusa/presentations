@@ -1,14 +1,13 @@
 import React from 'react';
 import {Avatar, JKubeLogo} from '../';
 
-
 export const InteriorSlideTemplate = ({
-  classNamePrefix,
   titleIcon = <JKubeLogo iconColor='#ffffffa6' textColor='#ffffffa6' style={{height: '75%'}}/>,
   footerIcon = <Avatar backgroundColor='none' hatColor='none' hatbandColor='none' style={{width: '5rem'}} />,
-  slide = 0, title = '', children
+  className = '', slide = 0, title = '', children
 }) => {
-  const calcClassName = (element = '') => (`${classNamePrefix}-slide${element ? `__${element}` : ''}`);
+  const calcClassName = (element = '') =>
+    ('interior-slide' + (element ? `__${element}` : '') + (className ? ` ${className}` : ''));
   return (
     <div className={calcClassName()}>
       <div className={calcClassName('header')}>
