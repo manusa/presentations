@@ -1,8 +1,7 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
-import {JKubeLogo} from '../../../components';
+import {DeveloperWorkflowDiagram, JKubeLogo} from '../../../components';
 import SlideTemplate from './components/slide-template';
-import DeveloperWorkflowDiagram from './components/developer-workflow-diagram';
 
 import './styles/slide-jkube-developer-workflow.scss';
 

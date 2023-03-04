@@ -6,6 +6,7 @@ import {SLUG} from './index';
 const Slide020 = () => (
   <SlideTemplate slide={2} title='Agenda'>
     <ul>
+      <li>Inner Loop vs. Outer Loop</li>
       <li>What is Eclipse JKube?</li>
       <li>JKube Remote Development</li>
       <li>Demo</li>

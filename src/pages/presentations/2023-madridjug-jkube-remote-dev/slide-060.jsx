@@ -1,13 +1,21 @@
 import React from 'react';
-import slideControls from '../../../components/slide-controls/slide-controls';
-import {TitleTemplate} from './components/title-template';
+import slideControls, {visibleClassNameInStep} from '../../../components/slide-controls/slide-controls';
+import {SlideTemplate} from './components/slide-template';
 import {SLUG} from './index';
+import {RemoteDevelopmentKubernetesDiagram, RemoteDevelopmentKubernetesDiagramRemote} from '../../../components';
 
-const Slide060 = () => (
-  <TitleTemplate
-    title='Demo: Sailing into the North Wind'
-    subtitle='https://github.com/marcnuri-demo/jkube-remote-dev'
-  />
-);
+import './styles/slide-remote-development-diagram.scss';
 
-export default slideControls(Slide060, `/presentations/${SLUG}/slide-050`, `/presentations/${SLUG}/slide-070`);
+const Slide060 = ({currentStep}) => {
+  const classNameVisibleIn = visibleClassNameInStep(currentStep);
+  return (
+    <SlideTemplate slide={6} title="Eclipse JKube - Remote Development (2)">
+      <div className='remote-development'>
+        <RemoteDevelopmentKubernetesDiagram className={classNameVisibleIn(1)} />
+        <RemoteDevelopmentKubernetesDiagramRemote className={classNameVisibleIn(2)} />
+      </div>
+    </SlideTemplate>
+  );
+};
+
+export default slideControls(Slide060, `/presentations/${SLUG}/slide-050`, `/presentations/${SLUG}/slide-070`, 2);

@@ -1,28 +1,39 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
-import {JKubeLogo} from '../../../components';
-import {TitleTemplate} from './components/title-template';
-import {SLUG, CLASS_NAME} from './index';
+import {SlideTemplate} from './components/slide-template';
+import {SLUG} from './index';
 
-import './styles/slide-q-and-a.scss';
+import './styles/slide-future-steps.scss';
 
-const Slide080 = () => (
-  <TitleTemplate className={`${CLASS_NAME}-q-and-a`} titleBandVisible={false}>
-    <h2 className='q-and-a'>Q&A</h2>
-    <div className='reach-out'>
-      <a href='https://github.com/eclipse/jkube'><i className='fab fa-github' /> github.com/eclipse/jkube</a>
-      <a href='https://twitter.com/jkubeio'><i className='fab fa-twitter' /> @jkubeio</a>
-      <a href='https://www.eclipse.org/jkube'><i className='fas fa-home' /> www.eclipse.org/jkube</a>
-      <JKubeLogo iconColor='white' textColor='white' />
-    </div>
-    <div className='presentation-links'>
-      <ul>
-        <li><a href={`https://presentations.marcnuri.com/presentations/${SLUG}/`}>
-          https://presentations.marcnuri.com/presentations/{SLUG}
-        </a></li>
-      </ul>
-    </div>
-  </TitleTemplate>
-);
+const Slide080 = () => {
+  return (
+    <SlideTemplate slide={8} title='Future steps'>
+      <div className='future-steps'>
+        <div className='future-steps__icon'>
+          <i className='fas fa-rocket' />
+        </div>
+        <div className='future-steps__steps'>
+          <div className='future-steps__step'>
+            <h3>Integration with other tooling</h3>
+            <ul>
+              <li>IDE plugins</li>
+              <li>CLI tools</li>
+              <li>Move to Fabric8 Kubernetes Client?</li>
+            </ul>
+          </div>
+          <div className='future-steps__step'>
+            <h3>Automatic port detection</h3>
+          </div>
+          <div className='future-steps__step'>
+            <h3>Encapsulate run</h3>
+          </div>
+          <div className='future-steps__step'>
+            <h3>Propagation of secrets and environment</h3>
+          </div>
+        </div>
+      </div>
+    </SlideTemplate>
+  );
+};
 
-export default slideControls(Slide080, `/presentations/${SLUG}/slide-070`, `/presentations/${SLUG}/slide-090`, 1);
+export default slideControls(Slide080, `/presentations/${SLUG}/slide-070`, `/presentations/${SLUG}/slide-090`);
