@@ -4,12 +4,12 @@ import {SlideTemplate} from './components/slide-template';
 import {SLUG} from './index';
 import {RemoteDevelopmentKubernetesDiagram, RemoteDevelopmentKubernetesDiagramRemote} from '../../../components';
 
-import './styles/slide-remote-development.scss';
+import './styles/slide-remote-development-diagram.scss';
 
-const Slide060 = ({currentStep}) => {
+const Slide050 = ({currentStep}) => {
   const classNameVisibleIn = visibleClassNameInStep(currentStep);
   return (
-    <SlideTemplate slide={6} title="Eclipse JKube - Remote Development (2)">
+    <SlideTemplate slide={5} title="Eclipse JKube - Remote Development (2)">
       <div className='remote-development'>
         <RemoteDevelopmentKubernetesDiagram className={classNameVisibleIn(1)} />
         <RemoteDevelopmentKubernetesDiagramRemote className={classNameVisibleIn(2)} />
@@ -18,4 +18,4 @@ const Slide060 = ({currentStep}) => {
   );
 };
 
-export default slideControls(Slide060, `/presentations/${SLUG}/slide-050`, `/presentations/${SLUG}/slide-070`, 2);
+export default slideControls(Slide050, `/presentations/${SLUG}/slide-040`, `/presentations/${SLUG}/slide-060`, 2);

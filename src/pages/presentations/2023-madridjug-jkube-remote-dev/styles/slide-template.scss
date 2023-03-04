@@ -3,6 +3,8 @@
 
 .madrid-jug-2023.interior-slide {
   @import './fonts';
-  @include eclipse-background(rgba(0, 0, 0, 0));
-  @include interior-slide-template($slide-header-background-color: $color-highlight);
+  @include madrid-jug-background;
+  @include interior-slide-template(
+    $slide-header-background-color: $color-highlight
+  );
 }

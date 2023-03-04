@@ -1,0 +1,32 @@
+@import 'variables';
+
+.madrid-jug-2023-q-and-a {
+  .q-and-a {
+    margin: 0 0 4rem;
+    padding: 0;
+    font-size: 8rem;
+    color: $color-white;
+  }
+  .reach-out {
+    display: flex;
+    flex-direction: column;
+    a {
+      margin: 0.5rem;
+      color: $color-gray-light;
+      text-decoration: none;
+      font-size:  3rem;
+    }
+  }
+  .presentation-links {
+    margin: 0.5rem 0 0 0;
+    align-self: start;
+    li {
+      list-style: none;
+    }
+    a {
+      color: $color-gray-light;
+      text-decoration: none;
+      font-size:  1.5rem;
+    }
+  }
+}

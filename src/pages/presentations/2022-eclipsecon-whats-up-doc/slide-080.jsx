@@ -6,9 +6,9 @@ import {SLUG} from './index';
 
 import './styles/slide-northwind-diagram.scss';
 
-const Slide080 = ({}) => {
+const Slide080 = () => {
   return (
-    <SlideTemplate slide={8} title="Demo: Sailing into the North Wind">
+    <SlideTemplate slide={8} title='Demo: Sailing into the North Wind' >
       <div className='northwind'>
         <NorthwindDiagram />
       </div>

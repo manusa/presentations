@@ -4,7 +4,7 @@ import slideControls, {
 } from '../../../components/slide-controls/slide-controls';
 import {SlideTemplate} from './components/slide-template';
 import {SLUG} from './index';
-import {DeveloperWorkflowDiagram, JKubeLogo, KubernetesLogo, OpenShiftLogo, } from '../../../components';
+import {DeveloperWorkflowDiagram, JKubeLogo, KubernetesLogo, OpenShiftLogo} from '../../../components';
 import dukeKubernetesSurf from './assets/duke-kubernetes-surf-sc.png';
 
 import './styles/slide-what-is-jkube.scss';
@@ -45,19 +45,19 @@ const Slide030 = ({currentStep}) => {
             Components
             <table style={{width: '80%'}}>
               <thead>
-                <tr>
-                  <th colSpan={2}>Java API (JKube Kit)</th>
-                </tr>
+              <tr>
+                <th colSpan={2}>Java API (JKube Kit)</th>
+              </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Kubernetes Maven Plugin</td>
-                  <td>Kubernetes Gradle Plugin</td>
-                </tr>
-                <tr>
-                  <td>OpenShift Maven Plugin</td>
-                  <td>OpenShift Gradle Plugin</td>
-                </tr>
+              <tr>
+                <td>Kubernetes Maven Plugin</td>
+                <td>Kubernetes Gradle Plugin</td>
+              </tr>
+              <tr>
+                <td>OpenShift Maven Plugin</td>
+                <td>OpenShift Gradle Plugin</td>
+              </tr>
               </tbody>
             </table>
           </li>
@@ -77,16 +77,16 @@ const Slide030 = ({currentStep}) => {
             </tr>
             </thead>
             <tbody>
-              <GoalRow goal='build' innerLoop='✅' outerLoop='✅'/>
-              <GoalRow goal='push' innerLoop='✔️' outerLoop='✅'/>
-              <GoalRow goal='resource' innerLoop='✅' outerLoop='✅️'/>
-              <GoalRow goal='apply' innerLoop='✅' outerLoop='✅️'/>
-              <GoalRow goal='helm' innerLoop='❌' outerLoop='✅'/>
-              <GoalRow goal='helm-push' innerLoop='❌️' outerLoop='✅'/>
-              <GoalRow goal='undeploy' innerLoop='✅' outerLoop='✔️'/>
-              <GoalRow goal='log' innerLoop='✅' outerLoop='✔️'/>
-              <GoalRow goal='watch' innerLoop='✅' outerLoop='❌️'/>
-              <GoalRow goal={<strong>remote-dev</strong>} innerLoop='✅' outerLoop='❌'/>
+            <GoalRow goal='build' innerLoop='✅' outerLoop='✅'/>
+            <GoalRow goal='push' innerLoop='✔️' outerLoop='✅'/>
+            <GoalRow goal='resource' innerLoop='✅' outerLoop='✅️'/>
+            <GoalRow goal='apply' innerLoop='✅' outerLoop='✅️'/>
+            <GoalRow goal='helm' innerLoop='❌' outerLoop='✅'/>
+            <GoalRow goal='helm-push' innerLoop='❌️' outerLoop='✅'/>
+            <GoalRow goal='undeploy' innerLoop='✅' outerLoop='✔️'/>
+            <GoalRow goal='log' innerLoop='✅' outerLoop='✔️'/>
+            <GoalRow goal='watch' innerLoop='✅' outerLoop='❌️'/>
+            <GoalRow goal={<strong>remote-dev</strong>} innerLoop='✅' outerLoop='❌'/>
             </tbody>
           </table>
         </div>
@@ -96,3 +96,4 @@ const Slide030 = ({currentStep}) => {
 };
 
 export default slideControls(Slide030, `/presentations/${SLUG}/slide-020`, `/presentations/${SLUG}/slide-040`, 4);
+

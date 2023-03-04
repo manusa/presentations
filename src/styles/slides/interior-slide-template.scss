@@ -3,6 +3,8 @@
 @mixin interior-slide-template(
   $slide-title-font-size: 4rem,
   $slide-font-size: 2.5rem,
+  $slide-background-overlay-from: rgba(35, 35, 35, 0.95) 10%,
+  $slide-background-overlay-to: rgba(10, 10, 10, 0.9) 100%,
   $slide-header-padding: 1rem 2rem,
   $slide-header-height: 90px,
   $slide-header-color: #FFF,
@@ -12,9 +14,8 @@
   $slide-content-padding: 1rem 2rem,
   $slide-content-color: #FFF,
   $slide-content-font-size: 2.5rem,
-  $slide-footer-height: 90px
+  $slide-footer-height: 90px,
 ) {
-  $root: &;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -22,10 +23,10 @@
   min-height: 100%;
 
   &::before {
-    background: radial-gradient(circle, rgba(35, 35, 35, 0.95) 10%, rgba(10, 10, 10, 0.9) 100%);
+    background: radial-gradient(circle, $slide-background-overlay-from, $slide-background-overlay-to);
   }
 
-  & #{$root}__header {
+  &__header {
     display: flex;
     align-items: center;
     padding: $slide-header-padding;
@@ -44,7 +45,7 @@
     }
   }
 
-  & #{$root}__content {
+  &__content {
     flex: 1;
     max-height: 100%;
     padding: $slide-content-padding;
@@ -65,7 +66,7 @@
     }
   }
 
-  & #{$root}__footer {
+  &__footer {
     padding: 1rem;
     height: $slide-footer-height;
     display: flex;

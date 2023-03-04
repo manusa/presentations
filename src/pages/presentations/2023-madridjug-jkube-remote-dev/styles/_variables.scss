@@ -1,25 +1,18 @@
 $background-image: '../assets/madrid-schweppes-bg.jpg';
-$color-highlight: #f6333f;
+$color-highlight: #f63440;
+$color-highlight-alternative: #2285f7;
 
-
-$color-highlight-alternative: #f6333f;
+$color-red: #FF0000;
+$color-gray-light: #AAA;
+$color-gray: #999;
+$color-gray-dark: #666;
+$color-gray-darker: #333;
 $color-white: #FAFAFA;
 $color-white-lightest: #FFF;
-$eclipse-orange: #f79422;
 
-$eclipse-header-height: 90px;
-$eclipse-header-padding: 1rem 2rem;
-$eclipse-header-color: $color-white-lightest;
-$eclipse-header-font-family: 'Oswald', 'Roboto', sans-serif;
-$eclipse-header-font-size: 4rem;
+$content-font-size: 2.5rem;
 
-$eclipse-content-padding: 1rem 2rem;
-$eclipse-content-color: $color-white-lightest;
-$eclipse-content-font-size: 2.5rem;
-
-$eclipse-footer-height: 90px;
-
-@mixin eclipse-background($overlay-color: rgba(0, 0, 0, 0.7)) {
+@mixin madrid-jug-background($overlay-color: rgba(0, 0, 0, 0.7)) {
   position: relative;
   background: black url($background-image) no-repeat;
   background-size: cover;

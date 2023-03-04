@@ -6,7 +6,7 @@
   box-sizing: border-box;
   height: 100vh;
   min-height: 100%;
-  @include eclipse-background;
+  @include madrid-jug-background;
   &__content {
     display: flex;
     flex-direction: column;

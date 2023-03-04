@@ -25,7 +25,7 @@ ul {
 }
 
 ul {
-  $line-height: $eclipse-content-font-size * 1.5;
+  $line-height: $content-font-size * 1.5;
   position: relative;
   list-style: none;
   margin-left: 0.5em;
@@ -33,9 +33,9 @@ ul {
   line-height: $line-height;
 
   li:before {
-    font-size: $eclipse-content-font-size * 0.5;
+    font-size: $content-font-size * 0.5;
     content: '\2b22';
-    color: $eclipse-orange;
+    color: $color-highlight;
     position: absolute;
     display: inline-block;
     margin-left: -2em;
@@ -55,21 +55,21 @@ blockquote {
   font-style: italic;
   margin: 0 auto;
   padding: 1rem;
-  color: $eclipse-orange;
+  color: $color-highlight;
   p {
     margin: 0;
     color: white;
     &::before, &::after {
-      color: $eclipse-orange;
+      color: $color-highlight;
       content: '“';
-      font-size: $eclipse-content-font-size * 3;
-      margin: -$eclipse-content-font-size 0 0 (-$eclipse-content-font-size * 1.5);
+      font-size: $content-font-size * 3;
+      margin: -$content-font-size 0 0 (-$content-font-size * 1.5);
       position: absolute;
       opacity: 0.8;
     }
     &::after {
       content: '”';
-      margin: 0 (-$eclipse-content-font-size * 1.5) 0 0;
+      margin: 0 (-$content-font-size * 1.5) 0 0;
     }
   }
   cite {

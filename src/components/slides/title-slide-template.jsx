@@ -2,7 +2,9 @@ import React from 'react';
 import {Avatar} from '../';
 
 export const TitleSlideTemplate = ({
-  className = '', classNamePrefix, title, subtitle = '',
+  classNamePrefix,
+  title, subtitle = '', titleBandVisible= true,
+  className = '',
   logoContent = <Avatar backgroundColor='none' hatColor='none' hatbandColor='none' style={{height: '50%'}} />,
   children
 }) => {
@@ -13,10 +15,12 @@ export const TitleSlideTemplate = ({
         <div className='logo'>
           {logoContent}
         </div>
-        <div className='title-band'>
-          <h1 className='title'>{title}</h1>
-          <h2 className='subtitle'>{subtitle}</h2>
-        </div>
+        {titleBandVisible &&
+          <div className='title-band'>
+            <h1 className='title'>{title}</h1>
+            <h2 className='subtitle'>{subtitle}</h2>
+          </div>
+        }
         {children}
       </div>
     </div>
