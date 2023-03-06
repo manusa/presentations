@@ -1,0 +1,1 @@
+export {FullstackQuarkusReactAd} from './ads';

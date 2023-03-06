@@ -1,0 +1,45 @@
+
+.fullstack-quarkus-and-react-ad {
+  $root: &;
+  $background: #DDD;
+  $border: 1px solid #BBB;
+  $height: 20rem;
+  $width: 60rem;
+  $linkColor: #0071CD;
+  $messageColor: #FF0000;
+  display: flex;
+  position: relative;
+  background: $background;
+  border: $border;
+  height: $height;
+  width: $width;
+  &__logo {
+    position: absolute;
+    height: 2rem;
+    top: 0;
+    right: 0.5rem;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    #{$root}__link-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      a#{$root}__link {
+        color: $linkColor !important;
+        text-decoration: none;
+        font-size: 4rem;
+      }
+    }
+    #{$root}__message {
+      color: $messageColor;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+  }
+  img {
+    max-height: 100%;
+  }
+}

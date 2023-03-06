@@ -15,5 +15,10 @@
       color: white;
       text-decoration: none;
     }
+    .advertisement {
+      position: absolute;
+      z-index: 1;
+      max-height: 100%;
+    }
   }
 }
