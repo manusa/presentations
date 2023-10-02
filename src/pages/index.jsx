@@ -1,8 +1,3 @@
-import React from 'react';
-import LandingPage from '../components/landing-page/landing-page';
+import {LandingPage} from '../components';
 
-const Index = () => (
-  <LandingPage />
-);
-
-export default Index;
+export default LandingPage;

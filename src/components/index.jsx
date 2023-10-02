@@ -10,6 +10,8 @@ export {
   DeveloperWorkflowDiagram, RemoteDevelopmentKubernetesDiagram, RemoteDevelopmentKubernetesDiagramRemote
 } from './jkube';
 
+export {LandingPage} from './landing-page';
+
 export {Link, ELink} from './link';
 
 export {FullstackQuarkusReactAd} from './packt';

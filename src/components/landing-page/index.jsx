@@ -1,13 +1,13 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
 import {navigate} from 'gatsby';
-import {Card} from '../../components';
+import {Card} from '../';
 
 export const TITLE = 'Marc Nuri\'s Tech Talks';
 export const DESCRIPTION = 'Presentation materials for my talks and presentations';
 export const MAIN_URL = 'https://presentations.marcnuri.com';
 
-const LandingPage = () => {
+export const LandingPage = () => {
   // Import styles like this or body css will propagate to all pages
   require('./landing-page.scss');
   return (
@@ -46,5 +46,3 @@ const LandingPage = () => {
     </div>
   );
 };
-
-export default LandingPage;
