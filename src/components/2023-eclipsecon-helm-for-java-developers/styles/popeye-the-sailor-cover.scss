@@ -1,0 +1,68 @@
+@import './variables';
+
+@font-face {
+  font-family: 'Paramount Mountain';
+  src: url('../assets/ParamountMountain.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Popeye';
+  src: url('../assets/Popeye.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Supersonic Rocketship';
+  src: url('../assets/SupersonicRocketship.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.eclipsecon-2023-cover {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  min-height: 100%;
+  background: #9ac2bd url('../assets/cover.jpeg') no-repeat;
+  background-size: cover;
+  background-blend-mode: luminosity; /* Make it grayscale -> blend with color #9ac2bd */
+  display: flex;
+  flex-direction: column;
+  //justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
+  &__producer {
+    font-family: 'Paramount Mountain', sans-serif;
+    font-size: 10rem;
+    //color: #faa261;
+    color: black;
+    -webkit-text-stroke: 1px #123a35;
+    letter-spacing: 4px;
+  }
+  &__popeye-the-sailor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    &-illustration {
+      height: 35vh;
+      //filter: contrast(0.85);
+    }
+    &-text {
+      height: 35vh;
+      fill: $eclipse-orange;
+      stroke: black;
+    }
+  }
+  &__title {
+    font-family: 'Supersonic Rocketship', sans-serif;
+    font-size: 8rem;
+    text-align: center;
+    color: #13AADD;
+    -webkit-text-stroke: 4px black;
+  }
+}

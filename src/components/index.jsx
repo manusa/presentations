@@ -1,3 +1,4 @@
+export * as EclipseCon2023 from './2023-eclipsecon-helm-for-java-developers';
 export {Card} from './card';
 
 export {Code} from './code';

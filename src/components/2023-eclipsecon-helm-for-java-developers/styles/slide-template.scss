@@ -1,0 +1,14 @@
+@import './variables';
+@import '../../../styles/slides/interior-slide-template' ;
+
+.eclipsecon-2023.interior-slide {
+  @import './fonts';
+  @include eclipse-background(rgba(0, 0, 0, 0.9));
+  @include interior-slide-template($slide-header-background-color: $eclipse-orange);
+  &__footer {
+    align-items: flex-end;
+    .eclipsecon-logo {
+      height: 75%;
+    }
+  }
+}
