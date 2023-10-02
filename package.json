@@ -33,7 +33,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/manusa/presentations.git"
+    "url": "git+https://github.com/manusa/presea white backgrntations.git"
   },
   "bugs": {
     "url": "https://github.com/manusa/presentations/issues"
@@ -41,9 +41,9 @@
   "homepage": "https://github.com/manusa/presentations#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.1.1",
-    "gatsby": "5.7.0",
-    "gatsby-plugin-react-helmet": "6.7.0",
-    "gatsby-plugin-sass": "6.7.0",
+    "gatsby": "5.12.5",
+    "gatsby-plugin-react-helmet": "6.12.0",
+    "gatsby-plugin-sass": "6.12.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-helmet": "6.1.0",
