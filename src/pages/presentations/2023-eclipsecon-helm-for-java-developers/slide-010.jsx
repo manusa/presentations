@@ -6,7 +6,7 @@ import '../../../components/2023-eclipsecon-helm-for-java-developers/styles/slid
 
 const Slide010 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
-  return(
+  return (
     <EclipseCon2023.SlideTemplate slide={1} title='About me'>
       <div className='about-me'>
         <Avatar className='avatar' />
@@ -28,4 +28,6 @@ const Slide010 = ({currentStep}) => {
   );
 }
 
-export default slideControls(Slide010, `/presentations/${EclipseCon2023.SLUG}`, `/presentations/${EclipseCon2023.SLUG}/slide-020`, 2);
+export default slideControls(Slide010,
+  `/presentations/${EclipseCon2023.SLUG}`,
+  `/presentations/${EclipseCon2023.SLUG}/slide-020`, 2);

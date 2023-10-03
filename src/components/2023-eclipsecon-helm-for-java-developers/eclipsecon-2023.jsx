@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Original letter colors #3d3c3b
+
 export const EclipseCon2023 = ({
   ...props
 }) => (
@@ -10,11 +12,12 @@ export const EclipseCon2023 = ({
     {...props}
   >
     <style>{`
-        .eclipsecon-2023-0{fill:#3d3c3b}
+        .eclipsecon-2023-0{fill:#FFF}
+        .eclipsecon-2023-0{fill:#FFF}
         .eclipsecon-2023-1{fill:#f89522}
         .eclipsecon-2023-2{fill:#f79422}
         .eclipsecon-2023-4{enable-background:new}
-        .eclipsecon-2023-5,.eclipsecon-2023-6{fill:none;stroke:#3d3c3b;stroke-width:2;stroke-miterlimit:10}
+        .eclipsecon-2023-5,.eclipsecon-2023-6{fill:none;stroke:#FFF;stroke-width:2;stroke-miterlimit:10}
         .eclipsecon-2023-6{stroke:#f79422}
       `}
     </style>

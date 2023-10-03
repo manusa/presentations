@@ -38,6 +38,7 @@ export const Code = ({
   language,
   lineProps,
   lineNumberStyle,
+  customStyle,
   style = railscasts,
   showLineNumbers = false,
   children
@@ -57,7 +58,7 @@ export const Code = ({
     .join('\n');
   return (
     <SyntaxHighlighter
-      className={className} style={style} language={language}
+      className={className} style={style} language={language} customStyle={customStyle}
       showLineNumbers={showLineNumbers} wrapLines={wrapLines}
       lineProps={lineProps} lineNumberStyle={lineNumberStyle}
     >

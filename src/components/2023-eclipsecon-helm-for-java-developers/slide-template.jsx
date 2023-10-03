@@ -11,5 +11,3 @@ export const SlideTemplate = ({className = '', ...props}) =>
     footerIcon={<EclipseCon2023 className='eclipsecon-logo' alt='An image of the EclipseCon logo' />}
     {...props}
   />;
-
-export default () => {};
