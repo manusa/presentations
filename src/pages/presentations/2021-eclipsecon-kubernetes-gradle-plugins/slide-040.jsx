@@ -13,52 +13,52 @@ const Slide040 = ({currentStep}) => {
         <div className={`challenge-docker ${classNameVisibleIn(2)}`}>
           <h2>Dockerfile</h2>
           <Code language='dockerfile'>{`
-FROM openjdk:17-jdk-alpine
-EXPOSE 8080
-ARG JAR_FILE=target/*.jar
-USER 1000:1000
-COPY \${JAR_FILE} /deployments/app.jar
-ENV JAVA_OPTIONS="-Xmx2G"
-ENTRYPOINT ["java","-jar","/deployments/app.jar"]
+            FROM openjdk:17-jdk-alpine
+            EXPOSE 8080
+            ARG JAR_FILE=target/*.jar
+            USER 1000:1000
+            COPY \${JAR_FILE} /deployments/app.jar
+            ENV JAVA_OPTIONS="-Xmx2G"
+            ENTRYPOINT ["java","-jar","/deployments/app.jar"]
           `}</Code>
           <Code language='shell'>{`
-$ mvn package
-$ docker build -t user/app:tag ./
-$ docker login
-$ docker push user/app:tag
+            $ mvn package
+            $ docker build -t user/app:tag ./
+            $ docker login
+            $ docker push user/app:tag
           `}</Code>
         </div>
         <div className={`challenge-kubernetes ${classNameVisibleIn(3)}`}>
           <h2>YAML files</h2>
           <div className='yaml-files'>
             <Code language='yaml'>{`
-kind: Deployment
-metadata:
-  name: app
-spec:
-  replicas: 1
-  selector:
-# ...
+              kind: Deployment
+              metadata:
+                name: app
+              spec:
+                replicas: 1
+                selector:
+              # ...
           `}</Code>
             <Code language='yaml'>{`
-kind: Service
-metadata:
-  name: app
-spec:
-  ports:
-# ...
+              kind: Service
+              metadata:
+                name: app
+              spec:
+                ports:
+              # ...
           `}</Code>
             <Code language='yaml'>{`
-kind: ConfigMap
-metadata:
-  name: app
-data:
- application.yml: >-
-# ...
+              kind: ConfigMap
+              metadata:
+                name: app
+              data:
+               application.yml: >-
+              # ...
           `}</Code>
           </div>
           <Code language='shell'>{`
-$ kubectl apply -f ./your-yaml.yml
+            $ kubectl apply -f ./your-yaml.yml
           `}</Code>
         </div>
         <div className={`challenge-jkube ${classNameVisibleIn(4)}`}>
