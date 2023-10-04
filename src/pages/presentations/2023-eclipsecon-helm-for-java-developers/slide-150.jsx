@@ -24,4 +24,4 @@ const Slide150 = () => (
 
 export default slideControls(Slide150,
   `/presentations/${EclipseCon2023.SLUG}/slide-140`,
-  `/presentations/${EclipseCon2023.SLUG}/slide-160`);
+  `/presentations/${EclipseCon2023.SLUG}/`);
