@@ -5,7 +5,10 @@ import {EclipseCon2023} from '../../../components';
 const Slide140 = () => (
   <EclipseCon2023.TitleTemplate
     title='Demo'
-    subtitle=''
+    subtitle={
+      <a href='https://github.com/marcnuri-demo/2023-eclipsecon-spring-petclinic' target='_blank'>
+        github.com/marcnuri-demo/2023-eclipsecon-spring-petclinic</a>
+    }
   />
 );
 

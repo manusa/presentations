@@ -37,6 +37,10 @@
       .subtitle {
         font-size: 2.5rem;
         color: black;
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
       }
     }
   }
