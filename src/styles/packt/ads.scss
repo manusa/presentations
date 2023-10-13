@@ -19,6 +19,10 @@
     top: 0;
     right: 0.5rem;
   }
+  &__image {
+    min-width: 0;
+    height: 100%;
+  }
   &__content {
     display: flex;
     flex-direction: column;
