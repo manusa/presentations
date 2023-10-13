@@ -19,7 +19,7 @@ const CellContent = ({style, children}) =>
 
 const Slide100 = () => {
   return (
-    <EclipseCon2023.SlideTemplate slide={100} title='What is Eclipse JKube?'>
+    <EclipseCon2023.SlideTemplate slide={10} title='What is Eclipse JKube?'>
       <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
         <JKubeLogo textColor='#FFF' style={{height: '30vh'}}/>
         <div style={{flex: 1, display: 'grid', gridAutoFlow: 'column', gridAutoColumns: '1fr', gap: '3rem', minHeight: 0}}>
