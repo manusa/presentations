@@ -1,0 +1,62 @@
+$devbcn-background-image: '../assets/barcelona-sagrada-familia-bg.jpg';
+$devbcn-background-overlay-image: '../assets/10550-grunge-nuclear-radiation-symbol-background.jpg';
+$devbcn-background-overlay-image: '../assets/star-logo.jpeg';
+$devbcn-color-highlight-alternative: #2285f7;
+$devbcn-color-white: #FAFAFA;
+$devbcn-color-white-lightest: #FFF;
+$devbcn-orange: #ffa800;
+
+$devbcn-header-height: 90px;
+$devbcn-header-padding: 1rem 2rem;
+$devbcn-header-color: $devbcn-color-white-lightest;
+$devbcn-header-font-family: 'Oswald', 'Roboto', sans-serif;
+$devbcn-header-font-size: 4rem;
+
+$devbcn-content-padding: 1rem 2rem;
+$devbcn-content-color: $devbcn-color-white-lightest;
+$devbcn-content-font-size: 2.5rem;
+
+$devbcn-footer-height: 90px;
+
+@mixin devbcn-background(
+  $overlay-color: rgba(0, 0, 0, 0.5),
+  $blend-mode: multiply,
+  $animation: brightness 4s linear infinite
+) {
+  position: relative;
+  background: url($devbcn-background-image) no-repeat;
+  background-size: cover;
+  &::before {
+    z-index: 0;
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: url($devbcn-background-overlay-image) 50% 50% no-repeat;
+    mix-blend-mode: $blend-mode;
+    background-size: cover;
+    opacity: 0.9;
+    animation: $animation;
+    @keyframes brightness {
+      0% {filter: hue-rotate(0deg) }
+      50% {filter: hue-rotate(-40deg)}
+      100% {filter: hue-rotate(0deg)}
+    }
+  }
+  &::after {
+    z-index: 0;
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $overlay-color;
+  }
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+}

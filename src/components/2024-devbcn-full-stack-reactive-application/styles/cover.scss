@@ -1,0 +1,39 @@
+@import './variables';
+
+.devbcn-2024-cover {
+  @import './fonts';
+  position: relative;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  min-height: 100%;
+  @include devbcn-background(rgba(0, 0, 0, 0.2));
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  &__title {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 3rem 1rem;
+    font-family: 'Lionello', sans-serif;
+    font-size: 5rem;
+    text-align: center;
+    color: $devbcn-color-white;
+    text-shadow: 0rem -1.5rem 0.4rem transparentize($devbcn-color-white, 0.85);
+  }
+  &__subtitle {
+    font-family: 'Chernobyl', sans-serif;
+    font-size: 8rem;
+    text-align: center;
+    color: $devbcn-orange;
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5);
+  }
+  &__author {
+    font-family: 'Chernobyl', sans-serif;
+    font-size: 6rem;
+    text-align: center;
+    color: $devbcn-orange;
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5);
+  }
+}

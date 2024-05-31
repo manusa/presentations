@@ -1,0 +1,116 @@
+@import './variables';
+
+@font-face {
+  font-family: 'Chernobyl';
+  src: url('../assets/Chernobyl.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lionello';
+  src: url('../assets/LIONELLORegular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1 {
+  margin: 1rem 0;
+  font-size: 4rem;
+}
+h2 {
+  margin: 1rem 0;
+  font-size: 3.5rem;
+}
+h3 {
+  margin: 1rem 0;
+  font-size: 3rem;
+  font-weight: normal;
+}
+h4 {
+  margin: 1rem 0;
+  font-size: 2.5rem;
+}
+p {
+  margin: 0 0 1rem 0;
+}
+ul {
+  margin: 1rem 0;
+}
+pre {
+  font-size: 2.2rem;
+}
+
+ul {
+  $line-height: $devbcn-content-font-size * 1.5;
+  position: relative;
+  list-style: none;
+  margin-left: 0.5em;
+  padding-left: 1em;
+  line-height: $line-height;
+
+  li:before {
+    font-size: $devbcn-content-font-size * 0.5;
+    content: '\2b22';
+    color: $devbcn-orange;
+    position: absolute;
+    display: inline-block;
+    margin-left: -2em;
+    width: 2em;
+  }
+}
+
+ol {
+  margin-left: 0.5em;
+  li:before {
+    content: '';
+  }
+}
+
+blockquote {
+  position: relative;
+  font-style: italic;
+  margin: 0 auto;
+  padding: 1rem;
+  color: $devbcn-orange;
+  p {
+    margin: 0;
+    color: white;
+    &::before, &::after {
+      color: $devbcn-orange;
+      content: '“';
+      font-size: $devbcn-content-font-size * 3;
+      margin: -$devbcn-content-font-size 0 0 (-$devbcn-content-font-size * 1.5);
+      position: absolute;
+      opacity: 0.8;
+    }
+    &::after {
+      content: '”';
+      margin: 0 (-$devbcn-content-font-size * 1.5) 0 0;
+    }
+  }
+  cite {
+    font-size: 1.7rem;
+  }
+}
+
+table {
+  border-top: 5px solid rgba($devbcn-color-white, 0.7);
+  border-bottom: 5px solid rgba($devbcn-color-white, 0.4);
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0.5rem auto 1.5rem auto;
+  width: 100%;
+
+  thead {
+    background-color: rgba($devbcn-color-highlight-alternative, 0.5);
+  }
+
+  th, td {
+    text-align: center;
+    &.left {
+      padding-left: 1.5rem;
+      text-align: left;
+    }
+  }
+}

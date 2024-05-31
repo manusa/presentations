@@ -1,0 +1,47 @@
+@import './variables';
+
+.devbcn-2024-title {
+  margin: -1px 0 0 0;
+  padding: 1px 0 0 0;
+  box-sizing: border-box;
+  height: 100vh;
+  min-height: 100%;
+  @include devbcn-background(rgba(0, 0, 0, 0));
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    .logo {
+      height: 33vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      img {
+        max-height: 20vh;
+      }
+    }
+    .title-band {
+      height: 33vh;
+      align-self: stretch;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: $devbcn-orange;
+      color: white;
+      text-align: center;
+      .title {
+        font-size: 3.5rem;
+      }
+      .subtitle {
+        font-size: 2.5rem;
+        color: black;
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
