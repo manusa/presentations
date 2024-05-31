@@ -4,3 +4,5 @@ export const TITLE = 'Developing a full stack reactive application using Kuberne
 
 export {Cover} from './cover';
 export {DevBcn} from './dev-bcn';
+export {SlideTemplate} from './slide-template';
+export {TitleTemplate} from './title-template';

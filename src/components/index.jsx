@@ -16,6 +16,6 @@ export {LandingPage} from './landing-page';
 
 export {Link, ELink} from './link';
 
-export {FullstackQuarkusReactAd} from './packt';
+export {FullstackQuarkusReactAd, fullstackQuarkusReactImage} from './packt';
 
 export {InteriorSlideTemplate, TitleSlideTemplate} from './slides';

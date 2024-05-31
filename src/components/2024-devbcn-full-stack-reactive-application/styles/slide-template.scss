@@ -1,0 +1,16 @@
+@import './variables';
+@import '../../../styles/slides/interior-slide-template' ;
+
+.devbcn-2024.interior-slide {
+  @import './fonts';
+  @include interior-slide-template($slide-header-background-color: $devbcn-color-blue);
+  @include devbcn-background(
+    $overlay-color: rgba(0, 0, 0, 0.85),
+    $blend-mode: overlay,
+    $animation: none
+  );
+  .devbcn-logo {
+      height: 75%;
+      fill: transparentize($devbcn-color-white, 0.2);
+    }
+}
