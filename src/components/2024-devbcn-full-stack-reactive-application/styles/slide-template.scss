@@ -3,7 +3,10 @@
 
 .devbcn-2024.interior-slide {
   @import './fonts';
-  @include interior-slide-template($slide-header-background-color: $devbcn-color-blue);
+  @include interior-slide-template(
+    $slide-header-background-color: $devbcn-color-blue,
+    $slide-footer-height: 1rem
+  );
   @include devbcn-background(
     $overlay-color: rgba(0, 0, 0, 0.85),
     $blend-mode: overlay,
