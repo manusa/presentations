@@ -1,0 +1,1 @@
+{"version":3,"file":"component---src-pages-index-jsx-d53516a92e0764bca820.js","mappings":"+JAEA,UAAeA,EAAW,E","sources":["webpack://@marcnuri/presentations/./src/pages/index.jsx"],"sourcesContent":["import {LandingPage} from '../components';\n\nexport default LandingPage;\n"],"names":["LandingPage"],"sourceRoot":""}
