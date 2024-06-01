@@ -5,7 +5,19 @@ export {Card} from './card';
 export {Code} from './code';
 
 export {
-  Avatar, BugsBunny, DockerLogo, JavaIcon, JKubeLogo, JKubeLogoSquare, KubernetesLogo, MadridJugLogo, OpenShiftLogo
+  Avatar,
+  BugsBunny,
+  DockerLogo,
+  ElasticIcon,
+  EnvelopesIcon,
+  JavaIcon,
+  JKubeLogo,
+  JKubeLogoSquare,
+  KubernetesLogo,
+  LaptopRocketIcon,
+  MadridJugLogo,
+  OpenShiftLogo,
+  ResilienceIcon
 } from './icons';
 
 export {
@@ -17,5 +29,7 @@ export {LandingPage} from './landing-page';
 export {Link, ELink} from './link';
 
 export {FullstackQuarkusReactAd, fullstackQuarkusReactImage} from './packt';
+
+export {TurnRightArrow} from './shapes';
 
 export {InteriorSlideTemplate, TitleSlideTemplate} from './slides';

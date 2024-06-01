@@ -1,13 +1,12 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
 import {DevBcn2024} from '../../../components';
-import {DevBcn} from "../../../components/2024-devbcn-full-stack-reactive-application";
 
 const Slide020 = () => {
   return (
     <DevBcn2024.SlideTemplate slide={2} title='Agenda'>
       <div style={{height: '100%', display: 'flex', gap: '0rem', alignItems: 'center'}}>
-        <DevBcn
+        <DevBcn2024.DevBcn
           style={{width: '30rem', fill: 'white', transform: 'rotate(270deg)'}}
           alt='An image of the DevBcn logo'
         />
