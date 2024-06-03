@@ -28,7 +28,7 @@ const Slide040 = ({currentStep}) => {
 };
 
 export default slideControls(Slide040,
-  `/presentations/${DevBcn2024.SLUG}/slide-030`,
-  `/presentations/${DevBcn2024.SLUG}/slide-050`,
+  `/presentations/${DevBcn2024.SLUG}/slide-030-reactive-applications`,
+  `/presentations/${DevBcn2024.SLUG}/slide-050-kubernetes-event-producer`,
   2
 );

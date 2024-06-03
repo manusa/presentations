@@ -30,10 +30,10 @@ const Slide030 = ({currentStep}) => {
         <ItemList className={`${classNameVisibleFrom(3)}`} style={{height: '33%'}}>
           <Item>Resiliency</Item>
           <Item>High availability</Item>
-          <Item>Replication</Item>
+          <Item>Self-healing</Item>
           <Item>Isolation</Item>
-          <Item>Delegation</Item>
           <Item>Varying Workloads</Item>
+          <Item>Replication</Item>
         </ItemList>
         <ItemList className={`${classNameVisibleFrom(4)}`} style={{height: 'calc(33% - 1rem)'}}>
           <Item>Asynchronous</Item>
@@ -51,5 +51,5 @@ const Slide030 = ({currentStep}) => {
 };
 
 export default slideControls(Slide030,
-  `/presentations/${DevBcn2024.SLUG}/slide-020`,
-  `/presentations/${DevBcn2024.SLUG}/slide-040`, 4);
+  `/presentations/${DevBcn2024.SLUG}/slide-020-agenda`,
+  `/presentations/${DevBcn2024.SLUG}/slide-040-kubernetes-what-is`, 4);

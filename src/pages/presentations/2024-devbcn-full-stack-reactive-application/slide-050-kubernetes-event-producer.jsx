@@ -54,7 +54,7 @@ const Slide050 = ({currentStep}) => {
 };
 
 export default slideControls(Slide050,
-  `/presentations/${DevBcn2024.SLUG}/slide-040`,
-  `/presentations/${DevBcn2024.SLUG}/slide-060`,
+  `/presentations/${DevBcn2024.SLUG}/slide-040-kubernetes-what-is`,
+  `/presentations/${DevBcn2024.SLUG}/slide-060-yakd-introduction`,
   2
 );

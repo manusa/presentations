@@ -33,4 +33,4 @@ const Slide010 = ({currentStep}) => {
 
 export default slideControls(Slide010,
   `/presentations/${DevBcn2024.SLUG}`,
-  `/presentations/${DevBcn2024.SLUG}/slide-020`);
+  `/presentations/${DevBcn2024.SLUG}/slide-020-agenda`);

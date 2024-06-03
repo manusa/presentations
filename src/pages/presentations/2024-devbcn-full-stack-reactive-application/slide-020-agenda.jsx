@@ -30,5 +30,5 @@ const Slide020 = () => {
 };
 
 export default slideControls(Slide020,
-  `/presentations/${DevBcn2024.SLUG}/slide-010`,
-  `/presentations/${DevBcn2024.SLUG}/slide-030`);
+  `/presentations/${DevBcn2024.SLUG}/slide-010-about`,
+  `/presentations/${DevBcn2024.SLUG}/slide-030-reactive-applications`);

@@ -16,4 +16,4 @@ const Index = () => (
   </div>
 );
 
-export default slideControls(Index, '/', `/presentations/${DevBcn2024.SLUG}/slide-010`);
+export default slideControls(Index, '/', `/presentations/${DevBcn2024.SLUG}/slide-010-about`);
