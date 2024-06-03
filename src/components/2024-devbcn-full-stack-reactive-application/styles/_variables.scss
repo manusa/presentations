@@ -41,7 +41,7 @@ $devbcn-footer-height: 90px;
     animation: $animation;
     @keyframes brightness {
       0% {filter: hue-rotate(0deg) }
-      50% {filter: hue-rotate(-40deg)}
+      50% {filter: hue-rotate(-60deg)}
       100% {filter: hue-rotate(0deg)}
     }
   }

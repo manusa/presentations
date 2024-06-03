@@ -1,5 +1,8 @@
 @import './variables';
 
 .devbcn-2024-index {
-  animation: fade-in .5s linear backwards;
+  background-color: black;
+  .devbcn-2024-cover {
+    animation: fade-in 1s linear backwards;
+  }
 }

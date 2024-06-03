@@ -12,7 +12,7 @@ const Slide020 = () => {
         />
         <ul style={{flex: 1}}>
           <li>What is a Reactive Application?</li>
-          <li>Kubernetes as an Event Producer</li>
+          <li>Kubernetes (Kube Architecture, Basic Resources, Controller Pattern, as an Event Producer)</li>
           <li>The YAKD project</li>
           <li>?? Challenges ??</li>
           <li>Architecture Overview</li>

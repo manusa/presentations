@@ -3,11 +3,11 @@ import SlideTemplate from './components/slide-template';
 import slideControls, {
   visibleClassNameInStep, visibleClassNameUntilStep
 } from '../../../components/slide-controls/slide-controls';
+import {kubernetesComponentsDiagram} from '../../../components';
 import deployment from './assets/kubernetes/deploy-256.png';
 import ingress from './assets/kubernetes/ing-256.png';
 import pod from './assets/kubernetes/pod-256.png';
 import service from './assets/kubernetes/svc-256.png';
-import componentsOfKubernetes from './assets/components-of-kubernetes.svg';
 
 import './styles/slide-kubernetes.scss';
 import {DockerLogo} from '../../../components';
@@ -30,7 +30,7 @@ const Slide050 = ({currentStep}) => {
         <div className='component-diagram'>
           <img
             className={classNameVisibleIn(2)}
-            src={componentsOfKubernetes} alt='A diagram of the Kubernetes components' />
+            src={kubernetesComponentsDiagram} alt='A diagram of the Kubernetes components' />
         </div>
         <div className={classNameVisibleIn(3)}>
           <table>

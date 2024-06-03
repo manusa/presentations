@@ -1,7 +1,7 @@
 import React from 'react';
+import {KubernetesControlLoopDiagram} from '../../../components';
 import SlideTemplate from './components/slide-template';
 import slideControls from '../../../components/slide-controls/slide-controls';
-import ControlLoopDiagram from './components/control-loop-diagram';
 
 const Slide120 = () => (
   <SlideTemplate slide={12} title='Controller pattern'>
@@ -15,7 +15,7 @@ const Slide120 = () => (
       justifyContent: 'center',
       alignItems: 'center'
     }}>
-      <ControlLoopDiagram style={{height: '100%'}} />
+      <KubernetesControlLoopDiagram style={{height: '100%'}} />
     </div>
   </SlideTemplate>
 );

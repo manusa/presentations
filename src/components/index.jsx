@@ -24,6 +24,10 @@ export {
   DeveloperWorkflowDiagram, RemoteDevelopmentKubernetesDiagram, RemoteDevelopmentKubernetesDiagramRemote
 } from './jkube';
 
+export {
+  KubernetesControlLoopDiagram, kubernetesComponentsDiagram
+} from './kubernetes';
+
 export {LandingPage} from './landing-page';
 
 export {Link, ELink} from './link';
