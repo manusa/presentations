@@ -1,10 +1,15 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
-import {DevBcn2024} from '../../../components';
+import {DevBcn2024, kubernetesComponentsDiagram} from '../../../components';
 
 const Slide070 = () => {
   return (
     <DevBcn2024.SlideTemplate slide={7} title='Kubernetes Streams'>
+      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <img
+          style={{height: '30rem'}}
+          src={DevBcn2024.kubernetesStreamResources} alt='A diagram of the Kubernetes components'/>
+      </div>
     </DevBcn2024.SlideTemplate>
   );
 };
