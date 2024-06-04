@@ -17,8 +17,9 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      img {
-        max-height: 20vh;
+      .devbcn-logo {
+        fill: $devbcn-color-white;
+        height: 10rem;
       }
     }
     .title-band {

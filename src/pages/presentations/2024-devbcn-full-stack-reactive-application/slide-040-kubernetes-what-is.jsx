@@ -1,16 +1,14 @@
 import React from 'react';
 import slideControls, {
-  visibleClassNameInStep,
-  visibleClassNameUntilStep
+  visibleClassNameFromStep,
 } from '../../../components/slide-controls/slide-controls';
 import {DevBcn2024, kubernetesComponentsDiagram} from '../../../components';
 
 const Slide040 = ({currentStep}) => {
-  const classNameVisibleIn = visibleClassNameInStep(currentStep);
-  const classNameVisibleUntil = visibleClassNameUntilStep(currentStep);
+  const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   return (
     <DevBcn2024.SlideTemplate slide={4} title='What is Kubernetes?'>
-      <div className={`${classNameVisibleUntil(2)}`}>
+      <div>
         <blockquote>
           <p>
             Kubernetes is a portable, extensible, open-source platform for managing containerized
@@ -19,7 +17,13 @@ const Slide040 = ({currentStep}) => {
           <cite>Kubernetes.io</cite>
         </blockquote>
       </div>
-      <div className={classNameVisibleIn(2)} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <div
+        className={classNameVisibleFrom(2)}
+        style={{margin: '1rem 0', textAlign: 'center', fontSize: '3.2rem', background: DevBcn2024.BLUE}}
+      >
+        Platform to deploy and orchestrate containerized applications
+      </div>
+      <div className={classNameVisibleFrom(3)} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <img
           src={kubernetesComponentsDiagram} alt='A diagram of the Kubernetes components'/>
       </div>
@@ -29,6 +33,6 @@ const Slide040 = ({currentStep}) => {
 
 export default slideControls(Slide040,
   `/presentations/${DevBcn2024.SLUG}/slide-030-reactive-applications`,
-  `/presentations/${DevBcn2024.SLUG}/slide-050-kubernetes-event-producer`,
-  2
+  `/presentations/${DevBcn2024.SLUG}/slide-050-kubernetes-resources`,
+  3
 );

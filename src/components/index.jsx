@@ -25,7 +25,7 @@ export {
 } from './jkube';
 
 export {
-  KubernetesControlLoopDiagram, kubernetesComponentsDiagram
+  DeploymentIcon, KubernetesControlLoopDiagram, PodIcon, kubernetesComponentsDiagram
 } from './kubernetes';
 
 export {LandingPage} from './landing-page';
