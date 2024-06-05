@@ -12,14 +12,12 @@ const Slide020 = () => {
         />
         <ul style={{flex: 1}}>
           <li>What is a Reactive Application?</li>
-          <li>Kubernetes (Kube Architecture, Basic Resources, Controller Pattern, as an Event Producer)</li>
-          <li>The YAKD project</li>
-          <li>?? Challenges ??</li>
-          <li>Architecture Overview</li>
-          <li>Streaming Kubernetes Events</li>
+          <li>Kubernetes as an Event Producer</li>
+          <li>Case study: The YAKD project</li>
           <li>Building a resilient Backend with Quarkus</li>
           <li>Frontend: Consuming Events Reactively</li>
           <li>Synchronizing State with Redux</li>
+          <li>?? Challenges ??</li>
           <li>Advantages of Reactive Applications</li>
           <li>Tradeoffs and Challenges</li>
           <li>Q&A</li>

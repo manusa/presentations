@@ -21,7 +21,7 @@ const Slide040 = ({currentStep}) => {
         className={classNameVisibleFrom(2)}
         style={{margin: '1rem 0', textAlign: 'center', fontSize: '3.2rem', background: DevBcn2024.BLUE}}
       >
-        Platform to deploy and orchestrate containerized applications
+        Platform to deploy and orchestrate <strong>containerized</strong> applications
       </div>
       <div className={classNameVisibleFrom(3)} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <img

@@ -15,4 +15,4 @@ const Slide100 = () => {
 
 export default slideControls(Slide100,
   `/presentations/${DevBcn2024.SLUG}/slide-090-yakd-introduction`,
-  `/presentations/${DevBcn2024.SLUG}/slide-110`);
+  `/presentations/${DevBcn2024.SLUG}/slide-110-yakd-reactive`);
