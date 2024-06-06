@@ -1,0 +1,21 @@
+@import 'variables';
+
+.devbcn-2024 {
+  $devbcn: &;
+  @at-root #{$devbcn} .hljs {
+    margin: 0.5rem 0;
+    background: #232323CC;
+    line-height: initial;
+  }
+  @at-root #{$devbcn}__code {
+    $highlight-color: $devbcn-color-white;
+    $highlight-background: $devbcn-color-blue;
+    &--highlighted {
+      background-color: $devbcn-color-blue;
+      color: $highlight-color;
+      *[class^='hljs-'] {
+        color: $highlight-color;
+      }
+    }
+  }
+}

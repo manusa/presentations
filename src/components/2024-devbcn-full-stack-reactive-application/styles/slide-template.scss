@@ -3,6 +3,7 @@
 
 .devbcn-2024.interior-slide {
   @import './fonts';
+  @import './code';
   @include interior-slide-template(
     $slide-header-background-color: $devbcn-color-blue,
     $slide-footer-height: 1rem

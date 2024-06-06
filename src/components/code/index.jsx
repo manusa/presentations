@@ -39,6 +39,7 @@ export const Code = ({
   lineProps,
   lineNumberStyle,
   customStyle,
+  useInlineStyles = true,
   style = railscasts,
   showLineNumbers = false,
   children
@@ -61,6 +62,8 @@ export const Code = ({
       className={className} style={style} language={language} customStyle={customStyle}
       showLineNumbers={showLineNumbers} wrapLines={wrapLines}
       lineProps={lineProps} lineNumberStyle={lineNumberStyle}
+      useInlineStyles={useInlineStyles}
+      spreadProps
     >
       {unindentedSnippet}
     </SyntaxHighlighter>
