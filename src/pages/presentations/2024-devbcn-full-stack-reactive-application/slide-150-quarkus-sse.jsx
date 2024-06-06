@@ -1,6 +1,6 @@
 import React from 'react';
 import slideControls, {visibleClassNameFromStep} from '../../../components/slide-controls/slide-controls';
-import {Code, DevBcn2024,} from '../../../components';
+import {Code, DevBcn2024} from '../../../components';
 
 import 'highlight.js/styles/railscasts.css';
 
@@ -58,5 +58,5 @@ const Slide150 = ({currentStep}) => {
 
 export default slideControls(Slide150,
   `/presentations/${DevBcn2024.SLUG}/slide-140-why-quarkus`,
-  `/presentations/${DevBcn2024.SLUG}/slide-160-watching-kubernetes-resources`,
+  `/presentations/${DevBcn2024.SLUG}/slide-160-quarkus-self-healing`,
   8);
