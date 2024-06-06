@@ -61,7 +61,7 @@ const Slide160 = ({currentStep}) => {
             private void subscribe(Watchable<?> watchable, MultiEmitter<? super WatchEvent<?>> emitter) {
               // pseudo code
               if (!emitter.isCancelled()) {
-                watchable.watch(new PseudoFabric8WatcherSubscription(watchable) {
+                watchable.watch(new Fabric8Watcher() {
                   // com.marcnuri.yakd.watch.WatchableSubscriber$WatchEventEmitter simplified
                   void onClose() {
                     LOG.debug("Watchable {} stopped, self healing with delay of {} seconds",

@@ -41,14 +41,14 @@ const Slide150 = ({currentStep}) => {
             return Multi.createFrom()
               .emitter(new SelfHealingWatchableEmitter(executorService, watchables))
               .onSubscription()
-              .invoke(subscription -> {
-                response.closeHandler(v -> subscription.cancel());
-                subscription.request(Long.MAX_VALUE); // unbounded -> request with no backpressure
-              })
+                .invoke(subscription -> {
+                  response.closeHandler(v -> subscription.cancel());
+                  subscription.request(Long.MAX_VALUE); // unbounded -> request with no backpressure
+                })
               .onFailure()
-              .invoke(throwable ->  LOG.warn("Watch subscription closed: {}", throwable.getMessage()))
+                .invoke(throwable ->  LOG.warn("Watch subscription closed: {}", throwable.getMessage()))
               .onCompletion()
-              .invoke(() ->  LOG.debug("Watch subscription closed gracefully"));
+                .invoke(() ->  LOG.debug("Watch subscription closed gracefully"));
           }
         `}</Code>
       </div>

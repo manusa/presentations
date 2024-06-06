@@ -20,6 +20,11 @@ const Img = ({src, visible = false}) => (
 
 const Slide110 = ({currentStep}) => {
   const visibleFrom = step => currentStep >= step;
+  // Kubernetes Dashboard is the opposite of reactive, imperative, it queries the API for the information it wants instead of
+  // getting everything
+  ///////////////////////////////
+  // Two windows with the search
+  // kubectl scale -n devbcn-2024 --replicas 1 deployment/devbcn-2024
   return (
     <DevBcn2024.SlideTemplate slide={11} title='YAKD Reactive'>
       <div style={{position: 'relative', height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>

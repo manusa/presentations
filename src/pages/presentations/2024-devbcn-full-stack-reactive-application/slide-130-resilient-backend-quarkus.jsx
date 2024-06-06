@@ -6,7 +6,7 @@ const Slide130 = () => {
   return (
     <DevBcn2024.TitleTemplate
       slide={13}
-      title='Building a Resilient Backend with Quarkus'
+      title='Building a Resilient and Reactive Backend with Quarkus'
       subtitle='Java'
     />
   );

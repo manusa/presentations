@@ -16,6 +16,9 @@ const Slide060 = ({currentStep}) => {
     justifyContent: 'center',
     alignItems: 'center'
   };
+  /*
+  * EN la analogía del termonstato, emplear palabros Kubernetes "El controller decidirá..."
+   */
   return (
     <DevBcn2024.SlideTemplate slide={6} title='Kubernetes as an Event Producer'>
       <KubernetesControlLoopDiagram style={{height: '100%'}} />

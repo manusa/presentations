@@ -16,8 +16,6 @@ const Slide020 = () => {
           <li>Case study: The YAKD project</li>
           <li>Building a resilient Backend with Quarkus</li>
           <li>Frontend: Consuming Events Reactively</li>
-          <li>Synchronizing State with Redux</li>
-          <li>?? Challenges ??</li>
           <li>Advantages of Reactive Applications</li>
           <li>Tradeoffs and Challenges</li>
           <li>Q&A</li>

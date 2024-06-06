@@ -8,7 +8,7 @@ import yakdStreaming from './assets/yakd-streaming.png';
 
 export const SLUG = '2024-devbcn-full-stack-reactive-application';
 export const CLASS_NAME = 'devbcn-2024';
-export const TITLE = 'Developing a full stack reactive application using Kubernetes as event producer';
+export const TITLE = 'Developing a full stack reactive application using Kubernetes as an event producer';
 
 export {kubernetesDashboardPolling};
 export {kubernetesDashboardSearch};
