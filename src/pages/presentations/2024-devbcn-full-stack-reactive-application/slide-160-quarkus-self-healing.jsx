@@ -5,7 +5,6 @@ import {Code, DevBcn2024} from '../../../components';
 import 'highlight.js/styles/railscasts.css';
 
 const Slide160 = ({currentStep}) => {
-
   const stepHighlightedLines = {
     4: [2, 3, 4], // Consumer<MultiEmitter> implementation,
     5: [5], // subscribe each watchable
@@ -72,7 +71,7 @@ const Slide160 = ({currentStep}) => {
                       subscribe(watchable, emitter), watchable.getSelfHealingDelay().getSeconds(), TimeUnit.SECONDS);
                   }
                   void eventReceived(Action action, T resource) {
-                    emitter.emit(new WatchEvent<>(action, mapper.apply(resource)));
+                    emitter.emit(new WatchEvent<>(action, resource));
                   }
                 });
             }

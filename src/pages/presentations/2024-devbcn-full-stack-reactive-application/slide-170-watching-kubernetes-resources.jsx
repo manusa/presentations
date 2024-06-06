@@ -6,6 +6,19 @@ import {Code, DevBcn2024, kubernetesComponentsDiagram} from '../../../components
 const Slide170 = ({currentStep}) => {
   // reflector.go 421-423
   // https://github.com/kubernetes/client-go/blob/b03e5b8438ce5abf36bac817490639abfbcd0441/tools/cache/reflector.go#L430-L432
+  const stepHighlightedLines = {
+    4: [3], // kubernetesClient.xxx().watch()
+    5: [3],
+    6: [3],
+    7: [4], // Timeout and jitter
+    8: [5, 6, 7, 8, 9, 10, 11, 12], // Watcher interface
+  }
+  const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
+  const stepResource = {
+    5: 'apps().deployments()',
+    6: 'services()'
+  };
+  const currentResource = stepResource[currentStep] ?? 'pods()';
   return (
     <DevBcn2024.SlideTemplate slide={17} title='Watching Kubernetes Resources with Fabric8 Kubernetes Client'>
       <div
@@ -21,17 +34,22 @@ const Slide170 = ({currentStep}) => {
           src={DevBcn2024.yakdArchitecture}
           alt='A diagram of the YAKD architecture for streaming'
         />
-        <div style={{display: currentStep > 2 && currentStep <= 6 ? 'block' : 'none'}}>
-          <Code language='java'>{`
+        <div style={{display: currentStep > 2 ? 'block' : 'none'}}>
+          <Code
+            language='java'
+            useInlineStyles={false}
+            lineProps={line => (currentHighlightedLines.includes(line) ? {class: 'devbcn-2024__code--highlighted'} : {})}
+          >{`
             // WatchableSubscriber.subscribe (simplified)
-            kubernetesClient.pods().inAnyNamespace().watch(
+            final var jitter = (long) (Math.random() * 9 + 1);
+            kubernetesClient.${currentResource}.inAnyNamespace().watch(
               new ListOptionsBuilder().withTimeoutSeconds(DEFAULT_WATCHER_TIMEOUT_SECONDS + jitter).build(),
               new Watcher() {
                 public void onClose() {
-                  // ...
+                  // ...self-healing logic
                 }
                 public void eventReceived(Action action, T resource) {
-                  multiEmitter.emit(new WatchEvent<>(action, mapper.apply(resource)));
+                  multiEmitter.emit(new WatchEvent<>(action, resource));
                 }
               });
           `}</Code>
@@ -46,4 +64,4 @@ export default slideControls(Slide170,
     DevBcn2024.SLUG
   }/slide-160-quarkus-self-healing`,
   `/presentations/${DevBcn2024.SLUG}/slide-180`,
-  5);
+  8);
