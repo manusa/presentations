@@ -11,8 +11,8 @@ const Slide090 = () => {
         </div>
         <ul style={{display: 'flex', flexDirection: 'column', gap: '4rem', justifyContent: 'space-between'}}>
           <li>Kubernetes Dashboard</li>
-          <li>Began as a quickstart example</li>
           <li>Free Open Source</li>
+          <li>Began as a quickstart example</li>
           <li>Same features as most dashboards</li>
           <li>Search (Reactive)</li>
         </ul>
