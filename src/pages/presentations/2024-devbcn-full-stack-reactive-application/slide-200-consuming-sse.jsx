@@ -4,6 +4,10 @@ import {Code, DevBcn2024, kubernetesComponentsDiagram} from '../../../components
 
 const Slide200 = ({currentStep}) => {
   const stepHighlightedLines = {
+    2: [2], // new EventSource()
+    3: [3, 4, 5, 6], // onopen
+    4: [7, 8, 9, 10], // onmessage
+    5: [11, 12, 13], // onerror
   };
   const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
   return (
@@ -35,5 +39,5 @@ const Slide200 = ({currentStep}) => {
 
 export default slideControls(Slide200,
   `/presentations/${DevBcn2024.SLUG}/slide-190-keeping-state`,
-  `/presentations/${DevBcn2024.SLUG}/slide-210`,
-  3);
+  `/presentations/${DevBcn2024.SLUG}/slide-210-reactive-applications-advantages`,
+  5);
