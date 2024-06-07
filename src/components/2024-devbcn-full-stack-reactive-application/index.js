@@ -4,6 +4,7 @@ import kubernetesStreamResources from './assets/kubernetes-stream-resources.svg'
 import yakdArchitecture from './assets/yakd-architecture.svg';
 import yakdHome from './assets/yakd-home.png';
 import yakdSearch from './assets/yakd-search.png';
+import yakdState from './assets/yakd-state.png';
 import yakdStreaming from './assets/yakd-streaming.png';
 
 export const SLUG = '2024-devbcn-full-stack-reactive-application';
@@ -16,6 +17,7 @@ export {kubernetesStreamResources};
 export {yakdArchitecture};
 export {yakdHome};
 export {yakdSearch};
+export {yakdState};
 export {yakdStreaming};
 
 export {BLUE, ORANGE} from './styles';

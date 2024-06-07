@@ -21,7 +21,7 @@ const Slide150 = ({currentStep}) => {
           style={{
             display: currentStep <= 2 ?'block' : 'none',
             position: 'absolute',
-            top: 0, bottom: 0,
+            maxWidth: '100%',
             transform: `scale(${currentStep === 2 ? 3 : 2}) translateX(${currentStep === 2 ? 200 : 0}px)`,
             transition: 'transform 1s ease-in-out'
           }}

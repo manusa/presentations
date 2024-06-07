@@ -12,7 +12,7 @@ const Slide170 = ({currentStep}) => {
     6: [3],
     7: [4], // Timeout and jitter
     8: [5, 6, 7, 8, 9, 10, 11, 12], // Watcher interface
-  }
+  };
   const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
   const stepResource = {
     5: 'apps().deployments()',
@@ -27,7 +27,7 @@ const Slide170 = ({currentStep}) => {
           style={{
             display: currentStep <= 2 ? 'block' : 'none',
             position: 'absolute',
-            top: 0, bottom: 0,
+            maxWidth: '100%',
             transform: `scale(3) translateX(${currentStep === 2 ? -400 : 0}px)`,
             transition: 'transform 1s ease-in-out'
           }}
@@ -63,5 +63,5 @@ export default slideControls(Slide170,
   `/presentations/${
     DevBcn2024.SLUG
   }/slide-160-quarkus-self-healing`,
-  `/presentations/${DevBcn2024.SLUG}/slide-180`,
+  `/presentations/${DevBcn2024.SLUG}/slide-180-yakd-frontend`,
   8);

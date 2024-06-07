@@ -4,7 +4,6 @@ export {DockerLogo} from './docker-logo';
 export {ElasticIcon} from './elastic-icon';
 export {JavaIcon} from './java-icon';
 export {JKubeLogo, JKubeLogoSquare} from './jkube-logo';
-export {KubernetesLogo} from './kubernetes-logo';
 export {LaptopRocketIcon} from './laptop-rocket-icon';
 export {EnvelopesIcon} from './envelopes-icon';
 export {MadridJugLogo} from './madrid-jug';

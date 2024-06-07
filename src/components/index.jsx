@@ -13,7 +13,6 @@ export {
   JavaIcon,
   JKubeLogo,
   JKubeLogoSquare,
-  KubernetesLogo,
   LaptopRocketIcon,
   MadridJugLogo,
   OpenShiftLogo,
@@ -25,7 +24,7 @@ export {
 } from './jkube';
 
 export {
-  DeploymentIcon, KubernetesControlLoopDiagram, PodIcon, kubernetesComponentsDiagram
+  DeploymentIcon, KubernetesControlLoopDiagram, KubernetesLogo, PodIcon, kubernetesComponentsDiagram
 } from './kubernetes';
 
 export {LandingPage} from './landing-page';

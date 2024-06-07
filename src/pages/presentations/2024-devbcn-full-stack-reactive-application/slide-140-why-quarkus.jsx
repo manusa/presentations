@@ -2,10 +2,8 @@ import React from 'react';
 import slideControls, {visibleClassNameFromStep} from '../../../components/slide-controls/slide-controls';
 import {Code, DevBcn2024, kubernetesComponentsDiagram} from '../../../components';
 
-
 const Slide140 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
-  // TODO: Use icons instead
   return (
     <DevBcn2024.SlideTemplate slide={14} title='Why Quarkus?'>
       <ul>

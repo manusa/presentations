@@ -7,6 +7,7 @@ const Slide100 = () => {
     <DevBcn2024.SlideTemplate slide={10} title='YAKD Architecture'>
       <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <img
+          style={{maxWidth: '100%'}}
           src={DevBcn2024.yakdArchitecture} alt='A diagram of the YAKD architecture for streaming'/>
       </div>
     </DevBcn2024.SlideTemplate>

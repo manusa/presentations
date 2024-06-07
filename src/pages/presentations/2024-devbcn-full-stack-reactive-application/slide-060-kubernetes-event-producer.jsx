@@ -21,7 +21,7 @@ const Slide060 = ({currentStep}) => {
    */
   return (
     <DevBcn2024.SlideTemplate slide={6} title='Kubernetes as an Event Producer'>
-      <KubernetesControlLoopDiagram style={{height: '100%'}} />
+      <KubernetesControlLoopDiagram style={{height: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} />
       <div className={classNameVisibleFrom(2)} style={{gap: '2rem', ...centerStyle}}>
         <Code language='yaml' customStyle={{border: '1px solid', borderColor: DevBcn2024.ORANGE, boxShadow: '1rem 1rem 2rem 0px #33333390'}}>{`
             kind: Deployment
@@ -35,7 +35,7 @@ const Slide060 = ({currentStep}) => {
               availableReplicas: 1
               readyReplicas: 0
             # ...
-            # ...
+            # ....................
         `}</Code>
         <Code language='yaml' customStyle={{border: '1px solid', borderColor: DevBcn2024.ORANGE, boxShadow: '1rem 1rem 2rem 0px #33333390'}}>{`
             kind: Pod
@@ -49,7 +49,7 @@ const Slide060 = ({currentStep}) => {
               containerStatuses:
                - name: app
                  ready: false
-            # ...
+            # ....................
         `}</Code>
       </div>
     </DevBcn2024.SlideTemplate>

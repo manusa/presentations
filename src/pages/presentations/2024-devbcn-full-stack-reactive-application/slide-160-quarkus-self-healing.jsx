@@ -24,7 +24,7 @@ const Slide160 = ({currentStep}) => {
           style={{
             display: currentStep <= 2 ? 'block' : 'none',
             position: 'absolute',
-            top: 0, bottom: 0,
+            maxWidth: '100%',
             transform: `scale(3) translateX(${currentStep === 2 ? 0 : 200}px)`,
             transition: 'transform 1s ease-in-out'
           }}
@@ -59,7 +59,7 @@ const Slide160 = ({currentStep}) => {
           >{`
             // com.marcnuri.yakd.watch.SelfHealingWatchableEmitter simplified
             private void subscribe(Watchable<?> watchable, MultiEmitter<? super WatchEvent<?>> emitter) {
-              // pseudo code
+              // pseudo-code
               if (!emitter.isCancelled()) {
                 watchable.watch(new Fabric8Watcher() {
                   // com.marcnuri.yakd.watch.WatchableSubscriber$WatchEventEmitter simplified
