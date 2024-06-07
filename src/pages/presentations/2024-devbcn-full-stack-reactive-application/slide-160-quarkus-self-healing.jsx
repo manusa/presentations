@@ -6,9 +6,9 @@ import 'highlight.js/styles/railscasts.css';
 
 const Slide160 = ({currentStep}) => {
   const stepHighlightedLines = {
-    4: [2, 3, 4], // Consumer<MultiEmitter> implementation,
-    5: [5], // subscribe each watchable
-    6: [6, 7, 8, 9], // Graceful termination
+    4: [2, 6, 7], // Consumer<MultiEmitter> implementation,
+    5: [4, 8], // subscribe each watchable
+    6: [9, 10, 11, 12], // Graceful termination
     8: [4], // async check emitter is still open
     9: [7, 8, 9], // onClose, watcher terminated, log it
     10: [10], // emit message to warn the subsrciber
@@ -39,6 +39,9 @@ const Slide160 = ({currentStep}) => {
           >{`
             // com.marcnuri.yakd.watch.SelfHealingWatchableEmitter simplified
             public class SelfHealingWatchableEmitter implements Consumer<MultiEmitter<? super WatchEvent<?>>> {
+            
+              private final List<Watchable<?>> watchables;
+              
               @Override
               public void accept(MultiEmitter<? super WatchEvent<?>> emitter) {
                 watchables.forEach(watchable -> executorService.execute(() -> subscribe(watchable, emitter)));
