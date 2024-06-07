@@ -9,7 +9,7 @@ const Slide120 = ({currentStep}) => {
         <img
           style={{
             maxWidth: '100%',
-            transform: `scale(${currentStep === 2 ? 2 : 1})`,
+            transform: `scale(${currentStep === 2 ? 1.8 : 1})`,
             transition: 'transform 1s ease-in-out'
           }}
           src={DevBcn2024.yakdArchitecture}
