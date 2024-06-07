@@ -25,7 +25,7 @@ const Slide160 = ({currentStep}) => {
             display: currentStep <= 2 ? 'block' : 'none',
             position: 'absolute',
             maxWidth: '100%',
-            transform: `scale(3) translateX(${currentStep === 2 ? 0 : 200}px)`,
+            transform: `scale(3) translateX(${currentStep === 2 ? 50 : 270}px)`,
             transition: 'transform 1s ease-in-out'
           }}
           src={DevBcn2024.yakdArchitecture}

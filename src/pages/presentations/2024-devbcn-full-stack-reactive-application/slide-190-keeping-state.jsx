@@ -10,7 +10,7 @@ const Slide190 = ({currentStep}) => {
           style={{
             display: currentStep <= 2 ? 'block' : 'none',
             maxWidth: '100%',
-            transform: `scale(${currentStep === 2 ? 2.5 : 1}) translateX(${currentStep === 2 ? '400' : '0'}px)`,
+            transform: `scale(${currentStep === 2 ? 2.5 : 1}) translateX(${currentStep === 2 ? '470' : '0'}px)`,
             transition: 'transform 1s ease-in-out'
           }}
           src={DevBcn2024.yakdArchitecture}
