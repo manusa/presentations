@@ -1,29 +1,38 @@
 import React from 'react';
-import slideControls, {
-  visibleClassNameFromStep,
-} from '../../../components/slide-controls/slide-controls';
+import slideControls from '../../../components/slide-controls/slide-controls';
 import {Code, DevBcn2024, KubernetesControlLoopDiagram} from '../../../components';
 
 const Slide060 = ({currentStep}) => {
-  const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
-  const centerStyle = {
-    position: 'absolute',
-    top: '1rem',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  };
   /*
-  * EN la analogía del termonstato, emplear palabros Kubernetes "El controller decidirá..."
+   * TODO: (Juan) EN la analogía del termostato, emplear palabros Kubernetes "El controller decidirá..."
    */
   return (
-    <DevBcn2024.SlideTemplate slide={6} title='Kubernetes as an Event Producer'>
-      <KubernetesControlLoopDiagram style={{height: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} />
-      <div className={classNameVisibleFrom(2)} style={{gap: '2rem', ...centerStyle}}>
-        <Code language='yaml' customStyle={{border: '1px solid', borderColor: DevBcn2024.ORANGE, boxShadow: '1rem 1rem 2rem 0px #33333390'}}>{`
+    <DevBcn2024.SlideTemplate slide={6} title='Kubernetes as an Event Producer - Controller Pattern'>
+      <KubernetesControlLoopDiagram
+        style={{height: '98%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}}/>
+      <img
+        style={{
+          position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)',
+          width: '18rem',
+          opacity: currentStep === 2 ? 1 : 0,
+          transition: 'opacity 0.5s ease-in-out'
+        }}
+        src={DevBcn2024.thermostat}
+        alt='A thermostat'
+      />
+      <div
+        style={{
+          position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)',
+          display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem',
+          opacity: currentStep === 3 ? 1 : 0,
+          transition: 'opacity 0.5s ease-in-out'
+        }}
+      >
+        <Code language='yaml' customStyle={{
+          border: '1px solid',
+          borderColor: DevBcn2024.ORANGE,
+          boxShadow: '1rem 1rem 2rem 0px #33333390'
+        }}>{`
             kind: Deployment
             metadata:
               name: app
@@ -37,7 +46,11 @@ const Slide060 = ({currentStep}) => {
             # ...
             # ....................
         `}</Code>
-        <Code language='yaml' customStyle={{border: '1px solid', borderColor: DevBcn2024.ORANGE, boxShadow: '1rem 1rem 2rem 0px #33333390'}}>{`
+        <Code language='yaml' customStyle={{
+          border: '1px solid',
+          borderColor: DevBcn2024.ORANGE,
+          boxShadow: '1rem 1rem 2rem 0px #33333390'
+        }}>{`
             kind: Pod
             metadata:
               name: app-1337
@@ -52,6 +65,10 @@ const Slide060 = ({currentStep}) => {
             # ....................
         `}</Code>
       </div>
+      <div style={{position: 'fixed', left: '1rem', bottom: '1rem', fontSize: '1rem', fontStyle: 'italic', lineHeight: '1.5rem'}}>
+        https://kubernetes.io/docs/concepts/architecture/controller/<br />
+        https://blog.marcnuri.com/kubernetes-operator-vs-controller
+      </div>
     </DevBcn2024.SlideTemplate>
   );
 };
@@ -59,5 +76,5 @@ const Slide060 = ({currentStep}) => {
 export default slideControls(Slide060,
   `/presentations/${DevBcn2024.SLUG}/slide-050-kubernetes-resources`,
   `/presentations/${DevBcn2024.SLUG}/slide-070-kubernetes-streams`,
-  2
+  3
 );
