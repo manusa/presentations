@@ -14,6 +14,9 @@ const Slide140 = ({currentStep}) => {
           Fast boot times and low memory footprint
         </li>
         <li className={classNameVisibleFrom(4)}>
+          Developer Joy
+        </li>
+        <li className={classNameVisibleFrom(5)}>
           Supports reactive programming out of the box
           <Code language='xml' useInlineStyles={false}>{`
             <dependency>
@@ -21,8 +24,13 @@ const Slide140 = ({currentStep}) => {
               <artifactId>quarkus-rest</artifactId>
             </dependency>
           `}</Code>
+          <ul>
+            <li>Non blocking I/O (Vert.x + Netty)</li>
+            <li>Unification of imperative and reactive (<code>@Blocking</code>)</li>
+            <li>Server Sent Events</li>
+          </ul>
         </li>
-        <li className={classNameVisibleFrom(5)}>
+        <li className={classNameVisibleFrom(6)}>
           Good integration with the Fabric8 Kubernetes Client
           <Code language='xml' useInlineStyles={false}>{`
             <dependency>
@@ -39,4 +47,4 @@ const Slide140 = ({currentStep}) => {
 export default slideControls(Slide140,
   `/presentations/${DevBcn2024.SLUG}/slide-130-resilient-backend-quarkus`,
   `/presentations/${DevBcn2024.SLUG}/slide-150-quarkus-sse`,
-  5);
+  6);
