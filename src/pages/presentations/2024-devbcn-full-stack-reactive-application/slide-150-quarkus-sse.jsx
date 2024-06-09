@@ -7,11 +7,12 @@ import 'highlight.js/styles/railscasts.css';
 const Slide150 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   const stepHighlightedLines = {
-    4: [2, 3, 4], // Annotations + Method signature
-    5: [5, 6], // Emitter (Mutiny)
-    6: [7, 8, 9, 10, 11], // Subscription handler (Override to allow closing the subscription in case the client disconnects - keeps it unbounded -no backpressure-)
-    7: [12, 13], // Failure handler
-    8: [14, 15], // Completion handler
+    4: [2, 3], // Annotations + Method signature
+    5: [4], // Multi stream of 0 to * resources (SmallRye Mutiny)
+    6: [5, 6], // Emitter (Mutiny)
+    7: [7, 8, 9, 10, 11], // Subscription handler (Override to allow closing the subscription in case the client disconnects - keeps it unbounded -no backpressure-)
+    8: [12, 13], // Failure handler
+    9: [14, 15], // Completion handler
   }
   const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
   return (
@@ -59,4 +60,4 @@ const Slide150 = ({currentStep}) => {
 export default slideControls(Slide150,
   `/presentations/${DevBcn2024.SLUG}/slide-140-why-quarkus`,
   `/presentations/${DevBcn2024.SLUG}/slide-160-quarkus-self-healing`,
-  8);
+  9);
