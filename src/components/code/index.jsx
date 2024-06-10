@@ -63,7 +63,6 @@ export const Code = ({
       showLineNumbers={showLineNumbers} wrapLines={wrapLines}
       lineProps={lineProps} lineNumberStyle={lineNumberStyle}
       useInlineStyles={useInlineStyles}
-      spreadProps
     >
       {unindentedSnippet}
     </SyntaxHighlighter>
