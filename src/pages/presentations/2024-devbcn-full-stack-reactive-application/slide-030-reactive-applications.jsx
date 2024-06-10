@@ -11,7 +11,7 @@ const ItemList = ({style, children, ...props}) => (
 );
 
 const Item = ({children}) => (
-  <div style={{margin: 0, padding: '0.5rem', background: DevBcn2024.BLUE, color: 'white', borderRadius: '1rem', fontSize: '2rem'}}>
+  <div style={{margin: 0, padding: '0.5rem', background: DevBcn2024.BLUE, color: 'white', borderRadius: '1rem', fontSize: '1.8rem'}}>
     {children}
   </div>
 );
@@ -46,7 +46,7 @@ const Slide030 = ({currentStep}) => {
           <Item>Problems detected quickly</Item>
         </ItemList>
         <ItemList className={`${classNameVisibleFrom(3)}`} style={{height: '33%'}}>
-          <Item>Resiliency</Item>
+          <Item>Embrace failure</Item>
           <Item>High availability</Item>
           <Item>Self-healing</Item>
           <Item>Isolation</Item>
