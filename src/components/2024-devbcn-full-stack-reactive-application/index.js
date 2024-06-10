@@ -1,6 +1,7 @@
 import kubernetesDashboardPolling from './assets/kubernetes-dashboard-polling.png';
 import kubernetesDashboardSearch from './assets/kubernetes-dashboard-search.png';
 import kubernetesStreamResources from './assets/kubernetes-stream-resources.svg';
+import reactiveSystemsInJava from './assets/reactive-systems-in-java.jpg';
 import thermostat from './assets/thermostat.png';
 import yakdArchitecture from './assets/yakd-architecture.svg';
 import yakdHome from './assets/yakd-home.png';
@@ -15,6 +16,7 @@ export const TITLE = 'Developing a full stack reactive application using Kuberne
 export {kubernetesDashboardPolling};
 export {kubernetesDashboardSearch};
 export {kubernetesStreamResources};
+export {reactiveSystemsInJava};
 export {thermostat};
 export {yakdArchitecture};
 export {yakdHome};

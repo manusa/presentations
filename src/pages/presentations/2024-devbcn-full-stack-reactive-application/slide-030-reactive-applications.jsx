@@ -16,6 +16,24 @@ const Item = ({children}) => (
   </div>
 );
 
+const ReactiveSystemsInJava = ({style, ...props}) => {
+  return (
+    <div
+      style={{
+        position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)',
+        height: '90%',
+        ...style
+      }} {...props}
+    >
+      <img
+        style={{maxHeight: '100%', maxWidth: '100%', boxShadow: '0 0 2rem 0rem #A7A7A7D6'}}
+        src={DevBcn2024.reactiveSystemsInJava}
+        alt='Reactive Systems in Java book cover'
+      />
+    </div>
+  );
+}
+
 const Slide030 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   return (
@@ -43,6 +61,7 @@ const Slide030 = ({currentStep}) => {
           <Item>Backpressure</Item>
         </ItemList>
       </div>
+      <ReactiveSystemsInJava  className={`${classNameVisibleFrom(5)}`} />
       <div style={{position: 'fixed', left: '1rem', bottom: '1rem', fontSize: '1rem', fontStyle: 'italic'}}>
         The Reactive Manifesto (https://www.reactivemanifesto.org/)
       </div>
@@ -52,4 +71,5 @@ const Slide030 = ({currentStep}) => {
 
 export default slideControls(Slide030,
   `/presentations/${DevBcn2024.SLUG}/slide-020-agenda`,
-  `/presentations/${DevBcn2024.SLUG}/slide-040-kubernetes-what-is`, 4);
+  `/presentations/${DevBcn2024.SLUG}/slide-040-kubernetes-what-is`,
+  5);
