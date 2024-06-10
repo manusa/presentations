@@ -6,14 +6,16 @@ import 'highlight.js/styles/railscasts.css';
 
 const Slide160 = ({currentStep}) => {
   const stepHighlightedLines = {
-    4: [2, 6, 7], // Consumer<MultiEmitter> implementation,
+    4: [2, 6, 7, 13], // Consumer<MultiEmitter> implementation,
     5: [4, 8], // subscribe each watchable
     6: [9, 10, 11, 12], // Graceful termination
     8: [4], // async check emitter is still open
-    9: [7, 8, 9], // onClose, watcher terminated, log it
-    10: [10], // emit message to warn the subsrciber
-    11: [11, 12], // schedule a new subscription
-    12: [14, 15, 16] // Pipe any Kubernetes event downstream
+    9: [5, 6], // watcher implementation
+    10: [7, 13], // onClose
+    11: [8, 9], // Log it
+    12: [10], // emit message to warn the subsrciber
+    13: [11, 12], // schedule a new subscription
+    14: [14, 15, 16] // Pipe any Kubernetes event downstream
   }
   const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
   return (
@@ -88,4 +90,4 @@ const Slide160 = ({currentStep}) => {
 export default slideControls(Slide160,
   `/presentations/${DevBcn2024.SLUG}/slide-150-quarkus-sse`,
   `/presentations/${DevBcn2024.SLUG}/slide-170-watching-kubernetes-resources`,
-  12);
+  14);
