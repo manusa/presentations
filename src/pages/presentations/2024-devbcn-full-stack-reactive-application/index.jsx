@@ -8,7 +8,9 @@ import '../../../components/2024-devbcn-full-stack-reactive-application/styles/i
 const Index = () => (
   <div className={`${DevBcn2024.CLASS_NAME}`}>
     <div className={`${DevBcn2024.CLASS_NAME}-index`}>
-      <Helmet>
+      <Helmet
+        bodyAttributes={{'class': DevBcn2024.CLASS_NAME}}
+      >
         <title>{DevBcn2024.TITLE}</title>
       </Helmet>
       <DevBcn2024.Cover />
