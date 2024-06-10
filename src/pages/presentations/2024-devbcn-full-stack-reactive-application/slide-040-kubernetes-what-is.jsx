@@ -11,7 +11,7 @@ const Slide040 = ({currentStep}) => {
       <div>
         <blockquote>
           <p>
-            Kubernetes is a portable, extensible, open-source platform for managing containerized
+            Kubernetes is a portable, extensible, open-source platform for managing <strong>containerized</strong>
             workloads and services, that facilitates both <strong>declarative</strong> configuration and automation
           </p>
           <cite>Kubernetes.io</cite>
