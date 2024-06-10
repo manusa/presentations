@@ -10,9 +10,10 @@ const Slide150 = ({currentStep}) => {
     4: [2, 3], // Annotations + Method signature
     5: [4], // Multi stream of 0 to * resources (SmallRye Mutiny)
     6: [5, 6], // Emitter (Mutiny)
-    7: [7, 8, 9, 10, 11], // Subscription handler (Override to allow closing the subscription in case the client disconnects - keeps it unbounded -no backpressure-)
-    8: [12, 13], // Failure handler
-    9: [14, 15], // Completion handler
+    7: [7, 8, 10], // Subscription handler (Override to allow closing the subscription in case the client disconnects - keeps it unbounded -no backpressure-)
+    8: [9], // response.close closes upstream
+    9: [11, 12], // Failure handler
+    10: [13, 14], // Completion handler
   }
   const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
   return (
@@ -44,7 +45,6 @@ const Slide150 = ({currentStep}) => {
               .onSubscription()
                 .invoke(subscription -> {
                   response.closeHandler(v -> subscription.cancel());
-                  subscription.request(Long.MAX_VALUE); // unbounded -> request with no backpressure
                 })
               .onFailure()
                 .invoke(throwable ->  LOG.warn("Watch subscription closed: {}", throwable.getMessage()))
@@ -60,4 +60,4 @@ const Slide150 = ({currentStep}) => {
 export default slideControls(Slide150,
   `/presentations/${DevBcn2024.SLUG}/slide-140-why-quarkus`,
   `/presentations/${DevBcn2024.SLUG}/slide-160-quarkus-self-healing`,
-  9);
+  10);
