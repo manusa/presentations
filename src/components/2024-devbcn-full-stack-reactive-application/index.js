@@ -25,8 +25,11 @@ export {yakdState};
 export {yakdStreaming};
 
 export {BLUE, ORANGE} from './styles';
+export {ComplexIcon} from './complex-icon';
 export {Cover} from './cover';
+export {DebuggingIcon} from './debugging-icon';
 export {DevBcn} from './dev-bcn';
+export {LearningCurveIcon} from './learning-curve-icon';
 export {SlideTemplate} from './slide-template';
 export {TitleTemplate} from './title-template';
 export {ReactiveSystemsDiagram} from './reactive-systems-diagram';

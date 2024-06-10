@@ -14,5 +14,5 @@ const Slide210 = () => {
 
 export default slideControls(Slide210,
   `/presentations/${DevBcn2024.SLUG}/slide-200-consuming-sse`,
-  `/presentations/${DevBcn2024.SLUG}/slide-220-q-a`
+  `/presentations/${DevBcn2024.SLUG}/slide-220-reactive-applications-challenges`
 );
