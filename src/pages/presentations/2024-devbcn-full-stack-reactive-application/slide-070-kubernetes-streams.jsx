@@ -12,7 +12,7 @@ const CmdWindow = ({style, children}) => {
 
 const podsSteps = {
   2: ['$ kubectl get pods --watch'],
-  3: ['NAME               READY   STATUS              RESTARTS   AGE'],
+  3: ['NAME               READY   STATUS              RESTARTS   AGE', ''],
   4: ['devbcn-2024-5c65   0/1     Pending             0          0s'],
   5: ['devbcn-2024-5c65   0/1     ContainerCreating   0          1s'],
   6: ['devbcn-2024-5c65   0/1     Running             0          4s'],
