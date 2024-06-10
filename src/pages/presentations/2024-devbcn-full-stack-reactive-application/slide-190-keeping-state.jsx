@@ -16,12 +16,22 @@ const Slide190 = ({currentStep}) => {
           src={DevBcn2024.yakdArchitecture}
           alt='A diagram of the YAKD architecture for streaming'
         />
-        <KubernetesLogo style={{
-          display: currentStep === 3 ? 'block' : 'none',
-          marginLeft: '31rem',
-          width: '30rem',
-          '-webkit-box-reflect': 'left 2rem linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8))'
-        }} />
+        <div
+          style={{
+            display: currentStep === 3 ? 'block' : 'none',
+            marginLeft: '-1rem' // Otherwise looks like it's not centered in relation to the Sagrada Familia
+          }}
+        >
+          <KubernetesLogo style={{
+            marginLeft: '31rem',
+            width: '30rem',
+            '-webkit-box-reflect': 'left 1rem linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8))'
+          }}/>
+          <div style={{display: 'flex', textAlign: 'center'}}>
+            <div style={{flex: '1 1 0'}}>Redux State</div>
+            <div style={{flex: '1 1 0'}}>Kubernetes Cluster</div>
+          </div>
+        </div>
         <img
           style={{
             display: currentStep === 4 ? 'block' : 'none',
