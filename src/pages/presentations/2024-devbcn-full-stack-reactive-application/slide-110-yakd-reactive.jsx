@@ -23,7 +23,10 @@ const Slide110 = ({currentStep}) => {
   // Kubernetes Dashboard is the opposite of reactive, imperative, it queries the API for the information it wants instead of
   // getting everything
   ///////////////////////////////
-  // Two windows with the search
+  // Two windows with the search // One window with the terminal
+  // - Show how one of the dashboards show the changes immediately (responsiveness)
+  // - Results shown as you type
+  // - Stop the dashboard, see what happens (resiliency)
   // kubectl scale -n devbcn-2024 --replicas 1 deployment/devbcn-2024
   return (
     <DevBcn2024.SlideTemplate slide={11} title='YAKD Reactive'>

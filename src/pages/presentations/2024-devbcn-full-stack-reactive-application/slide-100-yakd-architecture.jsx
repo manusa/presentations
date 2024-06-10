@@ -1,6 +1,6 @@
 import React from 'react';
 import slideControls from '../../../components/slide-controls/slide-controls';
-import {DevBcn2024, kubernetesComponentsDiagram} from '../../../components';
+import {DevBcn2024} from '../../../components';
 
 const Slide100 = () => {
   return (
