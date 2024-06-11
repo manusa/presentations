@@ -3,6 +3,9 @@ import slideControls from '../../../components/slide-controls/slide-controls';
 import {DevBcn2024} from '../../../components';
 
 const Slide020 = () => {
+  // TODO:
+  //  - What is the goal of the presentation?
+  //    -
   return (
     <DevBcn2024.SlideTemplate slide={2} title='Agenda'>
       <div style={{height: '100%', display: 'flex', gap: '0rem', alignItems: 'center'}}>
@@ -13,9 +16,13 @@ const Slide020 = () => {
         <ul style={{flex: 1}}>
           <li>What is a Reactive Application?</li>
           <li>Kubernetes as an Event Producer</li>
-          <li>Case study: The YAKD project</li>
-          <li>Building a resilient Backend with Quarkus</li>
-          <li>Frontend: Consuming Events Reactively</li>
+          <li>
+            Case study: The YAKD project
+            <ul>
+              <li>Building a resilient Backend with Quarkus</li>
+              <li>Frontend: Consuming Events Reactively</li>
+            </ul>
+          </li>
           <li>Advantages of Reactive Applications</li>
           <li>Tradeoffs and Challenges</li>
           <li>Q&A</li>

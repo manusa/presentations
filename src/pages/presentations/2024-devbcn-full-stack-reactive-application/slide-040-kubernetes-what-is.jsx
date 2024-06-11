@@ -5,14 +5,17 @@ import slideControls, {
 import {DevBcn2024, kubernetesComponentsDiagram} from '../../../components';
 
 const Slide040 = ({currentStep}) => {
+  // TODO:
+  //  - Reactive applications are usually illustrated with Apache Kafka, and other reactive technologies.
+  //  - In this case we are going to illustrate them using Kubernetes, let's see why K8s is a good event producer
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   return (
     <DevBcn2024.SlideTemplate slide={4} title='What is Kubernetes?'>
       <div>
         <blockquote>
           <p>
-            Kubernetes is a portable, extensible, open-source platform for managing <strong>containerized</strong>
-            workloads and services, that facilitates both <strong>declarative</strong> configuration and automation
+            Kubernetes is a portable, extensible, open-source platform for managing <strong>containerized</strong> workloads
+            and services, that facilitates both <strong>declarative</strong> configuration and automation.
           </p>
           <cite>Kubernetes.io</cite>
         </blockquote>

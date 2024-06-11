@@ -3,6 +3,13 @@ import slideControls from '../../../components/slide-controls/slide-controls';
 import {DevBcn2024, kubernetesComponentsDiagram} from '../../../components';
 
 const Slide120 = ({currentStep}) => {
+  // TODO:
+  //  - What is the problem
+  //  - How is the application solving it
+  //  - Animations
+  //  - Naïve solution
+  //    - From official K8s dashboard, imperative approach
+  //    - To reactive approach
   return (
     <DevBcn2024.SlideTemplate slide={12} title='YAKD Backend'>
       <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
