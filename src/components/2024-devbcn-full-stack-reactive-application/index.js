@@ -33,4 +33,5 @@ export {LearningCurveIcon} from './learning-curve-icon';
 export {SlideTemplate} from './slide-template';
 export {TitleTemplate} from './title-template';
 export {ReactiveSystemsDiagram} from './reactive-systems-diagram';
+export {YakdArchitectureSimplifiedDiagram} from './yakd-architecture-simplified-diagram';
 export {YakdStreamDiagram} from './yakd-stream-diagram';
