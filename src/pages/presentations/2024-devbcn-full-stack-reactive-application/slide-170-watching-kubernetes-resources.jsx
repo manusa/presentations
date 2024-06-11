@@ -23,7 +23,7 @@ const Slide170 = ({currentStep}) => {
     <DevBcn2024.SlideTemplate slide={17} title='Watching Kubernetes Resources with Fabric8 Kubernetes Client'>
       <div
         style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-        <img
+        <DevBcn2024.YakdStreamDiagram
           style={{
             display: currentStep <= 2 ? 'block' : 'none',
             position: 'absolute',
@@ -31,8 +31,6 @@ const Slide170 = ({currentStep}) => {
             transform: `scale(2.5) translateX(${currentStep === 2 ? -320 : 50}px)`,
             transition: 'transform 1s ease-in-out'
           }}
-          src={DevBcn2024.yakdArchitecture}
-          alt='A diagram of the YAKD architecture for streaming'
         />
         <div style={{display: currentStep > 2 ? 'block' : 'none'}}>
           <Code

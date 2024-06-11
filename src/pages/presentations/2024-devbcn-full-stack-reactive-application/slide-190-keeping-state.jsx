@@ -6,15 +6,13 @@ const Slide190 = ({currentStep}) => {
   return (
     <DevBcn2024.SlideTemplate slide={19} title='Frontend: Keeping the state'>
       <div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-        <img
+        <DevBcn2024.YakdStreamDiagram
           style={{
             display: currentStep <= 2 ? 'block' : 'none',
             maxWidth: '100%',
-            transform: `scale(${currentStep === 2 ? 2.5 : 1}) translateX(${currentStep === 2 ? '470' : '0'}px)`,
+            transform: `scale(${currentStep === 2 ? 2.5 : 1}) translateX(${currentStep === 2 ? '500' : '0'}px)`,
             transition: 'transform 1s ease-in-out'
           }}
-          src={DevBcn2024.yakdArchitecture}
-          alt='A diagram of the YAKD architecture for streaming'
         />
         <div
           style={{

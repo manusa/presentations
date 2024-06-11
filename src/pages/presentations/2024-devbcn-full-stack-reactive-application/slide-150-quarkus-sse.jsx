@@ -19,7 +19,7 @@ const Slide150 = ({currentStep}) => {
   return (
     <DevBcn2024.SlideTemplate slide={15} title='Quarkus: Streaming Server Sent Events'>
       <div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-        <img
+        <DevBcn2024.YakdStreamDiagram
           style={{
             display: currentStep <= 2 ?'block' : 'none',
             position: 'absolute',
@@ -27,8 +27,6 @@ const Slide150 = ({currentStep}) => {
             transform: `scale(${currentStep === 2 ? 2.5 : 1.8}) translateX(${currentStep === 2 ? 280 : 0}px)`,
             transition: 'transform 1s ease-in-out'
           }}
-          src={DevBcn2024.yakdArchitecture}
-          alt='A diagram of the YAKD architecture for streaming'
         />
         <Code
           className={`${classNameVisibleFrom(3)}`}

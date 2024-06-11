@@ -22,7 +22,7 @@ const Slide160 = ({currentStep}) => {
     <DevBcn2024.SlideTemplate slide={16} title='Quarkus: Embracing failure'>
       <div
         style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
-        <img
+        <DevBcn2024.YakdStreamDiagram
           style={{
             display: currentStep <= 2 ? 'block' : 'none',
             position: 'absolute',
@@ -30,8 +30,6 @@ const Slide160 = ({currentStep}) => {
             transform: `scale(2.5) translateX(${currentStep === 2 ? 50 : 280}px)`,
             transition: 'transform 1s ease-in-out'
           }}
-          src={DevBcn2024.yakdArchitecture}
-          alt='A diagram of the YAKD architecture for streaming'
         />
         <div style={{display: currentStep > 2 && currentStep <= 6 ? 'block' : 'none'}}>
           <Code
