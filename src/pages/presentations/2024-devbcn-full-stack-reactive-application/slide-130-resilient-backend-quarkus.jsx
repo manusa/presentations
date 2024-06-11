@@ -13,6 +13,6 @@ const Slide130 = () => {
 };
 
 export default slideControls(Slide130,
-  `/presentations/${DevBcn2024.SLUG}/slide-120-yakd-backend`,
+  `/presentations/${DevBcn2024.SLUG}/slide-120-yakd-reactive-streams`,
   `/presentations/${DevBcn2024.SLUG}/slide-140-why-quarkus`
 );

@@ -11,7 +11,7 @@ const Slide120 = ({currentStep}) => {
   //    - From official K8s dashboard, imperative approach
   //    - To reactive approach
   return (
-    <DevBcn2024.SlideTemplate slide={12} title='YAKD Backend'>
+    <DevBcn2024.SlideTemplate slide={12} title='YAKD Reactive Streams'>
       <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
         <DevBcn2024.YakdStreamDiagram
           style={{

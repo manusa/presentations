@@ -45,5 +45,5 @@ const Slide110 = ({currentStep}) => {
 
 export default slideControls(Slide110,
 `/presentations/${DevBcn2024.SLUG}/slide-100-yakd-architecture`,
-  `/presentations/${DevBcn2024.SLUG}/slide-120-yakd-backend`,
+  `/presentations/${DevBcn2024.SLUG}/slide-120-yakd-reactive-streams`,
   5);
