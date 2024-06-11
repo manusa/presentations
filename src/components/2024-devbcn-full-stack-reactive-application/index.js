@@ -34,4 +34,5 @@ export {SlideTemplate} from './slide-template';
 export {TitleTemplate} from './title-template';
 export {ReactiveSystemsDiagram} from './reactive-systems-diagram';
 export {YakdArchitectureSimplifiedDiagram} from './yakd-architecture-simplified-diagram';
+export {YakdImperativeDiagram} from './yakd-imperative-diagram';
 export {YakdStreamDiagram} from './yakd-stream-diagram';
