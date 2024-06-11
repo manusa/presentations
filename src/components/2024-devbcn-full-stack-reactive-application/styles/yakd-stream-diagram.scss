@@ -18,21 +18,21 @@
   }
 }
 
-@keyframes pod-envelope-left {
+@keyframes pod-envelope-1-left {
   @include resource-left-animation(
     matrix(0.856655, 0, 0, 0.856655, 212.42, 155.259),
     matrix(0.856655, 0, 0, 0.856655, 0, 155.259),
   );
 };
 
-@keyframes deployment-envelope-left {
+@keyframes deployment-envelope-1-left {
   @include resource-left-animation(
     matrix(0.85665534,0,0,0.85665534,212.42011,295.10238),
     matrix(0.85665534,0,0,0.85665534,0,295.10238),
   );
 };
 
-@keyframes resource-envelope-left {
+@keyframes resource-envelope-1-left {
   @include resource-left-animation(
     matrix(0.85665534,0,0,0.85665534,212.42011,434.94435),
     matrix(0.85665534,0,0,0.85665534,0,434.94435),
@@ -40,12 +40,35 @@
 };
 
 .pod-envelope-1 {
-  animation: infinite linear pod-envelope-left 1.8s;
+  opacity: 0;
+  animation: infinite linear pod-envelope-1-left 3s;
+  animation-delay: 0s;
 }
 .deployment-envelope-1 {
-  animation: infinite linear deployment-envelope-left 2.2s;
+  opacity: 0;
+  animation: infinite linear deployment-envelope-1-left 3s;
+  animation-delay: 1s;
 }
 .resource-envelope-1 {
-  animation: infinite linear resource-envelope-left 2s;
+  opacity: 0;
+  animation: infinite linear resource-envelope-1-left 3s;
+  animation-delay: 2s;
+}
 
+@keyframes sse-left {
+  @include resource-left-animation(
+    matrix(0.85665534,0,0,0.85665534,-611.17274,273.62252),
+    matrix(0.85665534,0,0,0.85665534,-811.17274,273.62252),
+  );
+};
+
+.pod-envelope-2 {
+  opacity: 0;
+  animation: infinite linear sse-left 2.5s;
+  animation-delay: 0s;
+}
+.deployment-envelope-2 {
+  opacity: 0;
+  animation: infinite linear sse-left 2.5s;
+  animation-delay: 1.25s;
 }
