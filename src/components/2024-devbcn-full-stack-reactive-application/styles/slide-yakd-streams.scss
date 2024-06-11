@@ -1,0 +1,51 @@
+@mixin resource-left-animation (
+  $matrix-origin,
+  $matrix-destination,
+) {
+  0% {
+    transform: $matrix-origin;
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    transform: $matrix-destination;
+    opacity: 0;
+  }
+}
+
+@keyframes pod-envelope-left {
+  @include resource-left-animation(
+    matrix(0.856655, 0, 0, 0.856655, 212.42, 155.259),
+    matrix(0.856655, 0, 0, 0.856655, 0, 155.259),
+  );
+};
+
+@keyframes deployment-envelope-left {
+  @include resource-left-animation(
+    matrix(0.85665534,0,0,0.85665534,212.42011,295.10238),
+    matrix(0.85665534,0,0,0.85665534,0,295.10238),
+  );
+};
+
+@keyframes resource-envelope-left {
+  @include resource-left-animation(
+    matrix(0.85665534,0,0,0.85665534,212.42011,434.94435),
+    matrix(0.85665534,0,0,0.85665534,0,434.94435),
+  );
+};
+
+.pod-envelope-1 {
+  animation: infinite linear pod-envelope-left 1.8s;
+}
+.deployment-envelope-1 {
+  animation: infinite linear deployment-envelope-left 2.2s;
+}
+.resource-envelope-1 {
+  animation: infinite linear resource-envelope-left 2s;
+
+}
