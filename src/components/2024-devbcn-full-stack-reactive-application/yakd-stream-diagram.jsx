@@ -1,5 +1,5 @@
 import React from 'react';
-import yakdStream from '!raw-loader!./assets/yakd-stream.svg';
+import yakdStream from '!raw-loader!./assets/yakd-stream-diagram.svg';
 
 import './styles/yakd-stream-diagram.scss';
 
