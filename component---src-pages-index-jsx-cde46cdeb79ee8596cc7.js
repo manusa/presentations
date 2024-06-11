@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunk_marcnuri_presentations=self.webpackChunk_marcnuri_presentations||[]).push([[1230],{90610:function(e,n,r){r.r(n);var s=r(19949);n.default=s.fy}}]);
-//# sourceMappingURL=component---src-pages-index-jsx-cde46cdeb79ee8596cc7.js.map
