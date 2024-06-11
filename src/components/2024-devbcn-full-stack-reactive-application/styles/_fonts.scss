@@ -37,7 +37,9 @@ p {
 pre {
   font-size: 1.7rem;
 }
-
+strong {
+  color: $devbcn-orange;
+}
 ul {
   $line-height: $devbcn-content-font-size * 1.5;
   position: relative;
