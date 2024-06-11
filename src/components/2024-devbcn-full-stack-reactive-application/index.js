@@ -29,6 +29,7 @@ export {ComplexIcon} from './complex-icon';
 export {Cover} from './cover';
 export {DebuggingIcon} from './debugging-icon';
 export {DevBcn} from './dev-bcn';
+export {Fabric8Icon} from './fabric8-icon';
 export {LearningCurveIcon} from './learning-curve-icon';
 export {SlideTemplate} from './slide-template';
 export {TitleTemplate} from './title-template';

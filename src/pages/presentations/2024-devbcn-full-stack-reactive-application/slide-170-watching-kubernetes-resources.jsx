@@ -21,6 +21,16 @@ const Slide170 = ({currentStep}) => {
   const currentResource = stepResource[currentStep] ?? 'pods()';
   return (
     <DevBcn2024.SlideTemplate slide={17} title='Watching Kubernetes Resources with Fabric8 Kubernetes Client'>
+      <DevBcn2024.Fabric8Icon
+        style={{
+          display: currentStep > 2 ? 'flex' : 'none',
+          position: 'absolute',
+          fill: DevBcn2024.ORANGE,
+          right: '2rem',
+          bottom: 0,
+          height: '15rem'
+        }}
+      />
       <div
         style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
         <DevBcn2024.YakdStreamDiagram
