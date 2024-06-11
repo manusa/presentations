@@ -20,6 +20,16 @@ const Slide160 = ({currentStep}) => {
   const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
   return (
     <DevBcn2024.SlideTemplate slide={16} title='Quarkus: Embracing failure'>
+      <DevBcn2024.SelfHealingIcon
+        style={{
+          display: currentStep > 2 ? 'flex' : 'none',
+          position: 'absolute',
+          fill: DevBcn2024.ORANGE,
+          right: '2rem',
+          bottom: 0,
+          height: '15rem'
+        }}
+      />
       <div
         style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
         <DevBcn2024.YakdStreamDiagram
