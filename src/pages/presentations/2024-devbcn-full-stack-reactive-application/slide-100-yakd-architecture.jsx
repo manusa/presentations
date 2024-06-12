@@ -6,7 +6,7 @@ const Slide100 = () => {
   return (
     <DevBcn2024.SlideTemplate slide={10} title='YAKD Architecture'>
       <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-        <DevBcn2024.YakdArchitectureSimplifiedDiagram />
+        <DevBcn2024.YakdArchitectureSimplifiedDiagram style={{flex: 1}} />
       </div>
     </DevBcn2024.SlideTemplate>
   );

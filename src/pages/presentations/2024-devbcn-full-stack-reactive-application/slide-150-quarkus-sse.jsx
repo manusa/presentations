@@ -18,6 +18,16 @@ const Slide150 = ({currentStep}) => {
   const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
   return (
     <DevBcn2024.SlideTemplate slide={15} title='Quarkus: Streaming Server Sent Events'>
+      <DevBcn2024.MutinyIcon
+        style={{
+          display: currentStep > 2 ? 'flex' : 'none',
+          position: 'absolute',
+          right: '2rem',
+          bottom: 0,
+          height: '15rem',
+          zIndex: 1
+        }}
+      />
       <div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <DevBcn2024.YakdStreamDiagram
           style={{
