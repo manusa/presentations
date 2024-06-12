@@ -5,24 +5,67 @@ import {Code, DevBcn2024} from '../../../components';
 import 'highlight.js/styles/railscasts.css';
 
 const Slide160 = ({currentStep}) => {
-  const stepHighlightedLines = {
-    4: [2, 6, 7, 13], // Consumer<MultiEmitter> implementation,
-    5: [4, 8], // subscribe each watchable
-    6: [9, 10, 11, 12], // Graceful termination
-    8: [4], // async check emitter is still open
-    9: [5, 6], // watcher implementation
-    10: [7, 13], // onClose
-    11: [8, 9], // Log it
-    12: [10], // emit message to warn the subsrciber
-    13: [11, 12], // schedule a new subscription
-    14: [14, 15, 16] // Pipe any Kubernetes event downstream
-  }
-  const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
-  const sseStrokeColor = {
-    6: 'red',
-    8: 'red',
-    14: 'lime'
-  }[currentStep] ?? '#FFFFFF';
+  const steps = {
+    // Consumer<MultiEmitter> implementation,
+    4: {
+      hl: [2, 6, 7, 13]
+    },
+    // subscribe each watchable
+    5: {
+      hl: [4, 8],
+      fabric8: 'lime'
+    },
+    // Graceful termination
+    6: {
+      hl: [9, 12],
+      sse: 'red'
+    },
+    // Cancel upstream watchers
+    7: {
+      hl: [10, 11],
+      fabric8: 'red',
+      sse: 'red'
+    },
+    // async check emitter is still open
+    9: {
+      hl: [4],
+      sse: 'red'
+    },
+    // watcher implementation
+    10: {
+      hl: [5, 6]
+    },
+    // onClose
+    11: {
+      hl: [7, 13],
+      fabric8Pod: 'red'
+    },
+    // Log close
+    12: {
+      hl: [8, 9],
+      fabric8Pod: 'red'
+    },
+    // emit message to warn the subscriber
+    13: {
+      hl: [10],
+      fabric8Pod: 'red'
+    },
+    // schedule a new subscription
+    14: {
+      hl: [11, 12],
+      fabric8Pod: DevBcn2024.ORANGE
+    },
+    // Pipe any Kubernetes event downstream
+    15: {
+      hl: [14, 15, 16],
+      fabric8: 'lime',
+      sse: 'lime'
+    }
+  };
+  const currentHighlightedLines = steps[currentStep]?.hl ?? [];
+  const fabric8StrokeColor = steps[currentStep]?.fabric8 ?? '#FFFFFF';
+  const fabric8PodStrokeColor = steps[currentStep]?.fabric8Pod ?? fabric8StrokeColor;
+  const sseStrokeColor = steps[currentStep]?.sse ?? '#FFFFFF';
   return (
     <DevBcn2024.SlideTemplate slide={16} title='Quarkus: Embracing failure'>
       <DevBcn2024.SelfHealingIcon
@@ -37,7 +80,10 @@ const Slide160 = ({currentStep}) => {
       />
       <style>{`
           .devbcn-2024 .fabric8-path {
-            stroke: ${currentStep === 5 ? 'lime' : '#FFFFFF'} ;
+            stroke: ${fabric8StrokeColor} ;
+          }
+          .devbcn-2024 .fabric8-pod-path {
+            stroke: ${fabric8PodStrokeColor} ;
           }
           .devbcn-2024 .sse-path {
             stroke: ${sseStrokeColor} ;
@@ -60,7 +106,7 @@ const Slide160 = ({currentStep}) => {
             transition: 'transform 1s ease-in-out'
           }}
         />
-        <div style={{display: currentStep > 2 && currentStep <= 6 ? 'block' : 'none'}}>
+        <div style={{display: currentStep > 2 && currentStep <= 7 ? 'block' : 'none'}}>
           <Code
             language='java'
             useInlineStyles={false}
@@ -83,7 +129,7 @@ const Slide160 = ({currentStep}) => {
             }
           `}</Code>
         </div>
-        <div style={{display: currentStep > 6 ? 'block' : 'none'}}>
+        <div style={{display: currentStep > 7 ? 'block' : 'none'}}>
           <Code
             language='java'
             useInlineStyles={false}
@@ -117,4 +163,4 @@ const Slide160 = ({currentStep}) => {
 export default slideControls(Slide160,
   `/presentations/${DevBcn2024.SLUG}/slide-150-quarkus-sse`,
   `/presentations/${DevBcn2024.SLUG}/slide-170-watching-kubernetes-resources`,
-  14);
+  15);
