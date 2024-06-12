@@ -139,7 +139,7 @@
          d="m 1144.7343,160 h -90 c -20.0062,0 -20,-35 -20,-35"
          id="path49"
          sodipodi:nodetypes="csc" /><path
-         class='fabric8-path'
+         class='fabric8-path fabric8-deployment-path'
          style="fill:none;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
          d="m 1144.7343,90 h -90 c -20.0062,0 -20,35 -20,35"
          id="path48"

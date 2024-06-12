@@ -6,19 +6,40 @@ import {Code, DevBcn2024, kubernetesComponentsDiagram} from '../../../components
 const Slide170 = ({currentStep}) => {
   // reflector.go 421-423
   // https://github.com/kubernetes/client-go/blob/b03e5b8438ce5abf36bac817490639abfbcd0441/tools/cache/reflector.go#L430-L432
-  const stepHighlightedLines = {
-    4: [3], // kubernetesClient.xxx().watch()
-    5: [3],
-    6: [3],
-    7: [4], // Timeout and jitter
-    8: [5, 6, 7, 8, 9, 10, 11, 12], // Watcher interface
+  const steps = {
+    // kubernetesClient.xxx().watch()
+    4: {
+      hl: [3],
+      fabric8Pod: 'lime'
+    },
+    5: {
+      hl: [3],
+      stepResource: 'apps().deployments()',
+      fabric8Deployment: 'lime'
+    },
+    6: {
+      hl: [3],
+      stepResource: 'services()',
+      fabric8: 'lime'
+    },
+    // Timeout and jitter
+    7: {
+      hl: [4],
+      fabric8Pod: DevBcn2024.ORANGE
+    },
+    // Watcher interface
+    8: {
+      hl: [5, 6, 7, 8, 9, 10, 11, 12],
+      sse: 'lime',
+      fabric8: 'lime'
+    }
   };
-  const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
-  const stepResource = {
-    5: 'apps().deployments()',
-    6: 'services()'
-  };
-  const currentResource = stepResource[currentStep] ?? 'pods()';
+  const currentHighlightedLines = steps[currentStep]?.hl ?? [];
+  const fabric8StrokeColor = steps[currentStep]?.fabric8 ?? '#FFFFFF';
+  const fabric8PodStrokeColor = steps[currentStep]?.fabric8Pod ?? fabric8StrokeColor;
+  const fabric8DeploymentStrokeColor = steps[currentStep]?.fabric8Deployment ?? fabric8StrokeColor;
+  const sseStrokeColor = steps[currentStep]?.sse ?? '#FFFFFF';
+  const currentResource = steps[currentStep]?.stepResource ?? 'pods()';
   return (
     <DevBcn2024.SlideTemplate slide={17} title='Watching Kubernetes Resources with Fabric8 Kubernetes Client'>
       <DevBcn2024.Fabric8Icon
@@ -31,6 +52,26 @@ const Slide170 = ({currentStep}) => {
           height: '15rem'
         }}
       />
+      <style>{`
+          .devbcn-2024 .fabric8-path {
+            stroke: ${fabric8StrokeColor};
+          }
+          .devbcn-2024 .fabric8-pod-path {
+            stroke: ${fabric8PodStrokeColor};
+          }
+          .devbcn-2024 .fabric8-deployment-path {
+            stroke: ${fabric8DeploymentStrokeColor};
+          }
+          .devbcn-2024 .sse-path {
+            stroke: ${sseStrokeColor};
+          }
+        `}</style>
+      <DevBcn2024.YakdMergeDiagram
+        style={{
+          display: currentStep > 2 ? 'flex' : 'none',
+          position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
+          height: '15rem'
+        }}/>
       <div
         style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <DevBcn2024.YakdStreamDiagram
