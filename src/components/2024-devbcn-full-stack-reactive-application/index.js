@@ -30,6 +30,7 @@ export {Cover} from './cover';
 export {DebuggingIcon} from './debugging-icon';
 export {DevBcn} from './dev-bcn';
 export {Fabric8Icon} from './fabric8-icon';
+export {FeedbackQr} from './feedback-qr';
 export {LearningCurveIcon} from './learning-curve-icon';
 export {MutinyIcon} from './mutiny-icon';
 export {SlideTemplate} from './slide-template';

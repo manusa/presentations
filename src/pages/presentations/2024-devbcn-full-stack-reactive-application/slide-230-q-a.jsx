@@ -5,12 +5,25 @@ import {DevBcn2024} from '../../../components';
 const Slide230 = () => {
   return (
     <DevBcn2024.SlideTemplate slide={23} title='Q&A'>
+      <div
+        style={{
+          position: 'absolute', bottom: 0, right: '2rem',
+          padding: '2rem', background: DevBcn2024.BLUE, borderRadius: '2rem'
+        }}
+      >
+        <DevBcn2024.FeedbackQr style={{display: 'flex', height: '22rem'}} />
+        <div
+          style={{textAlign: 'center', marginTop: '2rem'}}
+        >
+          Feedback ❤️
+        </div>
+      </div>
       <div style={{height: '100%', display: 'flex', gap: '0rem', alignItems: 'center'}}>
         <DevBcn2024.DevBcn
           style={{width: '30rem', fill: 'white', transform: 'rotate(270deg)'}}
           alt='An image of the DevBcn logo'
         />
-        <div style={{flex: 1, fontSize: '25rem'}}>
+        <div style={{flex: 1, fontSize: '20rem'}}>
           Q & A
         </div>
       </div>
