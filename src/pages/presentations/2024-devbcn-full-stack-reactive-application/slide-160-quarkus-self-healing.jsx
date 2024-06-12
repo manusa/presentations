@@ -33,7 +33,8 @@ const Slide160 = ({currentStep}) => {
     },
     // watcher implementation
     10: {
-      hl: [5, 6]
+      hl: [5, 6],
+      fabric8Pod: 'lime'
     },
     // onClose
     11: {
@@ -48,7 +49,8 @@ const Slide160 = ({currentStep}) => {
     // emit message to warn the subscriber
     13: {
       hl: [10],
-      fabric8Pod: 'red'
+      fabric8Pod: 'red',
+      sse: 'lime'
     },
     // schedule a new subscription
     14: {
@@ -93,7 +95,7 @@ const Slide160 = ({currentStep}) => {
         style={{
           display: currentStep > 2 ? 'flex' : 'none',
           position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
-          height: '15rem'
+          height: '18rem'
         }}/>
       <div
         style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>

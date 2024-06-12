@@ -70,7 +70,7 @@ const Slide170 = ({currentStep}) => {
         style={{
           display: currentStep > 2 ? 'flex' : 'none',
           position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
-          height: '15rem'
+          height: '18rem'
         }}/>
       <div
         style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -97,7 +97,7 @@ const Slide170 = ({currentStep}) => {
                   // ...self-healing logic
                 }
                 public void eventReceived(Action action, T resource) {
-                  multiEmitter.emit(new WatchEvent<>(action, resource));
+                  emitter.emit(new WatchEvent<>(action, resource));
                 }
               });
           `}</Code>
