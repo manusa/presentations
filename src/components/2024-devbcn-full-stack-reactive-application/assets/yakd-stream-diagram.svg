@@ -2,8 +2,6 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="1920"
-   height="910"
    viewBox="0 0 1920 910"
    version="1.1"
    id="svg1"
@@ -50,7 +48,7 @@
        visible="true" /></sodipodi:namedview><defs
      id="defs1"><marker
        style="overflow:visible"
-       id="Triangle"
+       id="Triangle-sm"
        refX="0"
        refY="0"
        orient="auto-start-reverse"
@@ -313,7 +311,7 @@
            id="tspan50"
            x="1265.3418"
            y="688.73401">WS ... (x30)</tspan></text><path
-         style="fill:none;stroke:#ffffff;stroke-width:3.01394;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:3.01394, 3.01394;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Triangle)"
+         style="fill:none;stroke:#ffffff;stroke-width:3.01394;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:3.01394, 3.01394;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Triangle-sm)"
          d="m 1210,614.84197 h 389.7343"
          id="path40"
          inkscape:label="kuberntes-quarkus-3"
@@ -346,7 +344,7 @@
            id="tspan49"
            x="1265.3418"
            y="550.04401">WS Deployments</tspan></text><path
-         style="fill:none;stroke:#ffffff;stroke-width:3.01394;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Triangle)"
+         style="fill:none;stroke:#ffffff;stroke-width:3.01394;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Triangle-sm)"
          d="m 1210,475 h 389.7343"
          id="path39"
          inkscape:label="kuberntes-quarkus-2"
@@ -380,7 +378,7 @@
            x="1399.7418"
            y="410.20096"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32px;font-family:Monospace;-inkscape-font-specification:'Monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:end;text-anchor:end">WS Pods</tspan></text><path
-         style="fill:none;stroke:#ffffff;stroke-width:3.01394;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Triangle)"
+         style="fill:none;stroke:#ffffff;stroke-width:3.01394;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Triangle-sm)"
          d="m 1210,335.15693 h 389.7343"
          id="path38"
          inkscape:label="kuberntes-quarkus-1"
@@ -505,7 +503,7 @@
          d="m 1144.7343,55 c 0,0 0,0 -90,0 -20,0 -20,70 -20,70"
          id="path41"
          sodipodi:nodetypes="csc" /><path
-         style="fill:none;stroke:#ffffff;stroke-width:3.72947;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Triangle)"
+         style="fill:none;stroke:#ffffff;stroke-width:3.72947;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Triangle-sm)"
          d="M 861.29446,125.00021 1034.7343,125"
          id="path55"
          sodipodi:nodetypes="cc" /><g

@@ -32,12 +32,11 @@ const Slide170 = ({currentStep}) => {
         }}
       />
       <div
-        style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
+        style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <DevBcn2024.YakdStreamDiagram
           style={{
-            display: currentStep <= 2 ? 'block' : 'none',
-            position: 'absolute',
-            maxWidth: '100%',
+            display: currentStep <= 2 ? 'flex' : 'none',
+            position: 'absolute', top: 0, bottom: 0,
             transform: `scale(2.5) translateX(${currentStep === 2 ? -320 : 50}px)`,
             transition: 'transform 1s ease-in-out'
           }}

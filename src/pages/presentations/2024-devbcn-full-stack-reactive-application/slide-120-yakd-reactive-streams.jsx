@@ -20,16 +20,15 @@ const Slide120 = ({currentStep}) => {
       >
         {currentStep === 1 ? 'Official Kubernetes Dashboard' : 'YAKD'}
       </div>
-      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
+      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%'}}>
         <DevBcn2024.YakdImperativeDiagram
           style={{
-            display: currentStep === 1 ? 'block' : 'none',
+            display: currentStep === 1 ? 'flex' : 'none', height: '100%'
           }}
         />
         <DevBcn2024.YakdStreamDiagram
           style={{
-            display: currentStep >= 2 ? 'block' : 'none',
-            maxWidth: '100%',
+            display: currentStep >= 2 ? 'flex' : 'none', height: '100%',
             transform: `scale(${currentStep === 3 ? 1.8 : 1})`,
             transition: 'transform 1s ease-in-out'
           }}
