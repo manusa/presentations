@@ -31,6 +31,7 @@ export const LandingPage = () => {
           <h1>{TITLE}</h1>
         </header>
         <div className={'content'}>
+          <Card onClick={() => navigate('/presentations/2024-devbcn-full-stack-reactive-application')} >Developing a full stack reactive application using Kubernetes as an event producer (DevBcn 2024)</Card>
           <Card onClick={() => navigate('/presentations/2023-eclipsecon-helm-for-java-developers')} >Helm for Java developers with Eclipse JKube (EclipseCon 2023)</Card>
           <Card onClick={() => navigate('/presentations/2023-madridjug-jkube-remote-dev')} >Desarrollo local de aplicaciones Java en Kubernetes (MadridJUG 2023)</Card>
           <Card onClick={() => navigate('/presentations/2022-eclipsecon-whats-up-doc')} >Eclipse JKube: What's up Doc? (EcliseCon 2022)</Card>
