@@ -18,6 +18,11 @@ const Slide160 = ({currentStep}) => {
     14: [14, 15, 16] // Pipe any Kubernetes event downstream
   }
   const currentHighlightedLines = stepHighlightedLines[currentStep] || [];
+  const sseStrokeColor = {
+    6: 'red',
+    8: 'red',
+    14: 'lime'
+  }[currentStep] ?? '#FFFFFF';
   return (
     <DevBcn2024.SlideTemplate slide={16} title='Quarkus: Embracing failure'>
       <DevBcn2024.SelfHealingIcon
@@ -30,6 +35,20 @@ const Slide160 = ({currentStep}) => {
           height: '15rem'
         }}
       />
+      <style>{`
+          .devbcn-2024 .fabric8-path {
+            stroke: ${currentStep === 5 ? 'lime' : '#FFFFFF'} ;
+          }
+          .devbcn-2024 .sse-path {
+            stroke: ${sseStrokeColor} ;
+          }
+        `}</style>
+      <DevBcn2024.YakdMergeDiagram
+        style={{
+          display: currentStep > 2 ? 'flex' : 'none',
+          position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)',
+          height: '15rem'
+        }}/>
       <div
         style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         <DevBcn2024.YakdStreamDiagram

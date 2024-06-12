@@ -37,4 +37,5 @@ export {ReactiveSystemsDiagram} from './reactive-systems-diagram';
 export {SelfHealingIcon} from './self-healing-icon';
 export {YakdArchitectureSimplifiedDiagram} from './yakd-architecture-simplified-diagram';
 export {YakdImperativeDiagram} from './yakd-imperative-diagram';
+export {YakdMergeDiagram} from './yakd-merge-diagram';
 export {YakdStreamDiagram} from './yakd-stream-diagram';
