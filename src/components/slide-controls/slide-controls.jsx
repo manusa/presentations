@@ -31,8 +31,17 @@ function slideControls(WrappedComponent, previousPage, nextPage, totalSteps = 1)
             navigate(nextPage);
           }
           break;
+        case 'f':
+          if (event.metaKey || event.ctrlKey) {
+            document.body.requestFullscreen({navigationUI: 'hide'}).catch(console.error)
+            event.preventDefault();
+          }
+          break;
         case 'Esc':
         case 'Escape':
+          if (document.fullscreenElement) {
+            document.exitFullscreen().catch(console.error);
+          }
           navigate('/');
           break;
         default:
