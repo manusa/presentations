@@ -1,0 +1,56 @@
+@use 'variables';
+@use 'common';
+
+.devbcn-2025-title {
+  margin: -1px 0 0 0;
+  padding: 1px 0 0 0;
+  box-sizing: border-box;
+  height: 100vh;
+  min-height: 100%;
+  animation: fade-in 0.5s linear backwards;
+  @include variables.devbcn-background(
+    $background-image: variables.$devbcn-background-image-sagrada-familia,
+    $background-overlay-image: variables.$devbcn-circuit-brain,
+    $background-overlay-size: cover,
+    $background-overlay-opacity: 1,
+  );
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    .logo {
+      height: 33vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .devbcn-logo {
+        fill: variables.$devbcn-color-white;
+        height: 10rem;
+      }
+    }
+    .title-band {
+      margin: 4rem 0;
+      height: 25vh;
+      align-self: stretch;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: variables.$devbcn-orange;
+      color: white;
+      text-align: center;
+      .title {
+        font-size: 3.5rem;
+      }
+      .subtitle {
+        font-size: 2.5rem;
+        color: black;
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

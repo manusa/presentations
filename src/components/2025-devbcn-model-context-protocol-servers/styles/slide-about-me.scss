@@ -1,0 +1,34 @@
+.devbcn-2025.interior-slide__content {
+  .about-me {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__bio {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .avatar {
+        margin-right: 3rem;
+        width: 34rem;
+      }
+      h2 {
+        margin-top: 0;
+      }
+      a {
+        color: white;
+        text-decoration: none;
+      }
+    }
+    .book {
+      position: absolute;
+      z-index: 1;
+      height: 25rem;
+      bottom: 3rem;
+      right: 5rem;
+      img {
+        max-height: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+@mixin css-variables() {
+  --li-bullet-content: "\f7d9";
+}
+$devbcn-background-image: '../assets/background.jpg';
+$devbcn-background-overlay-image: '../assets/sagrada-familia-brain-2-transp.png ';
+$devbcn-background-image-sagrada-familia: '../assets/barcelona-sagrada-familia-bg.jpg';
+$devbcn-circuit-brain: '../assets/circuit-brain.jpg';
+$devbcn-color-blue: #4798ca;
+$devbcn-color-white: #FAFAFA;
+$devbcn-color-white-lightest: #FFF;
+$devbcn-orange: #ffa800;
+
+$devbcn-header-height: 90px;
+$devbcn-header-padding: 1rem 2rem;
+$devbcn-header-color: $devbcn-color-white-lightest;
+$devbcn-header-font-family: 'Oswald', 'Roboto', sans-serif;
+$devbcn-header-font-size: 4rem;
+
+$devbcn-content-padding: 1rem 2rem;
+$devbcn-content-color: $devbcn-color-white-lightest;
+$devbcn-content-font-size: 2.5rem;
+
+$devbcn-footer-height: 90px;
+
+@mixin devbcn-background(
+  $background-image: $devbcn-background-image,
+  $background-overlay-image: $devbcn-background-overlay-image,
+  $background-overlay-size: 60vh 60vh,
+  $background-overlay-opacity: 0.7,
+  $blend-mode: screen,
+  $overlay-color: transparent,
+  $overlay-image: radial-gradient(circle, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.9) 80%),
+  //$blend-mode: color-dodge,
+  $animation: brightness 4s linear infinite
+) {
+  position: relative;
+  background: url($background-image) no-repeat;
+  background-size: cover;
+  &::before {
+    z-index: 0;
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: transparent url($background-overlay-image) 50% 50% no-repeat;
+    background-size: $background-overlay-size;
+    mix-blend-mode: $blend-mode;
+    opacity: $background-overlay-opacity;
+    animation: $animation;
+    @keyframes brightness {
+      0% {filter: hue-rotate(0deg) }
+      50% {filter: hue-rotate(45deg)}
+      100% {filter: hue-rotate(0deg)}
+    }
+  }
+  &::after {
+    z-index: 0;
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $overlay-color $overlay-image;
+  }
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+}

@@ -1,0 +1,21 @@
+<svg version="1.1"
+	 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 39.5 39.5"
+	 style="enable-background:new 0 0 39.5 39.5;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#D71E00;}
+	.st1{fill:#C21A00;}
+	.st2{fill:#FFFFFF;}
+	.st3{fill:#B7B7B7;}
+</style>
+<g transform="matrix(0.39457959,0,0,0.39457959,1.0823681,0.10489944)">
+	<circle class="st0" cx="47.3" cy="49.7" r="50"/>
+	<path class="st1" d="M82.6,14.4c19.5,19.5,19.5,51.2,0,70.7
+		c-19.5,19.5-51.2,19.5-70.7,0L82.6,14.4z"/>
+	<polygon class="st2" points="51.8,49.7 66.9,81.6 54,81.6 39,49.7 54,17.9 66.9,17.9"/>
+	<polygon class="st3" points="66.9,81.6 81.9,49.7 66.9,17.9 60.4,31.4 69.1,49.7 60.4,68"/>
+	<polygon class="st2" points="25.4,49.7 40.5,81.6 27.7,81.6 12.6,49.7 27.7,17.9 40.5,17.9"/>
+	<polygon class="st3" points="40.8,45.8 47.3,32.2 40.5,17.9 34.1,31.4"/>
+	<polygon class="st3" points="34.1,68 40.5,81.6 47.3,67.3 40.8,53.7"/>
+</g>
+</svg>

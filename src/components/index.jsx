@@ -1,5 +1,6 @@
 export * as EclipseCon2023 from './2023-eclipsecon-helm-for-java-developers';
 export * as DevBcn2024 from './2024-devbcn-full-stack-reactive-application';
+export * as DevBcn2025 from './2025-devbcn-model-context-protocol-servers';
 export {Card} from './card';
 
 export {Code} from './code';

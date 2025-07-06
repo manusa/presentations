@@ -1,0 +1,211 @@
+@use 'variables';
+@use 'fonts';
+
+.devbcn-2025 {
+  $font-size: 2.5rem;
+  $greeting-font-family: 'Tiempos Text', serif;
+  $greeting-font-size: 4rem;
+  $user-message-background: rgb(20, 20, 19);
+  $user-message-border-radius: 0.5rem;
+  $user-message-padding: 1rem;
+  $user-message-avatar-background: rgb(194, 192, 182);
+  $user-message-avatar-color: rgb(38, 38, 36);
+  $user-message-avatar-font-size: 2rem;
+  $assistant-message-padding: 0 0.5rem;
+  $assistant-message-color: rgb(250, 249, 245);
+  $assistant-message-font-family: 'Tiempos Text', serif;
+  $tool-call-message-color: rgb(194, 192, 182);
+  $tool-call-message-background: rgba(0, 0, 0, 0);
+  $tool-call-message-border-color: rgb(194, 192, 182);
+  $tool-call-message-border-radius: 0.5rem;
+  $tool-call-message-padding: 0.5rem 1rem;
+  $tool-call-message-avatar-background: rgb(194, 192, 182);
+  $tool-call-message-avatar-color: rgb(38, 38, 36);
+  $composer-background: rgb(48, 48, 46);
+  $composer-box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.035) 0px 4px 20px 0px;
+  $composer-border-color: rgba(222, 220, 209, 0.15);
+  $composer-border-radius: 1rem;
+  $composer-padding: 1rem;
+  $composer-input-color: rgb(250, 249, 245);
+  $composer-placeholder-color: rgb(156, 154, 146);
+  $composer-send-button-color: rgb(255, 255, 255);
+  $composer-send-button-background: rgb(201, 100, 66);
+  $composer-send-button-border-radius: 0.5rem;
+  $composer-send-button-size: 2.5rem;
+  $composer-model-selector-font-family: 'Tiempos Text', serif;
+  $composer-button-height: 2.5rem;
+  $composer-button-color: rgb(250, 249, 245);
+  $composer-button-background: rgba(0, 0, 0, 0);
+  $composer-button-border-color: rgb(194, 192, 182);
+  $composer-button-border-radius: 0.5rem;
+  $composer-button-font-size: 1.5rem;
+  .chat-gpt {
+    position: relative;
+    height: 100%;
+    font-size: $font-size;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .chat-gpt__greeting {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    transform: translateY(-40%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto auto;
+    gap: 1.5rem;
+    .chat-gpt__greeting-icon {
+      width: $greeting-font-size;
+      height: $greeting-font-size;
+      padding-bottom: 0.25 * $greeting-font-size; // The font baseline is higher than the icon, so we need to adjust it
+    }
+    .chat-gpt__greeting-title {
+      font-family: $greeting-font-family;
+      font-size: $greeting-font-size;
+      line-height: $greeting-font-size;
+    }
+  }
+  .chat-gpt__user-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    background: $user-message-background;
+    border-radius: $user-message-border-radius;
+    padding: $user-message-padding;
+    max-width: 60ch;
+
+    .chat-gpt__user-message-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: $user-message-avatar-font-size + 1.5rem;
+      width: $user-message-avatar-font-size + 1.5rem;
+      flex: none;
+      border-radius: 100%;
+      background: $user-message-avatar-background;
+      color: $user-message-avatar-color;
+      font-size: $user-message-avatar-font-size;
+    }
+    .chat-gpt__user-message-text {
+    }
+
+  }
+  .chat-gpt__assistant-message {
+    padding: $assistant-message-padding;
+    color: $assistant-message-color;
+    font-family: $assistant-message-font-family;
+    font-size: $font-size;
+    line-height: $font-size + 0.5rem;
+    strong {
+      color: inherit;
+      font-weight: 900;
+    }
+  }
+  .chat-gpt__tool-call-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    color: $tool-call-message-color;
+    background: $tool-call-message-background;
+    border: 1px solid $tool-call-message-border-color;
+    border-radius: $tool-call-message-border-radius;
+    padding: $tool-call-message-padding;
+
+    .chat-gpt__tool-call-message-tool-name{
+      flex: 1;
+    }
+    .fa-angle-down {
+      font-size: 0.75rem;
+    }
+  }
+  .chat-gpt__composer {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    gap: 1rem;
+    background: $composer-background;
+    border: 1px solid $composer-border-color;
+    border-radius: $composer-border-radius;
+    box-shadow: $composer-box-shadow;
+    padding: $composer-padding;
+    cursor: text;
+
+    .chat-gpt__composer-input_placeholder {
+      position: relative;
+      color: $composer-placeholder-color;
+      user-select: none;
+      &::before {
+        position: absolute;
+        content: '';
+        animation: cursor-blink 1.5s infinite;
+        width: 2px;
+        height: 100%;
+        background: $composer-input-color;
+      }
+      @keyframes cursor-blink {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    }
+    .chat-gpt__composer-tools {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .chat-gpt__composer-tools-options {
+      flex: 1;
+      display: flex;
+    }
+    .chat-gpt__composer-model-selector {
+      gap: 0.5rem;
+      font-family: $composer-model-selector-font-family;
+      .chat-gpt__composer-model-selector-text {
+        transform: translateY(0.1rem); // The font baseline is a little bit higher than the regular baseline, so we need to adjust it
+      }
+      .fa-angle-down {
+        font-size: 1rem;
+      }
+    }
+    .chat_gpt__composer-button {
+      display: flex;
+      align-items: center;
+      padding: 0 0.5rem;
+      color: $composer-button-color;
+      background: $composer-button-background;
+      border: 1px solid $composer-button-border-color;
+      border-radius: $composer-button-border-radius;
+      height: $composer-button-height;
+      font-size: $composer-button-font-size;
+    }
+    .chat-gpt__composer-send-button {
+      color: $composer-send-button-color;
+      background: $composer-send-button-background;
+      border: 0;
+      border-radius: $composer-send-button-border-radius;
+      margin: 0;
+      padding: 0;
+      height: $composer-send-button-size;
+      width: $composer-send-button-size;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        width: $composer-send-button-size - 1rem;
+        height: $composer-send-button-size - 1rem;
+      }
+    }
+  }
+}

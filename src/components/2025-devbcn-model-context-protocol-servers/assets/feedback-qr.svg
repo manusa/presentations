@@ -1,0 +1,2755 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 296 296"
+   version="1.1"
+   id="svg349"
+   sodipodi:docname="feedback-qr.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview349"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.6533333"
+     inkscape:cx="147.92714"
+     inkscape:cy="148.11558"
+     inkscape:window-width="1920"
+     inkscape:window-height="975"
+     inkscape:window-x="1920"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg349" />
+  <defs
+     id="defs342">
+    <clipPath
+       id="clip-path-background-color-1">
+      <rect
+         x="0"
+         y="0"
+         width="300"
+         height="300"
+         id="rect1" />
+    </clipPath>
+    <clipPath
+       id="clip-path-dot-color-1">
+      <path
+         d="m 74,2 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,78,6)"
+         id="path1" />
+      <path
+         d="m 82,2 v 8 h 8 V 6 A 4,4 0 0 0 86,2"
+         id="path2" />
+      <circle
+         cx="110"
+         cy="6"
+         r="4"
+         id="circle2" />
+      <circle
+         cx="142"
+         cy="6"
+         r="4"
+         id="circle3" />
+      <path
+         d="m 170,2 v 8 h 8 V 6 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,174,6)"
+         id="path3" />
+      <path
+         d="m 178,2 v 8 h 8 V 6 a 4,4 0 0 0 -4,-4"
+         id="path4" />
+      <path
+         d="m 194,2 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,198,6)"
+         id="path5" />
+      <rect
+         x="202"
+         y="2"
+         width="8"
+         height="8"
+         id="rect5" />
+      <rect
+         x="210"
+         y="2"
+         width="8"
+         height="8"
+         id="rect6" />
+      <rect
+         x="218"
+         y="2"
+         width="8"
+         height="8"
+         id="rect7" />
+      <path
+         d="m 226,2 v 8 h 8 V 6 a 4,4 0 0 0 -4,-4"
+         id="path7" />
+      <path
+         d="m 82,10 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,86,14)"
+         id="path8" />
+      <path
+         d="m 114,10 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,118,14)"
+         id="path9" />
+      <rect
+         x="122"
+         y="10"
+         width="8"
+         height="8"
+         id="rect9" />
+      <path
+         d="m 130,10 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path10" />
+      <rect
+         x="170"
+         y="10"
+         width="8"
+         height="8"
+         id="rect10" />
+      <rect
+         x="178"
+         y="10"
+         width="8"
+         height="8"
+         id="rect11" />
+      <path
+         d="m 210,10 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,214,14)"
+         id="path11" />
+      <rect
+         x="226"
+         y="10"
+         width="8"
+         height="8"
+         id="rect12" />
+      <path
+         d="m 66,18 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,70,22)"
+         id="path12" />
+      <path
+         d="m 74,18 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path13" />
+      <path
+         d="m 98,18 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,102,22)"
+         id="path14" />
+      <rect
+         x="122"
+         y="18"
+         width="8"
+         height="8"
+         id="rect14" />
+      <path
+         d="m 154,18 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,158,22)"
+         id="path15" />
+      <path
+         d="m 170,18 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,174,22)"
+         id="path16" />
+      <rect
+         x="178"
+         y="18"
+         width="8"
+         height="8"
+         id="rect16" />
+      <path
+         d="m 186,18 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path17" />
+      <path
+         d="m 218,18 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,222,22)"
+         id="path18" />
+      <rect
+         x="226"
+         y="18"
+         width="8"
+         height="8"
+         id="rect18" />
+      <path
+         d="m 82,26 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,86,30)"
+         id="path19" />
+      <rect
+         x="90"
+         y="26"
+         width="8"
+         height="8"
+         id="rect19" />
+      <path
+         d="m 98,26 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,102,30)"
+         id="path20" />
+      <rect
+         x="122"
+         y="26"
+         width="8"
+         height="8"
+         id="rect20" />
+      <path
+         d="m 146,26 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,150,30)"
+         id="path21" />
+      <rect
+         x="154"
+         y="26"
+         width="8"
+         height="8"
+         id="rect21" />
+      <rect
+         x="186"
+         y="26"
+         width="8"
+         height="8"
+         id="rect22" />
+      <path
+         d="m 210,26 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,214,30)"
+         id="path22" />
+      <path
+         d="m 226,26 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,230,30)"
+         id="path23" />
+      <path
+         d="m 66,34 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,70,38)"
+         id="path24" />
+      <path
+         d="m 74,34 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path25" />
+      <rect
+         x="122"
+         y="34"
+         width="8"
+         height="8"
+         id="rect25" />
+      <path
+         d="m 154,34 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,158,38)"
+         id="path26" />
+      <path
+         d="m 162,34 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path27" />
+      <path
+         d="m 186,34 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,190,38)"
+         id="path28" />
+      <path
+         d="m 202,34 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,206,38)"
+         id="path29" />
+      <rect
+         x="210"
+         y="34"
+         width="8"
+         height="8"
+         id="rect29" />
+      <path
+         d="m 218,34 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path30" />
+      <rect
+         x="66"
+         y="42"
+         width="8"
+         height="8"
+         id="rect30" />
+      <path
+         d="m 106,42 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,110,46)"
+         id="path31" />
+      <rect
+         x="114"
+         y="42"
+         width="8"
+         height="8"
+         id="rect31" />
+      <rect
+         x="122"
+         y="42"
+         width="8"
+         height="8"
+         id="rect32" />
+      <rect
+         x="130"
+         y="42"
+         width="8"
+         height="8"
+         id="rect33" />
+      <path
+         d="m 138,42 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path33" />
+      <path
+         d="m 178,42 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,182,46)"
+         id="path34" />
+      <path
+         d="m 194,42 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,198,46)"
+         id="path35" />
+      <path
+         d="m 202,42 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,206,46)"
+         id="path36" />
+      <path
+         d="m 226,42 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,230,46)"
+         id="path37" />
+      <path
+         d="m 66,50 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,70,54)"
+         id="path38" />
+      <path
+         d="m 82,50 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,86,54)"
+         id="path39" />
+      <circle
+         cx="102"
+         cy="54"
+         r="4"
+         id="circle39" />
+      <rect
+         x="114"
+         y="50"
+         width="8"
+         height="8"
+         id="rect39" />
+      <rect
+         x="130"
+         y="50"
+         width="8"
+         height="8"
+         id="rect40" />
+      <circle
+         cx="150"
+         cy="54"
+         r="4"
+         id="circle40" />
+      <path
+         d="m 162,50 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,166,54)"
+         id="path40" />
+      <rect
+         x="178"
+         y="50"
+         width="8"
+         height="8"
+         id="rect41" />
+      <rect
+         x="194"
+         y="50"
+         width="8"
+         height="8"
+         id="rect42" />
+      <path
+         d="m 210,50 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,214,54)"
+         id="path42" />
+      <path
+         d="m 226,50 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,230,54)"
+         id="path43" />
+      <path
+         d="m 74,58 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,78,62)"
+         id="path44" />
+      <path
+         d="m 82,58 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,86,62)"
+         id="path45" />
+      <path
+         d="m 106,58 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,110,62)"
+         id="path46" />
+      <path
+         d="m 114,58 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,118,62)"
+         id="path47" />
+      <rect
+         x="130"
+         y="58"
+         width="8"
+         height="8"
+         id="rect47" />
+      <path
+         d="m 154,58 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,158,62)"
+         id="path48" />
+      <rect
+         x="162"
+         y="58"
+         width="8"
+         height="8"
+         id="rect48" />
+      <rect
+         x="170"
+         y="58"
+         width="8"
+         height="8"
+         id="rect49" />
+      <rect
+         x="178"
+         y="58"
+         width="8"
+         height="8"
+         id="rect50" />
+      <path
+         d="m 194,58 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,198,62)"
+         id="path50" />
+      <rect
+         x="210"
+         y="58"
+         width="8"
+         height="8"
+         id="rect51" />
+      <path
+         d="m 10,66 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,14,70)"
+         id="path51" />
+      <path
+         d="m 34,66 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,38,70)"
+         id="path52" />
+      <circle
+         cx="54"
+         cy="70"
+         r="4"
+         id="circle52" />
+      <path
+         d="m 66,66 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,70,70)"
+         id="path53" />
+      <rect
+         x="74"
+         y="66"
+         width="8"
+         height="8"
+         id="rect53" />
+      <path
+         d="m 90,66 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,94,70)"
+         id="path54" />
+      <rect
+         x="98"
+         y="66"
+         width="8"
+         height="8"
+         id="rect54" />
+      <path
+         d="m 106,66 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,110,70)"
+         id="path55" />
+      <rect
+         x="130"
+         y="66"
+         width="8"
+         height="8"
+         id="rect55" />
+      <circle
+         cx="150"
+         cy="70"
+         r="4"
+         id="circle55" />
+      <path
+         d="m 170,66 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,174,70)"
+         id="path56" />
+      <path
+         d="m 178,66 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,182,70)"
+         id="path57" />
+      <path
+         d="m 202,66 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,206,70)"
+         id="path58" />
+      <rect
+         x="210"
+         y="66"
+         width="8"
+         height="8"
+         id="rect58" />
+      <rect
+         x="218"
+         y="66"
+         width="8"
+         height="8"
+         id="rect59" />
+      <rect
+         x="226"
+         y="66"
+         width="8"
+         height="8"
+         id="rect60" />
+      <path
+         d="m 234,66 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path60" />
+      <path
+         d="m 250,66 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,254,70)"
+         id="path61" />
+      <path
+         d="m 258,66 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path62" />
+      <circle
+         cx="278"
+         cy="70"
+         r="4"
+         id="circle62" />
+      <path
+         d="m 2,74 v 8 h 8 V 78 A 4,4 0 0 0 6,74"
+         transform="rotate(-90,6,78)"
+         id="path63" />
+      <path
+         d="m 10,74 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,14,78)"
+         id="path64" />
+      <rect
+         x="34"
+         y="74"
+         width="8"
+         height="8"
+         id="rect64" />
+      <rect
+         x="74"
+         y="74"
+         width="8"
+         height="8"
+         id="rect65" />
+      <rect
+         x="82"
+         y="74"
+         width="8"
+         height="8"
+         id="rect66" />
+      <path
+         d="m 90,74 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,94,78)"
+         id="path66" />
+      <circle
+         cx="118"
+         cy="78"
+         r="4"
+         id="circle66" />
+      <rect
+         x="130"
+         y="74"
+         width="8"
+         height="8"
+         id="rect67" />
+      <path
+         d="m 138,74 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path67" />
+      <circle
+         cx="158"
+         cy="78"
+         r="4"
+         id="circle67" />
+      <path
+         d="m 186,74 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,190,78)"
+         id="path68" />
+      <path
+         d="m 194,74 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path69" />
+      <rect
+         x="210"
+         y="74"
+         width="8"
+         height="8"
+         id="rect69" />
+      <rect
+         x="218"
+         y="74"
+         width="8"
+         height="8"
+         id="rect70" />
+      <rect
+         x="234"
+         y="74"
+         width="8"
+         height="8"
+         id="rect71" />
+      <rect
+         x="250"
+         y="74"
+         width="8"
+         height="8"
+         id="rect72" />
+      <rect
+         x="258"
+         y="74"
+         width="8"
+         height="8"
+         id="rect73" />
+      <circle
+         cx="294"
+         cy="78"
+         r="4"
+         id="circle73" />
+      <path
+         d="m 2,82 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,6,86)"
+         id="path73" />
+      <rect
+         x="34"
+         y="82"
+         width="8"
+         height="8"
+         id="rect74" />
+      <circle
+         cx="54"
+         cy="86"
+         r="4"
+         id="circle74" />
+      <path
+         d="m 74,82 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,78,86)"
+         id="path74" />
+      <rect
+         x="82"
+         y="82"
+         width="8"
+         height="8"
+         id="rect75" />
+      <circle
+         cx="110"
+         cy="86"
+         r="4"
+         id="circle75" />
+      <path
+         d="m 122,82 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,126,86)"
+         id="path75" />
+      <rect
+         x="130"
+         y="82"
+         width="8"
+         height="8"
+         id="rect76" />
+      <path
+         d="m 162,82 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,166,86)"
+         id="path76" />
+      <path
+         d="m 170,82 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path77" />
+      <path
+         d="m 186,82 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,190,86)"
+         id="path78" />
+      <rect
+         x="194"
+         y="82"
+         width="8"
+         height="8"
+         id="rect78" />
+      <rect
+         x="202"
+         y="82"
+         width="8"
+         height="8"
+         id="rect79" />
+      <rect
+         x="210"
+         y="82"
+         width="8"
+         height="8"
+         id="rect80" />
+      <rect
+         x="218"
+         y="82"
+         width="8"
+         height="8"
+         id="rect81" />
+      <rect
+         x="234"
+         y="82"
+         width="8"
+         height="8"
+         id="rect82" />
+      <rect
+         x="250"
+         y="82"
+         width="8"
+         height="8"
+         id="rect83" />
+      <rect
+         x="258"
+         y="82"
+         width="8"
+         height="8"
+         id="rect84" />
+      <rect
+         x="266"
+         y="82"
+         width="8"
+         height="8"
+         id="rect85" />
+      <path
+         d="m 274,82 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path85" />
+      <path
+         d="m 34,90 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,38,94)"
+         id="path86" />
+      <path
+         d="m 58,90 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,62,94)"
+         id="path87" />
+      <path
+         d="m 66,90 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path88" />
+      <rect
+         x="82"
+         y="90"
+         width="8"
+         height="8"
+         id="rect88" />
+      <path
+         d="m 114,90 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,118,94)"
+         id="path89" />
+      <rect
+         x="122"
+         y="90"
+         width="8"
+         height="8"
+         id="rect89" />
+      <path
+         d="m 130,90 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,134,94)"
+         id="path90" />
+      <path
+         d="m 146,90 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,150,94)"
+         id="path91" />
+      <rect
+         x="154"
+         y="90"
+         width="8"
+         height="8"
+         id="rect91" />
+      <rect
+         x="162"
+         y="90"
+         width="8"
+         height="8"
+         id="rect92" />
+      <rect
+         x="170"
+         y="90"
+         width="8"
+         height="8"
+         id="rect93" />
+      <path
+         d="m 178,90 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path93" />
+      <rect
+         x="194"
+         y="90"
+         width="8"
+         height="8"
+         id="rect94" />
+      <path
+         d="m 210,90 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,214,94)"
+         id="path94" />
+      <path
+         d="m 218,90 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,222,94)"
+         id="path95" />
+      <rect
+         x="234"
+         y="90"
+         width="8"
+         height="8"
+         id="rect95" />
+      <path
+         d="m 250,90 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,254,94)"
+         id="path96" />
+      <path
+         d="m 266,90 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,270,94)"
+         id="path97" />
+      <rect
+         x="274"
+         y="90"
+         width="8"
+         height="8"
+         id="rect97" />
+      <path
+         d="m 290,90 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,294,94)"
+         id="path98" />
+      <path
+         d="m 2,98 v 8 h 8 v -4 A 4,4 0 0 0 6,98"
+         transform="rotate(-90,6,102)"
+         id="path99" />
+      <path
+         d="m 10,98 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path100" />
+      <circle
+         cx="30"
+         cy="102"
+         r="4"
+         id="circle100" />
+      <path
+         d="m 42,98 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,46,102)"
+         id="path101" />
+      <rect
+         x="50"
+         y="98"
+         width="8"
+         height="8"
+         id="rect101" />
+      <rect
+         x="58"
+         y="98"
+         width="8"
+         height="8"
+         id="rect102" />
+      <rect
+         x="66"
+         y="98"
+         width="8"
+         height="8"
+         id="rect103" />
+      <rect
+         x="74"
+         y="98"
+         width="8"
+         height="8"
+         id="rect104" />
+      <rect
+         x="82"
+         y="98"
+         width="8"
+         height="8"
+         id="rect105" />
+      <rect
+         x="90"
+         y="98"
+         width="8"
+         height="8"
+         id="rect106" />
+      <rect
+         x="98"
+         y="98"
+         width="8"
+         height="8"
+         id="rect107" />
+      <rect
+         x="106"
+         y="98"
+         width="8"
+         height="8"
+         id="rect108" />
+      <rect
+         x="114"
+         y="98"
+         width="8"
+         height="8"
+         id="rect109" />
+      <path
+         d="m 122,98 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,126,102)"
+         id="path109" />
+      <path
+         d="m 154,98 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,158,102)"
+         id="path110" />
+      <path
+         d="m 162,98 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,166,102)"
+         id="path111" />
+      <path
+         d="m 178,98 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,182,102)"
+         id="path112" />
+      <path
+         d="m 194,98 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,198,102)"
+         id="path113" />
+      <path
+         d="m 226,98 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,230,102)"
+         id="path114" />
+      <rect
+         x="234"
+         y="98"
+         width="8"
+         height="8"
+         id="rect114" />
+      <path
+         d="m 242,98 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path115" />
+      <path
+         d="m 258,98 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,262,102)"
+         id="path116" />
+      <rect
+         x="274"
+         y="98"
+         width="8"
+         height="8"
+         id="rect116" />
+      <path
+         d="m 290,98 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,294,102)"
+         id="path117" />
+      <rect
+         x="2"
+         y="106"
+         width="8"
+         height="8"
+         id="rect117" />
+      <rect
+         x="10"
+         y="106"
+         width="8"
+         height="8"
+         id="rect118" />
+      <path
+         d="m 18,106 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path118" />
+      <path
+         d="m 34,106 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,38,110)"
+         id="path119" />
+      <path
+         d="m 42,106 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,46,110)"
+         id="path120" />
+      <rect
+         x="58"
+         y="106"
+         width="8"
+         height="8"
+         id="rect120" />
+      <path
+         d="m 66,106 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,70,110)"
+         id="path121" />
+      <path
+         d="m 210,106 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,214,110)"
+         id="path122" />
+      <path
+         d="m 218,106 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path123" />
+      <rect
+         x="234"
+         y="106"
+         width="8"
+         height="8"
+         id="rect123" />
+      <path
+         d="m 258,106 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,262,110)"
+         id="path124" />
+      <rect
+         x="274"
+         y="106"
+         width="8"
+         height="8"
+         id="rect124" />
+      <path
+         d="m 2,114 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,6,118)"
+         id="path125" />
+      <rect
+         x="18"
+         y="114"
+         width="8"
+         height="8"
+         id="rect125" />
+      <path
+         d="m 50,114 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,54,118)"
+         id="path126" />
+      <rect
+         x="58"
+         y="114"
+         width="8"
+         height="8"
+         id="rect126" />
+      <path
+         d="m 82,114 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,86,118)"
+         id="path127" />
+      <circle
+         cx="102"
+         cy="118"
+         r="4"
+         id="circle127" />
+      <path
+         d="m 194,114 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,198,118)"
+         id="path128" />
+      <rect
+         x="202"
+         y="114"
+         width="8"
+         height="8"
+         id="rect128" />
+      <rect
+         x="210"
+         y="114"
+         width="8"
+         height="8"
+         id="rect129" />
+      <rect
+         x="218"
+         y="114"
+         width="8"
+         height="8"
+         id="rect130" />
+      <rect
+         x="226"
+         y="114"
+         width="8"
+         height="8"
+         id="rect131" />
+      <path
+         d="m 234,114 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,238,118)"
+         id="path131" />
+      <circle
+         cx="254"
+         cy="118"
+         r="4"
+         id="circle131" />
+      <path
+         d="m 266,114 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,270,118)"
+         id="path132" />
+      <rect
+         x="274"
+         y="114"
+         width="8"
+         height="8"
+         id="rect132" />
+      <path
+         d="m 10,122 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,14,126)"
+         id="path133" />
+      <rect
+         x="18"
+         y="122"
+         width="8"
+         height="8"
+         id="rect133" />
+      <path
+         d="m 26,122 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path134" />
+      <path
+         d="m 58,122 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,62,126)"
+         id="path135" />
+      <path
+         d="m 66,122 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path136" />
+      <rect
+         x="82"
+         y="122"
+         width="8"
+         height="8"
+         id="rect136" />
+      <rect
+         x="194"
+         y="122"
+         width="8"
+         height="8"
+         id="rect137" />
+      <rect
+         x="210"
+         y="122"
+         width="8"
+         height="8"
+         id="rect138" />
+      <path
+         d="m 242,122 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,246,126)"
+         id="path138" />
+      <circle
+         cx="262"
+         cy="126"
+         r="4"
+         id="circle138" />
+      <rect
+         x="274"
+         y="122"
+         width="8"
+         height="8"
+         id="rect139" />
+      <path
+         d="m 10,130 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,14,134)"
+         id="path139" />
+      <path
+         d="m 18,130 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,22,134)"
+         id="path140" />
+      <path
+         d="m 34,130 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,38,134)"
+         id="path141" />
+      <circle
+         cx="54"
+         cy="134"
+         r="4"
+         id="circle141" />
+      <path
+         d="m 74,130 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,78,134)"
+         id="path142" />
+      <path
+         d="m 82,130 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,86,134)"
+         id="path143" />
+      <path
+         d="m 98,130 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,102,134)"
+         id="path144" />
+      <path
+         d="m 194,130 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,198,134)"
+         id="path145" />
+      <rect
+         x="210"
+         y="130"
+         width="8"
+         height="8"
+         id="rect145" />
+      <path
+         d="m 234,130 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,238,134)"
+         id="path146" />
+      <rect
+         x="242"
+         y="130"
+         width="8"
+         height="8"
+         id="rect146" />
+      <path
+         d="m 250,130 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path147" />
+      <path
+         d="m 266,130 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,270,134)"
+         id="path148" />
+      <rect
+         x="274"
+         y="130"
+         width="8"
+         height="8"
+         id="rect148" />
+      <rect
+         x="282"
+         y="130"
+         width="8"
+         height="8"
+         id="rect149" />
+      <path
+         d="m 290,130 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path149" />
+      <path
+         d="m 26,138 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,30,142)"
+         id="path150" />
+      <path
+         d="m 34,138 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,38,142)"
+         id="path151" />
+      <circle
+         cx="70"
+         cy="142"
+         r="4"
+         id="circle151" />
+      <path
+         d="m 98,138 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,102,142)"
+         id="path152" />
+      <rect
+         x="210"
+         y="138"
+         width="8"
+         height="8"
+         id="rect152" />
+      <rect
+         x="218"
+         y="138"
+         width="8"
+         height="8"
+         id="rect153" />
+      <path
+         d="m 226,138 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path153" />
+      <path
+         d="m 258,138 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,262,142)"
+         id="path154" />
+      <rect
+         x="266"
+         y="138"
+         width="8"
+         height="8"
+         id="rect154" />
+      <path
+         d="m 10,146 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,14,150)"
+         id="path155" />
+      <rect
+         x="18"
+         y="146"
+         width="8"
+         height="8"
+         id="rect155" />
+      <path
+         d="m 26,146 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,30,150)"
+         id="path156" />
+      <path
+         d="m 42,146 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,46,150)"
+         id="path157" />
+      <path
+         d="m 50,146 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path158" />
+      <circle
+         cx="78"
+         cy="150"
+         r="4"
+         id="circle158" />
+      <path
+         d="m 210,146 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,214,150)"
+         id="path159" />
+      <rect
+         x="218"
+         y="146"
+         width="8"
+         height="8"
+         id="rect159" />
+      <rect
+         x="226"
+         y="146"
+         width="8"
+         height="8"
+         id="rect160" />
+      <path
+         d="m 234,146 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path160" />
+      <circle
+         cx="254"
+         cy="150"
+         r="4"
+         id="circle160" />
+      <path
+         d="m 266,146 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,270,150)"
+         id="path161" />
+      <path
+         d="m 274,146 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path162" />
+      <rect
+         x="10"
+         y="154"
+         width="8"
+         height="8"
+         id="rect162" />
+      <rect
+         x="42"
+         y="154"
+         width="8"
+         height="8"
+         id="rect163" />
+      <circle
+         cx="70"
+         cy="158"
+         r="4"
+         id="circle163" />
+      <circle
+         cx="198"
+         cy="158"
+         r="4"
+         id="circle164" />
+      <rect
+         x="234"
+         y="154"
+         width="8"
+         height="8"
+         id="rect164" />
+      <rect
+         x="274"
+         y="154"
+         width="8"
+         height="8"
+         id="rect165" />
+      <path
+         d="m 2,162 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,6,166)"
+         id="path165" />
+      <rect
+         x="10"
+         y="162"
+         width="8"
+         height="8"
+         id="rect166" />
+      <path
+         d="m 18,162 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path166" />
+      <path
+         d="m 34,162 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,38,166)"
+         id="path167" />
+      <rect
+         x="42"
+         y="162"
+         width="8"
+         height="8"
+         id="rect167" />
+      <rect
+         x="50"
+         y="162"
+         width="8"
+         height="8"
+         id="rect168" />
+      <path
+         d="m 58,162 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path168" />
+      <path
+         d="m 82,162 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,86,166)"
+         id="path169" />
+      <path
+         d="m 90,162 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path170" />
+      <path
+         d="m 218,162 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,222,166)"
+         id="path171" />
+      <rect
+         x="234"
+         y="162"
+         width="8"
+         height="8"
+         id="rect171" />
+      <path
+         d="m 242,162 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path172" />
+      <rect
+         x="274"
+         y="162"
+         width="8"
+         height="8"
+         id="rect172" />
+      <rect
+         x="282"
+         y="162"
+         width="8"
+         height="8"
+         id="rect173" />
+      <path
+         d="m 290,162 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path173" />
+      <rect
+         x="18"
+         y="170"
+         width="8"
+         height="8"
+         id="rect174" />
+      <rect
+         x="26"
+         y="170"
+         width="8"
+         height="8"
+         id="rect175" />
+      <rect
+         x="34"
+         y="170"
+         width="8"
+         height="8"
+         id="rect176" />
+      <path
+         d="m 58,170 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,62,174)"
+         id="path176" />
+      <path
+         d="m 66,170 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path177" />
+      <path
+         d="m 82,170 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,86,174)"
+         id="path178" />
+      <path
+         d="m 210,170 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,214,174)"
+         id="path179" />
+      <rect
+         x="218"
+         y="170"
+         width="8"
+         height="8"
+         id="rect179" />
+      <path
+         d="m 234,170 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,238,174)"
+         id="path180" />
+      <path
+         d="m 258,170 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,262,174)"
+         id="path181" />
+      <rect
+         x="266"
+         y="170"
+         width="8"
+         height="8"
+         id="rect181" />
+      <rect
+         x="274"
+         y="170"
+         width="8"
+         height="8"
+         id="rect182" />
+      <rect
+         x="282"
+         y="170"
+         width="8"
+         height="8"
+         id="rect183" />
+      <path
+         d="m 2,178 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,6,182)"
+         id="path183" />
+      <rect
+         x="10"
+         y="178"
+         width="8"
+         height="8"
+         id="rect184" />
+      <rect
+         x="18"
+         y="178"
+         width="8"
+         height="8"
+         id="rect185" />
+      <rect
+         x="26"
+         y="178"
+         width="8"
+         height="8"
+         id="rect186" />
+      <rect
+         x="34"
+         y="178"
+         width="8"
+         height="8"
+         id="rect187" />
+      <circle
+         cx="54"
+         cy="182"
+         r="4"
+         id="circle187" />
+      <rect
+         x="66"
+         y="178"
+         width="8"
+         height="8"
+         id="rect188" />
+      <path
+         d="m 90,178 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,94,182)"
+         id="path188" />
+      <path
+         d="m 98,178 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path189" />
+      <path
+         d="m 194,178 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,198,182)"
+         id="path190" />
+      <rect
+         x="202"
+         y="178"
+         width="8"
+         height="8"
+         id="rect190" />
+      <rect
+         x="210"
+         y="178"
+         width="8"
+         height="8"
+         id="rect191" />
+      <rect
+         x="218"
+         y="178"
+         width="8"
+         height="8"
+         id="rect192" />
+      <path
+         d="m 226,178 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path192" />
+      <rect
+         x="266"
+         y="178"
+         width="8"
+         height="8"
+         id="rect193" />
+      <rect
+         x="274"
+         y="178"
+         width="8"
+         height="8"
+         id="rect194" />
+      <path
+         d="m 282,178 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,286,182)"
+         id="path194" />
+      <rect
+         x="10"
+         y="186"
+         width="8"
+         height="8"
+         id="rect195" />
+      <path
+         d="m 18,186 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,22,190)"
+         id="path195" />
+      <path
+         d="m 34,186 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,38,190)"
+         id="path196" />
+      <rect
+         x="66"
+         y="186"
+         width="8"
+         height="8"
+         id="rect196" />
+      <path
+         d="m 90,186 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,94,190)"
+         id="path197" />
+      <rect
+         x="202"
+         y="186"
+         width="8"
+         height="8"
+         id="rect197" />
+      <rect
+         x="226"
+         y="186"
+         width="8"
+         height="8"
+         id="rect198" />
+      <path
+         d="m 234,186 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path198" />
+      <circle
+         cx="254"
+         cy="190"
+         r="4"
+         id="circle198" />
+      <rect
+         x="266"
+         y="186"
+         width="8"
+         height="8"
+         id="rect199" />
+      <rect
+         x="274"
+         y="186"
+         width="8"
+         height="8"
+         id="rect200" />
+      <circle
+         cx="294"
+         cy="190"
+         r="4"
+         id="circle200" />
+      <path
+         d="m 10,194 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,14,198)"
+         id="path200" />
+      <path
+         d="m 50,194 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,54,198)"
+         id="path201" />
+      <rect
+         x="58"
+         y="194"
+         width="8"
+         height="8"
+         id="rect201" />
+      <rect
+         x="66"
+         y="194"
+         width="8"
+         height="8"
+         id="rect202" />
+      <path
+         d="m 82,194 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,86,198)"
+         id="path202" />
+      <path
+         d="m 98,194 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,102,198)"
+         id="path203" />
+      <path
+         d="m 106,194 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path204" />
+      <circle
+         cx="126"
+         cy="198"
+         r="4"
+         id="circle204" />
+      <path
+         d="m 146,194 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,150,198)"
+         id="path205" />
+      <rect
+         x="154"
+         y="194"
+         width="8"
+         height="8"
+         id="rect205" />
+      <path
+         d="m 162,194 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path206" />
+      <circle
+         cx="182"
+         cy="198"
+         r="4"
+         id="circle206" />
+      <path
+         d="m 194,194 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,198,198)"
+         id="path207" />
+      <path
+         d="m 202,194 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,206,198)"
+         id="path208" />
+      <path
+         d="m 218,194 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,222,198)"
+         id="path209" />
+      <path
+         d="m 226,194 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,230,198)"
+         id="path210" />
+      <circle
+         cx="246"
+         cy="198"
+         r="4"
+         id="circle210" />
+      <rect
+         x="266"
+         y="194"
+         width="8"
+         height="8"
+         id="rect210" />
+      <rect
+         x="274"
+         y="194"
+         width="8"
+         height="8"
+         id="rect211" />
+      <path
+         d="m 282,194 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path211" />
+      <circle
+         cx="6"
+         cy="206"
+         r="4"
+         id="circle211" />
+      <path
+         d="m 18,202 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,22,206)"
+         id="path212" />
+      <circle
+         cx="46"
+         cy="206"
+         r="4"
+         id="circle212" />
+      <rect
+         x="58"
+         y="202"
+         width="8"
+         height="8"
+         id="rect212" />
+      <rect
+         x="66"
+         y="202"
+         width="8"
+         height="8"
+         id="rect213" />
+      <path
+         d="m 82,202 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,86,206)"
+         id="path213" />
+      <path
+         d="m 90,202 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path214" />
+      <path
+         d="m 106,202 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,110,206)"
+         id="path215" />
+      <path
+         d="m 114,202 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path216" />
+      <path
+         d="m 154,202 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,158,206)"
+         id="path217" />
+      <rect
+         x="162"
+         y="202"
+         width="8"
+         height="8"
+         id="rect217" />
+      <path
+         d="m 170,202 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path218" />
+      <path
+         d="m 210,202 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,214,206)"
+         id="path219" />
+      <rect
+         x="218"
+         y="202"
+         width="8"
+         height="8"
+         id="rect219" />
+      <path
+         d="m 234,202 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,238,206)"
+         id="path220" />
+      <path
+         d="m 250,202 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,254,206)"
+         id="path221" />
+      <rect
+         x="258"
+         y="202"
+         width="8"
+         height="8"
+         id="rect221" />
+      <rect
+         x="266"
+         y="202"
+         width="8"
+         height="8"
+         id="rect222" />
+      <path
+         d="m 274,202 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,278,206)"
+         id="path222" />
+      <rect
+         x="18"
+         y="210"
+         width="8"
+         height="8"
+         id="rect223" />
+      <path
+         d="m 26,210 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path223" />
+      <path
+         d="m 50,210 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,54,214)"
+         id="path224" />
+      <rect
+         x="58"
+         y="210"
+         width="8"
+         height="8"
+         id="rect224" />
+      <rect
+         x="66"
+         y="210"
+         width="8"
+         height="8"
+         id="rect225" />
+      <path
+         d="m 74,210 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path225" />
+      <path
+         d="m 90,210 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,94,214)"
+         id="path226" />
+      <rect
+         x="114"
+         y="210"
+         width="8"
+         height="8"
+         id="rect226" />
+      <path
+         d="m 122,210 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path227" />
+      <path
+         d="m 138,210 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,142,214)"
+         id="path228" />
+      <rect
+         x="170"
+         y="210"
+         width="8"
+         height="8"
+         id="rect228" />
+      <rect
+         x="178"
+         y="210"
+         width="8"
+         height="8"
+         id="rect229" />
+      <path
+         d="m 186,210 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path229" />
+      <path
+         d="m 202,210 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,206,214)"
+         id="path230" />
+      <rect
+         x="210"
+         y="210"
+         width="8"
+         height="8"
+         id="rect230" />
+      <rect
+         x="218"
+         y="210"
+         width="8"
+         height="8"
+         id="rect231" />
+      <rect
+         x="226"
+         y="210"
+         width="8"
+         height="8"
+         id="rect232" />
+      <path
+         d="m 234,210 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,238,214)"
+         id="path232" />
+      <path
+         d="m 18,218 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,22,222)"
+         id="path233" />
+      <path
+         d="m 74,218 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,78,222)"
+         id="path234" />
+      <path
+         d="m 98,218 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,102,222)"
+         id="path235" />
+      <rect
+         x="106"
+         y="218"
+         width="8"
+         height="8"
+         id="rect235" />
+      <rect
+         x="114"
+         y="218"
+         width="8"
+         height="8"
+         id="rect236" />
+      <path
+         d="m 130,218 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,134,222)"
+         id="path236" />
+      <path
+         d="m 138,218 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,142,222)"
+         id="path237" />
+      <path
+         d="m 154,218 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,158,222)"
+         id="path238" />
+      <rect
+         x="162"
+         y="218"
+         width="8"
+         height="8"
+         id="rect238" />
+      <rect
+         x="170"
+         y="218"
+         width="8"
+         height="8"
+         id="rect239" />
+      <rect
+         x="178"
+         y="218"
+         width="8"
+         height="8"
+         id="rect240" />
+      <rect
+         x="186"
+         y="218"
+         width="8"
+         height="8"
+         id="rect241" />
+      <path
+         d="m 194,218 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path241" />
+      <path
+         d="m 210,218 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,214,222)"
+         id="path242" />
+      <rect
+         x="226"
+         y="218"
+         width="8"
+         height="8"
+         id="rect242" />
+      <path
+         d="m 242,218 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,246,222)"
+         id="path243" />
+      <path
+         d="m 258,218 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,262,222)"
+         id="path244" />
+      <rect
+         x="266"
+         y="218"
+         width="8"
+         height="8"
+         id="rect244" />
+      <rect
+         x="274"
+         y="218"
+         width="8"
+         height="8"
+         id="rect245" />
+      <rect
+         x="282"
+         y="218"
+         width="8"
+         height="8"
+         id="rect246" />
+      <path
+         d="m 290,218 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path246" />
+      <path
+         d="m 2,226 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,6,230)"
+         id="path247" />
+      <path
+         d="m 10,226 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path248" />
+      <path
+         d="m 26,226 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,30,230)"
+         id="path249" />
+      <path
+         d="m 34,226 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path250" />
+      <circle
+         cx="54"
+         cy="230"
+         r="4"
+         id="circle250" />
+      <circle
+         cx="94"
+         cy="230"
+         r="4"
+         id="circle251" />
+      <path
+         d="m 114,226 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,118,230)"
+         id="path251" />
+      <rect
+         x="122"
+         y="226"
+         width="8"
+         height="8"
+         id="rect251" />
+      <path
+         d="m 130,226 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,134,230)"
+         id="path252" />
+      <circle
+         cx="150"
+         cy="230"
+         r="4"
+         id="circle252" />
+      <rect
+         x="162"
+         y="226"
+         width="8"
+         height="8"
+         id="rect252" />
+      <rect
+         x="170"
+         y="226"
+         width="8"
+         height="8"
+         id="rect253" />
+      <rect
+         x="178"
+         y="226"
+         width="8"
+         height="8"
+         id="rect254" />
+      <path
+         d="m 194,226 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,198,230)"
+         id="path254" />
+      <rect
+         x="226"
+         y="226"
+         width="8"
+         height="8"
+         id="rect255" />
+      <rect
+         x="234"
+         y="226"
+         width="8"
+         height="8"
+         id="rect256" />
+      <rect
+         x="242"
+         y="226"
+         width="8"
+         height="8"
+         id="rect257" />
+      <rect
+         x="250"
+         y="226"
+         width="8"
+         height="8"
+         id="rect258" />
+      <rect
+         x="258"
+         y="226"
+         width="8"
+         height="8"
+         id="rect259" />
+      <rect
+         x="266"
+         y="226"
+         width="8"
+         height="8"
+         id="rect260" />
+      <path
+         d="m 274,226 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,278,230)"
+         id="path260" />
+      <path
+         d="m 290,226 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,294,230)"
+         id="path261" />
+      <path
+         d="m 66,234 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,70,238)"
+         id="path262" />
+      <path
+         d="m 74,234 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path263" />
+      <circle
+         cx="110"
+         cy="238"
+         r="4"
+         id="circle263" />
+      <path
+         d="m 122,234 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,126,238)"
+         id="path264" />
+      <rect
+         x="162"
+         y="234"
+         width="8"
+         height="8"
+         id="rect264" />
+      <rect
+         x="178"
+         y="234"
+         width="8"
+         height="8"
+         id="rect265" />
+      <path
+         d="m 186,234 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path265" />
+      <path
+         d="m 218,234 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,222,238)"
+         id="path266" />
+      <rect
+         x="226"
+         y="234"
+         width="8"
+         height="8"
+         id="rect266" />
+      <rect
+         x="258"
+         y="234"
+         width="8"
+         height="8"
+         id="rect267" />
+      <rect
+         x="266"
+         y="234"
+         width="8"
+         height="8"
+         id="rect268" />
+      <rect
+         x="74"
+         y="242"
+         width="8"
+         height="8"
+         id="rect269" />
+      <path
+         d="m 90,242 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,94,246)"
+         id="path269" />
+      <path
+         d="m 98,242 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path270" />
+      <path
+         d="m 130,242 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,134,246)"
+         id="path271" />
+      <circle
+         cx="150"
+         cy="246"
+         r="4"
+         id="circle271" />
+      <path
+         d="m 162,242 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,166,246)"
+         id="path272" />
+      <rect
+         x="170"
+         y="242"
+         width="8"
+         height="8"
+         id="rect272" />
+      <rect
+         x="178"
+         y="242"
+         width="8"
+         height="8"
+         id="rect273" />
+      <rect
+         x="186"
+         y="242"
+         width="8"
+         height="8"
+         id="rect274" />
+      <path
+         d="m 202,242 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,206,246)"
+         id="path274" />
+      <rect
+         x="210"
+         y="242"
+         width="8"
+         height="8"
+         id="rect275" />
+      <rect
+         x="218"
+         y="242"
+         width="8"
+         height="8"
+         id="rect276" />
+      <rect
+         x="226"
+         y="242"
+         width="8"
+         height="8"
+         id="rect277" />
+      <circle
+         cx="246"
+         cy="246"
+         r="4"
+         id="circle277" />
+      <rect
+         x="258"
+         y="242"
+         width="8"
+         height="8"
+         id="rect278" />
+      <rect
+         x="266"
+         y="242"
+         width="8"
+         height="8"
+         id="rect279" />
+      <path
+         d="m 274,242 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path279" />
+      <path
+         d="m 74,250 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,78,254)"
+         id="path280" />
+      <path
+         d="m 82,250 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path281" />
+      <path
+         d="m 98,250 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,102,254)"
+         id="path282" />
+      <circle
+         cx="118"
+         cy="254"
+         r="4"
+         id="circle282" />
+      <rect
+         x="130"
+         y="250"
+         width="8"
+         height="8"
+         id="rect282" />
+      <path
+         d="m 138,250 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path283" />
+      <path
+         d="m 154,250 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,158,254)"
+         id="path284" />
+      <path
+         d="m 170,250 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,174,254)"
+         id="path285" />
+      <path
+         d="m 186,250 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,190,254)"
+         id="path286" />
+      <path
+         d="m 210,250 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,214,254)"
+         id="path287" />
+      <rect
+         x="226"
+         y="250"
+         width="8"
+         height="8"
+         id="rect287" />
+      <rect
+         x="258"
+         y="250"
+         width="8"
+         height="8"
+         id="rect288" />
+      <rect
+         x="274"
+         y="250"
+         width="8"
+         height="8"
+         id="rect289" />
+      <circle
+         cx="70"
+         cy="262"
+         r="4"
+         id="circle289" />
+      <path
+         d="m 106,258 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,110,262)"
+         id="path289" />
+      <path
+         d="m 122,258 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,126,262)"
+         id="path290" />
+      <rect
+         x="130"
+         y="258"
+         width="8"
+         height="8"
+         id="rect290" />
+      <rect
+         x="138"
+         y="258"
+         width="8"
+         height="8"
+         id="rect291" />
+      <rect
+         x="146"
+         y="258"
+         width="8"
+         height="8"
+         id="rect292" />
+      <rect
+         x="154"
+         y="258"
+         width="8"
+         height="8"
+         id="rect293" />
+      <path
+         d="m 162,258 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path293" />
+      <path
+         d="m 202,258 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,206,262)"
+         id="path294" />
+      <path
+         d="m 226,258 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,230,262)"
+         id="path295" />
+      <rect
+         x="234"
+         y="258"
+         width="8"
+         height="8"
+         id="rect295" />
+      <rect
+         x="242"
+         y="258"
+         width="8"
+         height="8"
+         id="rect296" />
+      <rect
+         x="250"
+         y="258"
+         width="8"
+         height="8"
+         id="rect297" />
+      <rect
+         x="258"
+         y="258"
+         width="8"
+         height="8"
+         id="rect298" />
+      <rect
+         x="266"
+         y="258"
+         width="8"
+         height="8"
+         id="rect299" />
+      <rect
+         x="274"
+         y="258"
+         width="8"
+         height="8"
+         id="rect300" />
+      <rect
+         x="282"
+         y="258"
+         width="8"
+         height="8"
+         id="rect301" />
+      <path
+         d="m 290,258 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path301" />
+      <path
+         d="m 74,266 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,78,270)"
+         id="path302" />
+      <path
+         d="m 82,266 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path303" />
+      <path
+         d="m 98,266 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,102,270)"
+         id="path304" />
+      <rect
+         x="106"
+         y="266"
+         width="8"
+         height="8"
+         id="rect304" />
+      <path
+         d="m 114,266 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path305" />
+      <rect
+         x="146"
+         y="266"
+         width="8"
+         height="8"
+         id="rect305" />
+      <rect
+         x="154"
+         y="266"
+         width="8"
+         height="8"
+         id="rect306" />
+      <circle
+         cx="182"
+         cy="270"
+         r="4"
+         id="circle306" />
+      <path
+         d="m 194,266 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,198,270)"
+         id="path306" />
+      <path
+         d="m 202,266 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,206,270)"
+         id="path307" />
+      <rect
+         x="242"
+         y="266"
+         width="8"
+         height="8"
+         id="rect307" />
+      <rect
+         x="250"
+         y="266"
+         width="8"
+         height="8"
+         id="rect308" />
+      <rect
+         x="282"
+         y="266"
+         width="8"
+         height="8"
+         id="rect309" />
+      <rect
+         x="74"
+         y="274"
+         width="8"
+         height="8"
+         id="rect310" />
+      <circle
+         cx="94"
+         cy="278"
+         r="4"
+         id="circle310" />
+      <rect
+         x="114"
+         y="274"
+         width="8"
+         height="8"
+         id="rect311" />
+      <path
+         d="m 130,274 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,134,278)"
+         id="path311" />
+      <rect
+         x="138"
+         y="274"
+         width="8"
+         height="8"
+         id="rect312" />
+      <rect
+         x="146"
+         y="274"
+         width="8"
+         height="8"
+         id="rect313" />
+      <rect
+         x="154"
+         y="274"
+         width="8"
+         height="8"
+         id="rect314" />
+      <path
+         d="m 170,274 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,174,278)"
+         id="path314" />
+      <path
+         d="m 186,274 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,190,278)"
+         id="path315" />
+      <path
+         d="m 194,274 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,198,278)"
+         id="path316" />
+      <path
+         d="m 210,274 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(-90,214,278)"
+         id="path317" />
+      <circle
+         cx="230"
+         cy="278"
+         r="4"
+         id="circle317" />
+      <rect
+         x="242"
+         y="274"
+         width="8"
+         height="8"
+         id="rect317" />
+      <rect
+         x="250"
+         y="274"
+         width="8"
+         height="8"
+         id="rect318" />
+      <circle
+         cx="270"
+         cy="278"
+         r="4"
+         id="circle318" />
+      <rect
+         x="282"
+         y="274"
+         width="8"
+         height="8"
+         id="rect319" />
+      <path
+         d="m 66,282 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,70,286)"
+         id="path319" />
+      <rect
+         x="74"
+         y="282"
+         width="8"
+         height="8"
+         id="rect320" />
+      <path
+         d="m 82,282 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path320" />
+      <circle
+         cx="102"
+         cy="286"
+         r="4"
+         id="circle320" />
+      <path
+         d="m 114,282 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,118,286)"
+         id="path321" />
+      <path
+         d="m 130,282 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,134,286)"
+         id="path322" />
+      <path
+         d="m 154,282 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,158,286)"
+         id="path323" />
+      <rect
+         x="162"
+         y="282"
+         width="8"
+         height="8"
+         id="rect323" />
+      <rect
+         x="170"
+         y="282"
+         width="8"
+         height="8"
+         id="rect324" />
+      <path
+         d="m 186,282 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,190,286)"
+         id="path324" />
+      <path
+         d="m 210,282 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,214,286)"
+         id="path325" />
+      <path
+         d="m 218,282 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path326" />
+      <path
+         d="m 234,282 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,238,286)"
+         id="path327" />
+      <rect
+         x="242"
+         y="282"
+         width="8"
+         height="8"
+         id="rect327" />
+      <rect
+         x="250"
+         y="282"
+         width="8"
+         height="8"
+         id="rect328" />
+      <path
+         d="m 258,282 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         id="path328" />
+      <path
+         d="m 274,282 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(-90,278,286)"
+         id="path329" />
+      <rect
+         x="282"
+         y="282"
+         width="8"
+         height="8"
+         id="rect329" />
+      <path
+         d="m 74,290 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,78,294)"
+         id="path330" />
+      <circle
+         cx="94"
+         cy="294"
+         r="4"
+         id="circle330" />
+      <circle
+         cx="110"
+         cy="294"
+         r="4"
+         id="circle331" />
+      <circle
+         cx="126"
+         cy="294"
+         r="4"
+         id="circle332" />
+      <path
+         d="m 138,290 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(180,142,294)"
+         id="path332" />
+      <path
+         d="m 146,290 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path333" />
+      <path
+         d="m 162,290 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,166,294)"
+         id="path334" />
+      <path
+         d="m 170,290 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(90,174,294)"
+         id="path335" />
+      <circle
+         cx="198"
+         cy="294"
+         r="4"
+         id="circle335" />
+      <path
+         d="m 234,290 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,238,294)"
+         id="path336" />
+      <path
+         d="m 258,290 v 8 h 4 a 4,4 0 0 0 0,-8"
+         transform="rotate(90,262,294)"
+         id="path337" />
+      <path
+         d="m 274,290 v 8 h 8 v -4 a 4,4 0 0 0 -4,-4"
+         transform="rotate(180,278,294)"
+         id="path338" />
+      <rect
+         x="282"
+         y="290"
+         width="8"
+         height="8"
+         id="rect338" />
+      <path
+         d="m 290,290 v 8 h 4 a 4,4 0 0 0 0,-8"
+         id="path339" />
+    </clipPath>
+    <clipPath
+       id="clip-path-corners-square-color-0-0-1">
+      <path
+         clip-rule="evenodd"
+         d="M 2,22 V 38 A 20,20 0 0 0 22,58 H 38 A 20,20 0 0 0 58,38 V 22 A 20,20 0 0 0 38,2 H 22 A 20,20 0 0 0 2,22 M 22,10 H 38 A 12,12 0 0 1 50,22 V 38 A 12,12 0 0 1 38,50 H 22 A 12,12 0 0 1 10,38 V 22 A 12,12 0 0 1 22,10"
+         id="path340" />
+    </clipPath>
+    <clipPath
+       id="clip-path-corners-dot-color-0-0-1">
+      <circle
+         cx="30"
+         cy="30"
+         r="12"
+         id="circle340" />
+    </clipPath>
+    <clipPath
+       id="clip-path-corners-square-color-1-0-1">
+      <path
+         clip-rule="evenodd"
+         d="m 242,22 v 16 a 20,20 0 0 0 20,20 h 16 A 20,20 0 0 0 298,38 V 22 A 20,20 0 0 0 278,2 h -16 a 20,20 0 0 0 -20,20 m 20,-12 h 16 a 12,12 0 0 1 12,12 V 38 A 12,12 0 0 1 278,50 H 262 A 12,12 0 0 1 250,38 V 22 a 12,12 0 0 1 12,-12"
+         transform="rotate(90,270,30)"
+         id="path341" />
+    </clipPath>
+    <clipPath
+       id="clip-path-corners-dot-color-1-0-1">
+      <circle
+         cx="270"
+         cy="30"
+         r="12"
+         transform="rotate(90,270,30)"
+         id="circle341" />
+    </clipPath>
+    <clipPath
+       id="clip-path-corners-square-color-0-1-1">
+      <path
+         clip-rule="evenodd"
+         d="m 2,262 v 16 a 20,20 0 0 0 20,20 H 38 A 20,20 0 0 0 58,278 V 262 A 20,20 0 0 0 38,242 H 22 A 20,20 0 0 0 2,262 m 20,-12 h 16 a 12,12 0 0 1 12,12 v 16 A 12,12 0 0 1 38,290 H 22 A 12,12 0 0 1 10,278 v -16 a 12,12 0 0 1 12,-12"
+         transform="rotate(-90,30,270)"
+         id="path342" />
+    </clipPath>
+    <clipPath
+       id="clip-path-corners-dot-color-0-1-1">
+      <circle
+         cx="30"
+         cy="270"
+         r="12"
+         transform="rotate(-90,30,270)"
+         id="circle342" />
+    </clipPath>
+  </defs>
+  <rect
+     x="0"
+     y="0"
+     height="300"
+     width="300"
+     clip-path="url(#clip-path-dot-color-1)"
+     fill="#000000"
+     id="rect343"
+     style="display:inline"
+     transform="translate(-2,-2)" />
+  <rect
+     x="2"
+     y="2"
+     height="56"
+     width="56"
+     clip-path="url(#clip-path-corners-square-color-0-0-1)"
+     fill="#000000"
+     id="rect344"
+     style="display:inline"
+     transform="translate(-2,-2)" />
+  <rect
+     x="18"
+     y="18"
+     height="24"
+     width="24"
+     clip-path="url(#clip-path-corners-dot-color-0-0-1)"
+     fill="#000000"
+     id="rect345"
+     style="display:inline"
+     transform="translate(-2,-2)" />
+  <rect
+     x="242"
+     y="2"
+     height="56"
+     width="56"
+     clip-path="url(#clip-path-corners-square-color-1-0-1)"
+     fill="#000000"
+     id="rect346"
+     style="display:inline"
+     transform="translate(-2,-2)" />
+  <rect
+     x="258"
+     y="18"
+     height="24"
+     width="24"
+     clip-path="url(#clip-path-corners-dot-color-1-0-1)"
+     fill="#000000"
+     id="rect347"
+     style="display:inline"
+     transform="translate(-2,-2)" />
+  <rect
+     x="2"
+     y="242"
+     height="56"
+     width="56"
+     clip-path="url(#clip-path-corners-square-color-0-1-1)"
+     fill="#000000"
+     id="rect348"
+     style="display:inline"
+     transform="translate(-2,-2)" />
+  <rect
+     x="18"
+     y="258"
+     height="24"
+     width="24"
+     clip-path="url(#clip-path-corners-dot-color-0-1-1)"
+     fill="#000000"
+     id="rect349"
+     style="display:inline"
+     transform="translate(-2,-2)" />
+  <path
+     d="m 137.30333,167.71727 c -0.1028,-0.0564 -0.19076,-0.22975 -0.24327,-0.48013 -0.0989,-0.47504 -0.10726,-0.97413 -0.10279,-6.20566 0.007,-3.33655 -0.01,-5.23124 -0.0253,-5.34429 -0.0624,-0.37949 -0.26899,-0.37252 -1.20864,0.0401 -0.50013,0.21938 -0.79469,0.39437 -1.17135,0.69539 -1.03408,0.82792 -1.93577,2.21936 -2.57249,3.97019 -0.27043,0.74431 -0.5846,2.0168 -0.71261,2.88776 -0.10139,0.68848 -0.11796,0.96924 -0.14835,2.49687 -0.0315,1.60296 -0.043,1.71775 -0.18422,1.82232 l -0.0825,0.0604 -3.58282,0.011 c -1.97058,0.01 -5.37326,2.6e-4 -7.56156,-0.012 l -3.97914,-0.0213 v -0.62559 l 4.29793,-0.02 a 1920.0517,1920.0517 0 0 1 6.63916,-0.0204 c 1.28766,0 2.61724,-0.01 2.95438,-0.0198 l 0.61296,-0.0201 0.0514,-0.86446 c 0.15589,-2.64457 0.33486,-3.85667 0.76565,-5.18289 0.65198,-2.00478 1.41914,-3.36276 2.51977,-4.45863 0.75263,-0.74914 1.60569,-1.28038 2.59971,-1.61868 0.55504,-0.18904 0.91928,-0.25941 1.21762,-0.2349 l 0.23667,0.0197 0.0192,2.12226 c 0.0111,1.16728 0.027,3.94577 0.0379,6.17434 l 0.0188,4.05216 h 0.56597 l 0.0201,-3.43888 c 0.0195,-3.31346 0.0409,-4.36965 0.10829,-5.30779 0.043,-0.59606 0.12862,-1.2514 0.2184,-1.67604 0.25419,-1.20379 0.93133,-2.35034 1.59117,-2.69252 0.17589,-0.0916 0.20937,-0.0987 0.46739,-0.099 0.25285,-3.3e-4 0.29491,0.01 0.47803,0.0946 0.48531,0.22969 0.99335,0.94064 1.34173,1.87641 0.40397,1.08658 0.44054,1.39351 0.48639,4.08807 l 0.0593,3.47524 c 0.0428,2.48202 0.0908,3.67966 0.14702,3.67966 0.0147,0 0.0384,-0.0492 0.0546,-0.10938 0.10385,-0.39146 0.14354,-1.02339 0.23664,-3.77454 0.0928,-2.74671 0.41837,-7.65155 0.57294,-8.63016 0.0575,-0.36557 0.16793,-0.75153 0.25938,-0.90818 0.0386,-0.0657 0.11732,-0.16146 0.17451,-0.21176 0.0871,-0.0763 0.12874,-0.0917 0.24942,-0.0917 0.1321,0 0.15589,0.0121 0.26352,0.12208 0.24666,0.25426 0.45425,0.8303 0.48291,1.33836 0.0199,0.34769 0.0323,0.40876 0.0831,0.40876 0.11317,0 0.2035,-0.61188 0.3091,-2.08824 0.20001,-2.80699 0.49147,-3.928 1.02095,-3.928 0.4184,0 0.62432,0.48423 0.84509,1.98606 0.0997,0.67535 0.13552,0.87826 0.18041,1.01476 0.0696,0.21389 0.0919,0.13346 0.24766,-0.89816 0.25623,-1.69775 0.41528,-2.10266 0.82537,-2.10266 0.25667,0 0.46464,0.24144 0.61643,0.71566 0.17283,0.53952 0.2518,1.06306 0.35214,2.33618 0.117,1.4798 0.24805,2.63051 0.33149,2.90741 l 0.0391,0.12981 0.0481,-0.16046 c 0.0261,-0.0887 0.074,-0.3273 0.10657,-0.53052 0.10452,-0.65876 0.2456,-0.98651 0.4987,-1.15822 0.083,-0.0566 0.12877,-0.066 0.25393,-0.0572 0.0925,0.01 0.17594,0.0345 0.21146,0.0652 0.3921,0.3549 0.67254,2.63351 0.89057,7.24284 0.0355,0.74467 0.24905,6.18733 0.24905,6.34186 0,0.0309 0.10311,0.0398 0.50777,0.0398 0.45635,0 0.51464,-0.01 0.57674,-0.0562 l 0.0683,-0.0562 0.01,-5.97281 0.01,-5.97285 0.97788,-0.94094 1.75226,0.01 c 1.37627,0.01 1.77261,0.0182 1.8471,0.0486 0.0546,0.0219 0.14901,0.10966 0.22009,0.2028 0.11797,0.1552 0.2473,0.26705 0.46222,0.39945 0.0565,0.0343 0.10484,0.0941 0.11866,0.14585 0.0726,0.27048 0.0864,1.12104 0.10273,6.50234 l 0.0186,5.68443 0.27075,0.0343 c 0.2846,0.0355 0.46883,0.013 0.53536,-0.0676 0.0722,-0.087 0.0928,-1.12346 0.11935,-6.06391 0.0261,-4.89797 0.0445,-5.83174 0.11693,-6.10149 0.0262,-0.0969 0.0524,-0.1262 0.15486,-0.17239 0.13868,-0.0611 0.21974,-0.14182 0.35295,-0.34603 0.057,-0.087 0.13618,-0.16317 0.20825,-0.19903 0.11281,-0.0568 0.17529,-0.0585 1.86916,-0.0585 2.0489,0 1.94928,-0.0134 2.14659,0.27798 0.12308,0.1808 0.22936,0.27149 0.35384,0.30145 0.15314,0.0374 0.21111,0.11486 0.23457,0.31495 0.013,0.10248 0.036,2.50973 0.0517,5.34919 0.0265,4.71869 0.0559,6.34153 0.11419,6.62089 l 0.0216,0.10247 5.78137,0.0203 c 5.20642,0.0185 8.27521,0.0542 8.57639,0.10207 0.14932,0.0232 0.20932,0.0993 0.21138,0.267 0.004,0.12898 -0.01,0.14074 -0.1007,0.18759 -0.22181,0.10874 -0.71402,0.1167 -8.10757,0.13115 l -7.15875,0.0148 -0.0182,-2.28761 c -0.0467,-6.15934 -0.0813,-9.23955 -0.10801,-9.54517 -0.0353,-0.40359 -0.0683,-0.52571 -0.14694,-0.52571 -0.0814,0 -0.2742,-0.18554 -0.39013,-0.37597 -0.0559,-0.0904 -0.12965,-0.18211 -0.16516,-0.20378 -0.10904,-0.0663 -0.50604,-0.0838 -1.44629,-0.0622 -1.07515,0.0233 -1.10967,0.0324 -1.25905,0.29763 -0.095,0.16765 -0.27251,0.34494 -0.34559,0.34494 -0.1494,0 -0.15868,0.29184 -0.18628,5.81208 -0.0271,5.46171 -0.0428,6.34187 -0.10695,6.44543 -0.0616,0.0993 -0.21833,0.12895 -0.77091,0.14554 -0.47702,0.0155 -1.27032,-0.0228 -1.37976,-0.0647 -0.0669,-0.026 -0.10688,-0.16374 -0.14311,-0.49907 -0.0203,-0.18737 -0.0359,-2.29996 -0.0445,-6.03183 l -0.0156,-5.74371 -0.14652,-0.0527 c -0.19663,-0.0704 -0.33327,-0.19547 -0.42775,-0.38972 -0.0613,-0.12839 -0.0983,-0.16728 -0.18004,-0.19525 -0.1259,-0.0426 -1.80815,-0.0502 -2.12442,-0.01 -0.27736,0.0367 -0.36564,0.0845 -0.5833,0.32099 -0.10829,0.11768 -0.22762,0.2161 -0.29592,0.24329 -0.0812,0.0329 -0.11972,0.0676 -0.13387,0.12411 -0.0602,0.24282 -0.079,1.26516 -0.1041,5.86765 -0.0218,4.00319 -0.053,6.27185 -0.0864,6.36979 -0.01,0.0197 -0.40497,0.0476 -0.98823,0.0709 -1.03718,0.0428 -1.38489,-0.01 -1.46112,-0.19731 -0.10002,-0.2537 -0.15003,-1.00915 -0.21039,-3.16294 -0.0983,-3.50625 -0.39805,-8.53368 -0.52259,-8.7561 -0.0307,-0.055 -0.0463,-0.0259 -0.10038,0.18495 -0.12283,0.4773 -0.23627,1.6015 -0.28042,2.77666 -0.0293,0.78508 -0.0671,1.04234 -0.16696,1.11483 -0.17831,0.13029 -0.83958,0.16548 -0.95407,0.0508 -0.0577,-0.0574 -0.0997,-0.63363 -0.17938,-2.45361 -0.14483,-3.29465 -0.33767,-5.82577 -0.4667,-6.13556 -0.10275,-0.24593 -0.13039,-0.11619 -0.24763,1.17115 -0.14628,1.60392 -0.25525,3.65795 -0.29317,5.53397 -0.0343,1.64399 -0.0601,1.81188 -0.3084,1.91542 -0.14869,0.0619 -0.41671,0.0532 -0.53325,-0.0189 -0.21624,-0.13179 -0.23628,-0.28284 -0.26798,-2.00476 -0.0301,-1.62812 -0.0623,-2.38441 -0.14631,-3.29471 -0.0309,-0.33736 -0.0827,-1.00762 -0.11588,-1.48949 -0.10904,-1.59359 -0.14175,-1.91568 -0.20626,-2.02981 -0.0198,-0.0345 -0.0344,-0.0214 -0.0667,0.0584 -0.12423,0.29801 -0.23976,1.61677 -0.36909,4.21987 l -0.10388,2.08785 c -0.0657,1.32443 -0.12868,2.1806 -0.1683,2.30166 -0.0546,0.16553 -0.17836,0.21692 -0.48914,0.2014 -0.16518,-0.01 -0.2956,-0.0342 -0.38528,-0.0723 -0.11552,-0.0514 -0.14,-0.0771 -0.16659,-0.17621 -0.0626,-0.23702 -0.11763,-0.74681 -0.17631,-1.67008 -0.0883,-1.39077 -0.1359,-1.87029 -0.20833,-2.09553 -0.0266,-0.0838 -0.0834,-0.13249 -0.0849,-0.073 0,0.0128 -0.0203,0.12688 -0.0423,0.25566 -0.0829,0.4687 -0.21836,2.06919 -0.3225,3.81103 -0.0973,1.62238 -0.14039,2.70433 -0.22004,5.5196 -0.0307,1.0859 -0.0739,1.99825 -0.10521,2.20068 -0.0149,0.0919 -0.0344,0.11894 -0.11415,0.15246 -0.14285,0.0588 -0.82616,0.1032 -1.13831,0.0724 -0.30249,-0.0301 -0.35667,-0.0468 -0.37872,-0.11526 -0.0518,-0.16421 -0.0794,-1.44465 -0.10312,-4.86558 -0.0305,-4.40619 -0.0418,-4.6462 -0.23633,-5.62573 -0.16209,-0.81334 -0.4018,-1.54806 -0.64776,-1.98682 -0.22767,-0.40638 -0.55053,-0.66577 -0.82921,-0.66652 -0.10626,0 -0.1431,0.0201 -0.28974,0.1532 -0.29666,0.27002 -0.55158,0.7164 -0.76743,1.34285 -0.34982,1.01405 -0.40671,1.8619 -0.4712,7.00211 -0.0385,3.05812 -0.0881,4.45783 -0.16424,4.65716 -0.0199,0.0495 -0.11586,0.0665 -0.64702,0.11867 -0.55535,0.0542 -0.84511,0.0533 -0.94787,-0.007 z m -9.2214,-20.98254 c -1.4642,-0.0518 -2.32685,-0.19657 -2.93504,-0.49323 -0.36348,-0.17724 -0.60015,-0.35556 -0.92544,-0.69807 -0.70711,-0.74364 -0.95128,-1.36381 -1.0817,-2.74974 -0.0463,-0.49003 -0.0429,-4.25643 0.007,-5.30052 0.0504,-1.09686 0.11731,-1.41908 0.42046,-2.01342 0.60084,-1.17722 1.81439,-1.94437 3.34929,-2.11641 1.11306,-0.12531 2.88085,-0.11889 3.88423,0.0145 1.0417,0.13798 2.05233,0.5563 2.63597,1.09115 0.48428,0.44438 1.00203,1.60272 1.13002,2.52845 0.1179,0.85502 0.1086,3.36924 -0.0149,3.75598 a 0.12762426,0.12762426 0 0 1 -0.0652,0.0692 c -0.0846,0.0345 -2.25823,0.0676 -5.62398,0.0895 l -3.20824,0.0203 0.0146,0.73369 c 0.012,0.58288 0.0267,0.80047 0.0755,1.05889 0.0701,0.36846 0.21077,0.82156 0.29876,0.96374 0.15968,0.25835 0.61633,0.5408 0.96131,0.59404 0.36042,0.0564 3.44335,0.011 3.86561,-0.0577 0.25628,-0.0417 0.38148,-0.10614 0.54976,-0.28618 0.23732,-0.25354 0.37323,-0.57359 0.50572,-1.1893 0.0448,-0.20862 0.099,-0.39395 0.12038,-0.41158 0.0252,-0.0213 0.35629,-0.0391 0.93746,-0.0518 0.49433,-0.0111 1.07276,-0.0272 1.28555,-0.0386 l 0.38701,-0.019 v 0.32247 c 0,0.38024 -0.0722,0.83266 -0.21658,1.35675 -0.101,0.36558 -0.22629,0.66558 -0.27837,0.66558 -0.0538,0 -0.1183,0.0935 -0.11866,0.17006 -0.002,0.26148 -0.7126,1.01279 -1.30073,1.37296 -0.21044,0.12894 -0.69399,0.3145 -1.0762,0.41269 -0.79885,0.20635 -1.8419,0.26567 -3.58035,0.20422 z m 3.77944,-8.33343 c 0.0815,-0.0346 0.10522,-0.0622 0.12144,-0.14828 0.0451,-0.24253 -0.12699,-1.31275 -0.26838,-1.66614 -0.26836,-0.67014 -0.83822,-0.81755 -3.16506,-0.81608 -1.11452,0 -1.20004,0.01 -1.47984,0.0652 -0.42081,0.0925 -0.60633,0.1707 -0.78162,0.33131 -0.19141,0.17463 -0.30976,0.41386 -0.44041,0.89082 -0.1352,0.4933 -0.19669,0.91832 -0.16528,1.14693 0.0145,0.0979 0.0331,0.18699 0.0437,0.19734 0.0306,0.031 2.92905,0.0629 4.53861,0.0521 1.22136,-0.01 1.51424,-0.0199 1.59704,-0.0538 z m 38.62526,8.34423 c -0.15247,-0.01 -0.51401,-0.0219 -0.80297,-0.039 -1.70905,-0.0999 -2.3062,-0.31108 -3.1189,-1.10507 -0.5736,-0.56016 -0.74327,-0.8231 -0.97055,-1.50297 -0.29154,-0.87259 -0.32023,-1.28749 -0.29598,-4.284 0.0219,-2.72309 0.0515,-3.137 0.26906,-3.79131 0.1966,-0.5903 0.44494,-1.01631 0.82189,-1.40885 0.76929,-0.80056 1.75303,-1.17347 3.46932,-1.31485 0.55263,-0.046 2.22696,-0.0199 2.78913,0.0451 0.78434,0.088 1.57394,0.30765 2.21586,0.616 0.40595,0.19485 0.63297,0.35385 0.88121,0.6175 0.6268,0.6639 0.9848,1.61624 1.09316,2.90558 0.0228,0.27843 0.0508,0.59666 0.0591,0.70706 l 0.0189,0.20188 -0.50593,-0.0191 c -0.27833,-0.0111 -0.87719,-0.0272 -1.33101,-0.0385 -0.45364,-0.0116 -0.82511,-0.0268 -0.82511,-0.037 0,-0.0587 -0.21317,-1.2479 -0.25187,-1.40451 -0.0745,-0.30768 -0.2238,-0.58923 -0.39152,-0.73996 -0.25689,-0.23111 -0.59222,-0.31968 -1.41078,-0.37321 -0.71368,-0.0463 -2.57894,-0.0192 -2.91627,0.0442 -0.53335,0.0986 -0.78897,0.25532 -0.96345,0.59124 -0.27354,0.52535 -0.33111,1.29272 -0.30662,4.05563 0.0203,2.2158 0.0546,2.69147 0.22622,3.15131 0.20417,0.54636 0.56845,0.63571 2.75813,0.67746 1.37076,0.026 1.96124,-0.0281 2.36617,-0.21837 0.23763,-0.11102 0.39253,-0.25457 0.50712,-0.4688 0.16211,-0.3046 0.2204,-0.63113 0.33315,-1.87109 l 0.0359,-0.39433 0.48781,-0.0189 c 0.26833,-0.0112 0.86258,-0.0274 1.32102,-0.0408 l 0.83366,-0.0214 -3.4e-4,0.43386 c -0.002,1.50747 -0.24345,2.54043 -0.7881,3.35723 -0.20935,0.31387 -0.68534,0.77574 -1.0006,0.97067 -0.46739,0.28909 -1.17765,0.53527 -1.82202,0.63156 -0.5994,0.0896 -1.55072,0.1183 -2.78454,0.0838 z m -21.49435,-9.28207 v -9.22037 l 2.78187,0.0203 c 3.66317,0.0257 6.69717,0.0689 7.28834,0.10473 0.83826,0.0508 1.1566,0.12501 1.69847,0.39603 0.60024,0.30074 1.10937,0.68855 1.14719,0.87448 0.0108,0.0482 0.0715,0.17237 0.13768,0.2769 0.17596,0.27862 0.2535,0.46118 0.33359,0.78054 0.16035,0.64167 0.23003,1.34531 0.23046,2.32973 0,1.38481 -0.11974,2.22997 -0.40259,2.83639 -0.14496,0.31036 -0.27329,0.50601 -0.58118,0.88501 -0.12283,0.15185 -0.21986,0.28466 -0.21562,0.29572 0.01,0.0119 0.13453,0.12581 0.28871,0.25515 0.42051,0.35249 0.7054,0.70918 0.95445,1.19446 0.0806,0.1576 0.16899,0.37112 0.19589,0.47502 0.0718,0.27901 0.10006,1.14247 0.10145,3.09406 l 0.002,1.70562 -0.25047,0.48467 c -0.5688,1.10177 -0.84514,1.38072 -1.79291,1.81187 -1.06282,0.48328 -1.26049,0.49839 -7.18536,0.55647 -1.58208,0.017 -3.29399,0.036 -3.80381,0.0462 l -0.9272,0.0191 z m 7.54918,6.55701 c 1.12645,-0.0343 2.02881,-0.0787 2.42385,-0.11866 0.44908,-0.0457 0.79534,-0.17002 0.97611,-0.35057 0.2577,-0.25815 0.31524,-0.63754 0.34311,-2.26142 0.0256,-1.47739 -0.0229,-1.82682 -0.30417,-2.19664 -0.24208,-0.31863 -0.86914,-0.5132 -1.90572,-0.59073 -1.06824,-0.0806 -5.80688,-0.14204 -6.16634,-0.081 -0.1042,0.0191 -0.13964,0.0385 -0.15349,0.0877 -0.1048,0.37605 -0.0812,5.36954 0.026,5.47654 0.0423,0.0423 0.55575,0.0561 2.11791,0.0588 0.93954,0.005 2.12886,-0.01 2.64285,-0.0241 z m 1.84156,-8.18717 c 0.48388,-0.086 0.90649,-0.24569 1.06269,-0.40184 0.25735,-0.25735 0.38874,-1.01428 0.38711,-2.23109 -0.003,-1.08302 -0.0798,-1.53106 -0.31191,-1.7895 -0.20037,-0.22276 -0.476,-0.31495 -1.15407,-0.38618 -0.43729,-0.0461 -2.62251,-0.0853 -4.81418,-0.0864 l -1.8795,-0.003 0.0186,0.81053 c 0.0104,0.44532 0.0258,1.55575 0.035,2.46723 l 0.0193,1.65713 1.56602,0.0101 c 3.16127,0.0197 4.78247,0.008 5.07253,-0.0485 z m -52.87438,8.00436 c 0,-1.5458 0.01,-5.67884 0.0192,-9.18469 l 0.02,-6.37396 h 2.41177 c 3.17192,0.002 6.46121,0.0604 8.10653,0.14811 0.90132,0.049 1.4288,0.17871 2.16098,0.53655 0.47362,0.23104 0.81821,0.47523 1.13285,0.80127 0.35557,0.36901 0.69258,0.86679 0.69258,1.02374 0,0.0323 0.0377,0.10147 0.0834,0.1542 0.15759,0.18075 0.38288,0.72425 0.45287,1.09235 0.11391,0.59923 0.16348,2.48731 0.16348,6.17318 0,2.62771 -0.0252,3.6501 -0.10167,4.09602 -0.20633,1.2084 -0.66166,2.20517 -1.30729,2.86311 -0.27252,0.27763 -0.50368,0.45527 -0.88271,0.67839 -0.9693,0.57119 -1.36555,0.6519 -3.50454,0.71406 -0.98649,0.0288 -6.79856,0.089 -8.57841,0.0886 h -0.86967 z m 8.95098,0.297 c 1.74842,-0.0898 2.56966,-0.36094 2.98945,-0.98648 0.0606,-0.0907 0.19072,-0.31856 0.2891,-0.507 l 0.17867,-0.34216 0.0197,-4.16981 c 0.0203,-4.28338 0.012,-4.78349 -0.0914,-5.2875 -0.14863,-0.72779 -0.48011,-1.27978 -0.93194,-1.55211 -0.43466,-0.26199 -1.12418,-0.41234 -2.29279,-0.49987 -0.67155,-0.0505 -3.43621,-0.0829 -4.73592,-0.056 -1.18521,0.0249 -1.47215,0.0426 -1.5018,0.0895 -0.10863,0.17597 -0.13416,2.25624 -0.0994,8.17145 0.0165,2.81814 0.0347,5.12876 0.0413,5.13471 0.008,0.01 0.8371,0.0211 1.84668,0.0347 1.98269,0.0259 3.41001,0.017 4.28894,-0.03 z m 25.83177,2.48368 c -0.23902,-0.0334 -0.31803,-0.0933 -0.40518,-0.3081 -0.0943,-0.23223 -0.76106,-2.0637 -1.03549,-2.84494 -2.38005,-6.76664 -3.34523,-9.58054 -3.39733,-9.90299 -0.0145,-0.085 -0.01,-0.11005 0.0376,-0.12876 0.03,-0.013 0.41565,-0.0289 0.85748,-0.0362 0.8431,-0.0146 1.49121,0.0212 1.57017,0.0866 0.0934,0.0762 0.30251,0.58805 0.60635,1.48316 a 128.51596,128.51596 0 0 0 0.58918,1.69375 149.91708,149.91708 0 0 1 0.74025,2.15049 c 0.25458,0.75675 0.6459,1.89371 0.86916,2.52591 a 115.06706,115.06706 0 0 1 0.45767,1.31083 c 0.0707,0.22242 0.15595,0.368 0.23636,0.40445 0.0585,0.0262 0.0767,0.0202 0.12593,-0.0427 0.0323,-0.0408 0.0805,-0.14169 0.10716,-0.22522 0.24738,-0.75811 2.74602,-7.94204 3.01921,-8.67923 0.22251,-0.60077 0.2208,-0.59932 0.60087,-0.65723 0.50257,-0.0768 2.00171,-0.0656 2.08273,0.0164 0.041,0.0408 -0.1821,0.78644 -0.62601,2.10267 -2.49493,7.39527 -3.33454,9.84535 -3.53799,10.32273 -0.0584,0.13632 -0.12012,0.31868 -0.13767,0.40632 -0.0377,0.18732 -0.10621,0.25073 -0.32254,0.29771 -0.18481,0.0404 -2.18197,0.0609 -2.43726,0.0263 z m 47.65909,-0.25428 c 0.004,-1.0524 -0.0637,-6.57338 -0.0881,-7.40398 -0.0591,-2.09335 -0.21319,-2.7305 -0.72326,-3.00811 -0.30872,-0.16788 -0.4333,-0.18117 -1.72952,-0.18117 -1.2921,0 -1.39897,0.0121 -1.73046,0.17802 -0.61894,0.31189 -1.01102,0.70711 -1.37696,1.38734 l -0.13524,0.25137 -0.0579,4.11437 c -0.0314,2.26274 -0.0575,4.28858 -0.0577,4.50149 v 0.38691 h -2.54113 l 0.004,-5.54135 c 0.004,-5.0132 0.0221,-7.48777 0.0606,-7.52739 0.0525,-0.0527 0.43114,-0.0793 1.32379,-0.0931 l 1.02241,-0.0171 0.051,0.30004 c 0.0278,0.16483 0.0664,0.31905 0.0864,0.34206 0.0578,0.0688 0.21493,0.0275 0.63675,-0.16715 0.51839,-0.23983 0.69027,-0.30255 1.11657,-0.4073 0.56226,-0.13874 0.91341,-0.18078 1.64427,-0.19845 1.55116,-0.0376 2.64871,0.1942 3.43386,0.72332 0.88928,0.59912 1.42026,1.68051 1.51483,3.0837 0.0555,0.81568 0.0873,3.17814 0.0873,6.36954 v 3.19049 h -2.54038 z"
+     id="path1-6"
+     style="stroke-width:0.344931" />
+</svg>

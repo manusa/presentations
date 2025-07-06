@@ -1,0 +1,107 @@
+@use 'variables';
+
+.devbcn-2025 {
+  @include variables.css-variables;
+  @font-face {
+    font-family: 'Orbitron';
+    src: url('../assets/Orbitron-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Techno Overload';
+    src: url('../assets/techover.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Tiempos Text';
+    src: url('../assets/tiempos-text-regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  h1 {
+    margin: 1rem 0;
+    font-size: 4rem;
+  }
+  h2 {
+    margin: 1rem 0;
+    font-size: 3.5rem;
+  }
+  h3 {
+    margin: 1rem 0;
+    font-size: 3rem;
+    font-weight: normal;
+  }
+  h4 {
+    margin: 1rem 0;
+    font-size: 2.5rem;
+  }
+  p {
+    margin: 0 0 1rem 0;
+  }
+  pre {
+    font-size: 1.7rem;
+  }
+  strong {
+    color: variables.$devbcn-orange;
+  }
+  ul {
+    $line-height: variables.$devbcn-content-font-size * 1.5;
+    position: relative;
+    list-style: none;
+    margin: 1rem 0 1rem 2rem;
+    padding-left: 1rem;
+    line-height: $line-height;
+
+    li:before {
+      font-family: var(--fa-style-family-classic), sans-serif;
+      font-style: normal;
+      font-weight: 900;
+      font-size: variables.$devbcn-content-font-size * 0.8;
+      //content: '\f5dc'; /* brain */
+      content: var(--li-bullet-content); /* tools */
+      color: variables.$devbcn-orange;
+      position: absolute;
+      display: inline-block;
+      margin-left: -2.8rem;
+    }
+  }
+
+  ol {
+    margin-left: 0.5em;
+    li:before {
+      content: '';
+    }
+  }
+
+  blockquote {
+    position: relative;
+    font-style: italic;
+    margin: 0 auto;
+    padding: 1rem;
+    color: variables.$devbcn-orange;
+    p {
+      margin: 0;
+      color: white;
+      &::before, &::after {
+        color: variables.$devbcn-orange;
+        content: '“';
+        font-size: variables.$devbcn-content-font-size * 3;
+        margin: -1*variables.$devbcn-content-font-size 0 0 (-1*variables.$devbcn-content-font-size * 1.5);
+        position: absolute;
+        opacity: 0.8;
+      }
+      &::after {
+        content: '”';
+        margin: 0 (-1*variables.$devbcn-content-font-size * 1.5) 0 0;
+      }
+    }
+    cite {
+      font-size: 1.7rem;
+    }
+  }
+}
