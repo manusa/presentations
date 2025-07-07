@@ -48,5 +48,6 @@ export {Puzzle} from './puzzle';
 export {Server} from './server';
 export {Slack} from './slack';
 export {SlideTemplate} from './slide-template';
+export {Header, Cell} from './table';
 export {TitleTemplate} from './title-template';
 export {UsbC} from './usb-c';

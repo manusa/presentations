@@ -17,16 +17,6 @@ const Bar = ({widthPercent, bgColor, text}) => (
   </div>
 );
 
-const Header = ({children}) => (
-  <th style={{backgroundColor: DevBcn2025.BLUE, color: 'white', padding: '0.5rem 1rem', textAlign: 'center', fontSize: '2rem'}}>
-    {children}
-  </th>
-);
-const Cell = ({children}) => (
-  <td style={{backgroundColor: DevBcn2025.BLUE + '30', verticalAlign: 'top', padding: '1rem', fontSize: '2rem'}}>
-    {children}
-  </td>
-);
 
 const Slide230 = ({currentStep}) => {
   return (
@@ -57,26 +47,26 @@ const Slide230 = ({currentStep}) => {
         <table>
           <thead>
           <tr>
-            <Header>Model Type</Header>
-            <Header>Typical Context Window</Header>
-            <Header>Impact of <strong>5k Token</strong> Toolset</Header>
+            <DevBcn2025.Header>Model Type</DevBcn2025.Header>
+            <DevBcn2025.Header>Typical Context Window</DevBcn2025.Header>
+            <DevBcn2025.Header>Impact of <strong>5k Token</strong> Toolset</DevBcn2025.Header>
           </tr>
           </thead>
           <tbody>
           <tr>
-            <Cell><DevBcn2025.ChildReading style={{width: '1.8rem', fill: 'white'}}/> Small</Cell>
-            <Cell>4k - 8k tokens</Cell>
-            <Cell>
+            <DevBcn2025.Cell><DevBcn2025.ChildReading style={{width: '1.8rem', fill: 'white'}}/> Small</DevBcn2025.Cell>
+            <DevBcn2025.Cell>4k - 8k tokens</DevBcn2025.Cell>
+            <DevBcn2025.Cell>
               😱 Consumes 60-100% of context.<br/>
               Little to no room left for the user's prompt or conversation history.
-            </Cell>
+            </DevBcn2025.Cell>
           </tr>
           <tr>
-            <Cell><DevBcn2025.Graduate style={{width: '1.8rem', fill: 'white'}}/> Large</Cell>
-            <Cell>128k - 1M+ tokens</Cell>
-            <Cell>✅ Consumes &lt;4% of context.<br/>
+            <DevBcn2025.Cell><DevBcn2025.Graduate style={{width: '1.8rem', fill: 'white'}}/> Large</DevBcn2025.Cell>
+            <DevBcn2025.Cell>128k - 1M+ tokens</DevBcn2025.Cell>
+            <DevBcn2025.Cell>✅ Consumes &lt;4% of context.<br/>
               Plenty of space remains for complex reasoning and long conversations.
-            </Cell>
+            </DevBcn2025.Cell>
           </tr>
           </tbody>
         </table>
@@ -84,8 +74,8 @@ const Slide230 = ({currentStep}) => {
       <DevBcn2025.InnerSlide currentStep={currentStep} style={{justifyContent: 'flex-start'}}>
         <h2>Key Takeaways</h2>
         <ul style={{'--li-bullet-content': '""'}}>
-          <li>🧰 You don’t need all your tools all the time</li>
-          <li>🧹 Choose tools wisely to maximize utility without overwhelming the model</li>
+          <li>🧰 You don’t need all your tools all the time (Client/User)</li>
+          <li>🧹 Implement tools wisely to maximize utility without overwhelming the model</li>
           <li>✂️ Optimize Tool Definitions</li>
           <li>📏 Know Your Target Model</li>
           <li>🔄 Dynamic Loading</li>

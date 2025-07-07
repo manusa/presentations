@@ -36,6 +36,7 @@ const Slide200 = ({currentStep}) => {
       {/* Remote */}
       <DevBcn2025.InnerSlide currentStep={currentStep}>
         <FaBox iconClass='fa-solid fa-download' subIconClass='fa-solid fa-globe' />
+        <h2>Remote</h2>
         <CodeBlock language='json'>{`
            "mcpServers": {
               "github": {
@@ -52,6 +53,7 @@ const Slide200 = ({currentStep}) => {
       {/* Local */}
       <DevBcn2025.InnerSlide currentStep={currentStep}>
         <FaBox iconClass='fa-solid fa-download' subIconClass='fa-solid fa-desktop' />
+        <h2>Local</h2>
       </DevBcn2025.InnerSlide>
       {/* PyPi / Python */}
       <DevBcn2025.InnerSlide currentStep={currentStep}>
@@ -62,7 +64,7 @@ const Slide200 = ({currentStep}) => {
           }} />
         </div>
         <CodeBlock>
-          $ uvx kubernetes-mcp-server
+          $ uvx kubernetes-mcp-server@latest
         </CodeBlock>
         <CodeBlock language='json'>{`
            "mcpServers": {
@@ -82,7 +84,7 @@ const Slide200 = ({currentStep}) => {
           }} />
         </div>
         <CodeBlock>
-          $ npx kubernetes-mcp-server
+          $ npx kubernetes-mcp-server@latest
         </CodeBlock>
         <CodeBlock language='json'>{`
            "mcpServers": {

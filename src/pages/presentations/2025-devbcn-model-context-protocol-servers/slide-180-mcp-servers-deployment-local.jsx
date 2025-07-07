@@ -51,8 +51,8 @@ const Slide180 = ({currentStep}) => {
           <div style={{'--li-bullet-content': '""'}}>
             <ul>
               <li className={classNameVisibleFrom(2)}>⚙️ STDIO-based communication (process)</li>
-              <li className={classNameVisibleFrom(3)}>📁 Access to local resources</li>
-              <li className={classNameVisibleFrom(4)}>✅ Easier transport security management</li>
+              <li className={classNameVisibleFrom(3)}>✅ Easier transport security management</li>
+              <li className={classNameVisibleFrom(4)}>📁 Access to local resources</li>
               <li className={classNameVisibleFrom(5)}>⚠️ Supply-chain risks</li>
               <li className={classNameVisibleFrom(6)}>❌ NOT accessible from remote Assistants</li>
             </ul>

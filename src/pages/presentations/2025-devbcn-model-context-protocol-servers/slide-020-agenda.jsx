@@ -26,17 +26,16 @@ const Slide020 = () => {
             <li>What is MCP?</li>
             <li>
               Implementing Model Context Protocol Servers
-              <ul>
-                <li>Features</li>
-                <li>Programming language</li>
-                <li>Deployment strategies / Distribution / Packaging</li>
-                <li>Model size / Metadata</li>
+              <ul style={{'--li-bullet-content': '""'}}>
+                <li>✨ Features</li>
+                <li>🧑‍💻 Programming language</li>
+                <li>🚀 Deployment strategies / 📦 Packaging & Distribution</li>
+                <li>🧠 Model size / 🧰 Tool Budget / 🏷️ Metadata</li>
               </ul>
             </li>
             <li>Q&A</li>
           </ul>
         </div>
-
       </div>
     </DevBcn2025.SlideTemplate>
   );

@@ -69,11 +69,11 @@ const Slide160 = ({currentStep}) => {
           <div>
             {currentStep === 2 && (
               <Paper>
-                <pre style={{margin: '0'}}>{`devbcn-2025://sessions`}</pre>
+                <pre style={{margin: '0'}}>{`devbcn://2025/sessions`}</pre>
                 <pre style={{margin: '0', color: 'lime'}}>{`[{"id": "title": ...},...]`}</pre>
-                <pre style={{margin: '0'}}>{`devbcn-2025://speakers`}</pre>
+                <pre style={{margin: '0'}}>{`devbcn://2025/speakers`}</pre>
                 <pre style={{margin: '0', color: 'lime'}}>{`[{"id": "name": ...},...]`}</pre>
-                <pre style={{margin: '0'}}>{`devbcn-2025://speakers/{id}`}</pre>
+                <pre style={{margin: '0'}}>{`devbcn://2025/speakers/{id}`}</pre>
                 <pre style={{margin: '0', color: 'lime'}}>{`{"id": "name": ...}`}</pre>
                 <pre style={{margin: '0'}}>{`doc://mcp/concepts/architecture`}</pre>
                 <pre style={{margin: '0', color: 'lime'}}>{`## Core architecture...`}</pre>

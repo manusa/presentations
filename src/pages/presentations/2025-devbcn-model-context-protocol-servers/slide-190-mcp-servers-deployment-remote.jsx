@@ -55,8 +55,8 @@ const Slide190 = ({currentStep}) => {
             <ul>
               <li className={classNameVisibleFrom(2)} style={{textDecoration: 'line-through'}}>⚙️ SSE-based communication</li>
               <li className={classNameVisibleFrom(2)}>⚙️ Streamable HTTP-based communication</li>
-              <li className={classNameVisibleFrom(3)}>📁 NO Access to local resources</li>
-              <li className={classNameVisibleFrom(4)}>💪 Security management (OAuth)</li>
+              <li className={classNameVisibleFrom(3)}>💪 Security management (OAuth)</li>
+              <li className={classNameVisibleFrom(4)}>📁 NO Access to local resources</li>
               <li className={classNameVisibleFrom(5)}>✅ Accessible from remote Assistants</li>
             </ul>
           </div>
