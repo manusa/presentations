@@ -29,10 +29,10 @@ const IconTextContainer = ({children}) => (
   </div>
 );
 
-const Slide200 = ({currentStep}) => {
+const Slide210 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   return (
-    <DevBcn2025.SlideTemplate slide={20} title='Implementing MCP Servers: Distribution'>
+    <DevBcn2025.SlideTemplate slide={21} title='Implementing MCP Servers: Distribution'>
       {/* Remote */}
       <DevBcn2025.InnerSlide currentStep={currentStep}>
         <FaBox iconClass='fa-solid fa-download' subIconClass='fa-solid fa-globe' />
@@ -149,7 +149,7 @@ const Slide200 = ({currentStep}) => {
   );
 };
 
-export default slideControls(Slide200,
-  `/presentations/${DevBcn2025.SLUG}/slide-190-mcp-servers-deployment-remote`,
-  `/presentations/${DevBcn2025.SLUG}/slide-210-mcp-servers-model-size`,
+export default slideControls(Slide210,
+  `/presentations/${DevBcn2025.SLUG}/slide-200-mcp-servers-deployment-remote`,
+  `/presentations/${DevBcn2025.SLUG}/slide-220-mcp-servers-model-size`,
   10);

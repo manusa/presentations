@@ -86,6 +86,6 @@ const Slide230 = ({currentStep}) => {
 };
 
 export default slideControls(Slide230,
-  `/presentations/${DevBcn2025.SLUG}/slide-210-mcp-servers-model-size`,
-  `/presentations/${DevBcn2025.SLUG}/slide-230-mcp-servers-metadata`,
+  `/presentations/${DevBcn2025.SLUG}/slide-220-mcp-servers-model-size`,
+  `/presentations/${DevBcn2025.SLUG}/slide-240-q-a`,
   4);

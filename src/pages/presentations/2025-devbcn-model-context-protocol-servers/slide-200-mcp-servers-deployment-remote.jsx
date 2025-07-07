@@ -9,10 +9,10 @@ const boxStyle = {
   background: DevBcn2025.BOX_BACKGROUND
 };
 
-const Slide190 = ({currentStep}) => {
+const Slide200 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   return (
-    <DevBcn2025.SlideTemplate slide={19} title='Implementing MCP Servers: Deployment strategies 🌐'>
+    <DevBcn2025.SlideTemplate slide={20} title='Implementing MCP Servers: Deployment strategies 🌐'>
       <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
         <h2><i className='fa-solid fa-globe' /> Remote</h2>
         <div style={{
@@ -66,7 +66,7 @@ const Slide190 = ({currentStep}) => {
   );
 };
 
-export default slideControls(Slide190,
-  `/presentations/${DevBcn2025.SLUG}/slide-180-mcp-servers-deployment-local`,
-  `/presentations/${DevBcn2025.SLUG}/slide-200-mcp-servers-distribution`,
+export default slideControls(Slide200,
+  `/presentations/${DevBcn2025.SLUG}/slide-190-mcp-servers-deployment-local`,
+  `/presentations/${DevBcn2025.SLUG}/slide-210-mcp-servers-distribution`,
   5);

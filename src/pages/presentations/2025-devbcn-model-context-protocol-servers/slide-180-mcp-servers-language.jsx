@@ -18,10 +18,10 @@ const InlineIcon = ({iconClass, style = {}}) => (
   <i className={iconClass} style={{color: DevBcn2025.BLUE_LIGHT, fontSize: '2rem', verticalAlign: 'middle', ...style}}></i>
 );
 
-const Slide170 = ({currentStep}) => {
+const Slide180 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   return (
-    <DevBcn2025.SlideTemplate slide={17} title='Implementing MCP Servers: Programming language'>
+    <DevBcn2025.SlideTemplate slide={18} title='Implementing MCP Servers: Programming language'>
       <div style={{display: 'flex', gap: '2rem', height: '100%', position: 'relative', alignItems: 'center'}}>
         <div className={classNameVisibleFrom(2)} style={{flex: 0, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem'}}>
           <ProgrammingLanguage iconClass='fa-brands fa-golang'>Go</ProgrammingLanguage>
@@ -66,7 +66,7 @@ const Slide170 = ({currentStep}) => {
   );
 };
 
-export default slideControls(Slide170,
-  `/presentations/${DevBcn2025.SLUG}/slide-160-mcp-servers-features`,
-  `/presentations/${DevBcn2025.SLUG}/slide-180-mcp-servers-deployment-local`,
+export default slideControls(Slide180,
+  `/presentations/${DevBcn2025.SLUG}/slide-170-mcp-servers-metadata`,
+  `/presentations/${DevBcn2025.SLUG}/slide-190-mcp-servers-deployment-local`,
   4);

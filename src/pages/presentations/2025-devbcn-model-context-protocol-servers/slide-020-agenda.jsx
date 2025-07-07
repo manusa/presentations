@@ -27,10 +27,10 @@ const Slide020 = () => {
             <li>
               Implementing Model Context Protocol Servers
               <ul style={{'--li-bullet-content': '""'}}>
-                <li>✨ Features</li>
+                <li>✨ Features / 🏷️ Descriptions & Metadata</li>
                 <li>🧑‍💻 Programming language</li>
                 <li>🚀 Deployment strategies / 📦 Packaging & Distribution</li>
-                <li>🧠 Model size / 🧰 Tool Budget / 🏷️ Metadata</li>
+                <li>🧠 Model size / 🧰 Tool Budget </li>
               </ul>
             </li>
             <li>Q&A</li>

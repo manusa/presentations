@@ -11,27 +11,27 @@ const Box = ({icon, title}) => (
   </div>
 );
 
-const Slide100 = () => {
+const Slide150 = () => {
   return (
     <DevBcn2025.TitleTemplate
-      slide={10}
+      slide={15}
       title='Implementing MCP Servers'
       subtitle={DevBcn2025.TITLE}
     >
       <div style={{height: '25vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
         <Box icon='✨' title='Features' />
+        <Box icon='🏷️' title='Descriptions & Metadata' />
         <Box icon='🧑‍💻' title='Programming Language' />
         <Box icon='🚀' title='Deployment Strategies' />
         <Box icon='📦' title='Distribution' />
         <Box icon='🧠' title='Model Size (SLM vs LLM)' />
         <Box icon='🧰' title='Tool Budget' />
-        <Box icon='🏷️' title='Descriptions & Metadata' />
       </div>
     </DevBcn2025.TitleTemplate>
   );
 };
 
-export default slideControls(Slide100,
+export default slideControls(Slide150,
   `/presentations/${DevBcn2025.SLUG}/slide-140-mcp-timeline`,
   `/presentations/${DevBcn2025.SLUG}/slide-160-mcp-servers-features`,
   1);

@@ -30,6 +30,6 @@ const Slide240 = ({currentStep}) => {
 };
 
 export default slideControls(Slide240,
-  `/presentations/${DevBcn2025.SLUG}/slide-230-mcp-servers-metadata`,
+  `/presentations/${DevBcn2025.SLUG}/slide-230-mcp-servers-tool-budget`,
   `/presentations/${DevBcn2025.SLUG}`,
   1);

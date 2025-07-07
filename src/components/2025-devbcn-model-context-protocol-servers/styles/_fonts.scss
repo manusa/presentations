@@ -44,7 +44,7 @@
     margin: 0 0 1rem 0;
   }
   pre {
-    font-size: 1.7rem;
+    font-size: var(--pre-font-size);
   }
   strong {
     color: variables.$devbcn-orange;

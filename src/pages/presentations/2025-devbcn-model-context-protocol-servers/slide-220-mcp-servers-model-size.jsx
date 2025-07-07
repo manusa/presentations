@@ -14,9 +14,9 @@ const Model = ({Svg, children}) => (
   </div>
 );
 
-const Slide210 = ({currentStep}) => {
+const Slide220 = ({currentStep}) => {
   return (
-    <DevBcn2025.SlideTemplate slide={21} title='Implementing MCP Servers: Model Size'>
+    <DevBcn2025.SlideTemplate slide={22} title='Implementing MCP Servers: Model Size'>
       <DevBcn2025.InnerSlide currentStep={currentStep} style={{gap: '2rem', flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <Model Svg={DevBcn2025.ChildReading}>Small Language Model</Model>
         <Model Svg={DevBcn2025.Graduate}>Large Language Model</Model>
@@ -80,7 +80,7 @@ const Slide210 = ({currentStep}) => {
   );
 };
 
-export default slideControls(Slide210,
-  `/presentations/${DevBcn2025.SLUG}/slide-200-mcp-servers-distribution`,
-  `/presentations/${DevBcn2025.SLUG}/slide-220-mcp-servers-tool-budget`,
+export default slideControls(Slide220,
+  `/presentations/${DevBcn2025.SLUG}/slide-210-mcp-servers-distribution`,
+  `/presentations/${DevBcn2025.SLUG}/slide-230-mcp-servers-tool-budget`,
   9);

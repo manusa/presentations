@@ -1,6 +1,6 @@
 import React from 'react';
 import slideControls, {visibleClassNameFromStep} from '../../../components/slide-controls/slide-controls';
-import {DevBcn2025} from '../../../components';
+import {Code, DevBcn2025} from '../../../components';
 
 const CellTool = ({children}) => (
   <DevBcn2025.Cell style={{padding: '0.5rem', fontFamily: 'monospace'}}>{children}</DevBcn2025.Cell>
@@ -8,24 +8,55 @@ const CellTool = ({children}) => (
 const Cell = ({children}) => (
   <DevBcn2025.Cell style={{padding: '0.5rem'}}>{children}</DevBcn2025.Cell>
 );
-const Slide220 = ({currentStep}) => {
+const Slide170 = ({currentStep}) => {
   const classNameVisibleFrom = visibleClassNameFromStep(currentStep);
   return (
-    <DevBcn2025.SlideTemplate slide={23} title='Implementing MCP Servers: Descriptions & Metadata'>
-      <ul>
+    <DevBcn2025.SlideTemplate slide={17} title='Implementing MCP Servers: Descriptions & Metadata'>
+      {currentStep === 1 && (
+        <div style={{'--pre-font-size': '1.4rem'}}>
+          <h2>Tool Definition</h2>
+          <Code
+            language='json'
+            useInlineStyles={false}
+          >{`
+          {
+            "name": "weather_forecast",
+            "description": "Get the weather forecast for a given location",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "location": {
+                  "type": "string",
+                  "description": "The location to get the weather for, use airport short code or city name, country (e.g. 'BCN', 'Barcelona, ES')"
+                }
+              },
+              "required": ["location"]
+            },
+            "annotations": {
+              "title": "🌤️ Weather Forecast",
+              "readOnlyHint": true,
+              "destructiveHint": false,
+              "idempotentHint": true,
+              "openWorldHint": true
+            }
+          }
+          `}</Code>
+        </div>
+      )}
+      <ul className={classNameVisibleFrom(2)}>
         <li>Tool <strong>descriptions</strong> are essential for <strong>LLMs</strong> to understand and use tools effectively</li>
         <ul>
           <li>Experiment with target models</li>
           <li>Experiment with different prompts</li>
         </ul>
-        <li className={classNameVisibleFrom(2)}><strong>Annotations</strong> + metadata
+        <li className={classNameVisibleFrom(3)}><strong>Annotations</strong> + metadata
           <ul>
             <li>Document for <strong>LLMs</strong> and <strong>end users</strong></li>
             <li>Assistant / Agent UX</li>
           </ul>
         </li>
       </ul>
-      <table className={classNameVisibleFrom(3)} style={{width: '100%'}}>
+      <table className={classNameVisibleFrom(4)} style={{width: '100%'}}>
         <thead>
         <tr><DevBcn2025.Header>Annotation</DevBcn2025.Header><DevBcn2025.Header>Description</DevBcn2025.Header></tr>
         </thead>
@@ -44,7 +75,7 @@ const Slide220 = ({currentStep}) => {
   );
 };
 
-export default slideControls(Slide220,
-  `/presentations/${DevBcn2025.SLUG}/slide-220-mcp-servers-tool-budget`,
-  `/presentations/${DevBcn2025.SLUG}/slide-240-q-a`,
-  3);
+export default slideControls(Slide170,
+  `/presentations/${DevBcn2025.SLUG}/slide-160-mcp-servers-features`,
+  `/presentations/${DevBcn2025.SLUG}/slide-180-mcp-servers-language`,
+  4);

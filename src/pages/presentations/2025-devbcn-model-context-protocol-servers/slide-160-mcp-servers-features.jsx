@@ -109,5 +109,5 @@ const Slide160 = ({currentStep}) => {
 
 export default slideControls(Slide160,
   `/presentations/${DevBcn2025.SLUG}/slide-150-mcp-servers`,
-  `/presentations/${DevBcn2025.SLUG}/slide-170-mcp-servers-language`,
+  `/presentations/${DevBcn2025.SLUG}/slide-170-mcp-servers-metadata`,
   4);
