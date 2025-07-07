@@ -85,7 +85,9 @@ const Slide160 = ({currentStep}) => {
               <Paper>
                 <pre style={{margin: '0'}}>{`/speaker $name`}</pre>
                 <p style={{margin: '0', color: 'lime', fontSize: '1.7rem', fontFamily: 'monospace'}}>
-                  Get me the bio of the DevBcn 2025 speaker named "Marc Nuri".
+                  Show me the biography of the DevBcn 2025 speaker named "Marc Nuri".
+                  Include a list of their sessions.
+                  Format in a legible way using just ascii.
                 </p>
 
               </Paper>
