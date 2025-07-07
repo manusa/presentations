@@ -35,13 +35,13 @@ const Slide170 = ({currentStep}) => {
         </div>
         <div>
           <ul>
-            <li className={classNameVisibleFrom(3)}>Libraries available for all mainstream languages
+            <li className={classNameVisibleFrom(2)}>Libraries available for all mainstream languages
               <ul>
                 <li>Official</li>
                 <li>Community</li>
               </ul>
             </li>
-            <li className={classNameVisibleFrom(4)}>Choose based on language ecosystem
+            <li className={classNameVisibleFrom(3)}>Choose based on language ecosystem
               <ul>
                 <li>
                   Kubernetes MCP Server&nbsp;
@@ -49,7 +49,7 @@ const Slide170 = ({currentStep}) => {
                 </li>
               </ul>
             </li>
-            <li className={classNameVisibleFrom(5)}>Consider Distribution / Execution environment
+            <li className={classNameVisibleFrom(4)}>Consider Distribution / Execution environment
               <ul>
                 <li><InlineIcon iconClass='fa-brands fa-js'/> npx (<InlineIcon iconClass='fa-solid fa-desktop'/>)</li>
                 <li><InlineIcon iconClass='fa-brands fa-python'/> uvx (<InlineIcon iconClass='fa-solid fa-desktop'/>)</li>
@@ -69,4 +69,4 @@ const Slide170 = ({currentStep}) => {
 export default slideControls(Slide170,
   `/presentations/${DevBcn2025.SLUG}/slide-160-mcp-servers-features`,
   `/presentations/${DevBcn2025.SLUG}/slide-180-mcp-servers-deployment-local`,
-  5);
+  4);
