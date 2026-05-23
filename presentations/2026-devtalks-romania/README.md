@@ -30,9 +30,9 @@ When the bundle is dropped in here, the layout is:
                           print-to-PDF, thumbnail rail, speaker notes)
   assets/              — images referenced by slides
   README.md            — this file
-  AGENTS.md            — minimal orientation for future coding agents
-  CLAUDE.md            — symlink → AGENTS.md
 ```
+
+Project-wide guidance for coding agents lives in the repo-root `AGENTS.md` (with a `CLAUDE.md` symlink); this README is the deck-specific addendum.
 
 Slide model:
 
