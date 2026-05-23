@@ -9,13 +9,19 @@ jobs:
   npm:
     name: NPM Publish
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Upgrade npm
+        run: npm install -g npm@latest
       - name: Install
         run: npm install
       - name: Build
@@ -27,7 +33,4 @@ jobs:
           # Leave only runtime dependencies
           ./replaceDependencies.sh
       - name: Publish
-        run: |
-          export NPM_TOKEN=${{ secrets.NPM_TOKEN }}
-          echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> .npmrc
-          npm publish
+        run: npm publish --provenance --access public
