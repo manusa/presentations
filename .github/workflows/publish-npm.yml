@@ -33,4 +33,12 @@ jobs:
           # Leave only runtime dependencies
           ./replaceDependencies.sh
       - name: Publish
-        run: npm publish --provenance --access public
+        run: |
+          PKG=$(node -p "require('./package.json').name")
+          VER=$(node -p "require('./package.json').version")
+          PUBLISHED=$(npm view "${PKG}@${VER}" version 2>/dev/null || true)
+          if [ -n "$PUBLISHED" ]; then
+            echo "::notice::${PKG}@${VER} is already published — skipping publish"
+            exit 0
+          fi
+          npm publish --provenance --access public
