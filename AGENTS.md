@@ -23,6 +23,19 @@ npm run build              # gatsby clean & gatsby build → public/
 
 Static decks under `static/presentations/*` need no build step — they appear in `public/` as-is.
 
+## Visual Review (Screenshots)
+
+`scripts/screenshot.js` headlessly captures any URL at 1920×1080 PNG via Playwright. Use it to verify slide changes without opening a browser yourself.
+
+```bash
+npm run screenshot:setup                                                 # one-time: downloads Chromium (~150MB)
+npm run develop                                                          # start the dev server in another terminal
+npm run screenshot -- http://localhost:8000/ landing                     # → ./screenshots/landing.png
+npm run screenshot -- http://localhost:8000/presentations/<slug>/slide-010-about my-slide
+```
+
+Output lands in `./screenshots/` (gitignored). PDF rendering of full decks is a one-line drop-in via Playwright's `page.pdf()` when needed.
+
 ## Deploy
 
 Two GitHub Actions publish on every push to `main`:

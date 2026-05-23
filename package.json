@@ -11,7 +11,9 @@
     "dev": "gatsby develop --host=0.0.0.0",
     "develop": "gatsby develop --host=0.0.0.0",
     "start": "npm run develop --host=0.0.0.0",
-    "test": "jest"
+    "test": "jest",
+    "screenshot": "node scripts/screenshot.js",
+    "screenshot:setup": "playwright install chromium"
   },
   "publishConfig": {
     "access": "public"
@@ -56,6 +58,7 @@
     "eslint-plugin-jest": "29.0.1",
     "eslint-plugin-react": "7.37.5",
     "jest": "30.0.2",
+    "playwright": "1.60.0",
     "prop-types": "15.8.1"
   }
 }
