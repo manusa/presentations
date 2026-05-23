@@ -23,6 +23,12 @@ npm run build              # gatsby clean & gatsby build → public/
 
 Static decks under `static/presentations/*` need no build step — they appear in `public/` as-is.
 
+## Local Preview (Static Decks)
+
+`npm run serve:static` runs live-server on `static/` at http://localhost:8080/ with WebSocket-based hot reload — connected browsers refresh automatically whenever any file under `static/` changes. Use this when iterating on a static deck under `static/presentations/<slug>/`; for Gatsby decks, use `npm run develop` instead (port 8000, React HMR).
+
+The two servers can run in parallel: live-server on 8080 for the static deck, Gatsby on 8000 for everything else.
+
 ## Visual Review (Screenshots)
 
 `scripts/screenshot.js` headlessly captures any URL at 1920×1080 PNG via Playwright. Use it to verify slide changes without opening a browser yourself.
