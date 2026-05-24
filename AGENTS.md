@@ -98,6 +98,46 @@ npm run optimize:images -- ~/Downloads/conference-hero.jpg \
 
 Backed by `sharp` (libvips); no system dependencies beyond `npm install`.
 
+## Workflows
+
+Canonical sequences for deck work. Tools (above) tell you *what* each script does; this section tells you *when* and *in what order*.
+
+### 1. Onboarding a new upstream deck (e.g., Claude Design handoff)
+
+1. Drop the deck files into `static/presentations/<slug>/` (don't strip dev includes yet — verify it works first).
+2. `npm run serve:static` and open http://localhost:8080/presentations/<slug>/ to confirm it loads.
+3. **Capture the baseline immediately, before any edits**: `npm run snapshot:baseline -- http://localhost:8080/presentations/<slug>/ <deck-name>`.
+4. `git add static/presentations/<slug>/ snapshots/<deck-name>/baseline/` and commit deck files + baseline **in one PR**.
+
+**Gotcha**: if you skip step 3 and start refactoring first, you lose the "original upstream" reference — every later `snapshot:diff` is relative to your already-changed state, not the pristine handoff.
+
+### 2. Refactor iteration loop (no expected visual change)
+
+For style splits, script extraction, dead-code removal, comment cleanup — anything where the rendered output should be byte-identical.
+
+1. `npm run serve:static` running in one terminal.
+2. Edit files. Browser auto-reloads.
+3. `npm run snapshot:diff -- http://localhost:8080/presentations/<slug>/ <deck-name>`.
+4. Clean exit → commit.
+
+**Gotcha**: if `snapshot:diff` flags changes, treat as regressions unless you intentionally caused them. **Don't re-run `snapshot:baseline` to "fix" a failing diff** — investigate first.
+
+### 3. Intentional visual change (new slide, color tweak, swap a logo, etc.)
+
+1. Same edit/preview loop as #2.
+2. `npm run snapshot:diff` flags pixel changes — expected.
+3. **Review every diff overlay** under `snapshots/<deck-name>/diff/slide-NN.png`. Confirm each delta is what you wanted, not collateral damage.
+4. `npm run snapshot:baseline -- ... <deck-name>` to promote current state to the new reference.
+5. `git add` code changes + updated baseline files, commit together.
+
+**Gotcha**: promoting without reviewing each diff is how unrelated regressions sneak into the baseline. The five-second `eog` or `open` of each diff PNG is mandatory.
+
+### 4. Pre-talk deliverables
+
+1. Final `npm run snapshot:diff` to confirm `main` matches the committed baseline (sanity check).
+2. `npm run export:pdf -- http://localhost:8080/presentations/<slug>/ /tmp/<talk-name>.pdf` for the conference PDF handover.
+3. Optionally bump `package.json` version → next push releases a fresh `@marcnuri/presentations` tag with the final deck baked into `public/`.
+
 ## Deploy
 
 Two GitHub Actions publish on every push to `main`:
