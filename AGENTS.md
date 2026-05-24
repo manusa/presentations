@@ -56,6 +56,31 @@ npm run export:pdf -- http://localhost:8080/presentations/2026-devtalks-romania/
 
 Both deck-walking scripts use **keyboard simulation** (`ArrowRight`) for slide navigation — agnostic of any specific `deck-stage` API, so they keep working as `deck-stage.js` evolves.
 
+## Snapshot Regression Tests
+
+Pixel-diff guard against accidental visual regressions while refactoring a deck. Backed by `pixelmatch` with anti-aliasing tolerance (real changes flagged, sub-pixel font noise ignored).
+
+**Establish a baseline** — run once when you land an upstream deck, and again after any *intentional* visual change has been reviewed:
+```bash
+npm run snapshot:baseline -- http://localhost:8080/presentations/<slug>/ <deck-name>
+git add snapshots/<deck-name>/baseline/
+```
+
+**Check for regressions** — run after edits / refactors:
+```bash
+npm run snapshot:diff -- http://localhost:8080/presentations/<slug>/ <deck-name>
+```
+
+Layout:
+```
+snapshots/<deck-name>/
+  baseline/   ← committed (reference)
+  current/    ← gitignored (last diff capture)
+  diff/       ← gitignored (red-overlay PNGs for changed slides only)
+```
+
+Per-slide console report shows pixel-diff count + %. Exit code: 0 if all slides identical, 1 if any differ (handy for `make` / CI later). New or removed slides count as regressions.
+
 ## Image Optimization
 
 `npm run optimize:images -- <input> <output.webp>` converts any raster source (JPEG, PNG, TIFF, HEIC, WebP) into a WebP at the destination path. Use this as a **pre-pass before committing image assets** — the original raster is never stored in the repo, only the `.webp` output.
