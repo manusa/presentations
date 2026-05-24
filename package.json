@@ -14,8 +14,10 @@
     "test": "jest",
     "screenshot": "node scripts/screenshot.js",
     "screenshot:setup": "playwright install chromium",
+    "screenshot:deck": "node scripts/screenshot-deck.js",
     "serve:static": "live-server static --port=8080 --no-browser",
-    "optimize:images": "node scripts/optimize-images.js"
+    "optimize:images": "node scripts/optimize-images.js",
+    "export:pdf": "node scripts/export-pdf.js"
   },
   "publishConfig": {
     "access": "public"

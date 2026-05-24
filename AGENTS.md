@@ -29,18 +29,32 @@ Static decks under `static/presentations/*` need no build step — they appear i
 
 The two servers can run in parallel: live-server on 8080 for the static deck, Gatsby on 8000 for everything else.
 
-## Visual Review (Screenshots)
+## Visual Review (Screenshots + PDF)
 
-`scripts/screenshot.js` headlessly captures any URL at 1920×1080 PNG via Playwright. Use it to verify slide changes without opening a browser yourself.
+Four Playwright-backed scripts produce visual artifacts. All output goes under `./screenshots/` (gitignored). All capture at 1920×1080.
 
+**First-time setup** (downloads Chromium ~150MB):
 ```bash
-npm run screenshot:setup                                                 # one-time: downloads Chromium (~150MB)
-npm run develop                                                          # start the dev server in another terminal
-npm run screenshot -- http://localhost:8000/ landing                     # → ./screenshots/landing.png
-npm run screenshot -- http://localhost:8000/presentations/<slug>/slide-010-about my-slide
+npm run screenshot:setup
 ```
 
-Output lands in `./screenshots/` (gitignored). PDF rendering of full decks is a one-line drop-in via Playwright's `page.pdf()` when needed.
+**Single URL → PNG** — `screenshot`. For verifying one page (a Gatsby slide, a static deck URL, the landing page). By default waits for non-looping CSS animations to finish before capturing (the slide's "final" state). Pass `--delay <ms>` to capture mid-animation instead.
+```bash
+npm run screenshot -- http://localhost:8000/ landing
+npm run screenshot -- http://localhost:8080/presentations/<slug>/ early-state --delay 200
+```
+
+**Whole deck → PNG per slide** — `screenshot:deck`. Walks a `<deck-stage>`-style deck via `ArrowRight` keypress, captures each slide after animations settle. Outputs `screenshots/<name>/slide-NN.png`.
+```bash
+npm run screenshot:deck -- http://localhost:8080/presentations/2026-devtalks-romania/ devtalks-current
+```
+
+**Whole deck → multi-page PDF** — `export:pdf`. Same per-slide capture as `screenshot:deck`, assembled into a 1920×1080 PDF (16:9, no letterboxing). Hand this to conference organizers who require PDF.
+```bash
+npm run export:pdf -- http://localhost:8080/presentations/2026-devtalks-romania/ /tmp/devtalks-2026.pdf
+```
+
+Both deck-walking scripts use **keyboard simulation** (`ArrowRight`) for slide navigation — agnostic of any specific `deck-stage` API, so they keep working as `deck-stage.js` evolves.
 
 ## Image Optimization
 
