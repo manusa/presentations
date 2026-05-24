@@ -42,6 +42,23 @@ npm run screenshot -- http://localhost:8000/presentations/<slug>/slide-010-about
 
 Output lands in `./screenshots/` (gitignored). PDF rendering of full decks is a one-line drop-in via Playwright's `page.pdf()` when needed.
 
+## Image Optimization
+
+`npm run optimize:images -- <input> <output.webp>` converts any raster source (JPEG, PNG, TIFF, HEIC, WebP) into a WebP at the destination path. Use this as a **pre-pass before committing image assets** — the original raster is never stored in the repo, only the `.webp` output.
+
+- PNG / GIF / TIFF inputs → **lossless** WebP (preserves transparency + crisp logo edges)
+- JPEG / WebP inputs → **lossy** WebP at quality 80
+- Resolution preserved unless the long side exceeds 3840px (4K UHD), in which case the image is downscaled (aspect preserved, lanczos3)
+- SVG and animated images are refused — use `svgo` for SVG; the deck doesn't need animated rasters
+- EXIF metadata is stripped by default
+
+```bash
+npm run optimize:images -- ~/Downloads/conference-hero.jpg \
+  static/presentations/2026-devtalks-romania/assets/photos/hero.webp
+```
+
+Backed by `sharp` (libvips); no system dependencies beyond `npm install`.
+
 ## Deploy
 
 Two GitHub Actions publish on every push to `main`:

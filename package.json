@@ -14,7 +14,8 @@
     "test": "jest",
     "screenshot": "node scripts/screenshot.js",
     "screenshot:setup": "playwright install chromium",
-    "serve:static": "live-server static --port=8080 --no-browser"
+    "serve:static": "live-server static --port=8080 --no-browser",
+    "optimize:images": "node scripts/optimize-images.js"
   },
   "publishConfig": {
     "access": "public"
@@ -61,6 +62,7 @@
     "jest": "30.0.2",
     "live-server": "1.2.2",
     "playwright": "1.60.0",
-    "prop-types": "15.8.1"
+    "prop-types": "15.8.1",
+    "sharp": "0.34.5"
   }
 }
