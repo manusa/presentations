@@ -165,7 +165,7 @@ The NPM workflow runs `replaceDependencies.sh` before publish — it rewrites `d
 ## Adding a New Deck
 
 - **Gatsby deck**: follow the pattern of `src/pages/presentations/2025-devbcn-model-context-protocol-servers/` and its sibling `src/components/2025-devbcn-model-context-protocol-servers/`.
-- **Static deck**: drop a self-contained directory at `static/presentations/<deck-slug>/`, include a directory-local `README.md` capturing decisions, and link it from `src/components/landing-page/index.jsx` if you want it listed on the front page. Reference: `static/presentations/2026-devtalks-romania/`.
+- **Static deck**: drop a self-contained directory at `static/presentations/<deck-slug>/`, include a directory-local `README.md` capturing decisions, and link it from `src/components/landing-page/index.jsx` if you want it listed on the front page. Load `<deck-stage>` and `<image-slot>` from `static/deck-kit/` (`<script src="../../deck-kit/deck-stage.js" defer>` from the deck's `index.html`) — do **not** copy them inline. The deck-kit append-only contract is described in `static/deck-kit/README.md` and pinned by `npm run test:deck-kit`. Reference: `static/presentations/2026-devtalks-romania/`.
 
 ## Repo Conventions
 
