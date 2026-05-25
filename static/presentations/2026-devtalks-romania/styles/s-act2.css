@@ -251,3 +251,280 @@
   color: var(--cyan);
   white-space: nowrap;
 }
+
+/* ============================================================
+   New World — step 1 "self-aware pause" overlay
+   Warm tint dims the Gantt; a reconstructed Joanna Maciejewska
+   newspaper clipping floats center-right; a short cue line sits
+   on the left under the headline. Step 0 is unchanged (the pause
+   layer is fully outside the flex flow and starts hidden).
+   ============================================================ */
+.s-act2 .a2-pause {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 460ms ease-out, visibility 0s linear 460ms;
+}
+.s-act2[data-step="1"] .a2-pause {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 460ms ease-out, visibility 0s;
+}
+
+/* Warm scrim — radial wash with sepia / amber tones, multiplied so
+   the Gantt darkens softly instead of being painted over. Kept light
+   on the left so the original headline stays readable; the right
+   stays a touch warmer to push the clipping forward. */
+.s-act2 .a2-pause::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 68% 52%,
+      rgba(255, 232, 200, 0.16) 0%,
+      rgba(232, 170, 100, 0.26) 42%,
+      rgba(150,  80,  40, 0.40) 82%,
+      rgba( 70,  35,  20, 0.50) 100%);
+  mix-blend-mode: multiply;
+}
+/* Subtle warm haze on top of the multiply, in normal blend, to
+   tint the white paper bg of the deck without darkening it further. */
+.s-act2 .a2-pause::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 30%,
+      rgba(255, 210, 160, 0.10) 0%,
+      rgba(255, 180, 120, 0.04) 60%,
+      transparent 100%);
+}
+
+/* Dim the gantt + headline a touch in step 1 so the clipping
+   becomes the focal point. Keep the "You" lane and the chrome
+   readable — they anchor the slide back to its real subject. */
+.s-act2 .g1-stage,
+.s-act2 .a2-head { transition: opacity 460ms ease-out, filter 460ms ease-out; }
+.s-act2[data-step="1"] .g1-stage {
+  opacity: 0.58;
+  filter: saturate(0.78);
+}
+.s-act2[data-step="1"] .a2-head { opacity: 0.82; }
+.s-act2[data-step="1"] .g1-lane.you { opacity: 1; }
+.s-act2[data-step="1"] .g1-lane.you .lane-label { color: var(--fg); }
+
+/* Cue card — single paper "index card" with two reading levels.
+   Combining the headline and the metadata into one card (instead of
+   two stacked elements) keeps them visually unified and solves both
+   the alignment + legibility issues of a separate sub-line floating
+   on the warm scrim. */
+.s-act2 .a2-cue {
+  position: absolute;
+  left: 90px;
+  top: 470px;
+  display: inline-block;
+  padding: 14px 22px 12px;
+  background: rgba(255, 246, 230, 0.96);
+  border-left: 4px solid #c34b1c;
+  box-shadow: 0 8px 16px rgba(40, 18, 8, 0.20);
+  /* Pull the card's visible left edge flush with the slide grid
+     (cancels its own left border + padding). */
+  margin-left: -26px;
+  transform: translateY(8px);
+  opacity: 0;
+  transition: opacity 380ms ease-out 80ms, transform 380ms ease-out 80ms;
+}
+.s-act2[data-step="1"] .a2-cue {
+  opacity: 1;
+  transform: translateY(0);
+}
+.s-act2 .a2-cue .cue-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: #2a1408;
+  white-space: nowrap;
+}
+.s-act2 .a2-cue .cue-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #6a3a1a;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(70, 35, 15, 0.32);
+  white-space: nowrap;
+}
+
+/* The clipping — off-white paper, slight tilt, dropped shadow.
+   Two-column grid: portrait | text. Sits center-right. */
+.s-act2 .a2-clipping {
+  position: absolute;
+  top: 52%;
+  right: 70px;
+  width: 900px;
+  max-width: 49%;
+  margin: 0;
+  padding: 22px 30px 26px;
+  transform: translateY(-50%) rotate(-2.2deg);
+  transform-origin: center center;
+  background-color: #f6ecd2;
+  background-image:
+    radial-gradient(rgba(60, 35, 15, 0.05) 1px, transparent 1.6px),
+    radial-gradient(rgba(60, 35, 15, 0.03) 1px, transparent 1.6px),
+    linear-gradient(180deg, #faf2dc 0%, #efe1bd 100%);
+  background-size: 5px 5px, 3px 3px, 100% 100%;
+  background-position: 0 0, 1px 2px, 0 0;
+  border-radius: 2px;
+  border: 1px solid rgba(60, 40, 20, 0.18);
+  box-shadow:
+    0 22px 44px rgba(30, 14, 6, 0.50),
+    0 6px 12px rgba(30, 14, 6, 0.30);
+  opacity: 0;
+  transition: opacity 460ms ease-out 120ms, transform 460ms ease-out 120ms;
+}
+.s-act2 .a2-pause .a2-clipping {
+  /* starting state for the fade-in — same rotation, lifted a touch */
+  transform: translateY(calc(-50% + 12px)) rotate(-2.2deg);
+}
+.s-act2[data-step="1"] .a2-clipping {
+  opacity: 1;
+  transform: translateY(-50%) rotate(-2.2deg);
+}
+
+.s-act2 .a2-clipping .clip-masthead {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: #6c4326;
+  padding-bottom: 12px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid rgba(60, 40, 20, 0.30);
+}
+.s-act2 .a2-clipping .clip-body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 26px;
+  /* Stretch so the portrait height matches the quote+caption stack
+     on the right (instead of a fixed aspect-ratio that ran taller
+     than the text column). */
+  align-items: stretch;
+}
+
+/* Portrait — grayscale, paper-toned, very subtle halftone overlay.
+   Height is driven by the grid row (no aspect-ratio), so the photo
+   ends exactly at the bottom of the caption rule on the right. */
+.s-act2 .a2-clipping .clip-portrait {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #e3d2ab;
+  border: 1px solid rgba(60, 40, 20, 0.30);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+}
+.s-act2 .a2-clipping .clip-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 28%;
+  filter: grayscale(1) contrast(1.04) brightness(1.02);
+}
+/* light halftone — visible enough to feel printed, light enough that
+   it doesn't muddy the face */
+.s-act2 .a2-clipping .clip-portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(40, 28, 14, 0.45) 0.6px, transparent 0.9px);
+  background-size: 4px 4px;
+  mix-blend-mode: multiply;
+  opacity: 0.22;
+  pointer-events: none;
+}
+/* faint paper warm-tone wash so the photo reads as printed-on-paper */
+.s-act2 .a2-clipping .clip-portrait::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(246, 236, 210, 0.10) 0%, rgba(246, 236, 210, 0.02) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Quote text — large, editorial, dark navy on cream. */
+.s-act2 .a2-clipping .clip-text blockquote {
+  margin: 0 0 22px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.10;
+  letter-spacing: -0.012em;
+  color: #2a3744;
+  /* Manual <br>s shape the editorial rhythm; disable browser wrap-
+     balancing so the designed cadence stays intact. */
+  text-wrap: nowrap;
+  white-space: normal;
+}
+/* Two-level hierarchy:
+     <strong> = the affirmative wish (the punchline) — heavy + dark
+     plain    = the inverted counter-clause                — lighter ink
+   The em inside <strong> keeps the italic pull on the key phrases. */
+.s-act2 .a2-clipping .clip-text blockquote strong {
+  font-weight: 900;
+  color: #14212e;
+}
+.s-act2 .a2-clipping .clip-text blockquote em {
+  font-style: italic;
+  font-weight: inherit;
+}
+.s-act2 .a2-clipping .clip-text blockquote .oq,
+.s-act2 .a2-clipping .clip-text blockquote .cq {
+  font-size: 1.35em;
+  line-height: 0;
+  vertical-align: -0.05em;
+  margin: 0 0.02em;
+  color: #14212e;
+}
+.s-act2 .a2-clipping .clip-text figcaption {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #4a3a2a;
+  border-top: 1px solid rgba(60, 40, 20, 0.30);
+  padding-top: 14px;
+}
+.s-act2 .a2-clipping .clip-text figcaption strong {
+  color: #14212e;
+  font-weight: 800;
+}
+
+/* Bottom callout — swap the original line for the alt on step 1.
+   Both stay in flex flow so the column height doesn't jump. */
+.s-act2 .a2-takeaway-alt {
+  display: none;
+  position: relative;
+  z-index: 6;
+}
+.s-act2 .a2-takeaway-alt strong {
+  font-weight: 700;
+  color: var(--accent);
+}
+.s-act2[data-step="1"] .a2-takeaway { display: none; }
+.s-act2[data-step="1"] .a2-takeaway-alt { display: block; }
+
+/* PDF: drop the heavy box-shadow on the clipping (Chromium rasterises
+   large blurs into opaque rectangles in page.pdf()). Border + paper
+   bg still read as "lifted". */
+@media print {
+  .s-act2 .a2-clipping {
+    box-shadow: 0 2px 0 rgba(30, 14, 6, 0.25);
+  }
+}
