@@ -114,3 +114,10 @@ deck-stage section.light {
 
 /* Chrome rail dot keeps brand pink (decorative shape, not text). */
 
+/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
+   rectangles. Drop the cream-slide terminal lift in PDF; the border
+   already delineates the dark terminal from the cream background. */
+@media print {
+  .light .terminal { box-shadow: none; }
+}
+

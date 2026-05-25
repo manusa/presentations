@@ -243,3 +243,11 @@
   margin-left: auto;
   white-space: nowrap;
 }
+
+/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
+   rectangles, which turned the risky column's pink lift into a hard
+   pink rectangle in the PDF. Drop the shadow in print; the 2px pink
+   border + pink-tinted gradient still sell "risky". */
+@media print {
+  .s-legacy .col-risky { box-shadow: none; }
+}

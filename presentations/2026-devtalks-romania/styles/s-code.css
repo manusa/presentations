@@ -72,3 +72,10 @@
   margin-left: 4px;
 }
 @keyframes blink { 50% { opacity: 0; } }
+
+/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
+   rectangles. Drop the terminal lift in PDF; the dark terminal on a
+   dark slide already separates it from the background. */
+@media print {
+  .s-code .terminal { box-shadow: none; }
+}

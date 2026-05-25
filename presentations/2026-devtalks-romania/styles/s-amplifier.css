@@ -249,3 +249,10 @@
 }
 
 /* (stencil pill removed — the images are explicit enough) */
+
+/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
+   rectangles. Drop the 30px lift on .card in PDF; the card border +
+   tinted background still read as "lifted". */
+@media print {
+  .s-amplifier .card { box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
+}
