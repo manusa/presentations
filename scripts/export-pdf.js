@@ -28,7 +28,7 @@ How it works:
     across pages, producing a far smaller file than per-state pdf() + merge
 
 Example:
-  npm run export:pdf -- http://localhost:8080/presentations/2026-devtalks-romania/ /tmp/devtalks-2026.pdf
+  npm run export:pdf -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ /tmp/devtalks-2026.pdf
 `;
 
 const args = process.argv.slice(2);

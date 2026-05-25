@@ -18,7 +18,7 @@ How it works:
   - Waits for non-looping CSS animations to finish before each capture
 
 Example:
-  npm run screenshot:deck -- http://localhost:8080/presentations/2026-devtalks-romania/ devtalks-current
+  npm run screenshot:deck -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ devtalks-current
 `;
 
 const args = process.argv.slice(2);

@@ -18,7 +18,7 @@ When to run:
   - Re-capture at any point if you want to reset the comparison reference mid-session
 
 Example:
-  npm run snapshot:baseline -- http://localhost:8080/presentations/2026-devtalks-romania/ devtalks-2026
+  npm run snapshot:baseline -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ devtalks-2026
 `;
 
 const args = process.argv.slice(2);

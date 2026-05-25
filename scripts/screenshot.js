@@ -14,7 +14,7 @@ const USAGE = `Usage: npm run screenshot -- <url> [name] [--delay <ms>]
 Examples:
   npm run screenshot -- http://localhost:8000/ landing
   npm run screenshot -- http://localhost:8000/.../slide-010-about mcp-about
-  npm run screenshot -- http://localhost:8080/presentations/2026-devtalks-romania/ early --delay 200
+  npm run screenshot -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ early --delay 200
 
 Output:
   ./screenshots/<name>.png at 1920x1080.

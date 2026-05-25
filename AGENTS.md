@@ -25,11 +25,11 @@ Static decks under `static/presentations/*` need no build step — they appear i
 
 ## Local Preview (Static Decks)
 
-`npm run serve:static` runs live-server on `static/` at http://localhost:8080/ with WebSocket-based hot reload — connected browsers refresh automatically whenever any file under `static/` changes. Use this when iterating on a static deck under `static/presentations/<slug>/`; for Gatsby decks, use `npm run develop` instead (port 8000, React HMR).
+`npm run serve:static` runs live-server on `static/` with WebSocket-based hot reload — connected browsers refresh automatically whenever any file under `static/` changes. Use this when iterating on a static deck under `static/presentations/<slug>/`; for Gatsby decks, use `npm run develop` instead (port 8000, React HMR).
 
-The two servers can run in parallel: live-server on 8080 for the static deck, Gatsby on 8000 for everything else.
+**Port is random**, not fixed. Each invocation binds a free port (so multiple worktrees on the same machine can run their own `serve:static` in parallel without colliding). On startup the wrapper prints `→ http://localhost:NNNNN/` and writes the port to `.live-server.port` (gitignored) in the worktree root. Read either source to get the URL — e.g. `cat .live-server.port`, then pass `http://localhost:$(cat .live-server.port)/presentations/<slug>/` to `screenshot:deck`, `snapshot:diff`, etc.
 
-**Stop it when done.** `serve:static` keeps running after a task wraps. If you started it in the background (e.g. agent session), kill the `live-server` process before signing off — otherwise port 8080 stays held and the next session can't bind it. Quick: `pkill -f 'live-server static'`.
+**Cleanup is automatic** for Claude Code sessions. The wrapper also writes `.live-server.pid`; the Stop hook in `.claude/settings.json` runs `npm run --silent serve:static:stop` when the session ends, which reads the PID, verifies it still belongs to a `live-server` process (scoped check so it never kills another worktree's server), terminates it, and removes both sidecar files. Outside a Claude session, run the same command manually: `npm run serve:static:stop`.
 
 ## Visual Review (Screenshots + PDF)
 
@@ -43,17 +43,17 @@ npm run screenshot:setup
 **Single URL → PNG** — `screenshot`. For verifying one page (a Gatsby slide, a static deck URL, the landing page). By default waits for non-looping CSS animations to finish before capturing (the slide's "final" state). Pass `--delay <ms>` to capture mid-animation instead.
 ```bash
 npm run screenshot -- http://localhost:8000/ landing
-npm run screenshot -- http://localhost:8080/presentations/<slug>/ early-state --delay 200
+npm run screenshot -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ early-state --delay 200
 ```
 
 **Whole deck → PNG per slide** — `screenshot:deck`. Walks a `<deck-stage>`-style deck via `ArrowRight` keypress, captures each slide after animations settle. Outputs `screenshots/<name>/slide-NN.png`.
 ```bash
-npm run screenshot:deck -- http://localhost:8080/presentations/2026-devtalks-romania/ devtalks-current
+npm run screenshot:deck -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ devtalks-current
 ```
 
 **Whole deck → multi-page PDF** — `export:pdf`. Renders straight to a 1920×1080 vector PDF via Chromium's `page.pdf()` against the deck's `@media print` rule — text remains selectable, file size stays small (no rasterised slides). Photographic WebP `<image-slot>` sources are transcoded to JPEG just-in-time before render, because PDF doesn't support WebP and would otherwise embed each one as a multi-megabyte FlateDecode bitmap. Hand the output to conference organizers who require PDF.
 ```bash
-npm run export:pdf -- http://localhost:8080/presentations/2026-devtalks-romania/ /tmp/devtalks-2026.pdf
+npm run export:pdf -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ /tmp/devtalks-2026.pdf
 ```
 
 **Step-aware capture**: a `<section>` that publishes `data-step-max="N"` becomes N+1 PDF pages, rendered at `data-step="0..N"`. This is the contract `.s-amplifier` uses (3 states per slide); any future stepping slide should follow it and `export:pdf` will pick it up with no code changes.
@@ -73,9 +73,9 @@ Pixel-diff guard against unintended visual changes during a work session. Backed
 5. Move on. No `git add` of snapshots ever — they're disposable reference points.
 
 ```bash
-npm run snapshot:baseline -- http://localhost:8080/presentations/<slug>/ <deck-name>
+npm run snapshot:baseline -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ <deck-name>
 # … do your work …
-npm run snapshot:diff -- http://localhost:8080/presentations/<slug>/ <deck-name>
+npm run snapshot:diff -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ <deck-name>
 ```
 
 Layout (all gitignored):
@@ -122,7 +122,7 @@ The handoff bundle (the zip from Claude Design) is the upstream reference — **
 
 1. **Identify the runtime files.** The bundle's own README usually names the master deck HTML. Follow its imports. Many bundled JS files turn out to already be inlined in the HTML; lots of others are design-canvas internals, screenshots, or alternate-form modules not loaded at runtime.
 2. Copy only those runtime files into `static/presentations/<slug>/`.
-3. `npm run serve:static` and open http://localhost:8080/presentations/<slug>/ to verify it boots.
+3. `npm run serve:static` and open http://localhost:$(cat .live-server.port)/presentations/<slug>/ to verify it boots.
 4. **Clean it up before the first commit**, following workflow #2 for each pass: extract inline data URLs to external assets, `optimize:images --lossy` for AI-generated photographic PNGs, replace upstream placeholders with real assets, drop bundle dupes. Use the `snapshot:baseline` → edit → `snapshot:diff` dance to keep each pass honest.
 5. When the deck is in shape, commit the cleaned state. Add an *"Already refactored from the upstream bundle"* section to the deck-local `README.md` listing what was changed from the zip — that section is the diffing record for future readers, replacing the role a pristine commit would have played.
 
@@ -133,9 +133,9 @@ The handoff bundle (the zip from Claude Design) is the upstream reference — **
 Same pattern whether the change is supposed to be invisible (refactor) or very visible (new slide, color tweak, logo swap).
 
 1. `npm run serve:static` running in one terminal.
-2. **Before editing**: `npm run snapshot:baseline -- http://localhost:8080/presentations/<slug>/ <deck-name>` to capture the "before" state.
+2. **Before editing**: `npm run snapshot:baseline -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ <deck-name>` to capture the "before" state.
 3. Edit files. Browser auto-reloads.
-4. `npm run snapshot:diff -- http://localhost:8080/presentations/<slug>/ <deck-name>`.
+4. `npm run snapshot:diff -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ <deck-name>`.
 5. Review every flagged slide under `snapshots/<deck-name>/diff/slide-NN.png`. Confirm each delta matches intent:
    - Refactor: expect 0 diffs. Any diff is a regression — investigate, don't shrug.
    - Visual change: expect diffs only on the slides you touched. Anything else is collateral damage.
@@ -146,7 +146,7 @@ Same pattern whether the change is supposed to be invisible (refactor) or very v
 ### 3. Pre-talk deliverables
 
 1. `npm run snapshot:baseline` then load the deck and click through it visually as a sanity pass.
-2. `npm run export:pdf -- http://localhost:8080/presentations/<slug>/ /tmp/<talk-name>.pdf` for the conference PDF handover.
+2. `npm run export:pdf -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ /tmp/<talk-name>.pdf` for the conference PDF handover.
 3. Optionally bump `package.json` version → next push releases a fresh `@marcnuri/presentations` tag with the final deck baked into `public/`.
 
 ## Deploy

@@ -135,8 +135,8 @@ Based on the handoff bundle, the export looks **one-way**: there is no documente
 
 ## Deploying a new version
 
-1. Before editing: `npm run snapshot:baseline -- http://localhost:8080/presentations/2026-devtalks-romania/ devtalks-2026` (captures the "before" state — see `AGENTS.md` workflow #2).
+1. Before editing: `npm run snapshot:baseline -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ devtalks-2026` (captures the "before" state — see `AGENTS.md` workflow #2).
 2. Edit deck files in this directory.
-3. `npm run snapshot:diff -- http://localhost:8080/presentations/2026-devtalks-romania/ devtalks-2026` — review every flagged slide and confirm the deltas are intentional.
+3. `npm run snapshot:diff -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ devtalks-2026` — review every flagged slide and confirm the deltas are intentional.
 4. Bump `package.json` `version` (root of repo) — required for the NPM publish workflow to publish a new tag. GH Pages publish does not need this.
 5. Commit and push to `main`. Both workflows run automatically. `snapshots/` is gitignored — nothing to stage there.

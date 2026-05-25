@@ -21,7 +21,7 @@ Console report: per-slide pixel diff count + %.
 Exit code: 0 if all slides identical, 1 if any differ (or slide count changed).
 
 Example:
-  npm run snapshot:diff -- http://localhost:8080/presentations/2026-devtalks-romania/ devtalks-2026
+  npm run snapshot:diff -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ devtalks-2026
 `;
 
 const args = process.argv.slice(2);

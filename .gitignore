@@ -4,3 +4,5 @@ public/
 .cache/
 screenshots/
 snapshots/
+.live-server.pid
+.live-server.port
