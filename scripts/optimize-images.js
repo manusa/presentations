@@ -5,14 +5,18 @@ const fs = require('fs');
 
 const MAX_LONG_SIDE = 3840; // 4K UHD ceiling
 
-const USAGE = `Usage: npm run optimize:images -- <input> <output>
+const USAGE = `Usage: npm run optimize:images -- <input> <output> [--lossy]
 
   <input>   Source raster image (JPEG, PNG, TIFF, HEIC, WebP, etc.)
   <output>  Destination path; must end in .webp
+  --lossy   Force lossy WebP (q80) regardless of source format. Use for
+            photographic content stored as PNG (e.g. AI-generated scenes)
+            where the default lossless behavior would inflate file size.
 
 Behavior:
   - PNG / GIF / TIFF sources  → lossless WebP (preserves transparency + crisp edges)
   - JPEG / WebP sources       → lossy WebP at quality 80
+  - --lossy overrides the source-format rule → lossy WebP at quality 80
   - Resolution preserved unless the long side exceeds 3840px (4K UHD); in that case
     the image is downscaled (long side = 3840px, aspect preserved, lanczos3)
   - SVG inputs are refused (use svgo for SVG optimization)
@@ -30,13 +34,16 @@ if (args.length < 1 || args[0] === '-h' || args[0] === '--help') {
   process.exit(args.length === 0 ? 1 : 0);
 }
 
-if (args.length !== 2) {
-  console.error('Expected exactly two arguments: <input> <output>');
+const forceLossy = args.includes('--lossy');
+const positional = args.filter((a) => a !== '--lossy');
+
+if (positional.length !== 2) {
+  console.error('Expected exactly two positional arguments: <input> <output>');
   console.error('Run with --help for details.');
   process.exit(1);
 }
 
-const [input, output] = args;
+const [input, output] = positional;
 
 if (!output.toLowerCase().endsWith('.webp')) {
   console.error('Output path must end in .webp');
@@ -86,7 +93,7 @@ try {
     });
   }
 
-  const lossless = ['png', 'gif', 'tiff'].includes(format);
+  const lossless = !forceLossy && ['png', 'gif', 'tiff'].includes(format);
   pipeline = pipeline.webp(
     lossless ? {lossless: true, effort: 6} : {quality: 80, effort: 6}
   );

@@ -3,5 +3,4 @@ node_modules/
 public/
 .cache/
 screenshots/
-snapshots/*/current/
-snapshots/*/diff/
+snapshots/

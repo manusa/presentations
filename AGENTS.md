@@ -29,6 +29,8 @@ Static decks under `static/presentations/*` need no build step — they appear i
 
 The two servers can run in parallel: live-server on 8080 for the static deck, Gatsby on 8000 for everything else.
 
+**Stop it when done.** `serve:static` keeps running after a task wraps. If you started it in the background (e.g. agent session), kill the `live-server` process before signing off — otherwise port 8080 stays held and the next session can't bind it. Quick: `pkill -f 'live-server static'`.
+
 ## Visual Review (Screenshots + PDF)
 
 Four Playwright-backed scripts produce visual artifacts. All output goes under `./screenshots/` (gitignored). All capture at 1920×1080.
@@ -58,28 +60,33 @@ Both deck-walking scripts use **keyboard simulation** (`ArrowRight`) for slide n
 
 ## Snapshot Regression Tests
 
-Pixel-diff guard against accidental visual regressions while refactoring a deck. Backed by `pixelmatch` with anti-aliasing tolerance (real changes flagged, sub-pixel font noise ignored).
+Pixel-diff guard against unintended visual changes during a work session. Backed by `pixelmatch` with anti-aliasing tolerance (real changes flagged, sub-pixel font noise ignored).
 
-**Establish a baseline** — run once when you land an upstream deck, and again after any *intentional* visual change has been reviewed:
+**Baselines are session-scoped, not committed.** The entire `snapshots/` directory is gitignored. The pattern is always:
+
+1. `npm run snapshot:baseline -- <url> <deck-name>` — capture the "before" state, **before touching anything**
+2. Do the work (edits, refactor, content change, image swap…)
+3. `npm run snapshot:diff -- <url> <deck-name>` — capture "after" and overlay onto the session baseline
+4. Eyeball each diff PNG under `snapshots/<deck-name>/diff/` — confirm every delta is intended
+5. Move on. No `git add` of snapshots ever — they're disposable reference points.
+
 ```bash
 npm run snapshot:baseline -- http://localhost:8080/presentations/<slug>/ <deck-name>
-git add snapshots/<deck-name>/baseline/
-```
-
-**Check for regressions** — run after edits / refactors:
-```bash
+# … do your work …
 npm run snapshot:diff -- http://localhost:8080/presentations/<slug>/ <deck-name>
 ```
 
-Layout:
+Layout (all gitignored):
 ```
 snapshots/<deck-name>/
-  baseline/   ← committed (reference)
-  current/    ← gitignored (last diff capture)
-  diff/       ← gitignored (red-overlay PNGs for changed slides only)
+  baseline/   the "before" capture for this session
+  current/    the "after" capture from the most recent diff run
+  diff/       red-overlay PNGs for changed slides only
 ```
 
-Per-slide console report shows pixel-diff count + %. Exit code: 0 if all slides identical, 1 if any differ (handy for `make` / CI later). New or removed slides count as regressions.
+Per-slide console report shows pixel-diff count + %. Exit code: 0 if all slides identical, 1 if any differ. New or removed slides count as changes.
+
+**Why session-scoped**: decks evolve — new slides, content tweaks, design refreshes. A long-lived committed baseline would drift and force constant re-promotion churn, and the value of the diff is "before-vs-after this change", not "drift from some historic snapshot". The discipline that matters is *always capturing baseline first*; the storage is throwaway.
 
 ## Image Optimization
 
@@ -87,6 +94,7 @@ Per-slide console report shows pixel-diff count + %. Exit code: 0 if all slides 
 
 - PNG / GIF / TIFF inputs → **lossless** WebP (preserves transparency + crisp logo edges)
 - JPEG / WebP inputs → **lossy** WebP at quality 80
+- `--lossy` flag → force lossy WebP regardless of source format. Use for **photographic content stored as PNG** (e.g. AI-generated scene art, screenshots of dashboards) where the default lossless behavior balloons output to multiple megabytes for no perceptual gain.
 - Resolution preserved unless the long side exceeds 3840px (4K UHD), in which case the image is downscaled (aspect preserved, lanczos3)
 - SVG and animated images are refused — use `svgo` for SVG; the deck doesn't need animated rasters
 - EXIF metadata is stripped by default
@@ -94,6 +102,10 @@ Per-slide console report shows pixel-diff count + %. Exit code: 0 if all slides 
 ```bash
 npm run optimize:images -- ~/Downloads/conference-hero.jpg \
   static/presentations/2026-devtalks-romania/assets/photos/hero.webp
+
+# AI-generated PNG scene → small lossy WebP
+npm run optimize:images -- ~/Downloads/ai-scene.png \
+  static/presentations/<slug>/assets/scene.webp --lossy
 ```
 
 Backed by `sharp` (libvips); no system dependencies beyond `npm install`.
@@ -106,35 +118,27 @@ Canonical sequences for deck work. Tools (above) tell you *what* each script doe
 
 1. Drop the deck files into `static/presentations/<slug>/` (don't strip dev includes yet — verify it works first).
 2. `npm run serve:static` and open http://localhost:8080/presentations/<slug>/ to confirm it loads.
-3. **Capture the baseline immediately, before any edits**: `npm run snapshot:baseline -- http://localhost:8080/presentations/<slug>/ <deck-name>`.
-4. `git add static/presentations/<slug>/ snapshots/<deck-name>/baseline/` and commit deck files + baseline **in one PR**.
+3. `git add static/presentations/<slug>/` and commit the pristine drop **in one commit**, separate from any later cleanup. This commit is your real "upstream reference" — `git diff` against it tells you everything that's been changed since the handoff.
+4. From here on, follow workflow #2 for any cleanup pass.
 
-**Gotcha**: if you skip step 3 and start refactoring first, you lose the "original upstream" reference — every later `snapshot:diff` is relative to your already-changed state, not the pristine handoff.
+### 2. Any edit pass (refactor, content change, visual tweak, image swap)
 
-### 2. Refactor iteration loop (no expected visual change)
-
-For style splits, script extraction, dead-code removal, comment cleanup — anything where the rendered output should be byte-identical.
+Same pattern whether the change is supposed to be invisible (refactor) or very visible (new slide, color tweak, logo swap).
 
 1. `npm run serve:static` running in one terminal.
-2. Edit files. Browser auto-reloads.
-3. `npm run snapshot:diff -- http://localhost:8080/presentations/<slug>/ <deck-name>`.
-4. Clean exit → commit.
+2. **Before editing**: `npm run snapshot:baseline -- http://localhost:8080/presentations/<slug>/ <deck-name>` to capture the "before" state.
+3. Edit files. Browser auto-reloads.
+4. `npm run snapshot:diff -- http://localhost:8080/presentations/<slug>/ <deck-name>`.
+5. Review every flagged slide under `snapshots/<deck-name>/diff/slide-NN.png`. Confirm each delta matches intent:
+   - Refactor: expect 0 diffs. Any diff is a regression — investigate, don't shrug.
+   - Visual change: expect diffs only on the slides you touched. Anything else is collateral damage.
+6. Commit code changes only. `snapshots/` is gitignored — nothing to add there.
 
-**Gotcha**: if `snapshot:diff` flags changes, treat as regressions unless you intentionally caused them. **Don't re-run `snapshot:baseline` to "fix" a failing diff** — investigate first.
+**Gotcha**: forgetting step 2 (the pre-edit baseline) is the cardinal sin — without it, step 4 has nothing to compare against and you lose the safety net entirely.
 
-### 3. Intentional visual change (new slide, color tweak, swap a logo, etc.)
+### 3. Pre-talk deliverables
 
-1. Same edit/preview loop as #2.
-2. `npm run snapshot:diff` flags pixel changes — expected.
-3. **Review every diff overlay** under `snapshots/<deck-name>/diff/slide-NN.png`. Confirm each delta is what you wanted, not collateral damage.
-4. `npm run snapshot:baseline -- ... <deck-name>` to promote current state to the new reference.
-5. `git add` code changes + updated baseline files, commit together.
-
-**Gotcha**: promoting without reviewing each diff is how unrelated regressions sneak into the baseline. The five-second `eog` or `open` of each diff PNG is mandatory.
-
-### 4. Pre-talk deliverables
-
-1. Final `npm run snapshot:diff` to confirm `main` matches the committed baseline (sanity check).
+1. `npm run snapshot:baseline` then load the deck and click through it visually as a sanity pass.
 2. `npm run export:pdf -- http://localhost:8080/presentations/<slug>/ /tmp/<talk-name>.pdf` for the conference PDF handover.
 3. Optionally bump `package.json` version → next push releases a fresh `@marcnuri/presentations` tag with the final deck baked into `public/`.
 

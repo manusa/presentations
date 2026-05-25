@@ -10,11 +10,12 @@ const USAGE = `Usage: npm run snapshot:baseline -- <deck-url> <deck-name>
   <deck-name>  Short slug used to namespace this deck's snapshots
 
 Writes one PNG per slide to snapshots/<deck-name>/baseline/slide-NN.png and OVERWRITES
-any existing baseline. Commit these files — they're the reference for snapshot:diff.
+any existing baseline. The snapshots/ directory is gitignored — baselines are
+session-scoped reference points, not committed artifacts.
 
 When to run:
-  - Once when you land an upstream deck (initial baseline)
-  - After an intentional visual change has been reviewed and accepted
+  - Right before starting a change, to capture the "before" state for snapshot:diff
+  - Re-capture at any point if you want to reset the comparison reference mid-session
 
 Example:
   npm run snapshot:baseline -- http://localhost:8080/presentations/2026-devtalks-romania/ devtalks-2026
@@ -80,7 +81,7 @@ try {
     });
 
     console.log(`✓ baseline written to ${baselineDir}`);
-    console.log(`  remember to: git add ${path.relative(process.cwd(), baselineDir)}`);
+    console.log(`  now make your changes, then: npm run snapshot:diff -- ${url} ${deckName}`);
   } finally {
     await browser.close();
   }
