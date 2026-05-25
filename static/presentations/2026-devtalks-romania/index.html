@@ -6172,6 +6172,14 @@ deck-stage section.light {
         this._go(this._slides.length - 1, 'keyboard');
       } else if (key === 'r' || key === 'R') {
         this._go(0, 'keyboard');
+      } else if (key === 'f' || key === 'F') {
+        // Plain 'f' as the single cross-platform toggle. Not F11: Chromium
+        // intercepts F11 at the browser level (browser-chrome fullscreen, a
+        // different surface from the Fullscreen API) before the page sees
+        // it, and macOS doesn't wire F11 to fullscreen at all — binding it
+        // here would be dead code with a misleading promise. Escape exits
+        // via the browser default — no code needed.
+        this._toggleFullscreen();
       } else if (/^[0-9]$/.test(key)) {
         // 1..9 jump to that slide; 0 jumps to 10.
         const n = key === '0' ? 9 : parseInt(key, 10) - 1;
@@ -6195,6 +6203,23 @@ deck-stage section.light {
       }
       this._index = clamped;
       this._applyIndex({ showOverlay: true, broadcast: true, reason });
+    }
+
+    _toggleFullscreen() {
+      // Request on the host element (this), not documentElement: the host is
+      // already position:fixed; inset:0, so the rail and overlay come along
+      // for the ride. The === this check (not just truthy) keeps the toggle
+      // host-scoped: if some other element (a future image lightbox, an
+      // embedded video) is the fullscreen owner, 'f' won't yank it out — it
+      // promotes the deck instead (the Fullscreen API supports transitioning
+      // between elements without an explicit exit). catch() swallows the
+      // user-gesture-required / not-allowed rejection paths so a denied call
+      // doesn't surface as an unhandled promise rejection.
+      if (document.fullscreenElement === this) {
+        document.exitFullscreen().catch(() => {});
+      } else {
+        this.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
+      }
     }
 
     /** Step forward/back skipping any slide marked data-deck-skip. Falls
