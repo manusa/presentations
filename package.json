@@ -20,7 +20,8 @@
     "optimize:images": "node scripts/optimize-images.js",
     "export:pdf": "node scripts/export-pdf.js",
     "snapshot:baseline": "node scripts/snapshot-baseline.js",
-    "snapshot:diff": "node scripts/snapshot-diff.js"
+    "snapshot:diff": "node scripts/snapshot-diff.js",
+    "test:deck-kit": "node --test tests/deck-kit/*.spec.js"
   },
   "publishConfig": {
     "access": "public"
@@ -59,6 +60,12 @@
     "react-helmet": "6.1.0",
     "react-syntax-highlighter": "15.6.1",
     "sass": "1.77.2"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/deck-kit/"
+    ]
   },
   "devDependencies": {
     "eslint": "8.57.1",

@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>image-slot fixture</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; background: #111; color: #eee; }
+  image-slot { display: inline-block; vertical-align: top; margin: 6px; background: #222; }
+</style>
+</head>
+<body>
+<image-slot id="default" style="width:200px;height:120px" placeholder="default"></image-slot>
+<image-slot id="rounded" style="width:200px;height:120px" shape="rounded" radius="20"></image-slot>
+<image-slot id="circle"  style="width:120px;height:120px" shape="circle"></image-slot>
+<image-slot id="pill"    style="width:240px;height:80px" shape="pill"></image-slot>
+<image-slot id="masked"  style="width:200px;height:200px"
+            mask="polygon(50% 0, 100% 50%, 50% 100%, 0 50%)"></image-slot>
+<image-slot id="fit-contain" style="width:200px;height:120px" fit="contain"></image-slot>
+<image-slot id="fit-cover"   style="width:200px;height:120px" fit="cover"></image-slot>
+<image-slot id="positioned"  style="width:200px;height:120px" position="20% 80%"></image-slot>
+<image-slot id="placeholder" style="width:200px;height:120px" placeholder="Drop a hero"></image-slot>
+<image-slot id="with-src"    style="width:200px;height:120px"
+            src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23ff00ff'/%3E%3C/svg%3E"></image-slot>
+<script src="/static/deck-kit/image-slot.js" defer></script>
+</body>
+</html>
