@@ -55,6 +55,86 @@ try {
   process.exit(1);
 }
 
+let sharp;
+try {
+  sharp = require('sharp');
+} catch (err) {
+  console.error('sharp is not installed. Run: npm install');
+  process.exit(1);
+}
+
+/**
+ * Photographic raster images (WebP/PNG without an alpha channel) embed in the
+ * PDF as large FlateDecode bitmaps because PDF doesn't natively support WebP
+ * and Chromium falls back to PNG-style storage. JPEG (DCTDecode) is supported
+ * natively and stores at source size. We fetch each candidate via the page's
+ * request context, transcode to JPEG q=85 via sharp, and rewrite the src to a
+ * data URL. Images with transparency are left untouched.
+ *
+ * Runs BEFORE expandStepClones so the rewritten srcs propagate naturally to
+ * cloned step-states without re-transcoding the same bytes per clone.
+ */
+async function transcodePhotosToJpeg(page, {quality = 85} = {}) {
+  // Track the WebP→JPEG case separately — those are the wins that matter
+  // because WebP forces Chromium to inflate to FlateDecode bitmaps (~10x).
+  let webpCount = 0;
+  const srcs = await page.evaluate(() => {
+    const urls = new Set();
+    const visit = (el) => {
+      const src = el.getAttribute('src');
+      if (!src || src.startsWith('data:')) return;
+      const stem = src.split('?')[0].toLowerCase();
+      if (stem.endsWith('.svg')) return;
+      urls.add(src);
+    };
+    document.querySelectorAll('img[src]').forEach(visit);
+    document.querySelectorAll('image-slot[src]').forEach(visit);
+    return Array.from(urls);
+  });
+  if (srcs.length === 0) return {transcoded: 0, webpCount: 0};
+
+  const pageUrl = page.url();
+  const replacements = {};
+
+  for (const src of srcs) {
+    let resolved;
+    try {
+      resolved = new URL(src, pageUrl).href;
+    } catch (err) {
+      continue;
+    }
+    try {
+      const resp = await page.context().request.get(resolved);
+      if (!resp.ok()) continue;
+      const buf = Buffer.from(await resp.body());
+      const meta = await sharp(buf).metadata();
+      if (meta.hasAlpha) continue;
+      const jpegBuf = await sharp(buf).jpeg({quality, mozjpeg: true}).toBuffer();
+      // WebP sources MUST be transcoded — PDF doesn't support WebP and Chromium
+      // would otherwise inflate them to FlateDecode bitmaps (huge). For other
+      // formats, only transcode if the JPEG is meaningfully smaller.
+      const isWebP = meta.format === 'webp';
+      if (!isWebP && jpegBuf.length >= buf.length * 0.95) continue;
+      replacements[src] = `data:image/jpeg;base64,${jpegBuf.toString('base64')}`;
+      if (isWebP) webpCount += 1;
+    } catch (err) {
+      // Unreadable, unsupported, or non-image — skip.
+    }
+  }
+  if (Object.keys(replacements).length === 0) return {transcoded: 0, webpCount: 0};
+
+  await page.evaluate((map) => {
+    const apply = (el) => {
+      const src = el.getAttribute('src');
+      if (map[src]) el.setAttribute('src', map[src]);
+    };
+    document.querySelectorAll('img[src]').forEach(apply);
+    document.querySelectorAll('image-slot[src]').forEach(apply);
+  }, replacements);
+
+  return {transcoded: Object.keys(replacements).length, webpCount};
+}
+
 (async () => {
   let browser;
   try {
@@ -82,6 +162,17 @@ try {
     }
 
     await applyExportHidden(page);
+
+    const {transcoded, webpCount} = await transcodePhotosToJpeg(page);
+    if (transcoded > 0) {
+      const detail = webpCount > 0
+        ? ` (${webpCount} WebP→JPEG — large embed savings)`
+        : '';
+      console.log(
+        `Transcoded ${transcoded} photographic image${transcoded === 1 ? '' : 's'} to JPEG${detail}`
+      );
+    }
+
     const totalAfterExpand = await expandStepClones(page);
     const extraStates = totalAfterExpand - originalCount;
     console.log(
