@@ -27,6 +27,8 @@ Static decks under `static/presentations/*` need no build step — they appear i
 
 `npm run serve:static` runs live-server on `static/` with WebSocket-based hot reload — connected browsers refresh automatically whenever any file under `static/` changes. Use this when iterating on a static deck under `static/presentations/<slug>/`; for Gatsby decks, use `npm run develop` instead (port 8000, React HMR).
 
+Visiting `/` shows a dev-only index of every deck under `static/presentations/`, rendered on the fly by `scripts/serve-static-middleware.js` (no file written to `static/`, so it never lands in `public/` or collides with the Gatsby landing). Labels come from each deck's `README.md` first H1, falling back to the slug.
+
 **Port is random**, not fixed. Each invocation binds a free port (so multiple worktrees on the same machine can run their own `serve:static` in parallel without colliding). On startup the wrapper prints `→ http://localhost:NNNNN/` and writes the port to `.live-server.port` (gitignored) in the worktree root. Read either source to get the URL — e.g. `cat .live-server.port`, then pass `http://localhost:$(cat .live-server.port)/presentations/<slug>/` to `screenshot:deck`, `snapshot:diff`, etc.
 
 **Cleanup is automatic** for Claude Code sessions. The wrapper also writes `.live-server.pid`; the Stop hook in `.claude/settings.json` runs `npm run --silent serve:static:stop` when the session ends, which reads the PID, verifies it still belongs to a `live-server` process (scoped check so it never kills another worktree's server), terminates it, and removes both sidecar files. Outside a Claude session, run the same command manually: `npm run serve:static:stop`.

@@ -21,10 +21,12 @@
  */
 const fs = require('fs');
 const net = require('net');
+const path = require('path');
 const { spawn } = require('child_process');
 
 const PORT_FILE = '.live-server.port';
 const PID_FILE = '.live-server.pid';
+const MIDDLEWARE = path.resolve(__dirname, 'serve-static-middleware.js');
 
 function freePort() {
   return new Promise((resolve, reject) => {
@@ -43,7 +45,7 @@ async function main() {
 
   const child = spawn(
     'live-server',
-    ['static', `--port=${port}`, '--no-browser'],
+    ['static', `--port=${port}`, '--no-browser', `--middleware=${MIDDLEWARE}`],
     { stdio: ['ignore', 'pipe', 'pipe'] }
   );
 
