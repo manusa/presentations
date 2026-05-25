@@ -6652,7 +6652,12 @@ deck-stage section.light {
   });
 
   // Initialise step=0 on first paint for every amplifier slide.
-  document.querySelectorAll('.s-amplifier').forEach((s) => s.setAttribute('data-step', '0'));
+  // Publish data-step-max so capture tools (export:pdf) know how many states
+  // each stepped slide has — the contract for any future stepping slide.
+  document.querySelectorAll('.s-amplifier').forEach((s) => {
+    s.setAttribute('data-step', '0');
+    s.setAttribute('data-step-max', String(MAX_STEP));
+  });
 
   function activeAmplifier() {
     return document.querySelector('.s-amplifier[data-deck-active]');
