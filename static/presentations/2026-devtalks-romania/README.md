@@ -96,14 +96,14 @@ Done during onboarding — listed so a future reader sees the current deck is **
 - ~100 KB of inline base64 logo PNGs → external paths in `window.__LOGO_DATA_URLS` pointing at `assets/logos/<file>`.
 - `logo-helm-java` and `logo-minikube` swapped from upstream placeholders (`java.svg` / `javascript.svg`) to real Helm + Minikube SVGs. `logo-ai-beacon` still uses `go.svg` as a placeholder; no real asset yet.
 - Bundle duplicates removed: standalone `deck-stage.js` / `image-slot.js` (already inlined in `index.html`), `amp-scene-data.js` (not referenced), `techover-font.css` + `techover.ttf` (font is inlined as base64 in `@font-face`), and the flat `assets/*` logo dupes that were redundant with `assets/logos/`.
+- Dev React/Babel includes stripped: the three `unpkg` `<script>` tags (`react.development.js`, `react-dom.development.js`, `@babel/standalone`), the orphan `<div id="tweaks-root">` host, and the two `<script type="text/babel">` blocks (~600 lines of tweaks-panel.jsx) — all dev-only Claude Design tweaks-panel scaffolding, not used by the runtime deck. Verified via `snapshot:diff` (sub-pixel font noise only, no visual change).
 
-Net: `index.html` went from 1.17 MB → 368 KB; total deck size from ~2.4 MB → 1.2 MB.
+Net: `index.html` went from 1.17 MB → 333 KB; total deck size from ~2.4 MB → 1.2 MB.
 
 ---
 
 ## Known tradeoffs / cleanups worth doing
 
-- **Dev React/Babel includes**: `index.html` loads `react.development.js`, `react-dom.development.js`, and `@babel/standalone` from `unpkg`. These exist for the Claude Design *tweaks panel* embedded as inline `<script type="text/babel">` blocks, not the runtime deck. They can be stripped before shipping (or replaced with production builds if anything actually needs them — verify by removing and reloading and running `snapshot:diff`).
 - **CSS still embedded in one file**: ~990 lines of `<style>` at the top of `index.html`. A clean split into `styles/tokens.css` + `styles/shared.css` + `styles/s-*.css` is a 15–20 min mechanical refactor and pays off as the deck grows. Snapshot regression tests have you covered for the diff.
 - **Trim trailing template-demo + exploration slides** once the talk's slide order is final — they're not part of the actual talk.
 
