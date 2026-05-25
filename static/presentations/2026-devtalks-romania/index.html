@@ -236,128 +236,140 @@
   <!-- ============================================================
        SLIDE 3 — ABOUT (DAY JOB)
        ============================================================ -->
-  <section class="s-about2 light" data-label="03 About — Day job">
-    <div class="chrome-top">
-      <span class="dot"></span>
-      <span>~/dev/devtalks-2026 · about · day-job.md</span>
-      <span class="spacer"></span>
-      <span class="pill">02 / 12 · about/day_job</span>
-    </div>
-
-    <div class="body">
-      <div class="photo-col">
-        <image-slot id="speaker-calm"
-                    class="photo-slot"
-                    shape="rounded"
-                    radius="0"
-                    src="assets/portraits/calm.webp"
-                    placeholder="Drop B/W photo · 4:5 · calm, with headphones"></image-slot>
-        <div class="photo-caption">
-          <span class="tag">// portrait_01</span>
-          <span class="mood">calm</span>
-        </div>
-      </div>
-
-      <div class="info-col">
-        <div class="eyebrow">// whoami · day_job</div>
-        <h2 class="display">Marc Nuri</h2>
-        <div class="role-line">senior_principal_software_engineer <span class="at">@</span> red_hat &nbsp;·&nbsp; developer_tools</div>
-
-        <div class="sub-eyebrow">// open-source I maintain @ work</div>
-        <div class="proj-stack">
-
-          <div class="proj-card wide">
-            <image-slot id="logo-mcp-server" class="picon" fit="contain" placeholder="logo"></image-slot>
-            <div class="pinfo">
-              <div class="pname">kubernetes-mcp-server</div>
-              <div class="porg">github.com/containers/kubernetes-mcp-server</div>
-            </div>
-            <div class="pmeta">
-              <span class="lang-pill go">Go</span>
-              <span class="pstars"><span class="star">★</span>____</span>
-            </div>
-          </div>
-
-          <div class="proj-card wide">
-            <image-slot id="logo-k8s-client" class="picon" fit="contain" placeholder="logo"></image-slot>
-            <div class="pinfo">
-              <div class="pname">fabric8 kubernetes-client</div>
-              <div class="porg">github.com/fabric8io/kubernetes-client</div>
-            </div>
-            <div class="pmeta">
-              <span class="lang-pill java">Java</span>
-              <span class="pstars"><span class="star">★</span>____</span>
-            </div>
-          </div>
-
-          <div class="proj-card wide">
-            <image-slot id="logo-jkube" class="picon" fit="contain" placeholder="logo"></image-slot>
-            <div class="pinfo">
-              <div class="pname">Eclipse JKube</div>
-              <div class="porg">github.com/eclipse-jkube/jkube</div>
-            </div>
-            <div class="pmeta">
-              <span class="lang-pill java">Java</span>
-              <span class="pstars"><span class="star">★</span>____</span>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="handles-row">
-          <div class="h" title="GitHub"><span class="k"><i class="fa-brands fa-github"></i></span><span class="v"><span class="at">@</span>manusa</span></div>
-          <div class="h" title="Bluesky"><span class="k"><i class="fa-brands fa-bluesky"></i></span><span class="v"><span class="at">@</span>marcnuri.com</span></div>
-          <div class="h" title="X (Twitter)"><span class="k"><i class="fa-brands fa-x-twitter"></i></span><span class="v"><span class="at">@</span>MarcNuri</span></div>
-          <div class="h" title="LinkedIn"><span class="k"><i class="fa-brands fa-linkedin-in"></i></span><span class="v">/in/marcnuri</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="chrome-bottom">
-      <div class="left">
-        <span class="brand-mark">marc nuri</span>
-        <span class="sep">|</span>
-        <span>red hat</span>
-      </div>
-      <span class="spacer"></span>
-      <div class="right">
-        <span>devtalks.ro · 2026</span>
-      </div>
-    </div>
-  </section>
-
   <!-- ============================================================
-       SLIDE 3 — ABOUT (AFTER HOURS)
+       SLIDE 3 — ABOUT (DAY JOB / AFTER HOURS) — single stepped slide.
+       Two faces of the same person: front = day_job, back = after_hours.
+       data-step="0" shows front; data-step="1" flips to back.
+       The stepping handler at the bottom of this file (the same one
+       that drives .s-amplifier) wires ArrowRight / ArrowLeft to step
+       through, and export:pdf gets two pages automatically thanks to
+       data-step-max="1".
        ============================================================ -->
-  <section class="s-about2 light" data-label="04 About — After hours">
-    <div class="chrome-top">
-      <span class="dot"></span>
-      <span>~/dev/devtalks-2026 · about · after-hours.md</span>
-      <span class="spacer"></span>
-      <span class="pill">03 / 12 · about/after_hours</span>
-    </div>
+  <section class="s-about2 s-about2-flip light" data-label="02 About — Day job + After hours" data-step-max="1">
+    <div class="flip-stage">
+      <div class="flip-card">
 
-    <div class="body">
-      <div class="photo-col">
-        <image-slot id="speaker-crazy"
-                    class="photo-slot"
-                    shape="rounded"
-                    radius="0"
-                    src="assets/portraits/unhinged.webp"
-                    placeholder="Drop B/W photo · 4:5 · night run, headlamp, wild face"></image-slot>
-        <div class="photo-caption">
-          <span class="tag">// portrait_02</span>
-          <span class="mood">…and a bit unhinged.</span>
+        <!-- ── FRONT FACE: day job ────────────────────────────── -->
+        <div class="face face-front">
+          <div class="chrome-top">
+            <span class="dot"></span>
+            <span>~/dev/devtalks-2026 · about · day-job.md</span>
+            <span class="spacer"></span>
+            <span class="pill">02 / 11 · about/day_job</span>
+          </div>
+
+          <div class="body">
+            <div class="photo-col">
+              <image-slot id="speaker-calm"
+                          class="photo-slot"
+                          shape="rounded"
+                          radius="0"
+                          src="assets/portraits/calm.webp"
+                          placeholder="Drop B/W photo · 4:5 · calm, with headphones"></image-slot>
+              <div class="photo-caption">
+                <span class="tag">// portrait_01</span>
+                <span class="mood">calm</span>
+              </div>
+            </div>
+
+            <div class="info-col">
+              <div class="eyebrow">// whoami · day_job</div>
+              <h2 class="display">Marc Nuri</h2>
+              <div class="role-line">senior_principal_software_engineer <span class="at">@</span> red_hat &nbsp;·&nbsp; developer_tools</div>
+
+              <div class="sub-eyebrow">// open-source I maintain @ work</div>
+              <div class="proj-stack">
+
+                <div class="proj-card wide">
+                  <image-slot id="logo-mcp-server" class="picon" fit="contain" placeholder="logo"></image-slot>
+                  <div class="pinfo">
+                    <div class="pname">kubernetes-mcp-server</div>
+                    <div class="porg">github.com/containers/kubernetes-mcp-server</div>
+                  </div>
+                  <div class="pmeta">
+                    <span class="lang-pill go">Go</span>
+                    <span class="pstars"><span class="star">★</span>____</span>
+                  </div>
+                </div>
+
+                <div class="proj-card wide">
+                  <image-slot id="logo-k8s-client" class="picon" fit="contain" placeholder="logo"></image-slot>
+                  <div class="pinfo">
+                    <div class="pname">fabric8 kubernetes-client</div>
+                    <div class="porg">github.com/fabric8io/kubernetes-client</div>
+                  </div>
+                  <div class="pmeta">
+                    <span class="lang-pill java">Java</span>
+                    <span class="pstars"><span class="star">★</span>____</span>
+                  </div>
+                </div>
+
+                <div class="proj-card wide">
+                  <image-slot id="logo-jkube" class="picon" fit="contain" placeholder="logo"></image-slot>
+                  <div class="pinfo">
+                    <div class="pname">Eclipse JKube</div>
+                    <div class="porg">github.com/eclipse-jkube/jkube</div>
+                  </div>
+                  <div class="pmeta">
+                    <span class="lang-pill java">Java</span>
+                    <span class="pstars"><span class="star">★</span>____</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="handles-row">
+                <div class="h" title="GitHub"><span class="k"><i class="fa-brands fa-github"></i></span><span class="v"><span class="at">@</span>manusa</span></div>
+                <div class="h" title="Bluesky"><span class="k"><i class="fa-brands fa-bluesky"></i></span><span class="v"><span class="at">@</span>marcnuri.com</span></div>
+                <div class="h" title="X (Twitter)"><span class="k"><i class="fa-brands fa-x-twitter"></i></span><span class="v"><span class="at">@</span>MarcNuri</span></div>
+                <div class="h" title="LinkedIn"><span class="k"><i class="fa-brands fa-linkedin-in"></i></span><span class="v">/in/marcnuri</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chrome-bottom">
+            <div class="left">
+              <span class="brand-mark">marc nuri</span>
+              <span class="sep">|</span>
+              <span>red hat</span>
+            </div>
+            <span class="spacer"></span>
+            <div class="right">
+              <span>devtalks.ro · 2026</span>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="info-col">
-        <div class="eyebrow">// whoami · after_hours</div>
-        <h2 class="display">…and on the side.</h2>
-        <div class="role-line">probably-unhealthy_obsession_with_software &nbsp;·&nbsp; weekends &amp; evenings</div>
+        <!-- ── BACK FACE: after hours ─────────────────────────── -->
+        <div class="face face-back">
+          <div class="chrome-top">
+            <span class="dot"></span>
+            <span>~/dev/devtalks-2026 · about · after-hours.md</span>
+            <span class="spacer"></span>
+            <span class="pill">02 / 11 · about/after_hours</span>
+          </div>
 
-        <div class="sub-eyebrow">// side quests · open-source on my own time</div>
-        <div class="proj-grid">
+          <div class="body">
+            <div class="photo-col">
+              <image-slot id="speaker-crazy"
+                          class="photo-slot"
+                          shape="rounded"
+                          radius="0"
+                          src="assets/portraits/unhinged.webp"
+                          placeholder="Drop B/W photo · 4:5 · night run, headlamp, wild face"></image-slot>
+              <div class="photo-caption">
+                <span class="tag">// portrait_02</span>
+                <span class="mood">…and a bit unhinged.</span>
+              </div>
+            </div>
+
+            <div class="info-col">
+              <div class="eyebrow">// whoami · after_hours</div>
+              <h2 class="display">…and on the side.</h2>
+              <div class="role-line">probably-unhealthy_obsession_with_software &nbsp;·&nbsp; weekends &amp; evenings</div>
+
+              <div class="sub-eyebrow">// side quests · open-source on my own time</div>
+              <div class="proj-grid">
 
           <div class="proj-card compact">
             <image-slot id="logo-helm-java" class="picon" fit="contain" placeholder="logo"></image-slot>
@@ -444,32 +456,36 @@
             </div>
           </div>
 
-          <div class="proj-card compact blog-card" style="grid-column: span 2;">
-            <div class="blog-tile">
-              <span class="logo-wordmark"><span class="seg-blog">blog.</span><span class="seg-marc">marc</span><span class="seg-nuri">nuri</span><span class="seg-com">.com</span></span>
-              <span class="blog-cap">// posts on Java, Kubernetes &amp; dev tools</span>
+                <div class="proj-card compact blog-card" style="grid-column: span 2;">
+                  <div class="blog-tile">
+                    <span class="logo-wordmark"><span class="seg-blog">blog.</span><span class="seg-marc">marc</span><span class="seg-nuri">nuri</span><span class="seg-com">.com</span></span>
+                    <span class="blog-cap">// posts on Java, Kubernetes &amp; dev tools</span>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
 
+          <div class="chrome-bottom">
+            <div class="left">
+              <span class="brand-mark">marc nuri</span>
+              <span class="sep">|</span>
+              <span>red hat</span>
+            </div>
+            <span class="spacer"></span>
+            <div class="right">
+              <span>devtalks.ro · 2026</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="chrome-bottom">
-      <div class="left">
-        <span class="brand-mark">marc nuri</span>
-        <span class="sep">|</span>
-        <span>red hat</span>
-      </div>
-      <span class="spacer"></span>
-      <div class="right">
-        <span>devtalks.ro · 2026</span>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       SLIDE 5 — FIELD NOTES (Act I calibration: humility, not doctrine)
+       SLIDE 4 — FIELD NOTES (Act I calibration: humility, not doctrine)
        Sits at the end of Act I, immediately after "About — After hours".
        ============================================================ -->
   <section class="s-fieldnotes light" data-label="05 Field notes">
@@ -477,7 +493,7 @@
       <span class="dot"></span>
       <span>~/dev/devtalks-2026 · field-notes.md</span>
       <span class="spacer"></span>
-      <span class="pill">04 / 12 · about/field_notes</span>
+      <span class="pill">03 / 11 · about/field_notes</span>
     </div>
 
     <div class="body">
@@ -4281,56 +4297,71 @@
 
 <script>
 /* ============================================================
-   Manual step reveal for .s-amplifier slides.
+   Manual step reveal for any slide that opts in via data-step-max.
 
-   Each amplifier slide has three states:
-     step 0  — image only (initial)
-     step 1  — scrim + chrome + 6 cards (staggered in)
-     step 2  — takeaway revealed
+   Examples:
+     .s-amplifier — three states (image-only → cards → takeaway)
+     .s-about2-flip — two states (day_job face → after_hours face)
 
    We intercept advance/back keys + clicks in capture phase. While the
-   active slide is .s-amplifier and the step is below max (or above 0),
-   we bump the step ourselves and SWALLOW the event so deck-stage doesn't
+   active slide publishes data-step-max and the step is in range, we
+   bump the step ourselves and SWALLOW the event so deck-stage doesn't
    navigate. Only once a slide is fully revealed (or fully unwound) does
    navigation pass through.
+
+   The .s-amplifier slides authored before this generalisation didn't
+   carry data-step-max in markup, so we still stamp them here.
    ============================================================ */
 (function() {
-  const MAX_STEP = 2;
+  // After init, every stepped slide carries data-step-max — amplifier slides
+  // get it stamped below, the about slide ships with it in markup. That makes
+  // [data-step-max] the canonical "is stepped" selector. Don't build a list
+  // selector like '[data-step-max], .s-amplifier' and then concat
+  // '[data-deck-active]' to it — the comma makes the trailing attribute
+  // selector bind to only the LAST item, so '[data-step-max]' starts matching
+  // inactive stepped slides and silently swallows keypresses on other slides.
+  const AMPLIFIER_MAX_STEP = 2;
   const ADVANCE_KEYS = new Set(['ArrowRight', 'PageDown', 'Space', ' ', 'Enter']);
   const BACK_KEYS    = new Set(['ArrowLeft',  'PageUp']);
+
+  function maxStep(slide) {
+    return parseInt(slide.getAttribute('data-step-max') || '0', 10);
+  }
+
+  // Stamp data-step-max on amplifier slides (they predate the contract).
+  document.querySelectorAll('.s-amplifier').forEach((s) => {
+    if (!s.hasAttribute('data-step-max')) {
+      s.setAttribute('data-step-max', String(AMPLIFIER_MAX_STEP));
+    }
+  });
+  // Initialise data-step on every stepped slide once attributes are stamped.
+  document.querySelectorAll('[data-step-max]').forEach((s) => {
+    if (!s.hasAttribute('data-step')) s.setAttribute('data-step', '0');
+  });
 
   // Reset step on slide enter so re-entering replays cleanly.
   document.addEventListener('slidechange', (e) => {
     const slide = e.detail && e.detail.slide;
-    if (slide && slide.classList && slide.classList.contains('s-amplifier')) {
+    if (slide && slide.matches && slide.matches('[data-step-max]')) {
       slide.setAttribute('data-step', '0');
     }
-    // Also clear step on the slide we're leaving so it doesn't keep state.
     const prev = e.detail && e.detail.previousSlide;
-    if (prev && prev.classList && prev.classList.contains('s-amplifier')) {
+    if (prev && prev.matches && prev.matches('[data-step-max]')) {
       prev.setAttribute('data-step', '0');
     }
   });
 
-  // Initialise step=0 on first paint for every amplifier slide.
-  // Publish data-step-max so capture tools (export:pdf) know how many states
-  // each stepped slide has — the contract for any future stepping slide.
-  document.querySelectorAll('.s-amplifier').forEach((s) => {
-    s.setAttribute('data-step', '0');
-    s.setAttribute('data-step-max', String(MAX_STEP));
-  });
-
-  function activeAmplifier() {
-    return document.querySelector('.s-amplifier[data-deck-active]');
+  function activeStepped() {
+    return document.querySelector('[data-step-max][data-deck-active]');
   }
 
   function tryAdvance(slide) {
     const cur = parseInt(slide.getAttribute('data-step') || '0', 10);
-    if (cur < MAX_STEP) {
+    if (cur < maxStep(slide)) {
       slide.setAttribute('data-step', String(cur + 1));
-      return true; // handled — swallow event
+      return true;
     }
-    return false; // let deck-stage navigate to next slide
+    return false;
   }
 
   function tryRetreat(slide) {
@@ -4342,11 +4373,10 @@
     return false;
   }
 
-  // Keyboard — capture phase so we run BEFORE deck-stage's listener.
   window.addEventListener('keydown', (ev) => {
     if (ev.defaultPrevented) return;
     if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
-    const slide = activeAmplifier();
+    const slide = activeStepped();
     if (!slide) return;
 
     if (ADVANCE_KEYS.has(ev.key)) {

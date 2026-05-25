@@ -1,6 +1,11 @@
 /* ============================================================
    ABOUT — DUAL SLIDE LAYOUT (Day Job / After Hours)
    Photo on left (image-slot), info + project cards on right.
+
+   The two faces of the speaker live inside ONE deck slide
+   (.s-about2-flip) that publishes data-step-max="1". data-step="0"
+   shows the day_job face; data-step="1" pivots to the after_hours
+   face via the 3D flip defined at the bottom of this file.
    ============================================================ */
 .s-about2 .body {
   position: absolute;
@@ -283,3 +288,67 @@
 .s-about2 .handles-row .h .v { color: var(--fg); }
 .s-about2 .handles-row .h .v .at { color: var(--accent); }
 .s-about2 .handles-row .h .k i { color: var(--accent); }
+
+/* ============================================================
+   APPROACH A — CARD FLIP (center-pivoted rotateY 180°)
+   ============================================================
+   The .flip-card rotates about its centre on the Y axis. The back
+   face is pre-rotated 180° so when the card is at 0° we see the
+   front; at 180° the front is hidden (backface-visibility) and
+   the back lands face-up. Reads as flipping a card to show the
+   other side — the metaphor for "two sides of the same person".
+
+   Perspective lives on the .flip-stage so the rotation gets a
+   3D feel rather than a 2D scaleX. Tuned around the 1920×1080
+   design size — lower perspective = more distortion, higher
+   = flatter.
+   ============================================================ */
+.s-about2-flip .flip-stage {
+  position: absolute;
+  inset: 0;
+  perspective: 2400px;
+  perspective-origin: 50% 50%;
+}
+.s-about2-flip .flip-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 700ms cubic-bezier(0.7, 0, 0.3, 1);
+  will-change: transform;
+}
+.s-about2-flip[data-step="1"] .flip-card {
+  transform: rotateY(180deg);
+}
+.s-about2-flip .face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Opaque match for the section bg so neither face can bleed through if a
+     browser ever softens backface-visibility (Safari has historically been
+     spotty here). */
+  background: var(--bg);
+}
+.s-about2-flip .face-back {
+  transform: rotateY(180deg);
+}
+
+/* Print / PDF: collapse the 3D so each face is captured as a flat
+   page. export:pdf renders this slide at data-step="0" then
+   data-step="1"; we hide the off-step face on each. */
+@media print {
+  .s-about2-flip .flip-card { transform: none !important; transition: none !important; }
+  .s-about2-flip .face {
+    transform: none !important;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+  }
+  .s-about2-flip[data-step="0"] .face-back { display: none; }
+  .s-about2-flip[data-step="1"] .face-front { display: none; }
+}
+
+/* Reduced-motion users get an instant cut, no rotation. */
+@media (prefers-reduced-motion: reduce) {
+  .s-about2-flip .flip-card { transition: none; }
+}
