@@ -6179,7 +6179,22 @@ deck-stage section.light {
         .replace(/:root((?:\[[^\]]*\]|[.#][-\w]+|:[-\w]+(?:\([^)]*\))?)+)/g, ':host($1)')
         .replace(/:root\b/g, ':host')
         .replace(/(^|[\s,>~+(}])html((?:\[[^\]]*\]|[.#][-\w]+|:[-\w]+(?:\([^)]*\))?)+)(?![-\w])/g, '$1:host($2)')
-        .replace(/(^|[\s,>~+(}])html(?![-\w])/g, '$1:host');
+        .replace(/(^|[\s,>~+(}])html(?![-\w])/g, '$1:host')
+        // The cloned slide lives in a thumb shadow root, so it has no
+        // <deck-stage> ancestor — author rules like `deck-stage section`
+        // or `deck-stage section.light` (which scope slide background +
+        // theme to slides inside the live deck) would never match, leaving
+        // light slides transparent over the rewritten html→:host black.
+        // Drop the deck-stage prefix when it's used as a CSS type selector
+        // so the descendant rule reaches the cloned section.
+        .replace(/(^|[\s,>~+(}])deck-stage(?![-\w])/g, '$1')
+        // Same idea for <image-slot>: `_materialize` swaps each cloned
+        // slot for a <div> (its <img> lives in shadow DOM, lost to
+        // cloneNode), so author rules that pin `image-slot.scene-slot`
+        // sizing or `image-slot[data-filled]` siblings need to reach the
+        // replacement element. Drop the `image-slot` tag prefix so the
+        // class/attribute compounds still match the <div>.
+        .replace(/(^|[\s,>~+(}])image-slot(?![-\w])/g, '$1');
       // Every custom property the author references. _syncThumbHostAttrs
       // mirrors each one's *computed* value at <deck-stage> onto the
       // thumb host so the live value wins over the :host default above
@@ -6996,6 +7011,38 @@ deck-stage section.light {
         img.style.cssText = el.style.cssText + ';object-fit:cover;width:100%;height:100%;';
         img.className = el.className;
         el.replaceWith(img);
+      });
+      // <image-slot> renders its <img> inside its own shadow DOM; cloneNode
+      // does not traverse shadow roots, so the cloned slot is empty and the
+      // generic neuter pass below would otherwise discard it as a dashed
+      // placeholder. Stand up a plain <div><img></div> in its place, copying
+      // the slot's attributes (incl. class + data-filled) so the author
+      // sizing rules — `.proj-card .picon { width:72px; height:72px }`,
+      // `.s-about2 .photo-slot { aspect-ratio:4/5 }`, and the
+      // `.scene-slot { width:100%; height:100% }` that the
+      // image-slot → tag-strip rewrite in _snapshotAuthorCss makes reachable
+      // — keep driving the layout. Sizing is therefore handed back to CSS;
+      // the inner <img> just fills its parent with the slot's fit/position.
+      clone.querySelectorAll('image-slot').forEach((el) => {
+        const div = document.createElement('div');
+        for (const a of el.attributes) {
+          if (a.name === 'src') continue;
+          div.setAttribute(a.name, a.value);
+        }
+        const inlineStyle = el.getAttribute('style');
+        if (inlineStyle) div.setAttribute('style', inlineStyle);
+        const src = el.getAttribute('src');
+        if (src) {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = '';
+          const fit = el.getAttribute('fit') || 'cover';
+          const pos = el.getAttribute('position') || '50% 50%';
+          img.style.cssText = 'display:block;width:100%;height:100%;object-fit:' +
+            fit + ';object-position:' + pos + ';';
+          div.appendChild(img);
+        }
+        el.replaceWith(div);
       });
       // Images: defer decode and let the browser pick the smallest
       // srcset candidate for the ~140px thumb. Same-URL clones reuse the
