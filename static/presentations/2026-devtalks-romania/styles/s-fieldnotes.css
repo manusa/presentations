@@ -447,3 +447,13 @@
   transform: translateY(2px);
 }
 
+/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
+   rectangles, which made the cards look like they had hard pink
+   backplates in the PDF. Drop the lift shadows in print; the card
+   border + push-pin still sell the "pinned note" effect. */
+@media print {
+  .s-fieldnotes .card,
+  .s-fieldnotes .card.snippet { box-shadow: none; }
+  .s-fieldnotes .card.ci { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5); }
+}
+

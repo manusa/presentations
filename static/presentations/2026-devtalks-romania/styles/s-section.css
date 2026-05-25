@@ -137,3 +137,10 @@
 .s-section .mvn-reactor .rrow.pending .name  { color: var(--fg-mute); }
 .s-section .mvn-reactor .rrow.pending .state { opacity: 0.5; }
 .s-section .mvn-reactor .rrow.pending .dur   { opacity: 0.5; }
+
+/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
+   rectangles. The BUILDING pill's pink glow is decorative — drop it
+   in PDF so the pill stays clean. */
+@media print {
+  .s-section .mvn-reactor .rrow.building .state { box-shadow: none; }
+}

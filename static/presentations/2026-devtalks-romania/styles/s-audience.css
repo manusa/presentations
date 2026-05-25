@@ -245,3 +245,14 @@
 @keyframes s-audience-blink {
   50% { opacity: 0; }
 }
+
+/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
+   rectangles. Drop the 60px/18px navy lift on .terminal in PDF; keep
+   the 1px accent ring + inset highlight, both of which render fine. */
+@media print {
+  .s-audience .terminal {
+    box-shadow:
+      0 0 0 1px rgba(240, 42, 90, 0.18),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+}
