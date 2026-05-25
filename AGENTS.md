@@ -170,5 +170,6 @@ The NPM workflow runs `replaceDependencies.sh` before publish — it rewrites `d
 ## Repo Conventions
 
 - Commit messages use **gitmoji** (`✨` feature, `🐛` fix, `♻️` refactor, `👷` CI, etc.) plus a short imperative subject (see `git log`).
+- **Cross-repo issue references** — tracker issues for this repo live in `manusa/com.marcnuri.automated-tasks`, not in `manusa/presentations`. A bare `Fixes #1234` in a commit or PR body resolves against the *current* repo and silently does nothing for tracker issues. Always use the full `owner/repo#N` coordinate: `Fixes manusa/com.marcnuri.automated-tasks#1234`. Without it the tracker issue stays open after merge.
 - Per-deck SCSS variables and mixins live under `src/components/<deck-slug>/styles/` (Gatsby decks only).
 - Custom-domain config: `static/CNAME` — do not move.
