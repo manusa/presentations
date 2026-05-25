@@ -1362,28 +1362,6 @@ deck-stage section {
   transform: translateY(2px);
 }
 
-/* Hand-drawn-feel connector lines between cards.
-   Drawn at low opacity so they read as pencil traces, not arrows-with-intent. */
-.s-fieldnotes .connectors {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-.s-fieldnotes .connectors path {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 1.4;
-  stroke-dasharray: 4 5;
-  stroke-linecap: round;
-  opacity: 0.45;
-}
-.s-fieldnotes .connectors polygon {
-  fill: var(--accent);
-  opacity: 0.55;
-}
-
-
 .s-amplifier {
   background: #04081F; /* darker base so the image vignette reads */
 }
