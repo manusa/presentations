@@ -55,28 +55,43 @@ describe('deck-kit contract — append-only', () => {
     await bootDeck(page, server.fixture('minimal-deck.html'));
     await page.keyboard.press('ArrowRight');
     await page.waitForFunction(() => window.__slidechangeLog.length >= 2);
-    const detailKeys = await page.evaluate(() => {
-      const e = window.__slidechangeLog[window.__slidechangeLog.length - 1];
-      return Object.keys(e);
-    });
-    // The capture in _helpers re-shapes slide/previousSlide → slideTag/previousSlideTag
-    // for serialization; map them back to assert the on-the-wire detail names.
-    const onWireKeys = detailKeys.map((k) => k.replace('slideTag', 'slide').replace('previousSlideTag', 'previousSlide'));
-    assert.deepEqual([...onWireKeys].sort(), [...SLIDECHANGE_DETAIL_KEYS].sort());
+    // detailKeys is captured straight off `e.detail` inside the page —
+    // a wire-level read, not a helper-reshape — so a rename of any key
+    // on the dispatch site is caught here.
+    const detailKeys = await page.evaluate(
+      () => window.__slidechangeLog[window.__slidechangeLog.length - 1].detailKeys,
+    );
+    assert.deepEqual([...detailKeys].sort(), [...SLIDECHANGE_DETAIL_KEYS].sort());
     await page.close();
   });
 
   test('slidechange reason values stay within the documented set', async () => {
     const page = await browser.newPage();
     await bootDeck(page, server.fixture('minimal-deck.html'));
-    await page.keyboard.press('ArrowRight');
-    await page.evaluate(() => document.querySelector('deck-stage').goTo(3));
-    await page.evaluate(() => document.querySelector('deck-stage').next());
-    await page.evaluate(() => document.querySelector('deck-stage').prev());
-    await page.evaluate(() => document.querySelector('deck-stage').reset());
+    await page.keyboard.press('ArrowRight'); // reason='keyboard'
+    await page.evaluate(() => document.querySelector('deck-stage').goTo(3)); // reason='api'
+    await page.evaluate(() => {
+      // 'mutation' reason fires when slides are mutated externally —
+      // _moveSlide takes the same path on its second broadcast.
+      document.querySelector('deck-stage')._moveSlide(0, 1);
+    });
+    // Tap-back / tap-forward fire reason='tap'; the overlay prev/next
+    // buttons fire reason='click'. Drive both via the shadow-DOM nodes.
+    await page.evaluate(() => {
+      const stage = document.querySelector('deck-stage');
+      const overlay = stage.shadowRoot.querySelector('.overlay');
+      overlay.querySelector('.next').dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      stage._onTapBack(new Event('click'));
+    });
     const reasons = await page.evaluate(() => window.__slidechangeLog.map((e) => e.reason));
     for (const r of reasons) {
       assert.ok(SLIDECHANGE_REASONS.includes(r), `reason "${r}" not in allowlist`);
+    }
+    // All six reasons should appear in this run, so removing any one
+    // from the production code is caught immediately.
+    const seen = new Set(reasons);
+    for (const r of SLIDECHANGE_REASONS) {
+      assert.ok(seen.has(r), `reason "${r}" not observed in this run — coverage gap`);
     }
     await page.close();
   });
@@ -105,11 +120,13 @@ describe('deck-kit contract — append-only', () => {
       const stage = document.querySelector('deck-stage');
       const events = [];
       stage.addEventListener('deckchange', (e) => events.push(e.detail));
-      // _moveSlide is the canonical entry point used by the rail UI; the
-      // public deckchange contract is documented from these emissions.
+      // _moveSlide / _toggleSkip / _deleteSlide are the rail-UI canonical
+      // entry points. Fire all four documented actions so removing any
+      // one would be caught.
       stage._moveSlide(0, 1);
       stage._toggleSkip(0);
       stage._toggleSkip(0);
+      stage._deleteSlide(stage._slides.length - 1);
       return events.map((d) => ({ keys: Object.keys(d), action: d.action }));
     });
     for (const e of result) {
@@ -122,9 +139,9 @@ describe('deck-kit contract — append-only', () => {
     }
     // Confirm all documented actions have actually fired in this run.
     const seenActions = new Set(result.map((e) => e.action));
-    assert.ok(seenActions.has('move'));
-    assert.ok(seenActions.has('skip'));
-    assert.ok(seenActions.has('unskip'));
+    for (const a of DECKCHANGE_ACTIONS) {
+      assert.ok(seenActions.has(a), `action "${a}" not observed in this run — coverage gap`);
+    }
     await page.close();
   });
 

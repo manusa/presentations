@@ -24,7 +24,7 @@ function startServer() {
     const server = http.createServer((req, res) => {
       const urlPath = decodeURIComponent(req.url.split('?')[0]);
       const target = path.normalize(path.join(REPO_ROOT, urlPath));
-      if (!target.startsWith(REPO_ROOT)) {
+      if (target !== REPO_ROOT && !target.startsWith(REPO_ROOT + path.sep)) {
         res.statusCode = 403;
         res.end('forbidden');
         return;
@@ -58,6 +58,11 @@ async function bootDeck(page, url, { storage } = {}) {
     document.addEventListener('slidechange', (e) => {
       const d = e.detail || {};
       window.__slidechangeLog.push({
+        // Wire-level key set, captured directly off `detail` so the
+        // contract test can detect renames/removals at the source. Do
+        // NOT re-shape this into a fixed key set — that creates a
+        // tautology where the test asserts the helper's own shape.
+        detailKeys: Object.keys(d),
         index: d.index,
         previousIndex: d.previousIndex,
         total: d.total,
@@ -69,6 +74,7 @@ async function bootDeck(page, url, { storage } = {}) {
     document.addEventListener('deckchange', (e) => {
       const d = e.detail || {};
       window.__deckchangeLog.push({
+        detailKeys: Object.keys(d),
         action: d.action,
         from: d.from,
         to: d.to,

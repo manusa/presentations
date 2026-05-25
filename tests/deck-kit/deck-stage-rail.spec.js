@@ -69,20 +69,31 @@ describe('deck-stage thumbnail rail', () => {
     await page.close();
   });
 
-  test('rail width persists to localStorage on resize', async () => {
+  test('rail width persists to localStorage on resize drag', async () => {
     const page = await browser.newPage();
     await bootDeck(page, server.fixture('minimal-deck.html'));
-    // Simulate a programmatic resize by triggering the internal commit path:
-    // the rail-resize handler writes to localStorage with key
-    // 'deck-stage.railWidth'. We exercise the public side by issuing a
-    // resize through the same API the drag handler uses.
-    await page.evaluate(() => {
+    // Pre-condition: no width has been written yet.
+    const pre = await page.evaluate(() => localStorage.getItem('deck-stage.railWidth'));
+    assert.equal(pre, null);
+    // Synthesize the actual drag the user performs on `.rail-resize`:
+    // pointerdown → pointermove(s) → pointerup. The production
+    // pointerdown handler attaches the pointermove/pointerup listeners,
+    // and pointerup writes the persisted width. This is the real
+    // production code path — _setRailWidth + the storage write inside
+    // the captured pointerup handler — without manually setting state.
+    const stored = await page.evaluate(() => {
       const stage = document.querySelector('deck-stage');
-      stage._railPx = 320;
-      try { localStorage.setItem('deck-stage.railWidth', String(stage._railPx)); } catch (e) {}
+      const resize = stage.shadowRoot.querySelector('.rail-resize');
+      const fire = (type, x) => resize.dispatchEvent(new PointerEvent(type, {
+        pointerId: 1, clientX: x, clientY: 0, bubbles: true, cancelable: true,
+      }));
+      fire('pointerdown', 240);
+      fire('pointermove', 280);
+      fire('pointermove', 320);
+      fire('pointerup', 320);
+      return localStorage.getItem('deck-stage.railWidth');
     });
-    const stored = await page.evaluate(() => localStorage.getItem('deck-stage.railWidth'));
-    assert.equal(stored, '320');
+    assert.equal(stored, '320', 'pointerup handler should write the final width');
     await page.close();
   });
 

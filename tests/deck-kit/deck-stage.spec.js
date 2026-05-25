@@ -162,6 +162,38 @@ describe('deck-stage navigation', () => {
     await page.close();
   });
 
+  test('data-step-max / data-step pass through untouched (deck-kit does not clobber consumer attrs)', async () => {
+    // Step-reveal glue is deck-specific (rule #4: composition, not in
+    // deck-stage core). The contract from deck-stage's side is that
+    // sections carrying data-step-max / data-step are passed through
+    // verbatim — deck-kit must not remove, normalize, or overwrite them.
+    const page = await browser.newPage();
+    await bootDeck(page, server.fixture('stepped-deck.html'));
+    const state = await page.evaluate(() => {
+      const stepped = document.querySelector('section[data-step-max]');
+      return {
+        stepMax: stepped.getAttribute('data-step-max'),
+        step: stepped.getAttribute('data-step'),
+        hasStepMax: stepped.hasAttribute('data-step-max'),
+        hasStep: stepped.hasAttribute('data-step'),
+      };
+    });
+    assert.equal(state.hasStepMax, true);
+    assert.equal(state.hasStep, true);
+    assert.equal(state.stepMax, '2');
+    assert.equal(state.step, '0');
+    // Nav around a stepped slide; attributes must survive.
+    await page.evaluate(() => document.querySelector('deck-stage').goTo(1));
+    await page.evaluate(() => document.querySelector('deck-stage').goTo(2));
+    const after = await page.evaluate(() => {
+      const stepped = document.querySelector('section[data-step-max]');
+      return { stepMax: stepped.getAttribute('data-step-max'), step: stepped.getAttribute('data-step') };
+    });
+    assert.equal(after.stepMax, '2');
+    assert.equal(after.step, '0');
+    await page.close();
+  });
+
   test('public API: index, length, goTo, next, prev, reset', async () => {
     const page = await freshDeck();
     const initialLen = await page.evaluate(() => document.querySelector('deck-stage').length);
