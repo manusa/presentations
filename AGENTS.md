@@ -51,12 +51,14 @@ npm run screenshot -- http://localhost:8080/presentations/<slug>/ early-state --
 npm run screenshot:deck -- http://localhost:8080/presentations/2026-devtalks-romania/ devtalks-current
 ```
 
-**Whole deck → multi-page PDF** — `export:pdf`. Same per-slide capture as `screenshot:deck`, assembled into a 1920×1080 PDF (16:9, no letterboxing). Hand this to conference organizers who require PDF.
+**Whole deck → multi-page PDF** — `export:pdf`. Renders straight to a 1920×1080 vector PDF via Chromium's `page.pdf()` against the deck's `@media print` rule — text remains selectable, file size stays small (no rasterised slides). Photographic WebP `<image-slot>` sources are transcoded to JPEG just-in-time before render, because PDF doesn't support WebP and would otherwise embed each one as a multi-megabyte FlateDecode bitmap. Hand the output to conference organizers who require PDF.
 ```bash
 npm run export:pdf -- http://localhost:8080/presentations/2026-devtalks-romania/ /tmp/devtalks-2026.pdf
 ```
 
-Both deck-walking scripts use **keyboard simulation** (`ArrowRight`) for slide navigation — agnostic of any specific `deck-stage` API, so they keep working as `deck-stage.js` evolves.
+**Step-aware capture**: a `<section>` that publishes `data-step-max="N"` becomes N+1 PDF pages, rendered at `data-step="0..N"`. This is the contract `.s-amplifier` uses (3 states per slide); any future stepping slide should follow it and `export:pdf` will pick it up with no code changes.
+
+`screenshot:deck` and the snapshot scripts walk the deck via **keyboard simulation** (`ArrowRight`) — agnostic of any specific `deck-stage` API, so they keep working as `deck-stage.js` evolves. `export:pdf` takes a different path (DOM-clone the step states, render once in print media) because per-slide PNGs can't preserve vector text or compress photos efficiently.
 
 ## Snapshot Regression Tests
 
