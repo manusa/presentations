@@ -2957,6 +2957,13 @@
       this._hideTimer = null;
       this._mouseIdleTimer = null;
       this._menuIndex = -1;
+      // Two independent presenting sources OR-merged into _presenting by
+      // _syncPresenting: an Omelette host posting __omelette_presenting,
+      // and the user putting the deck host in standalone fullscreen. Track
+      // them separately so neither one can clobber the other on toggle.
+      this._omelettePresenting = false;
+      this._fullscreenPresenting = false;
+      this._presenting = false;
 
       this._onKey = this._onKey.bind(this);
       this._onResize = this._onResize.bind(this);
@@ -2965,6 +2972,7 @@
       this._onTapBack = this._onTapBack.bind(this);
       this._onTapForward = this._onTapForward.bind(this);
       this._onMessage = this._onMessage.bind(this);
+      this._onFullscreenChange = this._onFullscreenChange.bind(this);
       // Capture-phase close so a click anywhere dismisses the menu, but
       // ignore clicks that land inside the menu itself — otherwise the
       // capture handler runs before the menu's own (bubble) handler and
@@ -2995,6 +3003,8 @@
       window.addEventListener('mousemove', this._onMouseMove, { passive: true });
       window.addEventListener('message', this._onMessage);
       window.addEventListener('click', this._onDocClick, true);
+      document.addEventListener('fullscreenchange', this._onFullscreenChange);
+      document.addEventListener('webkitfullscreenchange', this._onFullscreenChange);
       // Initial collection + layout happens via slotchange, which fires on mount.
       this._enableRail();
       // Hold the stage hidden until webfonts are ready so the first visible
@@ -3197,6 +3207,8 @@
       window.removeEventListener('mousemove', this._onMouseMove);
       window.removeEventListener('message', this._onMessage);
       window.removeEventListener('click', this._onDocClick, true);
+      document.removeEventListener('fullscreenchange', this._onFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', this._onFullscreenChange);
       if (this._hideTimer) clearTimeout(this._hideTimer);
       if (this._mouseIdleTimer) clearTimeout(this._mouseIdleTimer);
       if (this._liveTimer) clearTimeout(this._liveTimer);
@@ -3605,16 +3617,8 @@
     _onMessage(e) {
       const d = e.data;
       if (d && typeof d.__omelette_presenting === 'boolean') {
-        this._presenting = d.__omelette_presenting;
-        if (this._presenting && this._overlay) {
-          this._overlay.removeAttribute('data-visible');
-          if (this._hideTimer) clearTimeout(this._hideTimer);
-        }
-        this._syncRailHidden();
-        this._closeMenu();
-        this._closeConfirm();
-        this._fit();
-        this._scaleThumbs();
+        this._omelettePresenting = d.__omelette_presenting;
+        this._syncPresenting();
       }
       // Host's Preview segment (ViewerMode='none'): the rail's drag-reorder /
       // right-click skip-delete affordances are editing chrome, so hide it
@@ -3649,6 +3653,35 @@
         this._railAnimTimer = setTimeout(() => this.removeAttribute('data-rail-anim'), 220);
       }
       if (d && d.type === '__omelette_rail_enabled') this._enableRail();
+    }
+
+    _onFullscreenChange() {
+      // Scope is host-only so a fullscreen lightbox or video elsewhere
+      // doesn't collapse the rail. webkitFullscreenElement covers Safari
+      // builds older than 16.4; in modern Safari both reads return the
+      // same node.
+      const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+      this._fullscreenPresenting = fsEl === this;
+      this._syncPresenting();
+    }
+
+    /** OR-merge the two presenting sources into _presenting, then apply
+     *  the chrome-free view (hide rail, suppress overlay, refit canvas).
+     *  Early-return on no-op so a same-state postMessage or duplicate
+     *  fullscreenchange doesn't thrash _fit / _scaleThumbs. */
+    _syncPresenting() {
+      const presenting = this._omelettePresenting || this._fullscreenPresenting;
+      if (presenting === this._presenting) return;
+      this._presenting = presenting;
+      if (presenting && this._overlay) {
+        this._overlay.removeAttribute('data-visible');
+        if (this._hideTimer) clearTimeout(this._hideTimer);
+      }
+      this._syncRailHidden();
+      this._closeMenu();
+      this._closeConfirm();
+      this._fit();
+      this._scaleThumbs();
     }
 
     _syncRailHidden() {
@@ -3752,10 +3785,16 @@
       // between elements without an explicit exit). catch() swallows the
       // user-gesture-required / not-allowed rejection paths so a denied call
       // doesn't surface as an unhandled promise rejection.
-      if (document.fullscreenElement === this) {
-        document.exitFullscreen().catch(() => {});
+      // Promise.resolve wrapping handles old Safari's webkitRequestFullscreen,
+      // which is sync (returns undefined) — modern unprefixed APIs return a
+      // promise.
+      const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+      if (fsEl === this) {
+        const exit = document.exitFullscreen || document.webkitExitFullscreen;
+        if (exit) Promise.resolve(exit.call(document)).catch(() => {});
       } else {
-        this.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
+        const req = this.requestFullscreen || this.webkitRequestFullscreen;
+        if (req) Promise.resolve(req.call(this, { navigationUI: 'hide' })).catch(() => {});
       }
     }
 
