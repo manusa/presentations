@@ -452,8 +452,6 @@ deck-stage section {
   position: relative;
   border: 1px solid var(--line-strong);
   background: #FBF9F2;
-  /* Make image render as BW even after user drops a real photo */
-  filter: grayscale(1) contrast(1.05);
 }
 .s-about2 .photo-slot::after {
   content: "";
@@ -461,6 +459,16 @@ deck-stage section {
   inset: 0;
   border: 1px solid var(--line);
   pointer-events: none;
+}
+/* Once a portrait is dropped in, the slot must read as just the photo — no
+   deck-level frame, inner ::after border, or beige fill bleeding through.
+   image-slot stamps [data-filled] when it has a source. */
+.s-about2 .photo-slot[data-filled] {
+  border-color: transparent;
+  background: transparent;
+}
+.s-about2 .photo-slot[data-filled]::after {
+  display: none;
 }
 .s-about2 .photo-caption {
   display: flex;
@@ -567,6 +575,15 @@ deck-stage section {
 .proj-card .picon::part(frame) { background: transparent; }
 .proj-card .picon::part(ring)  { border-color: transparent; }
 .proj-card .picon::part(empty) { display: none; }
+/* Once a logo is dropped in, the picon must read as just the logo — no
+   deck-level white box, baked-in LOGO placeholder SVG, or 1px border
+   bleeding through transparent areas of the dropped image. The dashed
+   placeholder visual stays for any unfilled future slot. */
+.proj-card .picon[data-filled] {
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+}
 
 .proj-card .pinfo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .proj-card .pname {
@@ -664,6 +681,15 @@ deck-stage section {
   font-size: 11px;
   letter-spacing: 0.18em;
   color: rgba(255,255,255,0.6);
+}
+/* Once the cover image is dropped in, hide the deck-level dark gradient,
+   1px border, and "BOOK" placeholder caption — show only the image. */
+.proj-card.book .book-slot[data-filled] {
+  background: transparent;
+  border-color: transparent;
+}
+.proj-card.book .book-slot[data-filled]::after {
+  display: none;
 }
 .proj-card.book .pname { white-space: normal; line-height: 1.15; }
 
