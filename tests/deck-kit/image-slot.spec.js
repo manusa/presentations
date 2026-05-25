@@ -108,15 +108,18 @@ describe('image-slot attributes', () => {
     await page.close();
   });
 
-  test('default placeholder is "Drop an image"', async () => {
+  test('placeholder attribute on the "default" slot wires through', async () => {
+    // Fixture sets placeholder="default" (literal string), so this
+    // verifies the wiring, not the fallback. The fallback text
+    // ("Drop an image") lives in image-slot.js around the _cap render —
+    // exercised by any slot without a placeholder attribute, which the
+    // fixture does not currently include.
     const page = await loadFixture();
     const text = await page.evaluate(() => {
       const el = document.getElementById('default');
       const cap = el.shadowRoot.querySelector('.cap');
       return cap && cap.textContent;
     });
-    // Fixture sets placeholder="default" explicitly so cap === "default".
-    // Verify wiring rather than fallback default here.
     assert.equal(text, 'default');
     await page.close();
   });
