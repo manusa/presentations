@@ -1,0 +1,111 @@
+/* ============================================================
+   SLIDE 1 — TITLE
+   ============================================================ */
+.s-title {
+  background:
+    radial-gradient(1200px 700px at 80% 30%, rgba(123,63,191,0.35), transparent 60%),
+    radial-gradient(900px 600px at 15% 85%, rgba(240,42,90,0.20), transparent 60%),
+    var(--bg);
+}
+.s-title .stack {
+  position: absolute;
+  inset: 0;
+  padding: 130px var(--pad-x) 130px var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.s-title .meta-top {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono);
+  color: var(--fg-dim);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.s-title .meta-top .dt-logo-mark {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+.s-title .meta-top .spacer { flex: 1; }
+.s-title .meta-top .sep-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--fg-mute);
+}
+.s-title .meta-top .badge {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 24px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.s-title .title-block { max-width: 1480px; }
+.s-title h1 {
+  font-size: 124px;
+  line-height: 0.96;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin: 0 0 36px 0;
+  text-wrap: balance;
+}
+.s-title h1 .frag { color: var(--accent); }
+.s-title h1 .frag2 { color: var(--accent-2); }
+.s-title .subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono-lg);
+  color: var(--fg-dim);
+  letter-spacing: 0.02em;
+  max-width: 1100px;
+  line-height: 1.5;
+}
+.s-title .meta-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.s-title .speaker { display: flex; flex-direction: column; gap: 8px; }
+.s-title .speaker .name {
+  font-family: 'Inter', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+}
+.s-title .speaker .role {
+  font-size: var(--type-mono);
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+.s-title .speaker .role .at { color: var(--accent-2); }
+.s-title .event {
+  text-align: right;
+  font-size: var(--type-mono);
+  color: var(--fg-dim);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.s-title .event .ev-name {
+  color: var(--fg);
+  font-size: var(--type-mono-lg);
+  font-weight: 600;
+}
+.s-title .event .stage { color: var(--accent); }
+
+/* Corner ticks */
+.tick {
+  position: absolute;
+  width: 24px; height: 24px;
+  border-color: var(--accent);
+}
+.tick.tl { top: 56px; left: 56px; border-top: 2px solid; border-left: 2px solid; }
+.tick.tr { top: 56px; right: 56px; border-top: 2px solid; border-right: 2px solid; }
+.tick.bl { bottom: 56px; left: 56px; border-bottom: 2px solid; border-left: 2px solid; }
+.tick.br { bottom: 56px; right: 56px; border-bottom: 2px solid; border-right: 2px solid; }

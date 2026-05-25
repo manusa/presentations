@@ -1,0 +1,74 @@
+/* ============================================================
+   SLIDE 9 — CODE / TERMINAL
+   ============================================================ */
+.s-code .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  padding: 100px var(--pad-x) 80px var(--pad-x);
+  display: flex;
+  flex-direction: column;
+}
+.terminal {
+  margin-top: 56px;
+  background: #060D3A;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+}
+.terminal .term-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,0.02);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono-sm);
+  color: var(--fg-mute);
+}
+.terminal .term-bar .dot {
+  width: 12px; height: 12px; border-radius: 50%;
+}
+.terminal .term-bar .dot.r { background: #FF5F57; }
+.terminal .term-bar .dot.y { background: #FEBC2E; }
+.terminal .term-bar .dot.g { background: #28C840; }
+.terminal .term-bar .path { margin-left: 16px; }
+.terminal .term-body {
+  flex: 1;
+  padding: 36px 44px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  line-height: 1.55;
+  color: #C8CCE4;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.term-body .ln {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+}
+.term-body .ln .lno { color: var(--fg-mute); text-align: right; }
+.term-body .prompt { color: var(--accent); }
+.term-body .cmd { color: var(--fg); }
+.term-body .cmt { color: var(--fg-mute); }
+.term-body .ok { color: var(--accent); }
+.term-body .warn { color: var(--accent-2); }
+.term-body .kw { color: var(--purple); }
+.term-body .str { color: #B6E3A8; }
+.term-body .num { color: #F0B96E; }
+.term-body .cursor {
+  display: inline-block;
+  width: 14px;
+  height: 28px;
+  vertical-align: -4px;
+  background: var(--accent);
+  animation: blink 1.1s steps(2, end) infinite;
+  margin-left: 4px;
+}
+@keyframes blink { 50% { opacity: 0; } }
