@@ -116,10 +116,15 @@ Canonical sequences for deck work. Tools (above) tell you *what* each script doe
 
 ### 1. Onboarding a new upstream deck (e.g., Claude Design handoff)
 
-1. Drop the deck files into `static/presentations/<slug>/` (don't strip dev includes yet — verify it works first).
-2. `npm run serve:static` and open http://localhost:8080/presentations/<slug>/ to confirm it loads.
-3. `git add static/presentations/<slug>/` and commit the pristine drop **in one commit**, separate from any later cleanup. This commit is your real "upstream reference" — `git diff` against it tells you everything that's been changed since the handoff.
-4. From here on, follow workflow #2 for any cleanup pass.
+The handoff bundle (the zip from Claude Design) is the upstream reference — **keep the original zip somewhere recoverable; do not commit it.** Pristine bundles are bloated (inline base64 megabytes, alternate module forms, design-canvas internals, exploration scratch slides, source uploads) and offer no diffing value, because the zip is always recoverable.
+
+1. **Identify the runtime files.** The bundle's own README usually names the master deck HTML. Follow its imports. Many bundled JS files turn out to already be inlined in the HTML; lots of others are design-canvas internals, screenshots, or alternate-form modules not loaded at runtime.
+2. Copy only those runtime files into `static/presentations/<slug>/`.
+3. `npm run serve:static` and open http://localhost:8080/presentations/<slug>/ to verify it boots.
+4. **Clean it up before the first commit**, following workflow #2 for each pass: extract inline data URLs to external assets, `optimize:images --lossy` for AI-generated photographic PNGs, replace upstream placeholders with real assets, drop bundle dupes. Use the `snapshot:baseline` → edit → `snapshot:diff` dance to keep each pass honest.
+5. When the deck is in shape, commit the cleaned state. Add an *"Already refactored from the upstream bundle"* section to the deck-local `README.md` listing what was changed from the zip — that section is the diffing record for future readers, replacing the role a pristine commit would have played.
+
+**Why no pristine commit**: bundles are ~10–15 MB of mostly junk (screenshots, design-canvas state, source uploads, inline base64 that we immediately externalize). Committing them adds permanent repo bloat for ~zero value — the zip is the only reference anyone would ever want, and we already have it. The "what changed from upstream" record lives in the deck README, not in git history.
 
 ### 2. Any edit pass (refactor, content change, visual tweak, image swap)
 

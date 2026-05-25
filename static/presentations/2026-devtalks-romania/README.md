@@ -88,6 +88,19 @@ Caveat: `README.md` is publicly served at `…/2026-devtalks-romania/README.md` 
 
 ---
 
+## Already refactored from the upstream bundle
+
+Done during onboarding — listed so a future reader sees the current deck is **not** what the Claude Design handoff originally shipped:
+
+- ~530 KB of inline base64 amp-scene JPEGs (slides 10/11) → external WebP under `assets/amp-scene-{bad,good}.webp`, re-encoded from the source PNGs with `optimize:images --lossy`. Claude Design's re-encodes were lower-quality than the originals and bloated the HTML.
+- ~100 KB of inline base64 logo PNGs → external paths in `window.__LOGO_DATA_URLS` pointing at `assets/logos/<file>`.
+- `logo-helm-java` and `logo-minikube` swapped from upstream placeholders (`java.svg` / `javascript.svg`) to real Helm + Minikube SVGs. `logo-ai-beacon` still uses `go.svg` as a placeholder; no real asset yet.
+- Bundle duplicates removed: standalone `deck-stage.js` / `image-slot.js` (already inlined in `index.html`), `amp-scene-data.js` (not referenced), `techover-font.css` + `techover.ttf` (font is inlined as base64 in `@font-face`), and the flat `assets/*` logo dupes that were redundant with `assets/logos/`.
+
+Net: `index.html` went from 1.17 MB → 368 KB; total deck size from ~2.4 MB → 1.2 MB.
+
+---
+
 ## Known tradeoffs / cleanups worth doing
 
 - **Dev React/Babel includes**: `index.html` loads `react.development.js`, `react-dom.development.js`, and `@babel/standalone` from `unpkg`. These exist for the Claude Design *tweaks panel* embedded as inline `<script type="text/babel">` blocks, not the runtime deck. They can be stripped before shipping (or replaced with production builds if anything actually needs them — verify by removing and reloading and running `snapshot:diff`).
