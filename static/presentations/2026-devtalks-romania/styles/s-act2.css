@@ -1,0 +1,253 @@
+/* ============================================================
+   ACT 2 — OLD WORLD / NEW WORLD (Gantt slides)
+   Two slides showing the day-in-the-life shift from sequential
+   solo development to parallel AI-orchestrated work.
+   Both render a 7-lane gantt with a 08:00–18:00 axis. Old World
+   fills the "You" lane and ghosts the agent lanes; New World
+   fills every lane.
+   ============================================================ */
+.s-act2 {
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+/* Use master-deck chrome bars in normal flex flow inside this slide */
+.s-act2 .chrome-top,
+.s-act2 .chrome-bottom {
+  position: static;
+  flex: 0 0 56px;
+}
+
+.s-act2 .a2-head {
+  padding: 56px 90px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.s-act2 .a2-head .eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.s-act2 .a2-head h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 88px;
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+.s-act2 .a2-head h1 .accent  { color: var(--accent); }
+.s-act2 .a2-head h1 .accent2 { color: var(--accent-2); }
+.s-act2 .a2-head .sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  color: var(--fg-dim);
+  letter-spacing: 0.04em;
+}
+
+.s-act2 .a2-takeaway {
+  margin: 0 90px 28px;
+  padding: 22px 28px;
+  border-left: 4px solid var(--accent);
+  background: rgba(255,255,255,0.03);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  color: var(--fg);
+}
+.s-act2.light .a2-takeaway {
+  background: rgba(10, 21, 84, 0.04);
+}
+
+/* Light-mode contrast overrides for the Gantt slides.
+   The cyan accent (#5BE9F0) is a pale pastel that disappears on the
+   cream paper bg, so we re-route spawn arrows + the you-merge block
+   to a darker teal that still reads as "cyan" but actually sits on
+   the cream. Ghost lanes also need more ink to stay legible. */
+.s-act2.light .g1-spawn {
+  background: #0E7C8A;
+}
+.s-act2.light .g1-spawn::before {
+  border-top-color: #0E7C8A;
+}
+.s-act2.light .g1-spawn .tag {
+  color: #0E7C8A;
+}
+.s-act2.light .g1-block.you-merge {
+  background: #0E7C8A;
+  color: #EAFBFD;
+}
+.s-act2.light .g1-lane.ghost {
+  opacity: 0.55;
+}
+.s-act2.light .g1-block {
+  border-color: rgba(10, 21, 84, 0.22);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset;
+}
+/* The default white-on-color block text was tuned for the navy deck.
+   On cream paper these darker block bgs still take white text fine,
+   but the orange you-impl block already overrides to dark ink — good. */
+
+.s-act2 .a2-takeaway .qt { color: var(--accent); margin-right: 8px; }
+
+/* — Gantt stage / axis / board — */
+.s-act2 .g1-stage {
+  flex: 1;
+  margin: 0 90px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+.s-act2 .g1-axis {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  color: var(--fg-mute);
+}
+.s-act2 .g1-axis .lane-label { color: transparent; }
+.s-act2 .g1-axis .ticks {
+  position: relative;
+  height: 32px;
+}
+.s-act2 .g1-axis .tick {
+  position: absolute;
+  top: 0; bottom: 0;
+  border-left: 1px solid var(--line);
+  padding-left: 6px;
+  color: var(--fg-mute);
+  font-size: 16px;
+}
+.s-act2 .g1-axis .tick.major {
+  border-left-color: var(--line-strong);
+  color: var(--fg-dim);
+  font-size: 18px;
+}
+.s-act2 .g1-axis .tick.minor { opacity: 0.55; }
+
+.s-act2 .g1-board {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 36px; /* reserves room for spawn-arrow labels above the You lane */
+  position: relative;
+}
+.s-act2 .g1-lane {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  align-items: center;
+  gap: 0;
+}
+.s-act2 .g1-lane .lane-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  color: var(--fg-dim);
+  padding-right: 24px;
+  text-align: right;
+}
+.s-act2 .g1-lane .lane-label .sub {
+  display: block;
+  font-size: 13px;
+  color: var(--fg-mute);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.s-act2 .g1-lane.you .lane-label {
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 24px;
+}
+.s-act2 .g1-lane.you .lane-label .sub { color: var(--accent); }
+.s-act2 .g1-lane.ghost { opacity: 0.32; }
+.s-act2 .g1-lane.ghost .lane-label,
+.s-act2 .g1-lane.ghost .lane-label .sub { color: var(--fg-mute); }
+.s-act2 .g1-track {
+  position: relative;
+  height: 60px;
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px dashed var(--line);
+  background:
+    repeating-linear-gradient(
+      to right,
+      transparent 0,
+      transparent calc(10% - 1px),
+      var(--grid) calc(10% - 1px),
+      var(--grid) 10%
+    );
+}
+.s-act2 .g1-lane.you .g1-track {
+  height: 92px;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+/* Task blocks */
+.s-act2 .g1-block {
+  position: absolute;
+  top: 6px; bottom: 6px;
+  border-radius: 4px;
+  padding: 3px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.0;
+  letter-spacing: -0.005em;
+  color: #fff;
+  border: 1px solid rgba(0,0,0,0.25);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.08) inset;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: keep-all;
+  hyphens: none;
+}
+.s-act2 .g1-lane.you .g1-block { font-weight: 700; }
+.s-act2 .g1-block.you-chore { background: #4A589C; color: #E6EAFF; }
+.s-act2 .g1-block.you-impl  { background: var(--orange); color: #1A0B00; }
+.s-act2 .g1-block.you-bug   { background: #B53D5F; }
+.s-act2 .g1-block.you-meet  { background: #3E5DBE; }
+.s-act2 .g1-block.you-mgmt  { background: var(--pink); }
+.s-act2 .g1-block.you-merge { background: var(--cyan); color: #062a30; }
+.s-act2 .g1-block.agent     { background: var(--purple); }
+.s-act2 .g1-block.agent.alt { background: #5C2FA0; }
+.s-act2 .g1-block.agent.tn  { background: #8E5BCC; }
+
+/* Spawn-arrow markers */
+.s-act2 .g1-spawn {
+  position: absolute;
+  top: -22px;
+  width: 1px;
+  height: 22px;
+  background: var(--cyan);
+  z-index: 2;
+}
+.s-act2 .g1-spawn::before {
+  content: "";
+  position: absolute;
+  left: -4px; bottom: -2px;
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid var(--cyan);
+}
+.s-act2 .g1-spawn .tag {
+  position: absolute;
+  left: 4px; top: -18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--cyan);
+  white-space: nowrap;
+}

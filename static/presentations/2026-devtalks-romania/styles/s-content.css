@@ -1,0 +1,48 @@
+/* ============================================================
+   SLIDE 5 — STANDARD CONTENT (title + body bullets)
+   ============================================================ */
+.s-content .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  padding: 100px var(--pad-x) 80px var(--pad-x);
+  display: flex;
+  flex-direction: column;
+}
+.s-content .lead {
+  font-size: 40px;
+  line-height: 1.4;
+  color: var(--fg-dim);
+  max-width: 1300px;
+  margin: 48px 0 0 0;
+  text-wrap: pretty;
+}
+.bullets {
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  max-width: 1500px;
+}
+.bullet {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 32px;
+  align-items: baseline;
+}
+.bullet .idx {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono);
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  padding-top: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.bullet .txt {
+  font-size: 36px;
+  line-height: 1.4;
+  color: var(--fg);
+  text-wrap: pretty;
+}
+.bullet .txt strong { color: var(--fg); font-weight: 700; }
+.bullet .txt .hl { color: var(--accent-2); font-weight: 600; }

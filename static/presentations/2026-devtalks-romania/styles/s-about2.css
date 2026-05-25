@@ -1,0 +1,285 @@
+/* ============================================================
+   ABOUT — DUAL SLIDE LAYOUT (Day Job / After Hours)
+   Photo on left (image-slot), info + project cards on right.
+   ============================================================ */
+.s-about2 .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  padding: 70px var(--pad-x) 70px var(--pad-x);
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  gap: 80px;
+  align-items: stretch;
+}
+.s-about2 .photo-col {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.s-about2 .photo-slot {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  position: relative;
+  border: 1px solid var(--line-strong);
+  background: #FBF9F2;
+}
+.s-about2 .photo-slot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--line);
+  pointer-events: none;
+}
+/* Once a portrait is dropped in, the slot must read as just the photo — no
+   deck-level frame, inner ::after border, or beige fill bleeding through.
+   image-slot stamps [data-filled] when it has a source. */
+.s-about2 .photo-slot[data-filled] {
+  border-color: transparent;
+  background: transparent;
+}
+.s-about2 .photo-slot[data-filled]::after {
+  display: none;
+}
+.s-about2 .photo-caption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: var(--fg-mute);
+  letter-spacing: 0.04em;
+}
+.s-about2 .photo-caption .tag {
+  border: 1px solid var(--line-strong);
+  padding: 4px 12px;
+  border-radius: 999px;
+  color: var(--fg-dim);
+}
+.s-about2 .photo-caption .mood {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.s-about2 .info-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.s-about2 .eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-eyebrow);
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.s-about2 .display {
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  margin: 0 0 14px 0;
+  text-wrap: balance;
+}
+.s-about2 .role-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  color: var(--fg-dim);
+  margin-bottom: 36px;
+}
+.s-about2 .role-line .at { color: var(--accent-2); }
+.s-about2 .sub-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: var(--fg-mute);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+
+/* Project card grid + stack variants */
+.proj-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.proj-card {
+  border: 1px solid var(--line-strong);
+  background: #FBF9F2;
+  padding: 22px 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+/* Wide variant: icon | name+org | meta-on-right (one row) */
+.proj-card.wide {
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 28px;
+}
+.proj-card .picon {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  background-color: #FFFFFF;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect x="16" y="16" width="48" height="48" rx="6" fill="none" stroke="%23C5C8DC" stroke-width="1.4" stroke-dasharray="3 3"/><text x="40" y="46" text-anchor="middle" fill="%238E94B8" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" font-weight="700" letter-spacing="1">LOGO</text></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.proj-card.compact .picon { width: 56px; height: 56px; border-radius: 8px; }
+.proj-card .picon::part(frame) { background: transparent; }
+.proj-card .picon::part(ring)  { border-color: transparent; }
+.proj-card .picon::part(empty) { display: none; }
+/* Once a logo is dropped in, the picon must read as just the logo — no
+   deck-level white box, baked-in LOGO placeholder SVG, or 1px border
+   bleeding through transparent areas of the dropped image. The dashed
+   placeholder visual stays for any unfilled future slot. */
+.proj-card .picon[data-filled] {
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+}
+
+.proj-card .pinfo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.proj-card .pname {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.proj-card.compact .pname { font-size: 24px; }
+.proj-card .porg {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: var(--fg-mute);
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.proj-card.compact .porg { font-size: 18px; }
+
+.proj-card .pmeta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+}
+.proj-card.compact .pmeta { font-size: 20px; gap: 10px; }
+.proj-card.wide .pmeta { margin-left: auto; flex-shrink: 0; }
+
+.lang-pill {
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.proj-card.compact .lang-pill { font-size: 14px; padding: 4px 11px; }
+.lang-pill.java { background: rgba(176, 114, 25, 0.14); color: #7A4F11; border: 1px solid rgba(176, 114, 25, 0.35); }
+.lang-pill.go   { background: rgba(0, 173, 216, 0.14); color: #006A82; border: 1px solid rgba(0, 173, 216, 0.4);  }
+.lang-pill.js   { background: rgba(217, 184, 30, 0.18); color: #6B5708; border: 1px solid rgba(217, 184, 30, 0.5);  }
+
+.proj-card .pstars { color: var(--fg-dim); white-space: nowrap; }
+.proj-card .pstars .star { color: var(--accent); margin-right: 4px; }
+
+/* "+ many more" tile */
+.proj-card.more {
+  background: transparent;
+  border: 1px dashed var(--line-strong);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100%;
+}
+.proj-card.more .more-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  color: var(--fg-mute);
+  letter-spacing: 0.08em;
+  text-align: center;
+  line-height: 1.5;
+}
+.proj-card.more .more-label strong { color: var(--accent); font-weight: 600; }
+
+/* Book cover tile */
+.proj-card.book {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+}
+.proj-card.book .book-slot {
+  width: 56px;
+  height: 80px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  background: linear-gradient(135deg, #1B2660 0%, #0A1554 100%);
+  position: relative;
+  overflow: hidden;
+}
+.proj-card.book .book-slot::after {
+  content: "BOOK";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.6);
+}
+/* Once the cover image is dropped in, hide the deck-level dark gradient,
+   1px border, and "BOOK" placeholder caption — show only the image. */
+.proj-card.book .book-slot[data-filled] {
+  background: transparent;
+  border-color: transparent;
+}
+.proj-card.book .book-slot[data-filled]::after {
+  display: none;
+}
+.proj-card.book .pname { white-space: normal; line-height: 1.15; }
+
+/* Small handles row at the bottom of slide 2a */
+.s-about2 .handles-row {
+  margin-top: auto;
+  padding-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 44px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+}
+.s-about2 .handles-row .h {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.s-about2 .handles-row .h .k { color: var(--fg-mute); font-size: 28px; width: 28px; display: inline-flex; justify-content: center; }
+.s-about2 .handles-row .h .v { color: var(--fg); }
+.s-about2 .handles-row .h .v .at { color: var(--accent); }
+.s-about2 .handles-row .h .k i { color: var(--accent); }

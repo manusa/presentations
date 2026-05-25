@@ -1,0 +1,251 @@
+.s-amplifier {
+  background: #04081F; /* darker base so the image vignette reads */
+}
+
+/* Layer 1 — the user-supplied scene */
+.s-amplifier .scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.s-amplifier image-slot.scene-slot {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Placeholder hint when no image dropped yet — auto-hides once
+   the image-slot has filled (image-slot stamps [data-filled]). */
+.s-amplifier .scene-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+}
+.s-amplifier image-slot[data-filled] ~ .scene-fallback,
+.s-amplifier .scene:has(image-slot[data-filled]) .scene-fallback {
+  display: none;
+}
+
+/* ============================================================
+   Manual reveal — controlled by data-step on the active slide.
+   Step 0 = image only.   Step 1 = scrim + chrome + cards.   Step 2 = takeaway.
+   See the keyboard handler at the bottom of the file.
+   ============================================================ */
+.s-amplifier .scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 700ms ease-out;
+  /* Subtle atmospheric darken — cards do their own legibility work via
+     backdrop-blur + tinted background, so the scrim only needs to take
+     the overall image down a notch and feather the right edge under the
+     takeaway. */
+  background:
+    linear-gradient(90deg, rgba(4,8,31,0.42) 0%, rgba(4,8,31,0.22) 45%, rgba(4,8,31,0.10) 70%, rgba(4,8,31,0.28) 100%);
+}
+.s-amplifier.bad .scrim {
+  background:
+    linear-gradient(90deg, rgba(20,4,12,0.42) 0%, rgba(15,4,10,0.22) 45%, rgba(10,4,8,0.10) 70%, rgba(8,4,6,0.28) 100%);
+}
+.s-amplifier.good .scrim {
+  background:
+    linear-gradient(90deg, rgba(4,18,12,0.42) 0%, rgba(4,16,12,0.22) 45%, rgba(4,14,12,0.10) 70%, rgba(4,12,12,0.28) 100%);
+}
+
+/* Layer 3 — content */
+.s-amplifier .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 2;
+  padding: 60px var(--pad-x) 52px var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Card stack */
+.s-amplifier .cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  width: 880px;
+  max-width: 50%;
+}
+.s-amplifier .card {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 22px;
+  background: rgba(8, 10, 28, 0.78);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow:
+    0 14px 30px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.s-amplifier.bad  .card { border-color: rgba(240, 42, 90, 0.30); }
+.s-amplifier.good .card { border-color: rgba(143, 215, 159, 0.30); }
+
+.s-amplifier .card .icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.s-amplifier.bad .card .icon {
+  background: rgba(240, 42, 90, 0.14);
+  border: 1px solid rgba(240, 42, 90, 0.45);
+  color: var(--amp-bad);
+}
+.s-amplifier.good .card .icon {
+  background: rgba(143, 215, 159, 0.12);
+  border: 1px solid rgba(143, 215, 159, 0.45);
+  color: var(--amp-good);
+}
+.s-amplifier .card .icon svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+.s-amplifier .card .txt {
+  font-size: 26px;
+  line-height: 1.25;
+  color: var(--fg);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+.s-amplifier .card .txt strong { color: var(--fg); font-weight: 700; }
+.s-amplifier.bad  .card .txt em { font-style: normal; color: var(--amp-bad); font-weight: 600; }
+.s-amplifier.good .card .txt em { font-style: normal; color: var(--amp-good); font-weight: 600; }
+
+/* Bottom-line tagline */
+.s-amplifier .tag-line {
+  position: absolute;
+  right: var(--pad-x);
+  bottom: 92px;
+  z-index: 2;
+  max-width: 600px;
+  text-align: right;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+}
+.s-amplifier .tag-line .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+  margin-bottom: 10px;
+}
+.s-amplifier .tag-line .quote {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  text-wrap: balance;
+}
+.s-amplifier.bad  .tag-line .quote .hl { color: var(--amp-bad); }
+.s-amplifier.good .tag-line .quote .hl { color: var(--amp-good); }
+
+/* ============================================================
+   Reveal states — step driven
+   ============================================================ */
+.s-amplifier .card {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 520ms ease-out, transform 520ms ease-out;
+}
+.s-amplifier .chrome-top,
+.s-amplifier .chrome-bottom {
+  opacity: 0;
+  transition: opacity 600ms ease-out;
+}
+
+/* Dark rail bars for legibility over the busy full-bleed scene.
+   These give the chrome its own contrast bed without darkening the
+   middle of the image where the cards live. backdrop-filter blurs
+   whatever pixels sit underneath so even bright/painterly areas
+   read cleanly. */
+.s-amplifier .chrome-top {
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 8, 31, 0.78) 0%,
+    rgba(4, 8, 31, 0.62) 70%,
+    rgba(4, 8, 31, 0.00) 100%
+  );
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.s-amplifier .chrome-bottom {
+  background: linear-gradient(
+    to top,
+    rgba(4, 8, 31, 0.78) 0%,
+    rgba(4, 8, 31, 0.62) 70%,
+    rgba(4, 8, 31, 0.00) 100%
+  );
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+/* Lift chrome text a touch so it sits comfortably on the bar */
+.s-amplifier .chrome-top,
+.s-amplifier .chrome-bottom {
+  color: rgba(230, 232, 244, 0.78);
+}
+.s-amplifier .chrome-bottom .brand-mark {
+  color: rgba(245, 247, 255, 0.92);
+}
+
+/* Step 1 — scrim + chrome + cards staggered in */
+.s-amplifier[data-step="1"] .scrim,
+.s-amplifier[data-step="2"] .scrim { opacity: 1; }
+.s-amplifier[data-step="1"] .chrome-top,
+.s-amplifier[data-step="1"] .chrome-bottom,
+.s-amplifier[data-step="2"] .chrome-top,
+.s-amplifier[data-step="2"] .chrome-bottom { opacity: 1; }
+.s-amplifier[data-step="1"] .card,
+.s-amplifier[data-step="2"] .card {
+  opacity: 1;
+  transform: translateY(0);
+}
+.s-amplifier[data-step="1"] .card:nth-child(1),
+.s-amplifier[data-step="2"] .card:nth-child(1) { transition-delay: 0ms; }
+.s-amplifier[data-step="1"] .card:nth-child(2),
+.s-amplifier[data-step="2"] .card:nth-child(2) { transition-delay: 120ms; }
+.s-amplifier[data-step="1"] .card:nth-child(3),
+.s-amplifier[data-step="2"] .card:nth-child(3) { transition-delay: 240ms; }
+.s-amplifier[data-step="1"] .card:nth-child(4),
+.s-amplifier[data-step="2"] .card:nth-child(4) { transition-delay: 360ms; }
+.s-amplifier[data-step="1"] .card:nth-child(5),
+.s-amplifier[data-step="2"] .card:nth-child(5) { transition-delay: 480ms; }
+.s-amplifier[data-step="1"] .card:nth-child(6),
+.s-amplifier[data-step="2"] .card:nth-child(6) { transition-delay: 600ms; }
+
+/* Step 2 — takeaway */
+.s-amplifier[data-step="2"] .tag-line {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* (stencil pill removed — the images are explicit enough) */

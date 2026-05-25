@@ -1,0 +1,139 @@
+/* ============================================================
+   SLIDE 4 — SECTION DIVIDER (Maven reactor build)
+   Each act of the talk is a Maven module. The divider runs
+   `mvn -pl :devtalks-act-NN -am verify` for the act about to begin;
+   the title sits inside the reactor as the module being BUILDING.
+   ============================================================ */
+.s-section {
+  background: var(--bg);
+}
+.s-section .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  padding: 60px var(--pad-x) 40px var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Maven log color tokens — scoped, don't pollute other slides */
+.s-section {
+  --mvn-info:    #6B78B8;
+  --mvn-text:    #A5B0E6;
+  --mvn-success: #8FD79F;
+  --mvn-cyan:    #5BE9F0;
+}
+
+/* command being run */
+.s-section .mvn-cmd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: var(--fg-dim);
+  line-height: 1.45;
+}
+.s-section .mvn-cmd .prompt { color: var(--fg-mute); margin-right: 12px; }
+.s-section .mvn-cmd .mvn    { color: var(--fg); }
+.s-section .mvn-cmd .flag   { color: var(--accent); }
+.s-section .mvn-cmd .arg    { color: var(--accent-2); }
+
+/* Maven [INFO] log lines */
+.s-section .mvn-info {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  color: var(--mvn-text);
+  line-height: 1.5;
+  white-space: nowrap;
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+}
+.s-section .mvn-info .info-tag { color: var(--mvn-info); margin-right: 12px; }
+.s-section .mvn-info .ga       { color: var(--mvn-cyan); }
+.s-section .mvn-info .strong   { color: var(--fg); font-weight: 600; }
+.s-section .mvn-info .dim      { color: var(--fg-mute); }
+.s-section .mvn-info .pos      { color: var(--accent); font-weight: 600; }
+.s-section .mvn-info .grow     { flex: 1; }
+
+/* The title block — module being built, annotated with @Act / class name */
+.s-section .mvn-head {
+  margin: 36px 0 36px 0;
+  padding: 24px 0 24px 36px;
+  border-left: 4px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.s-section .mvn-anno {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  color: var(--fg-mute);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+}
+.s-section .mvn-anno .actno {
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+.s-section .mvn-anno .at   { color: var(--accent); }
+.s-section .mvn-anno .deco { color: var(--fg-mute); }
+.s-section .mvn-anno .ja   { color: var(--mvn-cyan); }
+.s-section .mvn-anno .num  { color: var(--accent-2); font-weight: 600; }
+.s-section .mvn-msg {
+  font-family: 'Inter', sans-serif;
+  font-size: 88px;
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--fg);
+  margin: 0;
+  text-wrap: balance;
+  max-width: 1500px;
+}
+
+/* Reactor build order */
+.s-section .mvn-reactor {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  color: var(--mvn-text);
+  display: grid;
+  grid-template-columns: 80px 20px 1fr 160px 130px;
+  column-gap: 14px;
+  row-gap: 2px;
+  align-items: baseline;
+  line-height: 1.4;
+}
+.s-section .mvn-reactor .rrow      { display: contents; }
+.s-section .mvn-reactor .info-tag  { color: var(--mvn-info); }
+.s-section .mvn-reactor .glyph     { color: var(--fg-mute); text-align: center; }
+.s-section .mvn-reactor .name      { color: var(--mvn-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.s-section .mvn-reactor .name .dots {
+  color: var(--fg-mute); opacity: 0.5; margin-left: 14px; letter-spacing: 0.2em;
+}
+.s-section .mvn-reactor .state     { color: var(--fg-mute); font-weight: 600; letter-spacing: 0.08em; }
+.s-section .mvn-reactor .dur       { color: var(--fg-mute); }
+
+.s-section .mvn-reactor .rrow.success .glyph { color: var(--mvn-success); }
+.s-section .mvn-reactor .rrow.success .name  { opacity: 0.8; }
+.s-section .mvn-reactor .rrow.success .state { color: var(--mvn-success); }
+.s-section .mvn-reactor .rrow.success .dur   { opacity: 0.6; }
+
+.s-section .mvn-reactor .rrow.building .glyph { color: var(--accent); font-weight: 700; }
+.s-section .mvn-reactor .rrow.building .name  { color: var(--fg); font-weight: 600; }
+.s-section .mvn-reactor .rrow.building .name .dots { opacity: 0.7; }
+.s-section .mvn-reactor .rrow.building .state {
+  color: #fff; background: var(--accent); padding: 2px 12px;
+  border-radius: 4px; font-weight: 700; letter-spacing: 0.14em;
+  display: inline-block;
+  box-shadow: 0 0 24px rgba(240,42,90,0.5);
+}
+.s-section .mvn-reactor .rrow.building .dur { color: var(--accent); }
+
+.s-section .mvn-reactor .rrow.pending .glyph { opacity: 0.5; }
+.s-section .mvn-reactor .rrow.pending .name  { color: var(--fg-mute); }
+.s-section .mvn-reactor .rrow.pending .state { opacity: 0.5; }
+.s-section .mvn-reactor .rrow.pending .dur   { opacity: 0.5; }

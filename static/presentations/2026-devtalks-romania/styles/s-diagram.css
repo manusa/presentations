@@ -1,0 +1,50 @@
+/* ============================================================
+   SLIDE 10 — DIAGRAM PLACEHOLDER
+   ============================================================ */
+.s-diagram .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  padding: 100px var(--pad-x) 80px var(--pad-x);
+  display: flex;
+  flex-direction: column;
+}
+.diagram-frame {
+  margin-top: 56px;
+  flex: 1;
+  background: var(--bg-elev);
+  border: 1px solid var(--line-strong);
+  position: relative;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+.diagram-frame .ph-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono-lg);
+  color: var(--fg-mute);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.diagram-frame .ph-spec {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono);
+  color: var(--fg-mute);
+  border: 1px solid var(--line-strong);
+  padding: 10px 22px;
+  border-radius: 4px;
+}
+.diagram-frame .corner {
+  position: absolute;
+  width: 20px; height: 20px;
+  border-color: var(--accent);
+}
+.diagram-frame .corner.tl { top: -1px; left: -1px; border-top: 2px solid; border-left: 2px solid; }
+.diagram-frame .corner.tr { top: -1px; right: -1px; border-top: 2px solid; border-right: 2px solid; }
+.diagram-frame .corner.bl { bottom: -1px; left: -1px; border-bottom: 2px solid; border-left: 2px solid; }
+.diagram-frame .corner.br { bottom: -1px; right: -1px; border-bottom: 2px solid; border-right: 2px solid; }
