@@ -1,0 +1,678 @@
+/* ============================================================
+   .s-skill — Act 4, slide 14.
+   "Encode project-specific tasks as skills."
+
+   Three-step conveyor — at most two cards visible at a time:
+
+     Step 0 — the problem.
+       Failing Dependabot PR card, centered on stage.
+       Tagline:  // 5 days. no humans. still red.
+
+     Step 1 — the ritual.
+       FAIL card slides LEFT; SKILL.md card enters from off-right
+       into the RIGHT slot. SKILL.md is a markdown file panel with
+       frontmatter + numbered steps + 2-3 highlighted "gems".
+       Tagline:  // a maintainer's ritual, written down — once.
+
+     Step 2 — the resolution.
+       FAIL card exits OFF-LEFT (the problem is gone).
+       SKILL.md shifts to LEFT slot.
+       Green merged PR enters from off-right into the RIGHT slot.
+       Tagline:  Who wants to read Go to ship a Java release?
+                 + footer: 20 min → days → now asynchronous.
+
+   Theme: .light slide (cream paper). Card panels stay on dark
+   navy so they read as files / artifacts, same idiom as s-code
+   and s-agents-md.
+   ============================================================ */
+
+/* Faint dotted grid — atmosphere only, same as s-agents-md */
+.s-skill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Body grid — header / stage / tagline
+   ============================================================ */
+.s-skill .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 1;
+  /* Extra bottom padding so the takeaway tagline breathes above the
+     deck's chrome-bottom rail — matches the visual margin around the
+     cards above. */
+  padding: 36px var(--pad-x) 56px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 22px;
+}
+
+/* === Header — same construction as s-agents-md === */
+.s-skill .head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: 48px;
+}
+.s-skill .head .eyebrow {
+  grid-column: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: var(--accent-ink);
+  margin-bottom: 14px;
+}
+.s-skill .head .title {
+  grid-column: 1;
+  font-size: 64px;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+}
+.s-skill .head .title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-skill .head .sub {
+  grid-column: 2;
+  margin: 0 0 8px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--fg-dim);
+  text-align: right;
+}
+.s-skill .head .sub .t-prev { color: var(--fg-mute); }
+.s-skill .head .sub .t-this { color: var(--accent-ink); font-weight: 600; }
+
+/* ============================================================
+   Stage — relative box with 2 visible "slots", 3 cards sliding
+   through it. Cards are absolutely positioned and animated
+   between LEFT / RIGHT / CENTER / OFFLEFT / OFFRIGHT via `left`.
+
+   Stage height is fixed so the cards have a known box and the
+   layout doesn't shift between steps.
+   ============================================================ */
+.s-skill .stage {
+  position: relative;
+  overflow: hidden;          /* clip off-stage cards out of the deck flow */
+  height: 600px;
+}
+
+/* ============================================================
+   Two card flavors share the same conveyor footprint:
+     .card-fail, .card-green — GitHub-style LIGHT cards (white paper)
+     .card-skill             — DARK terminal (markdown file feel)
+   Common positioning + transition logic, divergent skinning below.
+   ============================================================ */
+.s-skill .card {
+  position: absolute;
+  top: 0;
+  /* two-up grid: each card = half the stage minus half the gap (40px gap) */
+  width: calc((100% - 40px) / 2);
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* animate both `left` and opacity together; one beat, no stagger */
+  transition:
+    left 600ms cubic-bezier(.25, .8, .25, 1),
+    opacity 400ms cubic-bezier(.25, .8, .25, 1);
+}
+
+/* Dark terminal card — SKILL.md.
+   Shadows tightened so they don't bleed past stage's overflow:hidden
+   and leave a visible clip-line at the cards' bottom edge. */
+.s-skill .card-skill {
+  background: #060D3A;
+  border: 1px solid rgba(10, 21, 84, 0.22);
+  box-shadow: 0 2px 8px rgba(10, 21, 84, 0.12);
+}
+
+/* Light GitHub-style cards — FAIL + GREEN */
+.s-skill .card-fail,
+.s-skill .card-green {
+  background: #FFFFFF;
+  border: 1px solid #D1D9E0;        /* GitHub light border */
+  box-shadow: 0 2px 8px rgba(10, 21, 84, 0.10);
+}
+
+/* ── Default positions (step 0) ─────────────────────────────
+   FAIL card centered alone; the other two are off-stage to the right. */
+.s-skill .card-fail   { left: calc(25% + 10px); }
+.s-skill .card-skill  { left: 110%; opacity: 0; }
+.s-skill .card-green  { left: 110%; opacity: 0; }
+
+/* ── Step 1 ─────────────────────────────────────────────────
+   FAIL slides to LEFT slot; SKILL enters from off-right into RIGHT slot. */
+.s-skill[data-step="1"] .card-fail  { left: 0; }
+.s-skill[data-step="1"] .card-skill { left: calc(50% + 20px); opacity: 1; }
+
+/* ── Step 2 ─────────────────────────────────────────────────
+   FAIL exits OFF-LEFT (problem is gone); SKILL shifts to LEFT;
+   GREEN enters from off-right into RIGHT slot. */
+.s-skill[data-step="2"] .card-fail  { left: -55%; opacity: 0; }
+.s-skill[data-step="2"] .card-skill { left: 0; opacity: 1; }
+.s-skill[data-step="2"] .card-green { left: calc(50% + 20px); opacity: 1; }
+
+/* ============================================================
+   Panel chrome (top bar of each card) — two variants:
+     .panel-bar.gh    — GitHub repo + PR number + status pill (LIGHT)
+     .panel-bar.term  — three traffic-lights + filepath (DARK file)
+   ============================================================ */
+.s-skill .panel-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* GH variant — light, mimics GitHub's header strip */
+.s-skill .panel-bar.gh {
+  background: #F6F8FA;                              /* GitHub canvas-subtle */
+  border-bottom: 1px solid #D1D9E0;
+  color: #59636E;                                   /* GitHub fg-muted */
+}
+.s-skill .panel-bar.gh .gh-icon { color: #1F2328; font-size: 17px; }
+.s-skill .panel-bar.gh .repo    { color: #1F2328; font-weight: 600; }
+.s-skill .panel-bar.gh .sep     { color: #59636E; }
+.s-skill .panel-bar.gh .prnum   { color: #59636E; font-weight: 400; }
+.s-skill .panel-bar.gh .grow    { flex: 1; }
+.s-skill .panel-bar.gh .status {
+  font-size: 13px;
+  letter-spacing: 0;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+/* GitHub open-green pill (used here for the failing-but-open Dependabot PR) */
+.s-skill .panel-bar.gh .status.open {
+  color: #FFFFFF;
+  background: #1F883D;
+  border: 1px solid #1A7F37;
+}
+/* GitHub merged-purple pill */
+.s-skill .panel-bar.gh .status.merged {
+  color: #FFFFFF;
+  background: #8250DF;
+  border: 1px solid #6F42C1;
+}
+
+/* Terminal variant — DARK, used by SKILL.md card */
+.s-skill .panel-bar.term {
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #8A93BC;
+}
+.s-skill .panel-bar.term .dot { width: 11px; height: 11px; border-radius: 50%; }
+.s-skill .panel-bar.term .dot.r { background: #FF5F57; }
+.s-skill .panel-bar.term .dot.y { background: #FEBC2E; }
+.s-skill .panel-bar.term .dot.g { background: #28C840; }
+.s-skill .panel-bar.term .path  { margin-left: 14px; color: #B4BAD8; }
+.s-skill .panel-bar.term .grow  { flex: 1; }
+.s-skill .panel-bar.term .status.skill {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+}
+
+/* ============================================================
+   FAIL card body — Dependabot PR feel (LIGHT, GitHub-style)
+   ============================================================ */
+.s-skill .card-fail .panel-body {
+  padding: 22px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1F2328;                           /* GitHub fg-default */
+}
+.s-skill .card-fail .pr-title {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 22px;
+  line-height: 1.3;
+  color: #1F2328;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.s-skill .card-fail .pr-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  color: #59636E;
+}
+.s-skill .card-fail .pr-author .avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2188FF;
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+/* Dependabot-style avatar: brand-blue circle with a clear white bot glyph. */
+.s-skill .card-fail .pr-author .avatar.bot {
+  background: #1F4E8C;                         /* Dependabot dark-blue */
+  border: 1px solid #2F4F8F;
+}
+.s-skill .card-fail .pr-author .avatar.bot i {
+  color: #FFFFFF;
+  font-size: 15px;
+}
+.s-skill .card-fail .pr-author .bot {
+  color: #1F2328;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+}
+.s-skill .card-fail .pr-author .dim { color: #59636E; }
+.s-skill .card-fail .checks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 18px;
+  background: #FFEBE9;                       /* GitHub danger-subtle */
+  border: 1px solid #FF8182;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+}
+.s-skill .card-fail .check {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: #1F2328;
+}
+.s-skill .card-fail .check .glyph {
+  width: 18px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+}
+.s-skill .card-fail .check.fail .glyph { color: #CF222E; }   /* GitHub danger-fg */
+.s-skill .card-fail .check.fail .label { color: #1F2328; }
+.s-skill .card-fail .check.fail .why   { color: #82071E; font-style: italic; }
+.s-skill .card-fail .check.skip { color: #59636E; }
+/* Activity sentence — a single horizontal line under the checks block.
+   The three zeros carry the "no humans" beat; the rest is grey context.
+   Dims to 0.55 when the card is no longer the focus (step 1+), so the
+   eye hands off to the SKILL card on its right. */
+.s-skill .card-fail .activity {
+  padding: 12px 18px;
+  background: #F6F8FA;                        /* GitHub canvas-subtle */
+  border: 1px dashed #D1D9E0;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  color: #59636E;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  transition: opacity 350ms cubic-bezier(.2, .7, .2, 1);
+}
+.s-skill .card-fail .activity .zero {
+  color: #CF222E;                              /* GitHub danger-fg */
+  font-weight: 700;
+  font-size: 18px;
+  margin-right: 2px;
+}
+.s-skill .card-fail .activity .dot {
+  color: #AFB8C1;
+  margin: 0 4px;
+}
+/* Hand-off: once the SKILL card is the new focus, dim the FAIL-card body */
+.s-skill[data-step="1"] .card-fail .activity,
+.s-skill[data-step="2"] .card-fail .activity { opacity: 0.55; }
+
+/* "No conversation yet." — diegetic stand-in for the empty GitHub
+   discussion area, so the FAIL card doesn't read as a layout bug. */
+.s-skill .card-fail .no-convo {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-style: italic;
+  text-align: center;
+  color: #656D76;                              /* GitHub fg-subtle */
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  padding: 8px 0;
+  margin: 8px 0 4px;
+}
+
+.s-skill .card-fail .pr-foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+}
+/* Amber pill — state, not verdict; leaves the takeaway's "Still red."
+   as the only red emphasis on screen. */
+.s-skill .card-fail .pr-foot .stale {
+  color: #9A6700;                              /* GitHub attention-emphasis */
+  background: #FFF8C5;                         /* GitHub attention-subtle */
+  border: 1px solid #D4A72C;
+  border-radius: 4px;
+  padding: 2px 10px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+}
+.s-skill .card-fail .pr-foot .msg { color: #59636E; }
+
+/* ============================================================
+   SKILL.md card body — markdown file feel
+   ============================================================ */
+.s-skill .card-skill .panel-body {
+  padding: 20px 26px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  line-height: 1.45;
+  color: #C8CCE4;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  overflow: hidden;
+}
+.s-skill .card-skill .ln { display: block; }
+.s-skill .card-skill .ln.fm { color: var(--cyan); }
+.s-skill .card-skill .ln.fm .k { color: #8A93BC; }
+.s-skill .card-skill .ln.fm .v { color: #B4BAD8; }
+.s-skill .card-skill .ln.sep { height: 10px; }
+.s-skill .card-skill .ln.md-h {
+  color: var(--cyan);
+  font-weight: 600;
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+.s-skill .card-skill .ln.step {
+  color: #C8CCE4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.s-skill .card-skill .ln.step .num {
+  color: var(--orange-soft);
+  font-weight: 700;
+  margin-right: 4px;
+}
+.s-skill .card-skill .ln.step code {
+  color: var(--orange-soft);
+  background: rgba(225, 99, 9, 0.14);
+  border: 1px solid rgba(225, 99, 9, 0.32);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+}
+.s-skill .card-skill .ln.step .anno {
+  color: var(--cyan);
+  font-style: italic;
+  margin-left: 6px;
+  opacity: 0.85;
+}
+.s-skill .card-skill .ln.gem {
+  color: #FFFFFF;
+}
+.s-skill .card-skill .ln.gem .hot {
+  color: var(--pink);
+  font-weight: 700;
+}
+.s-skill .card-skill .ln.gem .anno {
+  color: var(--pink);
+  opacity: 0.95;
+}
+
+/* ============================================================
+   GREEN card body — merged PR + diff summary (LIGHT, GitHub-style)
+   Claude Code is the visible author chip; manusa is the human
+   merger acknowledged in the dim line.
+   ============================================================ */
+.s-skill .card-green .panel-body {
+  padding: 22px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1F2328;
+}
+.s-skill .card-green .pr-title {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 22px;
+  line-height: 1.3;
+  color: #1F2328;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.s-skill .card-green .pr-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  color: #59636E;
+  flex-wrap: wrap;
+}
+/* Agent avatar — emphasized purple to read as "this is who did the work" */
+.s-skill .card-green .pr-author .avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #FFFFFF;
+}
+.s-skill .card-green .pr-author .avatar.agent {
+  background: linear-gradient(135deg, #8250DF, #6F42C1);
+  box-shadow: 0 0 0 2px rgba(130, 80, 223, 0.18);
+}
+.s-skill .card-green .pr-author .agent-name {
+  color: #1F2328;
+  font-weight: 700;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 17px;
+}
+.s-skill .card-green .pr-author .dim {
+  color: #59636E;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+}
+.s-skill .card-green .pr-author .dim strong {
+  color: #1F2328;
+  font-weight: 600;
+}
+
+.s-skill .card-green .diff {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 18px;
+  background: #DAFBE1;                        /* GitHub success-subtle */
+  border: 1px solid #A2E5A2;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+}
+.s-skill .card-green .diff .row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: #1F2328;
+  flex-wrap: wrap;
+}
+.s-skill .card-green .diff .row .g {
+  color: #1A7F37;
+  font-weight: 700;
+  min-width: 16px;
+}
+.s-skill .card-green .diff .row .k { color: #1F2328; font-weight: 600; }
+.s-skill .card-green .diff .row .v { color: #59636E; }
+.s-skill .card-green .diff .row code {
+  color: #6F42C1;                             /* GitHub purple for inline code */
+  background: rgba(130, 80, 223, 0.08);
+  border: 1px solid rgba(130, 80, 223, 0.20);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+
+.s-skill .card-green .pr-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  flex-wrap: wrap;
+}
+.s-skill .card-green .pr-foot .closes {
+  color: #1A7F37;
+  background: #DAFBE1;
+  border: 1px solid #1A7F37;
+  border-radius: 999px;
+  padding: 3px 14px;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.s-skill .card-green .pr-foot .closes .num { color: #0A1554; font-weight: 700; }
+.s-skill .card-green .pr-foot .meta {
+  color: #59636E;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  font-family: 'JetBrains Mono', monospace;
+}
+.s-skill .card-green .pr-foot .meta strong {
+  color: #1F2328;
+  font-weight: 700;
+}
+/* The "while I slept" aside — a small italic comment in GitHub purple,
+   matching the agent author chip's hue. Keep it light: the punchline
+   lives on the slide tagline, this is just spice on the artifact. */
+.s-skill .card-green .pr-foot .async {
+  color: #6F42C1;
+  font-style: italic;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  margin-left: auto;
+}
+
+/* ============================================================
+   Tag line — 3-state morph (q-0 / q-1 / q-2)
+
+   The takeaway zone is anchored to a fixed two-line block so the
+   audience parks their eye in the same spot each step. Sub-line
+   is always present, so the layout never reflows between steps.
+   ============================================================ */
+.s-skill .tag-line {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 18px;
+  align-items: baseline;
+  min-height: 96px;
+}
+.s-skill .tag-line .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+  align-self: start;
+  padding-top: 8px;
+}
+.s-skill .tag-line .quotes {
+  position: relative;
+  min-height: 96px;
+}
+.s-skill .tag-line .quote {
+  position: absolute;
+  inset: 0;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.18;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  transition: opacity 350ms cubic-bezier(.2, .7, .2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.s-skill .tag-line .quote em {
+  font-style: normal;
+  color: var(--accent-ink);
+  font-weight: 700;
+}
+.s-skill .tag-line .quote .sub {
+  font-size: 20px;
+  font-weight: 400;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--fg-dim);
+  letter-spacing: 0.01em;
+}
+/* Step 2 payoff — promotes "unattended." so it survives the back row. */
+.s-skill .tag-line .quote .sub .arrow {
+  color: var(--accent-ink);
+  font-weight: 700;
+  font-size: 24px;
+  vertical-align: -1px;
+}
+.s-skill .tag-line .quote .sub .payoff {
+  color: var(--accent-ink);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-style: italic;
+}
+
+/* All quotes hidden by default; the matching one is shown per step. */
+.s-skill .tag-line .quote { opacity: 0; }
+.s-skill[data-step="0"] .tag-line .quote.q-0,
+.s-skill:not([data-step]) .tag-line .quote.q-0 { opacity: 1; }
+.s-skill[data-step="1"] .tag-line .quote.q-1 { opacity: 1; }
+.s-skill[data-step="2"] .tag-line .quote.q-2 { opacity: 1; }
+
+/* ============================================================
+   Print — drop heavy shadows for PDF export. Step rendering
+   (export:pdf walks data-step="0..N") needs each step legible
+   without animation, which the absolute-positioning model
+   already gives us.
+   ============================================================ */
+@media print {
+  .s-skill .card { box-shadow: none; }
+}

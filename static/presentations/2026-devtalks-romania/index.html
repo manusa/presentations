@@ -33,6 +33,7 @@
 <link rel="stylesheet" href="styles/s-legacy.css" />
 <link rel="stylesheet" href="styles/s-flywheel.css" />
 <link rel="stylesheet" href="styles/s-agents-md.css" />
+<link rel="stylesheet" href="styles/s-skill.css" />
 </head>
 <body>
 
@@ -1814,7 +1815,182 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 14 — ACT V DIVIDER (Maven reactor)
+       SLIDE 14 — ACT IV · ENCODE PROJECT-SPECIFIC TASKS AS SKILLS
+
+       Real story: cluster-api-provider-metal3 1.9.3 → 1.12.2
+         · Dependabot PR #7528 opened 2026-03-06, failed CI, sat 5 days
+         · Fix PR #7544 merged 2026-03-11, closes #7528
+         · 32 files changed; cmd/reflection.go import path edited;
+           refToJavaTypeMappings added to pom.xml; Java models moved
+           from clusterapi.v1beta1 → clusterapi.core.v1beta1
+         · Commit literally co-authored by Claude Opus 4.6
+
+       3-step conveyor (at most 2 cards visible at any time):
+         step 0 — failing Dependabot PR, centered (the problem)
+         step 1 — failing PR slides LEFT, SKILL.md enters RIGHT
+         step 2 — failing PR exits OFF-LEFT, SKILL shifts LEFT,
+                  green merged PR enters RIGHT
+       ============================================================ -->
+  <section class="s-skill light" data-label="14 Act 4 — Encode project tasks as skills" data-step-max="2">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · .claude/skills/regen-java-models-from-upstream/SKILL.md</span>
+      <span class="spacer"></span>
+      <span class="pill">act 04 · skill · 14</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">// act 04 · skill</div>
+        <h2 class="title">Encode project-specific <em>tasks</em>.</h2>
+        <p class="sub">
+          <span class="t-prev">AGENTS.md</span> was the map.<br/>
+          <span class="t-this">SKILL.md</span> is the ritual.
+        </p>
+      </header>
+
+      <div class="stage">
+        <!-- ============================================================
+             FAIL card — failing Dependabot PR #7528.
+             Step 0: CENTER (alone). Step 1: LEFT. Step 2: OFF-LEFT (gone).
+             ============================================================ -->
+        <article class="card card-fail">
+          <header class="panel-bar gh">
+            <span class="gh-icon"><i class="fa-brands fa-github"></i></span>
+            <span class="repo">fabric8io / kubernetes-client</span>
+            <span class="sep">·</span>
+            <span class="prnum">#7528</span>
+            <span class="grow"></span>
+            <span class="status open">Open</span>
+          </header>
+          <div class="panel-body">
+            <h3 class="pr-title">chore(deps): bump cluster-api-provider-metal3 from 1.9.3 to 1.12.2</h3>
+            <div class="pr-author">
+              <span class="avatar bot"><i class="fa-solid fa-robot"></i></span>
+              <span class="bot">dependabot[bot]</span>
+              <span class="dim">opened 5 days ago</span>
+            </div>
+            <div class="checks">
+              <div class="check fail">
+                <span class="glyph">✗</span>
+                <span class="label">generate-model</span>
+                <span class="why">— cluster-api/v1beta1 not found</span>
+              </div>
+              <div class="check fail">
+                <span class="glyph">✗</span>
+                <span class="label">check-no-schema-file-modified</span>
+              </div>
+              <div class="check fail">
+                <span class="glyph">✗</span>
+                <span class="label">build · 47 compile errors</span>
+              </div>
+            </div>
+            <div class="activity">
+              <span class="zero">0</span> reviews
+              <span class="dot">·</span>
+              <span class="zero">0</span> comments
+              <span class="dot">·</span>
+              <span class="zero">0</span> humans assigned
+              <span class="dot">·</span>
+              last activity: dependabot · 4h ago
+            </div>
+            <div class="no-convo">— No conversation yet. —</div>
+            <footer class="pr-foot">
+              <span class="stale">stale · 5 days</span>
+              <span class="msg">upstream reorganized its API. someone has to read Go.</span>
+            </footer>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             SKILL.md card — the encoded ritual.
+             Step 0: off-right. Step 1: RIGHT slot. Step 2: LEFT slot.
+             ============================================================ -->
+        <article class="card card-skill">
+          <header class="panel-bar term">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">.claude/skills/regen-java-models-from-upstream/SKILL.md</span>
+            <span class="grow"></span>
+            <span class="status skill">SKILL</span>
+          </header>
+          <div class="panel-body">
+            <div class="ln fm">---</div>
+            <div class="ln fm"><span class="k">name:</span> <span class="v">regen-java-models-from-upstream</span></div>
+            <div class="ln fm"><span class="k">description:</span> <span class="v">bump Go dep · regen Java models · fix · open closing PR</span></div>
+            <div class="ln fm">---</div>
+            <div class="ln sep"></div>
+            <div class="ln md-h"># Steps</div>
+            <div class="ln step"><span class="num">1.</span> Pick up the failing Dependabot PR.</div>
+            <div class="ln step"><span class="num">2.</span> Decode upstream Go API changes<span class="anno">← read Go to ship Java</span></div>
+            <div class="ln step"><span class="num">3.</span> Run <code>make generate-model</code><span class="anno">← canonical command (~15 min)</span></div>
+            <div class="ln step"><span class="num">4.</span> Fix Java compile · <code>refToJavaTypeMappings</code> in pom.xml</div>
+            <div class="ln step gem"><span class="num">5.</span> Update CHANGELOG · <span class="hot">alphabetical</span><span class="anno">← avoids merge conflicts</span></div>
+            <div class="ln step"><span class="num">6.</span> Commit · push · open the PR that <em>Closes</em> Dependabot.</div>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             GREEN card — merged fix PR #7544.
+             Step 0/1: off-right. Step 2: RIGHT slot.
+             ============================================================ -->
+        <article class="card card-green">
+          <header class="panel-bar gh">
+            <span class="gh-icon"><i class="fa-brands fa-github"></i></span>
+            <span class="repo">fabric8io / kubernetes-client</span>
+            <span class="sep">·</span>
+            <span class="prnum">#7544</span>
+            <span class="grow"></span>
+            <span class="status merged">Merged</span>
+          </header>
+          <div class="panel-body">
+            <h3 class="pr-title">chore(deps): bump cluster-api-provider-metal3 from 1.9.3 to 1.12.2</h3>
+            <div class="pr-author">
+              <span class="avatar agent"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+              <span class="agent-name">Claude Code</span>
+              <span class="dim">opened &amp; merged by <strong>manusa</strong> · just now</span>
+            </div>
+            <div class="diff">
+              <div class="row"><span class="g">+</span><span class="k">cmd/reflection.go</span><span class="v">· Go import path → <code>api/core/v1beta1</code></span></div>
+              <div class="row"><span class="g">+</span><span class="k">openshift-misc/pom.xml</span><span class="v">· <code>refToJavaTypeMappings</code></span></div>
+              <div class="row"><span class="g">+</span><span class="k">Java models moved</span><span class="v">· <code>clusterapi.v1beta1</code> → <code>clusterapi.core.v1beta1</code></span></div>
+            </div>
+            <footer class="pr-foot">
+              <span class="closes">Closes <span class="num">#7528</span></span>
+              <span class="meta">32 files · 3 cascade bumps · <strong>was open 5 days</strong></span>
+              <span class="async">// ran while I slept.</span>
+            </footer>
+          </div>
+        </article>
+      </div>
+
+      <div class="tag-line">
+        <span class="lbl">// takeaway</span>
+        <div class="quotes">
+          <span class="quote q-0">
+            5 days. No humans. <em>Still red.</em>
+            <span class="sub">// upstream Go reorg · nobody wants to read it.</span>
+          </span>
+          <span class="quote q-1">
+            A maintainer's ritual, <em>written down. Once.</em>
+            <span class="sub">// ~10 lines of frontmatter · ~300 lines of markdown · executable.</span>
+          </span>
+          <span class="quote q-2">
+            Who wants to read Go to ship a Java release? <em>The agent does.</em>
+            <span class="sub">// hours of Go reading · slow model-regen cycles · diff-check by hand &nbsp;<span class="arrow">→</span>&nbsp; <span class="payoff">unattended.</span></span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 15 — ACT V DIVIDER (Maven reactor)
        ============================================================ -->
   <section class="s-section" data-label="Act V — Codebase feedback">
     <div class="chrome-top">
