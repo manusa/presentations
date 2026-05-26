@@ -1,0 +1,375 @@
+/* ============================================================
+   .s-specs-vs-tests — Act 5 opener.
+   "Specs explain intent. Tests enforce it."
+
+   The hinge of the talk. Single static slide (no steps) — a
+   frame-setter for Act V. The audience flips from Act IV
+   ("encode knowledge in text") to Act V ("and make the codebase
+   reject violations").
+
+   Layout: two side-by-side cards (same intent, two encodings):
+     LEFT  — spec card: AGENTS.md prose, dotted "advisory" frame
+     RIGHT — test card: JUnit @Test on dark terminal background,
+             plus an inline BUILD FAILED console at the bottom
+
+   Between them, a thin "vs" axis carries the contrast without
+   visually competing with either side.
+
+   Theme: light slide. Code artifacts stay on dark navy panels
+   so they read as files (same idiom as .s-agents-md, .s-skill).
+   ============================================================ */
+
+/* Cream-paper texture matches Act IV opener slides. */
+.s-specs-vs-tests::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Body grid — header / stage / tagline
+   ============================================================ */
+.s-specs-vs-tests .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 1;
+  padding: 36px var(--pad-x) 28px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 24px;
+}
+
+/* === Header === */
+.s-specs-vs-tests .head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: 48px;
+}
+.s-specs-vs-tests .head .eyebrow {
+  grid-column: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: var(--accent-ink);
+  margin-bottom: 14px;
+}
+.s-specs-vs-tests .head .title {
+  grid-column: 1;
+  font-size: 64px;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+}
+.s-specs-vs-tests .head .title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-specs-vs-tests .head .sub {
+  grid-column: 2;
+  margin: 0 0 10px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  line-height: 1.3;
+  color: var(--fg);
+  text-align: right;
+}
+.s-specs-vs-tests .head .sub .t-warn { color: var(--accent-2-ink); font-weight: 600; }
+
+/* ============================================================
+   Stage — 2 cards with a slim "vs" rail in the middle.
+   The rail is narrow on purpose; the two cards do the talking.
+   ============================================================ */
+.s-specs-vs-tests .stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 80px minmax(0, 1fr);
+  column-gap: 0;
+  align-items: stretch;
+}
+
+/* ---------- VS axis ---------- */
+.s-specs-vs-tests .vs-axis {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  user-select: none;
+}
+.s-specs-vs-tests .vs-axis .line {
+  flex: 1 1 0;
+  width: 1.5px;
+  background: rgba(10, 21, 84, 0.40);
+}
+.s-specs-vs-tests .vs-axis .vs {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+  padding: 4px 10px;
+  border: 1px solid rgba(10,21,84,0.22);
+  border-radius: 999px;
+  background: var(--bg);
+}
+
+/* ============================================================
+   Cards — shared envelope rules.
+   The spec card is "soft" (cream, dotted border). The test card
+   is dark navy terminal-style (matches s-agents-md / s-skill).
+   ============================================================ */
+.s-specs-vs-tests .card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.s-specs-vs-tests .panel-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.s-specs-vs-tests .panel-bar .grow { flex: 1 1 auto; }
+.s-specs-vs-tests .panel-bar .path { font-weight: 500; }
+
+/* enforce-pill — the headline contrast tag on each card */
+.s-specs-vs-tests .enforce-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.10em;
+  text-transform: lowercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.s-specs-vs-tests .enforce-pill.advisory {
+  color: var(--fg-mute);
+  background: rgba(10,21,84,0.04);
+}
+.s-specs-vs-tests .enforce-pill.enforced {
+  color: #FF7B86;
+  background: rgba(240, 42, 90, 0.10);
+  border-color: rgba(255, 123, 134, 0.55);
+}
+
+/* ============================================================
+   SPEC card — markdown excerpt on cream paper.
+   Dotted-frame treatment signals "informal, advisory".
+   ============================================================ */
+.s-specs-vs-tests .card-spec {
+  background: var(--bg-elev);                       /* #FFFFFF on cream */
+  border: 3px dashed rgba(10, 21, 84, 0.45);
+  box-shadow:
+    0 12px 32px rgba(10, 21, 84, 0.10),
+    0 2px 6px rgba(10, 21, 84, 0.06);
+}
+.s-specs-vs-tests .card-spec .panel-bar.md {
+  background: rgba(10, 21, 84, 0.04);
+  border-bottom: 1px dashed rgba(10, 21, 84, 0.28);
+  color: var(--fg-mute);
+}
+.s-specs-vs-tests .card-spec .panel-bar.md .path { color: var(--fg-dim); }
+.s-specs-vs-tests .card-spec .panel-body {
+  padding: 26px 30px 30px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--fg-dim);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.s-specs-vs-tests .card-spec .ln.md-h {
+  color: var(--cyan-ink);
+  font-weight: 600;
+  font-size: 24px;
+}
+.s-specs-vs-tests .card-spec .ln.prose {
+  color: var(--fg);
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+.s-specs-vs-tests .card-spec .ln.prose code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  color: var(--accent-ink);
+  background: rgba(184, 23, 66, 0.08);
+  border: 1px solid rgba(184, 23, 66, 0.28);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.s-specs-vs-tests .card-spec .ln.cmt {
+  color: var(--fg-dim);
+  font-size: 21px;
+}
+.s-specs-vs-tests .card-spec .ln.sep { height: 10px; }
+
+/* ============================================================
+   TEST card — dark navy terminal.
+   Same colour family as s-agents-md / s-skill code panels.
+   ============================================================ */
+.s-specs-vs-tests .card-test {
+  background: #060D3A;
+  border: 1px solid rgba(10, 21, 84, 0.30);
+  box-shadow:
+    0 24px 60px rgba(10, 21, 84, 0.22),
+    0 4px 12px rgba(10, 21, 84, 0.10);
+}
+.s-specs-vs-tests .card-test .panel-bar.term {
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: #8A93BC;
+}
+.s-specs-vs-tests .card-test .panel-bar.term .dot {
+  width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0;
+}
+.s-specs-vs-tests .card-test .panel-bar.term .dot.r { background: #FF5F57; }
+.s-specs-vs-tests .card-test .panel-bar.term .dot.y { background: #FEBC2E; }
+.s-specs-vs-tests .card-test .panel-bar.term .dot.g { background: #28C840; }
+.s-specs-vs-tests .card-test .panel-bar.term .path { margin-left: 14px; color: #B4BAD8; }
+
+.s-specs-vs-tests .card-test .panel-body.code {
+  padding: 22px 30px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  line-height: 1.45;
+  color: #C8CCE4;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.s-specs-vs-tests .card-test .ln.indent   { padding-left: 22px; }
+.s-specs-vs-tests .card-test .ln.indent-2 { padding-left: 44px; }
+.s-specs-vs-tests .card-test .ln.indent-3 { padding-left: 66px; }
+
+.s-specs-vs-tests .card-test .t-anno { color: var(--orange-soft); }
+.s-specs-vs-tests .card-test .t-kw   { color: #B89AE8; }
+.s-specs-vs-tests .card-test .t-type { color: var(--cyan); }
+.s-specs-vs-tests .card-test .t-fn   { color: var(--cyan); font-weight: 600; }
+.s-specs-vs-tests .card-test .t-str  { color: #B6E3A8; }
+
+/* ---------- inline BUILD FAILED console (under the @Test body) ---------- */
+.s-specs-vs-tests .card-test .console-fail {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(to bottom, rgba(240,42,90,0.10), rgba(240,42,90,0.04));
+  padding: 16px 30px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #E8C8CF;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.s-specs-vs-tests .card-test .console-fail .cf-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.s-specs-vs-tests .card-test .console-fail .cf-glyph {
+  color: var(--pink);
+  font-weight: 700;
+  font-size: 20px;
+}
+.s-specs-vs-tests .card-test .console-fail .cf-label {
+  color: #FF6B7E;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+.s-specs-vs-tests .card-test .console-fail .cf-sub {
+  color: #B4BAD8;
+  font-size: 15px;
+}
+.s-specs-vs-tests .card-test .console-fail .cf-detail {
+  color: #C8CCE4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.s-specs-vs-tests .card-test .console-fail .cf-key {
+  color: #8A93BC;
+}
+.s-specs-vs-tests .card-test .console-fail .cf-ok  { color: #8FD79F; }
+.s-specs-vs-tests .card-test .console-fail .cf-bad { color: #FF8794; text-decoration: line-through; text-decoration-color: rgba(255,135,148,0.5); }
+.s-specs-vs-tests .card-test .console-fail .cf-foot {
+  margin-top: 10px;
+  color: #8A93BC;
+  font-style: italic;
+  font-size: 17px;
+}
+
+/* ============================================================
+   Tag line — single takeaway (no step toggling on this slide)
+   ============================================================ */
+.s-specs-vs-tests .tag-line {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 56px;
+}
+.s-specs-vs-tests .tag-line .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+.s-specs-vs-tests .tag-line .quote {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.s-specs-vs-tests .tag-line .quote em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-specs-vs-tests .tag-line .quote .sub {
+  display: block;
+  margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--fg-dim);
+  letter-spacing: 0;
+}
+
+/* ============================================================
+   Print — drop shadows / gradient so Chromium's page.pdf()
+   doesn't rasterise them as opaque rectangles. The slide is
+   single-state so no step rules to flatten.
+   ============================================================ */
+@media print {
+  .s-specs-vs-tests .card-spec,
+  .s-specs-vs-tests .card-test { box-shadow: none; }
+  .s-specs-vs-tests .card-test .console-fail {
+    background: rgba(240,42,90,0.10);
+  }
+}

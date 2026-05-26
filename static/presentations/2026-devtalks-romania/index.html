@@ -34,6 +34,7 @@
 <link rel="stylesheet" href="styles/s-flywheel.css" />
 <link rel="stylesheet" href="styles/s-agents-md.css" />
 <link rel="stylesheet" href="styles/s-skill.css" />
+<link rel="stylesheet" href="styles/s-specs-vs-tests.css" />
 </head>
 <body>
 
@@ -2084,6 +2085,125 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
           <span class="name">devtalks-act-07-close<span class="dots"> .........</span></span>
           <span class="state">PENDING</span>
           <span class="dur"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 17 — ACT V · OPENER · SPECS EXPLAIN INTENT, TESTS ENFORCE IT
+
+       The hinge of the whole talk: text can be skipped, code can't.
+       Single static state (no steps) — frame-setter, ~75s of speech.
+
+       Two-panel layout:
+         LEFT  — AGENTS.md prose card  · advisory
+         RIGHT — JUnit @Test with @DisplayName · enforced
+                 + inline BUILD FAILED console at the bottom
+
+       Same intent on both sides: the default-namespace fallback
+       (a real fabric8 invariant). The form difference is the
+       entire point of the slide.
+       ============================================================ -->
+  <section class="s-specs-vs-tests light" data-label="17 Act 5 — Specs explain intent. Tests enforce it.">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · devtalks-act-05-codebase-feedback/SpecsVsTests.java</span>
+      <span class="spacer"></span>
+      <span class="pill">act 05 · pushback · 17</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">// act 05 · the codebase pushes back</div>
+        <h2 class="title">Specs <em>explain</em> intent. Tests <em>enforce</em> it.</h2>
+        <p class="sub">
+          But <span class="t-warn">text doesn't push back.</span>
+        </p>
+      </header>
+
+      <div class="stage">
+        <!-- ============================================================
+             LEFT — SPEC card.
+             Markdown excerpt from a project's AGENTS.md. Soft, dotted
+             border, "advisory" pill. The agent may read it, or skip it.
+             ============================================================ -->
+        <article class="card card-spec">
+          <header class="panel-bar md">
+            <span class="path">docs/specs/config.md</span>
+            <span class="grow"></span>
+            <span class="enforce-pill advisory">// advisory</span>
+          </header>
+          <div class="panel-body">
+            <div class="ln md-h"># Default namespace</div>
+            <div class="ln sep"></div>
+            <div class="ln prose">When no namespace is configured,</div>
+            <div class="ln prose">fall back to <code>kubernetes.default.svc</code>.</div>
+            <div class="ln sep"></div>
+            <div class="ln cmt">// an agent may read this.</div>
+            <div class="ln cmt">// or skip it.</div>
+            <div class="ln cmt">// or break it. and not notice.</div>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             The divider — a small "vs" axis. Communicates the contrast
+             without taking visual weight from either panel.
+             ============================================================ -->
+        <div class="vs-axis" aria-hidden="true">
+          <span class="line top"></span>
+          <span class="vs">vs</span>
+          <span class="line bot"></span>
+        </div>
+
+        <!-- ============================================================
+             RIGHT — TEST card.
+             Compact JUnit @Test (with @DisplayName, no @Nested) that
+             encodes the same intent in code. Below the test body, an
+             inline console region shows what the agent sees when it
+             violates the invariant — the "BUILD FAILED" punchline.
+             ============================================================ -->
+        <article class="card card-test">
+          <header class="panel-bar term">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">ConfigTest.java</span>
+            <span class="grow"></span>
+            <span class="enforce-pill enforced">// enforced</span>
+          </header>
+          <div class="panel-body code">
+            <div class="ln"><span class="t-anno">@Test</span></div>
+            <div class="ln"><span class="t-anno">@DisplayName</span>(<span class="t-str">"falls back to kubernetes.default.svc"</span>)</div>
+            <div class="ln"><span class="t-kw">void</span> <span class="t-fn">fallsBackToDefaultNamespace</span>() {</div>
+            <div class="ln indent">assertThat(<span class="t-kw">new</span> <span class="t-type">ConfigBuilder</span>().build())</div>
+            <div class="ln indent-2">.hasFieldOrPropertyWithValue(</div>
+            <div class="ln indent-3"><span class="t-str">"masterUrl"</span>, <span class="t-str">"https://kubernetes.default.svc/"</span>);</div>
+            <div class="ln">}</div>
+          </div>
+          <!-- Inline failure console — what the agent sees when wrong. -->
+          <div class="console-fail">
+            <div class="cf-head">
+              <span class="cf-glyph">✗</span>
+              <span class="cf-label">BUILD FAILED</span>
+              <span class="cf-sub">— ConfigTest › falls back to kubernetes.default.svc</span>
+            </div>
+            <div class="cf-detail">  <span class="cf-key">expected:</span> <span class="cf-ok">"https://kubernetes.default.svc/"</span></div>
+            <div class="cf-detail">  <span class="cf-key">actual:</span>   <span class="cf-bad">"https://my-cluster.example.com/"</span></div>
+            <div class="cf-foot">// what the agent sees when it gets it wrong.</div>
+          </div>
+        </article>
+      </div>
+
+      <div class="tag-line">
+        <span class="lbl">// takeaway</span>
+        <div class="quote">
+          In Java, the best spec is the one that <em>compiles</em>.
+          <span class="sub">// text waits to be read. tests run on every commit.</span>
         </div>
       </div>
     </div>

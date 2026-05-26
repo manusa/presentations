@@ -600,10 +600,9 @@
    ============================================================ */
 .s-skill .tag-line {
   position: relative;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 18px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   min-height: 96px;
 }
 .s-skill .tag-line .lbl {
@@ -612,8 +611,6 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fg-mute);
-  align-self: start;
-  padding-top: 8px;
 }
 .s-skill .tag-line .quotes {
   position: relative;
