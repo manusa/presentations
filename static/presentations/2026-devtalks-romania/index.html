@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="styles/s-audience.css" />
 <link rel="stylesheet" href="styles/s-legacy.css" />
 <link rel="stylesheet" href="styles/s-flywheel.css" />
+<link rel="stylesheet" href="styles/s-agents-md.css" />
 </head>
 <body>
 
@@ -1657,6 +1658,144 @@
           <span class="name">devtalks-act-07-close<span class="dots"> .........</span></span>
           <span class="state">PENDING</span>
           <span class="dur"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 11 — ACT IV · ENCODE PROJECT-SPECIFIC KNOWLEDGE
+       Step 0: AGENTS.md excerpt + 3 annotated gems.
+       Step 1: Makefile / build.gradle.kts side-by-side for the
+               same quick-build ritual; AGENTS.md panel collapses.
+       ============================================================ -->
+  <section class="s-agents-md light" data-label="11 Act 4 — Encode project knowledge" data-step-max="1">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · devtalks-act-04-teach-agents/AGENTS.md</span>
+      <span class="spacer"></span>
+      <span class="pill">act 04 · agent map · 11</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">// act 04 · agent map</div>
+        <h2 class="title">Encode <em>project-specific</em> knowledge.</h2>
+        <p class="sub">
+          <span class="t-readme">README.md</span> tells a person how to use it.<br/>
+          <span class="t-agents">AGENTS.md</span> tells an agent how to change it.
+        </p>
+      </header>
+
+      <div class="stage">
+        <!-- ============================================================
+             AGENTS.md panel — real excerpt from fabric8 K8s client.
+             Three gems highlighted; the lines below the first section
+             fade on step 1 so the panel reads as "summary card".
+             ============================================================ -->
+        <article class="agents-panel">
+          <header class="panel-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">AGENTS.md  ·  fabric8 / kubernetes-client</span>
+          </header>
+          <div class="panel-body">
+            <div class="ln md-h"># Build &amp; validation</div>
+            <div class="ln gem">Prefer <span class="lit">`make`</span> targets over raw Maven commands.</div>
+            <div class="ln dim"><span class="lit">`make generate-model`</span> is the singular model regen path.</div>
+
+            <div class="ln sep fade-step-1"></div>
+            <div class="ln md-h fade-step-1"># Mock-mode tests</div>
+            <div class="ln gem fade-step-1">Default to plain HTTP for new mock-mode tests.</div>
+            <div class="ln gem fade-step-1">The first HTTPS call in each surefire fork pays</div>
+            <div class="ln gem fade-step-1">a <span class="hot">~7-8s TLS / Vert.x cold-start cost</span>.</div>
+
+            <div class="ln sep fade-step-1"></div>
+            <div class="ln md-h fade-step-1"># CI reproduction</div>
+            <div class="ln gem fade-step-1">Reproduce 2-core CI locally:</div>
+            <div class="ln dim fade-step-1">&nbsp;&nbsp;docker run --cpus=2 --memory=4g …</div>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             Annotation rail — three gems with a leader tick to the panel.
+             ============================================================ -->
+        <ol class="callouts">
+          <li class="co co-1">
+            <span class="num">[ 01 ]</span>
+            <span class="lbl">canonical command</span>
+            <span class="d">one path. not a 12-line Maven invocation to guess at.</span>
+          </li>
+          <li class="co co-2">
+            <span class="num">[ 02 ]</span>
+            <span class="lbl">operational gotcha</span>
+            <span class="d">the kind of thing an old hand on the project would tell you on day one.</span>
+          </li>
+          <li class="co co-3">
+            <span class="num">[ 03 ]</span>
+            <span class="lbl">CI reproduction</span>
+            <span class="d">the agent can rerun your CI on its own laptop — before opening a PR.</span>
+          </li>
+        </ol>
+
+        <!-- ============================================================
+             Makefile panel (step 1) — the ritual AGENTS.md pointed at.
+             ============================================================ -->
+        <article class="cmd-panel make">
+          <header class="panel-bar mini">
+            <span class="path">Makefile</span>
+            <span class="tag">fabric8 today</span>
+          </header>
+<pre class="cmd-body"><code><span class="t-cmt"># fast validation — used by AGENTS.md, used by the agent</span>
+<span class="t-name">quick-build</span>:
+	<span class="t-cmd">mvn</span> -T 1C -DskipTests \
+	  -pl <span class="t-str">'!doc-projects/...'</span> \
+	  install
+</code></pre>
+        </article>
+
+        <!-- ============================================================
+             Gradle panel (step 1) — same ritual, declarative parity.
+             ============================================================ -->
+        <article class="cmd-panel gradle">
+          <header class="panel-bar mini">
+            <span class="path">build.gradle.kts</span>
+            <span class="tag">if you'd rather</span>
+          </header>
+<pre class="cmd-body"><code><span class="t-cmt">// same intent, different dialect</span>
+tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>) {
+  <span class="t-kw">group</span> = <span class="t-str">"verification"</span>
+  <span class="t-fn">dependsOn</span>(<span class="t-str">":kubernetes-client:install"</span>)
+  <span class="t-cmt">// parallel build, skip tests</span>
+}
+</code></pre>
+        </article>
+
+        <!-- ============================================================
+             Agent-invocation caption — the punchline of step 1.
+             ============================================================ -->
+        <div class="cmd-caption">
+          <span class="prompt">$</span>
+          <span class="cmd">claude "run a fast build"</span>
+          <span class="arrow">→</span>
+          <span class="hl">agent finds <code>quick-build</code>. just runs it.</span>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           Tag-line — morphs between step 0 (knowledge) and step 1
+           (knowledge + executable rituals).
+           ============================================================ -->
+      <div class="tag-line">
+        <span class="lbl">// takeaway</span>
+        <div class="quotes">
+          <span class="quote q-0">Not generic. <em>Project-specific.</em></span>
+          <span class="quote q-1">Project-specific. <em>And executable.</em></span>
         </div>
       </div>
     </div>
