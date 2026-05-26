@@ -366,10 +366,9 @@
    ============================================================ */
 .s-agents-md .tag-line {
   position: relative;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 18px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   min-height: 56px;
 }
 .s-agents-md .tag-line .lbl {
