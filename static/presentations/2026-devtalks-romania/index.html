@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="styles/s-act2.css" />
 <link rel="stylesheet" href="styles/s-audience.css" />
 <link rel="stylesheet" href="styles/s-legacy.css" />
+<link rel="stylesheet" href="styles/s-flywheel.css" />
 </head>
 <body>
 
@@ -1448,6 +1449,120 @@
   </section>
 
   <!-- ============================================================
+       SLIDE — AI-READINESS FLYWHEEL (Act 3 closer · bridge to Act IV)
+       Optimistic turn: even an un-AI-ready project can use AI to
+       become AI-ready. Build 1 = exoskeleton scene + title + quote.
+       Build 2 = circular flywheel diagram dominates the right side.
+       ============================================================ -->
+  <section class="s-flywheel" data-label="10 Act 3 — AI-readiness flywheel" data-step-max="1">
+
+    <div class="scene">
+      <image-slot id="flywheel-scene"
+                  class="scene-slot"
+                  shape="rect"
+                  placeholder="Drop scene · developer in assistive exoskeleton at workstation"></image-slot>
+    </div>
+
+    <div class="scrim"></div>
+    <div class="scrim-wheel" aria-hidden="true"></div>
+
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · readiness/Flywheel.java</span>
+      <span class="spacer"></span>
+      <span class="pill">act 03 · flywheel · 10</span>
+    </div>
+
+    <div class="body">
+      <!-- Flywheel diagram — revealed on step 1 -->
+      <div class="wheel" aria-label="AI-readiness flywheel">
+        <svg class="wheel-svg" viewBox="0 0 620 620" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <marker id="fw-arrow" viewBox="0 0 12 12" refX="6" refY="6"
+                    markerWidth="9" markerHeight="9" orient="auto">
+              <path d="M1 1 L11 6 L1 11 Z" fill="currentColor"></path>
+            </marker>
+          </defs>
+          <!-- outer ring, faint -->
+          <circle cx="310" cy="310" r="240" fill="none"
+                  stroke="rgba(255,255,255,0.10)" stroke-width="1"></circle>
+          <!-- Main ring path — four arcs, each spanning 90° centered on a
+               cardinal point (12/3/6/9). Arrowheads land at the diagonals
+               between nodes (1:30 / 4:30 / 7:30 / 10:30), so they're never
+               eclipsed by the cards. -->
+          <g class="ring" fill="none" stroke="currentColor" stroke-width="3"
+             stroke-linecap="round" marker-end="url(#fw-arrow)">
+            <!-- through 12, ending at 1:30 -->
+            <path class="arc arc-1" d="M 140 140 A 240 240 0 0 1 480 140"></path>
+            <!-- through 3, ending at 4:30 -->
+            <path class="arc arc-2" d="M 480 140 A 240 240 0 0 1 480 480"></path>
+            <!-- through 6, ending at 7:30 -->
+            <path class="arc arc-3" d="M 480 480 A 240 240 0 0 1 140 480"></path>
+            <!-- through 9, ending at 10:30 -->
+            <path class="arc arc-4" d="M 140 480 A 240 240 0 0 1 140 140"></path>
+          </g>
+        </svg>
+
+        <!-- center label -->
+        <div class="wheel-center">
+          <div class="c-title">Compounding<br/>AI&nbsp;leverage</div>
+        </div>
+
+        <!-- four nodes -->
+        <div class="node node-1">
+          <span class="num">1</span>
+          <div class="n-title">Bounded readiness work</div>
+          <div class="n-sub">tests · docs · cleanup · CI</div>
+        </div>
+        <div class="node node-2">
+          <span class="num">2</span>
+          <div class="n-title">Project gets clearer</div>
+          <div class="n-sub">knowledge · boundaries · specs</div>
+        </div>
+        <div class="node node-3">
+          <span class="num">3</span>
+          <div class="n-title">Agents become safer</div>
+          <div class="n-sub">better PRs · fewer wrong turns</div>
+        </div>
+        <div class="node node-4">
+          <span class="num">4</span>
+          <div class="n-title">Developer gains capacity</div>
+          <div class="n-sub">review · scope · architecture</div>
+        </div>
+      </div>
+
+      <div class="lead">
+        <div class="eyebrow">// bridge to act IV</div>
+        <h2 class="title">AI-readiness<br/>is a <em>flywheel</em>.</h2>
+        <p class="callout">
+          “Start with <span class="hl">bounded readiness work</span>
+          that makes the repository easier to change.”
+        </p>
+        <ul class="hints" aria-hidden="true">
+          <li><span class="k">mvn verify</span></li>
+          <li><span class="k">JUnit</span></li>
+          <li><span class="k">AGENTS.md</span></li>
+          <li><span class="k">pom.xml</span></li>
+          <li><span class="k">CI stable</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tag-line">
+      <div class="tag-inner">
+        <div class="lbl">// takeaway</div>
+        <div class="quote">Every improvement <span class="hl">lowers the cost</span> of the next change.</div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
        SLIDE 13 — ACT IV DIVIDER (Maven reactor)
        ============================================================ -->
   <section class="s-section" data-label="Act IV — Teach agents">
@@ -2208,7 +2323,8 @@
 (function(){
   const M = {
     "amp-scene-bad":  "assets/amp-scene-bad.webp",
-    "amp-scene-good": "assets/amp-scene-good.webp"
+    "amp-scene-good": "assets/amp-scene-good.webp",
+    "flywheel-scene": "assets/flywheel-scene.webp"
   };
   function apply() {
     for (const id in M) {
