@@ -36,7 +36,7 @@
 
 /* ============================================================
    Manual reveal — controlled by data-step on the active slide.
-   Step 0 = image only.   Step 1 = scrim + chrome + cards.   Step 2 = takeaway.
+   Step 0 = image only.   Step 1 = scrim + chrome + cards + takeaway.
    See the keyboard handler at the bottom of the file.
    ============================================================ */
 .s-amplifier .scrim {
@@ -136,13 +136,15 @@
 .s-amplifier.bad  .card .txt em { font-style: normal; color: var(--amp-bad); font-weight: 600; }
 .s-amplifier.good .card .txt em { font-style: normal; color: var(--amp-good); font-weight: 600; }
 
-/* Bottom-line tagline */
+/* Bottom-line tagline. Lifted clear of the bottom chrome so the longest
+   bad-slide card ("Problems hidden for months… exposed in hours") can't
+   crowd into the quote's horizontal lane. */
 .s-amplifier .tag-line {
   position: absolute;
   right: var(--pad-x);
-  bottom: 92px;
+  bottom: 160px;
   z-index: 2;
-  max-width: 600px;
+  max-width: 780px;
   text-align: right;
   opacity: 0;
   transform: translateY(14px);
@@ -150,17 +152,17 @@
 }
 .s-amplifier .tag-line .lbl {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 24px;
+  font-size: 26px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fg-mute);
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 .s-amplifier .tag-line .quote {
-  font-size: 30px;
+  font-size: 44px;
   font-weight: 600;
-  line-height: 1.22;
-  letter-spacing: -0.01em;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
   color: var(--fg);
   text-wrap: balance;
 }
@@ -217,35 +219,39 @@
   color: rgba(245, 247, 255, 0.92);
 }
 
-/* Step 1 — scrim + chrome + cards staggered in */
-.s-amplifier[data-step="1"] .scrim,
-.s-amplifier[data-step="2"] .scrim { opacity: 1; }
+/* Step 1 — scrim + chrome + cards (staggered) + takeaway */
+.s-amplifier[data-step="1"] .scrim { opacity: 1; }
 .s-amplifier[data-step="1"] .chrome-top,
-.s-amplifier[data-step="1"] .chrome-bottom,
-.s-amplifier[data-step="2"] .chrome-top,
-.s-amplifier[data-step="2"] .chrome-bottom { opacity: 1; }
-.s-amplifier[data-step="1"] .card,
-.s-amplifier[data-step="2"] .card {
+.s-amplifier[data-step="1"] .chrome-bottom { opacity: 1; }
+.s-amplifier[data-step="1"] .card {
   opacity: 1;
   transform: translateY(0);
 }
-.s-amplifier[data-step="1"] .card:nth-child(1),
-.s-amplifier[data-step="2"] .card:nth-child(1) { transition-delay: 0ms; }
-.s-amplifier[data-step="1"] .card:nth-child(2),
-.s-amplifier[data-step="2"] .card:nth-child(2) { transition-delay: 120ms; }
-.s-amplifier[data-step="1"] .card:nth-child(3),
-.s-amplifier[data-step="2"] .card:nth-child(3) { transition-delay: 240ms; }
-.s-amplifier[data-step="1"] .card:nth-child(4),
-.s-amplifier[data-step="2"] .card:nth-child(4) { transition-delay: 360ms; }
-.s-amplifier[data-step="1"] .card:nth-child(5),
-.s-amplifier[data-step="2"] .card:nth-child(5) { transition-delay: 480ms; }
-.s-amplifier[data-step="1"] .card:nth-child(6),
-.s-amplifier[data-step="2"] .card:nth-child(6) { transition-delay: 600ms; }
+.s-amplifier[data-step="1"] .card:nth-child(1) { transition-delay: 0ms; }
+.s-amplifier[data-step="1"] .card:nth-child(2) { transition-delay: 120ms; }
+.s-amplifier[data-step="1"] .card:nth-child(3) { transition-delay: 240ms; }
+.s-amplifier[data-step="1"] .card:nth-child(4) { transition-delay: 360ms; }
+.s-amplifier[data-step="1"] .card:nth-child(5) { transition-delay: 480ms; }
+.s-amplifier[data-step="1"] .card:nth-child(6) { transition-delay: 600ms; }
 
-/* Step 2 — takeaway */
-.s-amplifier[data-step="2"] .tag-line {
+/* Takeaway lands just after the last card finishes its stagger, so it
+   reads as the "…therefore" answer to the cards rather than a parallel
+   beat appearing mid-list. */
+.s-amplifier[data-step="1"] .tag-line {
   opacity: 1;
   transform: translateY(0);
+  transition-delay: 720ms;
+}
+
+/* Reduced-motion: instant cut, no stagger or slide-in. */
+@media (prefers-reduced-motion: reduce) {
+  .s-amplifier .card,
+  .s-amplifier .scrim,
+  .s-amplifier .chrome-top,
+  .s-amplifier .chrome-bottom,
+  .s-amplifier .tag-line { transition: none; }
+  .s-amplifier[data-step="1"] .card,
+  .s-amplifier[data-step="1"] .tag-line { transition-delay: 0ms; }
 }
 
 /* (stencil pill removed — the images are explicit enough) */

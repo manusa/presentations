@@ -39,12 +39,26 @@
   color: var(--accent);
 }
 
-/* Two-column contrast */
+/* Two-column contrast. The risky column shares grid cell (col 2,
+   row 1) with a ghost placeholder so step 0 has an anchor on the
+   right half without forcing a layout shift on reveal. */
 .s-legacy .lg-cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
   gap: 40px;
   min-height: 0;
+}
+.s-legacy .col-stable { grid-column: 1; grid-row: 1; }
+.s-legacy .col-risky-ghost,
+.s-legacy .col-risky { grid-column: 2; grid-row: 1; }
+
+/* Ghost outline for the risky column. Dashed box only — no text,
+   no label — so it anchors the right half without telegraphing
+   what's coming. */
+.s-legacy .col-risky-ghost {
+  border: 1px dashed rgba(10, 21, 84, 0.18);
+  background: transparent;
 }
 
 .s-legacy .lg-col {
@@ -250,4 +264,50 @@
    border + pink-tinted gradient still sell "risky". */
 @media print {
   .s-legacy .col-risky { box-shadow: none; }
+}
+
+/* ============================================================
+   Manual reveal — controlled by data-step on the active slide.
+   Step 0 = "Legacy is not age." + STABLE column + ghost outline.
+   Step 1 = title-2, RISKY column, and punchline all cross-fade
+   together in a single synchronised beat. The ghost fades out
+   on the same curve so the right half hands off cleanly.
+
+   Hidden elements use opacity + visibility, not display, so the
+   grid keeps its full geometry from step 0 — nothing shifts when
+   the risky column lands.
+   ============================================================ */
+.s-legacy .lg-title .title-2,
+.s-legacy .col-risky,
+.s-legacy .lg-punch {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 520ms ease-out, visibility 0s 520ms;
+}
+
+.s-legacy[data-step="1"] .lg-title .title-2,
+.s-legacy[data-step="1"] .col-risky,
+.s-legacy[data-step="1"] .lg-punch {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 520ms ease-out, visibility 0s 0s;
+}
+
+/* Ghost fades out on the same curve as the risky column fades in. */
+.s-legacy .col-risky-ghost {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 520ms ease-out, visibility 0s 0s;
+}
+.s-legacy[data-step="1"] .col-risky-ghost {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 520ms ease-out, visibility 0s 520ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s-legacy .lg-title .title-2,
+  .s-legacy .col-risky,
+  .s-legacy .col-risky-ghost,
+  .s-legacy .lg-punch { transition: none; }
 }
