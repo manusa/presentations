@@ -1370,7 +1370,7 @@
        Long-lived Java codebase (calm, structured) vs new AI-assisted
        codebase (fast, risky). "Legacy" = unsafe change, not age.
        ============================================================ -->
-  <section class="s-legacy light" data-label="09 Act 3 — Legacy framing">
+  <section class="s-legacy light" data-label="09 Act 3 — Legacy framing" data-step-max="1">
     <div class="chrome-top">
       <span class="dot"></span>
       <span>~/dev/devtalks-2026 · framing/Legacy.java</span>
@@ -1381,7 +1381,7 @@
     <div class="body">
       <div class="lg-header">
         <div class="lg-eyebrow">// reframing</div>
-        <h2 class="lg-title">Legacy is not age.<br/>Legacy is <em>unsafe change</em>.</h2>
+        <h2 class="lg-title">Legacy is not age.<br/><span class="title-2">Legacy is <em>unsafe change</em>.</span></h2>
       </div>
 
       <div class="lg-cols">
@@ -1413,6 +1413,12 @@
             <span>AI can accelerate it.</span>
           </div>
         </div>
+
+        <!-- RIGHT-side ghost outline shown only at step 0. Anchors the
+             right half so the slide reads as "two columns, second one
+             pending" rather than "card pushed left of an empty canvas".
+             Outline alone — no text — so it never spoils the reveal. -->
+        <div class="col-risky-ghost" aria-hidden="true"></div>
 
         <!-- RIGHT · fast, risky, AI-assisted greenfield -->
         <div class="lg-col col-risky">
@@ -2502,7 +2508,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   // '[data-deck-active]' to it — the comma makes the trailing attribute
   // selector bind to only the LAST item, so '[data-step-max]' starts matching
   // inactive stepped slides and silently swallows keypresses on other slides.
-  const AMPLIFIER_MAX_STEP = 2;
+  const AMPLIFIER_MAX_STEP = 1;
   const ADVANCE_KEYS = new Set(['ArrowRight', 'PageDown', 'Space', ' ', 'Enter']);
   const BACK_KEYS    = new Set(['ArrowLeft',  'PageUp']);
 
