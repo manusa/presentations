@@ -107,36 +107,108 @@ async function expandStepClones(page) {
 }
 
 /**
- * Walk a deck slide-by-slide via ArrowRight, calling `onSlide(i, total)`
- * after each slide's animations have settled.
+ * Walk a deck via ArrowRight, capturing every (section, step) pair.
  *
+ * Slides with `data-step-max="N"` expand to N+1 captures (steps 0..N) because
+ * the in-deck step-reveal handler intercepts ArrowRight until the slide is
+ * fully stepped, then passes it through to advance to the next section.
  * `onSlide` is awaited; throw from it to abort the walk.
  *
- * Returns the total number of slides captured.
+ * `onSlide(descriptor, totalPairs, captureIndex)` where descriptor is
+ *   { sectionIdx: 1-indexed section position,
+ *     step:       0-indexed step within section,
+ *     maxStep:    section's data-step-max (0 for non-stepped),
+ *     totalSections: raw <section> count (for filename padding) }.
+ *
+ * Returns the total number of (section, step) pairs captured.
  */
 async function walkDeck(page, onSlide) {
-  const total = await page.evaluate(() => {
+  const sequence = await page.evaluate(() => {
     const stage = document.querySelector('deck-stage');
-    if (!stage) return 0;
-    return stage.querySelectorAll(':scope > section').length;
+    if (!stage) return [];
+    const sections = Array.from(stage.querySelectorAll(':scope > section'));
+    const totalSections = sections.length;
+    const out = [];
+    sections.forEach((s, idx) => {
+      const max = parseInt(s.getAttribute('data-step-max') || '0', 10);
+      const maxStep = Number.isFinite(max) && max > 0 ? max : 0;
+      for (let step = 0; step <= maxStep; step++) {
+        out.push({sectionIdx: idx + 1, step, maxStep, totalSections});
+      }
+    });
+    return out;
   });
-  if (total === 0) {
+
+  if (sequence.length === 0) {
     throw new Error('No <deck-stage> > <section> elements found at this URL.');
   }
 
   await applyExportHidden(page);
 
-  for (let i = 1; i <= total; i++) {
-    if (i > 1) {
+  for (let i = 0; i < sequence.length; i++) {
+    if (i > 0) {
       await page.keyboard.press('ArrowRight');
       // Give the deck a tick to process the keypress before we look at animations.
       await page.waitForTimeout(100);
     }
     await settleAnimations(page);
-    await onSlide(i, total);
+    await onSlide(sequence[i], sequence.length, i + 1);
   }
 
-  return total;
+  return sequence.length;
 }
 
-module.exports = {settleAnimations, applyExportHidden, expandStepClones, walkDeck};
+/**
+ * Filename for a (section, step) capture descriptor produced by `walkDeck`.
+ * Stepped sections get `slide-NN-step-K.png`; non-stepped get `slide-NN.png`.
+ * Pad width is derived from `totalSections`, not the inflated pair count.
+ */
+function slideFilename({sectionIdx, step, maxStep, totalSections}) {
+  const pad = Math.max(2, String(totalSections).length);
+  const idx = String(sectionIdx).padStart(pad, '0');
+  return maxStep > 0 ? `slide-${idx}-step-${step}.png` : `slide-${idx}.png`;
+}
+
+/**
+ * Jump to (sectionIdx, step) on an already-loaded deck. sectionIdx is
+ * 1-indexed (matching the documented `#N` hash entry point). Uses the
+ * public deck-stage.goTo() API for the section jump, then K ArrowRight
+ * presses to advance the step. Settles between each press.
+ *
+ * Throws with a clear message if sectionIdx or step are out of range.
+ */
+async function goToStep(page, sectionIdx, step) {
+  const meta = await page.evaluate((n) => {
+    const stage = document.querySelector('deck-stage');
+    if (!stage) return {error: 'no-stage'};
+    const sections = Array.from(stage.querySelectorAll(':scope > section'));
+    if (n < 1 || n > sections.length) {
+      return {error: 'section-out-of-range', total: sections.length};
+    }
+    const s = sections[n - 1];
+    const max = parseInt(s.getAttribute('data-step-max') || '0', 10);
+    return {maxStep: Number.isFinite(max) && max > 0 ? max : 0, total: sections.length};
+  }, sectionIdx);
+  if (meta.error === 'no-stage') {
+    throw new Error('No <deck-stage> element found at this URL.');
+  }
+  if (meta.error === 'section-out-of-range') {
+    throw new Error(`--slide ${sectionIdx} is out of range (deck has ${meta.total} sections).`);
+  }
+  if (step < 0 || step > meta.maxStep) {
+    throw new Error(
+      `--step ${step} is out of range for section ${sectionIdx} (data-step-max=${meta.maxStep}).`
+    );
+  }
+  await page.evaluate((n) => {
+    document.querySelector('deck-stage').goTo(n - 1);
+  }, sectionIdx);
+  await settleAnimations(page);
+  for (let s = 0; s < step; s++) {
+    await page.keyboard.press('ArrowRight');
+    await page.waitForTimeout(100);
+  }
+  await settleAnimations(page);
+}
+
+module.exports = {settleAnimations, applyExportHidden, expandStepClones, walkDeck, slideFilename, goToStep};

@@ -2,16 +2,18 @@
 /* eslint-disable no-console */
 const path = require('path');
 const fs = require('fs');
-const {walkDeck} = require('./lib/deck');
+const {walkDeck, slideFilename} = require('./lib/deck');
 
 const USAGE = `Usage: npm run snapshot:baseline -- <deck-url> <deck-name>
 
   <deck-url>   URL of a deck (single page containing <deck-stage> with <section> children)
   <deck-name>  Short slug used to namespace this deck's snapshots
 
-Writes one PNG per slide to snapshots/<deck-name>/baseline/slide-NN.png and OVERWRITES
-any existing baseline. The snapshots/ directory is gitignored — baselines are
-session-scoped reference points, not committed artifacts.
+Writes one PNG per (section, step) to snapshots/<deck-name>/baseline/:
+  slide-NN.png            for non-stepped sections
+  slide-NN-step-K.png     for sections with data-step-max (one PNG per step state)
+OVERWRITES any existing baseline. The snapshots/ directory is gitignored —
+baselines are session-scoped reference points, not committed artifacts.
 
 When to run:
   - Right before starting a change, to capture the "before" state for snapshot:diff
@@ -63,24 +65,14 @@ try {
     const page = await context.newPage();
     await page.goto(url, {waitUntil: 'networkidle', timeout: 30_000});
 
-    const total = await page.evaluate(() => {
-      const stage = document.querySelector('deck-stage');
-      return stage ? stage.querySelectorAll(':scope > section').length : 0;
-    });
-    if (total === 0) {
-      console.error('No <deck-stage> > <section> elements found at this URL.');
-      process.exit(1);
-    }
-    const padLen = Math.max(2, String(total).length);
-
-    console.log(`Capturing baseline for "${deckName}" — ${total} slides`);
-    await walkDeck(page, async (i, n) => {
-      const out = path.join(baselineDir, `slide-${String(i).padStart(padLen, '0')}.png`);
+    console.log(`Capturing baseline for "${deckName}"`);
+    const total = await walkDeck(page, async (slide, totalPairs, captureIndex) => {
+      const out = path.join(baselineDir, slideFilename(slide));
       await page.screenshot({path: out, fullPage: false});
-      console.log(`  [${i}/${n}] ${out}`);
+      console.log(`  [${captureIndex}/${totalPairs}] ${out}`);
     });
 
-    console.log(`✓ baseline written to ${baselineDir}`);
+    console.log(`✓ baseline written to ${baselineDir} (${total} captures)`);
     console.log(`  now make your changes, then: npm run snapshot:diff -- ${url} ${deckName}`);
   } finally {
     await browser.close();
