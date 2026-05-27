@@ -94,16 +94,17 @@ The 9 logo slot ids currently in use: `logo-mcp-server`, `logo-podman-mcp` (both
 
 ## How it deploys
 
-Two deploy paths, both pick up this directory automatically:
+Three paths pick this directory up automatically:
 
-| Channel | Workflow | Output URL |
+| Channel | Trigger | Output URL |
 |---|---|---|
-| GitHub Pages | `.github/workflows/publish-gh-pages.yml` | `https://presentations.marcnuri.com/presentations/2026-devtalks-romania/` |
-| NPM package | `.github/workflows/publish-npm.yml` | `npx mn-presentations` → local express server over `public/` → `http://localhost:8000/presentations/2026-devtalks-romania/` |
+| GitHub Pages (production) | push to `main` (`.github/workflows/publish-gh-pages.yml`) | `https://presentations.marcnuri.com/presentations/2026-devtalks-romania/` |
+| NPM package | push to `main` with a `package.json` version bump (`.github/workflows/publish-npm.yml`) | `npx mn-presentations` → local express server over `public/` → `http://localhost:8000/presentations/2026-devtalks-romania/` |
+| Cloudflare Pages (preview) | push to any non-main branch / PR | `https://<commit-sha>.presentations-a7o.pages.dev/presentations/2026-devtalks-romania/` |
 
-Each push to `main` re-publishes both channels. The NPM publish requires a version bump in `package.json` to succeed (the GH Pages publish does not).
+Each push to `main` re-publishes the first two. The NPM publish requires a version bump in `package.json` to succeed (the GH Pages publish does not). The Cloudflare preview runs on every PR push and posts a sticky comment with the URL. Preview URLs are gated by Cloudflare Access (GitHub OAuth) so they're visible only to the repo owner — see repo-level `AGENTS.md` "Deploy → Preview access control" for the full setup. Production at `marcnuri.com` is unaffected by Cloudflare and remains publicly served.
 
-A link from the landing page (`src/components/landing-page/index.jsx`) is optional and can be added later.
+A link from the landing page (`src/components/landing-page/index.jsx`) is optional and can be added later. This deck's entry in the Cloudflare preview landing (`static/index.html`) is sourced from `meta.json` in this directory — title and subtitle live there, regenerate with `npm run gen:landing` after any change.
 
 ---
 
