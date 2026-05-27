@@ -1,0 +1,464 @@
+/* ============================================================
+   .s-ci — Act 5 · Fabric8 CI: slow/flaky → fast/stable.
+   "From 40 minutes and flaky to under 15 and stable."
+
+   Single-state slide (no reveal). The shape is a two-card
+   split: the speed win on the left, the deeper insight on the
+   right (flaky tests were real bugs hiding under low CI
+   contention). Footer tag-line lands the management punchline.
+
+   Theme: light slide (cream paper). Both cards are dark navy
+   terminals so they read as sibling files in the same Act V
+   room — same idiom as .s-blackbox, .s-specs-vs-tests,
+   .s-feedback-ladder.
+   ============================================================ */
+
+.s-ci::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Body grid — header / stage / tagline
+   ============================================================ */
+.s-ci .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 1;
+  padding: 30px var(--pad-x) 24px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 22px;
+}
+
+/* === Header === */
+.s-ci .head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: 48px;
+}
+.s-ci .head .eyebrow {
+  grid-column: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: var(--accent-ink);
+  margin-bottom: 12px;
+}
+.s-ci .head .title {
+  grid-column: 1;
+  font-size: 60px;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+}
+.s-ci .head .title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-ci .head .sub {
+  grid-column: 2;
+  margin: 0 0 10px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--fg-dim);
+  text-align: right;
+}
+.s-ci .head .sub .t-warn { color: var(--accent-2-ink); font-weight: 600; }
+
+/* ============================================================
+   Stage — two equal columns: SPEED card · REAL BUGS card.
+   ============================================================ */
+.s-ci .stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 22px;
+  align-items: stretch;
+  min-height: 0;
+}
+
+/* ============================================================
+   Cards — shared dark-terminal envelope.
+   Same chrome as .s-blackbox / .s-feedback-ladder cards.
+   ============================================================ */
+.s-ci .card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #060D3A;
+  border: 1px solid rgba(10, 21, 84, 0.30);
+  box-shadow:
+    0 24px 60px rgba(10, 21, 84, 0.22),
+    0 4px 12px rgba(10, 21, 84, 0.10);
+}
+
+.s-ci .panel-bar.term {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: #8A93BC;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.s-ci .panel-bar.term .dot {
+  width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0;
+}
+.s-ci .panel-bar.term .dot.r { background: #FF5F57; }
+.s-ci .panel-bar.term .dot.y { background: #FEBC2E; }
+.s-ci .panel-bar.term .dot.g { background: #28C840; }
+.s-ci .panel-bar.term .path  { margin-left: 8px; color: #B4BAD8; font-weight: 500; }
+.s-ci .panel-bar.term .grow  { flex: 1 1 auto; }
+
+/* Status pills inside the panel bar. */
+.s-ci .status-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.10em;
+  text-transform: lowercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.s-ci .status-pill.st-stable {
+  color: #8FD79F;
+  background: rgba(40, 200, 64, 0.10);
+  border-color: rgba(143, 215, 159, 0.55);
+}
+.s-ci .status-pill.st-bug {
+  color: #F2C266;
+  background: rgba(254, 188, 46, 0.12);
+  border-color: rgba(242, 194, 102, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+}
+
+/* Micro-glossary one-liner under the panel bar. */
+.s-ci .micro-gloss {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #8A93BC;
+  padding: 7px 18px 5px;
+  background: rgba(255,255,255,0.015);
+  border-bottom: 1px dashed rgba(255,255,255,0.07);
+}
+
+/* ============================================================
+   LEFT — SPEED card.
+   Hero row (40m → 22m) on top, module breakdown below, then
+   a small footer caption naming the actual fix.
+   ============================================================ */
+.s-ci .card-speed .speed-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 22px 16px;
+  gap: 14px;
+  color: #C8CCE4;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Hero before → after row.
+   Asymmetric: BEFORE muted (opacity, not strikethrough — strikethrough
+   reads as a kerning artifact at 40 ft); AFTER big and bright. The
+   transformation is the visual, not the endpoints. */
+.s-ci .hero-row {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  align-items: center;
+  column-gap: 28px;
+  padding: 6px 6px 14px;
+  border-bottom: 1px dashed rgba(255,255,255,0.10);
+}
+.s-ci .hero-cell { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.s-ci .hero-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+.s-ci .hero-num .unit {
+  font-weight: 500;
+  margin-left: 2px;
+  color: inherit;
+  opacity: 0.85;
+}
+/* BEFORE: muted, smaller — a fact to acknowledge then leave. */
+.s-ci .hero-before .hero-num {
+  color: #8A93BC;
+  opacity: 0.65;
+  font-size: 64px;
+}
+.s-ci .hero-before .hero-num .unit { font-size: 30px; }
+/* AFTER: large, bright — the number the audience leaves with. */
+.s-ci .hero-after .hero-num {
+  color: #8FD79F;
+  font-size: 112px;
+}
+.s-ci .hero-after .hero-num .unit { font-size: 50px; }
+
+.s-ci .hero-cap {
+  font-size: 12px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #6F77A6;
+  text-align: center;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.s-ci .hero-cap .lbl { color: #8A93BC; font-weight: 600; }
+
+/* Arrow column: chunky wedge + an explicit -45% under it,
+   so the transformation is encoded redundantly (hue + size + label). */
+.s-ci .hero-arrow-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 14px;
+}
+.s-ci .hero-arrow {
+  font-size: 56px;
+  color: var(--orange-soft);
+  font-weight: 700;
+  line-height: 1;
+}
+.s-ci .hero-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  color: #8FD79F;
+  background: rgba(40, 200, 64, 0.10);
+  border: 1px solid rgba(143, 215, 159, 0.45);
+  border-radius: 999px;
+  padding: 3px 14px;
+  line-height: 1;
+}
+
+/* Module rows. */
+.s-ci .modules {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 0 4px;
+}
+.s-ci .modules .mod-head {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 120px 80px;
+  align-items: center;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6F77A6;
+  padding: 0 6px 6px;
+  border-bottom: 1px dashed rgba(255,255,255,0.07);
+}
+.s-ci .mod-row {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 120px 80px;
+  align-items: center;
+  padding: 9px 6px;
+  font-size: 17px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.s-ci .mod-row:last-child { border-bottom: 0; }
+.s-ci .mod-name { color: #C8CCE4; font-weight: 500; }
+.s-ci .mod-times { color: #8A93BC; text-align: right; padding-right: 8px; }
+.s-ci .mod-times .before { color: #FF8794; }
+.s-ci .mod-times .arrow  { color: var(--orange-soft); margin: 0 6px; }
+.s-ci .mod-times .after  { color: #8FD79F; font-weight: 600; }
+.s-ci .mod-delta {
+  text-align: right;
+  font-weight: 700;
+  font-size: 17px;
+  color: #8FD79F;
+  letter-spacing: 0.02em;
+}
+
+/* Speed-card footer caption — names the actual fix. */
+.s-ci .speed-foot {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(255,255,255,0.10);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #8A93BC;
+  white-space: normal;
+}
+.s-ci .speed-foot .k { color: var(--orange-soft); }
+
+/* ============================================================
+   RIGHT — REAL BUGS card.
+   Two bug entries + a counter strip pinned to the bottom.
+   ============================================================ */
+.s-ci .card-bugs .bugs-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px 14px;
+  gap: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  color: #C8CCE4;
+}
+
+/* Hero bug — the "named villain". Same gravity as the 40m→22m hero
+   on the left card. Pulls #7741 out as the memorable line. */
+.s-ci .bug-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 4px 14px;
+  border-bottom: 1px dashed rgba(255,255,255,0.10);
+}
+.s-ci .bug-hero-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.s-ci .bug-hero-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--orange-soft);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.s-ci .bug-hero-tag {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,135,148,0.55);
+  color: #FF8794;
+  background: rgba(240,42,90,0.08);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.s-ci .bug-hero-line {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+.s-ci .bug-hero-line .ident { color: var(--cyan); font-family: 'JetBrains Mono', monospace; font-size: 24px; }
+.s-ci .bug-hero-line em { font-style: normal; color: var(--orange-soft); }
+.s-ci .bug-hero-cause {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #B4BAD8;
+}
+.s-ci .bug-hero-cause .ident { color: var(--cyan); }
+
+/* Secondary bug — compressed, single line. */
+.s-ci .bug-also {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 4px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #B4BAD8;
+}
+.s-ci .bug-also .also-id { color: var(--orange-soft); font-weight: 700; flex-shrink: 0; }
+.s-ci .bug-also .ident   { color: var(--cyan); }
+
+/* Counter strip pinned at the bottom of the bug card. */
+.s-ci .bugs-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 14px 4px 2px;
+  border-top: 1px dashed rgba(255,255,255,0.10);
+}
+.s-ci .bugs-foot .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--orange-soft);
+  letter-spacing: -0.02em;
+}
+.s-ci .bugs-foot .lbl {
+  font-size: 15px;
+  line-height: 1.35;
+  color: #8A93BC;
+}
+.s-ci .bugs-foot .lbl .t-warn { color: #F2C266; font-weight: 600; }
+
+/* ============================================================
+   Tag-line at the bottom — the management punchline.
+   This is the sentence the audience should still be looking at
+   when the speaker says it. Promoted to display weight, lifted
+   clear of the chrome-bottom rail so it does not compete with
+   the footer brand mark.
+   ============================================================ */
+.s-ci .tag-line {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 22px;
+  padding: 4px 0 0;
+}
+.s-ci .tag-line .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: var(--accent-ink);
+  padding: 7px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  white-space: nowrap;
+  align-self: start;
+  margin-top: 4px;
+}
+.s-ci .tag-line .quote {
+  font-family: 'Inter', sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1.18;
+  letter-spacing: -0.018em;
+}
+.s-ci .tag-line .quote em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-ci .tag-line .quote .sub {
+  display: block;
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--fg-dim);
+  letter-spacing: 0;
+}

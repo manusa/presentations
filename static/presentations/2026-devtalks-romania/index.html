@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="styles/s-specs-vs-tests.css" />
 <link rel="stylesheet" href="styles/s-blackbox.css" />
 <link rel="stylesheet" href="styles/s-feedback-ladder.css" />
+<link rel="stylesheet" href="styles/s-ci.css" />
 </head>
 <body>
 
@@ -2673,7 +2674,169 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 15 — ACT VI DIVIDER (Maven reactor)
+       SLIDE 22 — ACT V · FABRIC8 CI: SLOW/FLAKY → FAST/STABLE
+
+       Single-state slide. Two cards in a split-screen:
+         LEFT  — speed win: 40m → 22m Windows build (hero row)
+                 plus per-module before/after timings from
+                 issue #7648 (forkCount=1C + reuseForks + cache).
+         RIGHT — the deeper insight: flakes turned out to be real
+                 bugs hiding under low CI contention. Two
+                 representative examples (#7700 race in the exec
+                 listener, #7741 doomed LIST per exec/attach/getLog).
+       Footer tag-line lands the management punchline:
+       tech debt is not optional polish — it caps throughput.
+
+       Sibling visual idiom: dark navy terminal cards on a cream
+       light slide, matching .s-blackbox / .s-specs-vs-tests /
+       .s-feedback-ladder.
+       ============================================================ -->
+  <section class="s-ci light" data-label="22 Act 5 — Fabric8 CI: slow/flaky → fast/stable">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · devtalks-act-05-codebase-feedback/CIPipeline.md</span>
+      <span class="spacer"></span>
+      <span class="pill">act 05 · ci · 22</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">// act 05 · the pipeline is feedback too</div>
+        <h2 class="title">From <em>40 minutes and flaky</em> to <em>22 and stable</em>.</h2>
+        <p class="sub">
+          // pipeline work. not flashy.<br>
+          <span class="t-warn">everything else got cheaper.</span>
+        </p>
+      </header>
+
+      <div class="stage">
+        <!-- ============================================================
+             LEFT — SPEED card.
+             Hero before→after on top. Per-module breakdown from
+             issue #7648 below. Footer caption names the fix.
+             ============================================================ -->
+        <article class="card card-speed">
+          <header class="panel-bar term">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">fabric8io/kubernetes-client · windows-build</span>
+            <span class="grow"></span>
+            <span class="status-pill st-stable">✓ stable</span>
+          </header>
+          <div class="micro-gloss">// wall-clock per pipeline run · same matrix, same hardware</div>
+          <div class="speed-body">
+            <div class="hero-row">
+              <div class="hero-cell hero-before">
+                <div class="hero-num">40<span class="unit">m</span></div>
+                <div class="hero-cap"><span class="lbl">before</span> · windows · run #22430057522</div>
+              </div>
+              <div class="hero-arrow-col">
+                <div class="hero-arrow">→</div>
+                <div class="hero-pct">−45%</div>
+              </div>
+              <div class="hero-cell hero-after">
+                <div class="hero-num">22<span class="unit">m</span></div>
+                <div class="hero-cap"><span class="lbl">after</span> · same workflow, current main</div>
+              </div>
+            </div>
+
+            <div class="modules">
+              <div class="mod-head">
+                <span>module · surefire test phase</span>
+                <span>before → after</span>
+                <span>cut</span>
+              </div>
+              <div class="mod-row">
+                <span class="mod-name">kubernetes-tests</span>
+                <span class="mod-times"><span class="before">266s</span><span class="arrow">→</span><span class="after">109s</span></span>
+                <span class="mod-delta">-59%</span>
+              </div>
+              <div class="mod-row">
+                <span class="mod-name">kubernetes-client-api</span>
+                <span class="mod-times"><span class="before">84s</span><span class="arrow">→</span><span class="after">31s</span></span>
+                <span class="mod-delta">-62%</span>
+              </div>
+              <div class="mod-row">
+                <span class="mod-name">kubernetes-client</span>
+                <span class="mod-times"><span class="before">153s</span><span class="arrow">→</span><span class="after">43s</span></span>
+                <span class="mod-delta">-72%</span>
+              </div>
+            </div>
+
+            <div class="speed-foot">
+              // fix: <span class="k">forkCount=1C</span> · <span class="k">reuseForks=true</span> · <span class="k">cache: 'maven'</span> · opt-in JaCoCo
+            </div>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             RIGHT — REAL BUGS card.
+             Two representative flakes-as-real-bugs (#7700, #7741).
+             Counter strip at the bottom anchors the larger pattern.
+             ============================================================ -->
+        <article class="card card-bugs">
+          <header class="panel-bar term">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">github · issues?label=flaky+state:closed</span>
+            <span class="grow"></span>
+            <span class="status-pill st-bug">⚠ real bugs</span>
+          </header>
+          <div class="micro-gloss">// what stopped hiding once the suite ran under contention</div>
+          <div class="bugs-body">
+            <!-- HERO BUG — #7741, the named villain. Same gravity as the
+                 40m → 22m hero on the left. -->
+            <div class="bug-hero">
+              <div class="bug-hero-head">
+                <span class="bug-hero-id">#7741</span>
+                <span class="bug-hero-tag">flake → silent bug</span>
+              </div>
+              <div class="bug-hero-line">
+                Every <em>exec / attach / getLog</em> did a <em>doomed LIST</em> round-trip.
+              </div>
+              <p class="bug-hero-cause">
+                A 2024 default flipped <span class="ident">DEFAULT_POD_READY_WAIT_TIMEOUT_MS</span>
+                to 0. The LIST timed out instantly before the real call ran.
+                Two years in production, surfaced as flakes under CI contention.
+              </p>
+            </div>
+
+            <!-- SECONDARY BUG — compressed, one line. -->
+            <div class="bug-also">
+              <span class="also-id">#7700</span>
+              <span>
+                and: <span class="ident">ExecWebSocketListener.onError</span> dropped exit codes
+                when peer-close beat the queued status task.
+              </span>
+            </div>
+
+            <div class="bugs-foot">
+              <span class="num">31</span>
+              <span class="lbl">
+                flaky issues closed in 8 weeks ·<br>
+                <span class="t-warn">5+ turned out to be real production bugs</span>
+              </span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="tag-line">
+        <span class="lbl">// takeaway</span>
+        <div class="quote">
+          Tech debt is <em>not optional polish.</em>
+          <span class="sub">// in an AI-assisted workflow it caps throughput, every week.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 23 — ACT VI DIVIDER (Maven reactor)
        ============================================================ -->
   <section class="s-section" data-label="Act VI — Close">
     <div class="chrome-top">
