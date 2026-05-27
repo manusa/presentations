@@ -2496,7 +2496,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
         </h2>
         <p class="sub">
           <span class="s-0">// the loop you remember from 2010 is now<br>the loop your <span class="t-warn">agent is trapped in</span></span>
-          <span class="s-1">// measured on my projects:<br><span class="t-warn">each tier is about 10× slower</span></span>
+          <span class="s-1">// measured on my projects:<br><span class="t-warn">every lower tier buys confidence at a cost</span></span>
         </p>
       </header>
 
@@ -2587,7 +2587,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
             <div class="tooling">
               <div class="anno"><span class="t-anno">@EnableKubernetesMockClient</span>(https = false)</div>
               <div class="gloss">Fabric8 · <em>KubernetesMockServer</em> · <span class="src">PriorityClassTest</span></div>
-              <div class="cadence">// run on <em>every save</em> · majority of your suite</div>
+              <div class="cadence">// run on <em>every save</em> · default inner loop</div>
             </div>
             <div class="badge">
               <div class="num">~1</div>
@@ -2682,7 +2682,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
             <div class="tooling">
               <div class="anno"><span class="t-kw">new</span> <span class="t-type">KubernetesClientBuilder</span>().<span class="t-fn">build</span>()</div>
               <div class="gloss">your real cluster · <span class="src">kubectl apply</span> manifests · smoke tests</div>
-              <div class="cadence">// run <em>pre-release</em> · a handful</div>
+              <div class="cadence">// run <em>before release</em> · a handful</div>
             </div>
             <div class="badge">
               <div class="num">~10</div>

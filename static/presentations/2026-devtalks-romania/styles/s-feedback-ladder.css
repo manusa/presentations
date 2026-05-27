@@ -176,9 +176,9 @@
 }
 
 .s-feedback-ladder .legacy-log {
-  padding: 18px 22px 20px;
+  padding: 22px 28px 24px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 17px;
+  font-size: 21px;
   line-height: 1.55;
   color: #C8CCE4;
   white-space: nowrap;
@@ -357,19 +357,19 @@
   color: #B4BAD8;
 }
 .s-feedback-ladder .rung .tier .arrow {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1;
   font-weight: 700;
 }
 .s-feedback-ladder .rung .tier .label {
-  font-size: 18px;
+  font-size: 21px;
   letter-spacing: 0.06em;
   text-transform: lowercase;
   font-weight: 600;
   color: #C8CCE4;
 }
 .s-feedback-ladder .rung .tier .scale {
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #8A93BC;
@@ -421,7 +421,7 @@
 }
 .s-feedback-ladder .rung .tooling .anno {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 600;
   letter-spacing: -0.005em;
   color: #C8CCE4;
@@ -435,7 +435,7 @@
 .s-feedback-ladder .rung .tooling .anno .t-fn   { color: var(--cyan); }
 .s-feedback-ladder .rung .tooling .gloss {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
+  font-size: 16px;
   color: #8A93BC;
   letter-spacing: 0.02em;
   white-space: nowrap;
@@ -455,10 +455,10 @@
    of these" tells the audience how to allocate across the ladder. */
 .s-feedback-ladder .rung .tooling .cadence {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+  font-size: 16px;
   letter-spacing: 0.04em;
   color: var(--orange-soft);
-  margin-top: 1px;
+  margin-top: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -478,14 +478,14 @@
   font-family: 'JetBrains Mono', monospace;
 }
 .s-feedback-ladder .rung .badge .num {
-  font-size: 30px;
+  font-size: 34px;
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1;
   color: #FFF;
 }
 .s-feedback-ladder .rung .badge .unit {
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 600;
