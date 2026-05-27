@@ -2676,22 +2676,28 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   <!-- ============================================================
        SLIDE 22 — ACT V · FABRIC8 CI: SLOW/FLAKY → FAST/STABLE
 
-       Single-state slide. Two cards in a split-screen:
-         LEFT  — speed win: 40m → 22m Windows build (hero row)
-                 plus per-module before/after timings from
-                 issue #7648 (forkCount=1C + reuseForks + cache).
-         RIGHT — the deeper insight: flakes turned out to be real
-                 bugs hiding under low CI contention. Two
-                 representative examples (#7700 race in the exec
-                 listener, #7741 doomed LIST per exec/attach/getLog).
-       Footer tag-line lands the management punchline:
-       tech debt is not optional polish — it caps throughput.
+       Thesis-first. The title carries the argument; the slide
+       is the case study that proves it.
 
-       Sibling visual idiom: dark navy terminal cards on a cream
-       light slide, matching .s-blackbox / .s-specs-vs-tests /
-       .s-feedback-ladder.
+       Three-step reveal:
+         step 0  speed evidence:   40m → 22m hero + per-module
+                                   cuts from #7648. Bottom narrates
+                                   the actual fix.
+         step 1  money beat:       a "CI spend per merged PR"
+                                   math panel reveals inside the
+                                   speed card: ~½ minutes × ~½
+                                   per-minute cost = ~¼ the spend.
+         step 2  bonus win:        right card reveals — flakes
+                                   that turned out to be real
+                                   production bugs (#7741 hero,
+                                   #7700 secondary, 31 counter).
+
+       Eyebrow bridges from slide 21 (feedback ladder ended with
+       "the faster the loop, the more attempts the agent can
+       afford"): the pipeline is the loop you can't fit in a
+       unit test — the slowest rung of the same ladder.
        ============================================================ -->
-  <section class="s-ci light" data-label="22 Act 5 — Fabric8 CI: slow/flaky → fast/stable">
+  <section class="s-ci light" data-label="22 Act 5 — Fabric8 CI: tech debt caps throughput" data-step-max="3">
     <div class="chrome-top">
       <span class="dot"></span>
       <span>~/dev/devtalks-2026 · devtalks-act-05-codebase-feedback/CIPipeline.md</span>
@@ -2701,19 +2707,28 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
 
     <div class="body">
       <header class="head">
-        <div class="eyebrow">// act 05 · the pipeline is feedback too</div>
-        <h2 class="title">From <em>40 minutes and flaky</em> to <em>22 and stable</em>.</h2>
+        <div class="eyebrow">// act 05 · the loop you can't fit in a unit test</div>
+        <h2 class="title">Tech debt is <em>not optional polish.</em> It <em>caps throughput.</em></h2>
         <p class="sub">
-          // pipeline work. not flashy.<br>
-          <span class="t-warn">everything else got cheaper.</span>
+          // case in point:<br>
+          <em>40 minutes of Fabric8 CI.</em>
         </p>
       </header>
 
       <div class="stage">
         <!-- ============================================================
-             LEFT — SPEED card.
-             Hero before→after on top. Per-module breakdown from
-             issue #7648 below. Footer caption names the fix.
+             STEP 0 INTRO — case-study setup. Hidden at step 1+. Lives
+             over the empty stage so the slide doesn't look unfinished
+             while the speaker introduces the thesis.
+             ============================================================ -->
+        <div class="intro">
+          <div class="line">4 issues. 4 PRs. <em>8 weeks.</em></div>
+          <div class="meta">three wins:&nbsp; <span class="acc">⏱ timer</span> &nbsp;·&nbsp; <span class="acc">$ billing</span> &nbsp;·&nbsp; <span class="acc">⚠ hidden bugs</span></div>
+        </div>
+
+        <!-- ============================================================
+             SPEED card — DARK terminal. Revealed at step 1, shifts left
+             at step 2, slides off at step 3.
              ============================================================ -->
         <article class="card card-speed">
           <header class="panel-bar term">
@@ -2725,25 +2740,27 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
           <div class="micro-gloss">// wall-clock per pipeline run · same matrix, same hardware</div>
           <div class="speed-body">
             <div class="hero-row">
-              <div class="hero-cell hero-before">
+              <div class="hero-before">
                 <div class="hero-num">40<span class="unit">m</span></div>
-                <div class="hero-cap"><span class="lbl">before</span> · windows · run #22430057522</div>
               </div>
               <div class="hero-arrow-col">
                 <div class="hero-arrow">→</div>
                 <div class="hero-pct">−45%</div>
               </div>
-              <div class="hero-cell hero-after">
+              <div class="hero-after">
                 <div class="hero-num">22<span class="unit">m</span></div>
-                <div class="hero-cap"><span class="lbl">after</span> · same workflow, current main</div>
               </div>
+            </div>
+            <div class="hero-byline">
+              <span class="lbl">windows build</span>
+              <span class="dim"> · was 40m (run #22430057522) · now ~22m (current main)</span>
             </div>
 
             <div class="modules">
               <div class="mod-head">
                 <span>module · surefire test phase</span>
                 <span>before → after</span>
-                <span>cut</span>
+                <span class="col-cut">cut</span>
               </div>
               <div class="mod-row">
                 <span class="mod-name">kubernetes-tests</span>
@@ -2761,69 +2778,178 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
                 <span class="mod-delta">-72%</span>
               </div>
             </div>
+          </div>
+        </article>
 
-            <div class="speed-foot">
-              // fix: <span class="k">forkCount=1C</span> · <span class="k">reuseForks=true</span> · <span class="k">cache: 'maven'</span> · opt-in JaCoCo
+        <!-- ============================================================
+             COST card — LIGHT GitHub UI. Revealed at step 2.
+             Real Actions runner pricing from docs.github.com.
+             ============================================================ -->
+        <article class="card card-cost">
+          <header class="panel-bar gh">
+            <span class="gh-icon"><i class="fa-brands fa-github"></i></span>
+            <span class="repo">docs.github.com</span>
+            <span class="sep">·</span>
+            <span class="path">actions / billing / per-minute rates</span>
+            <span class="grow"></span>
+            <span class="gh-pill docs">Docs</span>
+          </header>
+          <div class="cost-body">
+            <h3 class="cost-title">Actions runner pricing</h3>
+            <p class="cost-sub">
+              Per-minute rate (USD) by runner SKU. Fabric8 moved two job
+              groups to cheaper SKUs in #7798 and #7814.
+            </p>
+
+            <div class="price-table">
+              <div class="price-row head">
+                <span>Operating system</span>
+                <span>Billing SKU</span>
+                <span style="text-align:right">$ / min</span>
+              </div>
+              <div class="price-row hot">
+                <span class="os">Linux 2-core (arm64)</span>
+                <span class="sku">actions_linux_arm</span>
+                <span class="rate">$0.005</span>
+              </div>
+              <div class="price-row was">
+                <span class="os">Linux 2-core (x64)</span>
+                <span class="sku">actions_linux</span>
+                <span class="rate">$0.006</span>
+              </div>
+              <div class="price-row was">
+                <span class="os">macOS 3- / 4-core</span>
+                <span class="sku">actions_macos</span>
+                <span class="rate">$0.062</span>
+              </div>
+            </div>
+
+            <div class="cost-moves">
+              <div class="move">
+                <span class="arrow">→</span>
+                <span class="what">
+                  <span class="ident">generate-model</span> + <span class="ident">javadocs</span>
+                  moved <em>macOS → ARM64</em>
+                </span>
+                <span class="save">~12× cheaper / min</span>
+              </div>
+              <div class="move">
+                <span class="arrow">→</span>
+                <span class="what">
+                  Linux build moved <em>x64 → ARM64</em>
+                </span>
+                <span class="save">~17% cheaper / min</span>
+              </div>
+            </div>
+
+            <div class="cost-foot">
+              Compound with the <em>wall-clock cut in half</em>.<br>
+              <span style="color:#59636E;font-weight:500">Multiply by every PR, every contributor. Real money.</span>
             </div>
           </div>
         </article>
 
         <!-- ============================================================
-             RIGHT — REAL BUGS card.
-             Two representative flakes-as-real-bugs (#7700, #7741).
-             Counter strip at the bottom anchors the larger pattern.
+             BUGS card — LIGHT GitHub UI (issues list). Revealed at
+             step 3, full-width, after speed + cost slide off.
              ============================================================ -->
         <article class="card card-bugs">
-          <header class="panel-bar term">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <span class="path">github · issues?label=flaky+state:closed</span>
+          <header class="panel-bar gh">
+            <span class="gh-icon"><i class="fa-brands fa-github"></i></span>
+            <span class="repo">fabric8io / kubernetes-client</span>
+            <span class="sep">·</span>
+            <span class="path">issues?q=is:closed+label:flaky</span>
             <span class="grow"></span>
-            <span class="status-pill st-bug">⚠ real bugs</span>
+            <span class="gh-pill flaky">label: flaky</span>
           </header>
-          <div class="micro-gloss">// what stopped hiding once the suite ran under contention</div>
           <div class="bugs-body">
-            <!-- HERO BUG — #7741, the named villain. Same gravity as the
-                 40m → 22m hero on the left. -->
-            <div class="bug-hero">
-              <div class="bug-hero-head">
-                <span class="bug-hero-id">#7741</span>
-                <span class="bug-hero-tag">flake → silent bug</span>
-              </div>
-              <div class="bug-hero-line">
-                Every <em>exec / attach / getLog</em> did a <em>doomed LIST</em> round-trip.
-              </div>
-              <p class="bug-hero-cause">
-                A 2024 default flipped <span class="ident">DEFAULT_POD_READY_WAIT_TIMEOUT_MS</span>
-                to 0. The LIST timed out instantly before the real call ran.
-                Two years in production, surfaced as flakes under CI contention.
-              </p>
+            <div class="bugs-bar">
+              <span class="closed-num"><span class="glyph">✓</span> 31 closed</span>
+              <span class="sep">·</span>
+              <span>in the last 8 weeks · 89% of all-time</span>
+              <span class="grow"></span>
+              <span class="qry">is:closed label:flaky</span>
             </div>
 
-            <!-- SECONDARY BUG — compressed, one line. -->
-            <div class="bug-also">
-              <span class="also-id">#7700</span>
-              <span>
-                and: <span class="ident">ExecWebSocketListener.onError</span> dropped exit codes
-                when peer-close beat the queued status task.
-              </span>
+            <div class="issue-list">
+              <article class="issue">
+                <span class="glyph">✓</span>
+                <div class="body">
+                  <div class="title-row">
+                    <span class="title">Every <span class="ident">exec/attach/getLog</span> does a doomed LIST round-trip</span>
+                    <span class="num">#7741</span>
+                  </div>
+                  <div class="labels">
+                    <span class="lbl flaky">flaky</span>
+                    <span class="lbl realbug">production bug</span>
+                  </div>
+                  <p class="cause">
+                    <span class="ident">DEFAULT_POD_READY_WAIT_TIMEOUT_MS</span> default flipped to <em>0</em>
+                    in 2024. The LIST timed out instantly before the real call ran. Two years in production.
+                  </p>
+                </div>
+                <div class="right">closed<br>3 days ago<br>by manusa</div>
+              </article>
+
+              <article class="issue">
+                <span class="glyph">✓</span>
+                <div class="body">
+                  <div class="title-row">
+                    <span class="title"><span class="ident">ExecWebSocketListener.onError</span> drops exit code on peer-close race</span>
+                    <span class="num">#7700</span>
+                  </div>
+                  <div class="labels">
+                    <span class="lbl flaky">flaky</span>
+                    <span class="lbl realbug">production bug</span>
+                  </div>
+                  <p class="cause">
+                    Race in <span class="ident">SerialExecutor</span> shutdown. The queued
+                    <span class="ident">handleExitStatus</span> task was discarded before the parsed exit code surfaced.
+                  </p>
+                </div>
+                <div class="right">closed<br>5 days ago<br>by manusa</div>
+              </article>
+
+              <article class="issue">
+                <span class="glyph">✓</span>
+                <div class="body">
+                  <div class="title-row">
+                    <span class="title"><span class="ident">ExecListener.onClose / onFailure</span> lost on close-handshake race</span>
+                    <span class="num">#7779</span>
+                  </div>
+                  <div class="labels">
+                    <span class="lbl flaky">flaky</span>
+                    <span class="lbl realbug">production bug</span>
+                  </div>
+                  <p class="cause">
+                    Any transport that drops the close handshake under load left callers
+                    blocked on a latch <em>forever</em>.
+                  </p>
+                </div>
+                <div class="right">closed<br>1 day ago<br>by manusa</div>
+              </article>
             </div>
 
             <div class="bugs-foot">
-              <span class="num">31</span>
-              <span class="lbl">
-                flaky issues closed in 8 weeks ·<br>
-                <span class="t-warn">5+ turned out to be real production bugs</span>
-              </span>
+              <span class="num">5+</span>
+              <span>of the 31 closed flakes were <em>real production bugs</em>, hidden under low CI contention.</span>
             </div>
           </div>
         </article>
       </div>
 
       <div class="tag-line">
-        <span class="lbl">// takeaway</span>
-        <div class="quote">
-          Tech debt is <em>not optional polish.</em>
-          <span class="sub">// in an AI-assisted workflow it caps throughput, every week.</span>
+        <div class="quote-step quote-0">
+          When AI makes everything move fast, tech debt shows up as a <em>throughput cap.</em>
+        </div>
+        <div class="quote-step quote-1">
+          The Windows build used to be <em>40 minutes</em>. Now it is <em>22</em>.
+        </div>
+        <div class="quote-step quote-2">
+          Shorter runs <em>and</em> cheaper runners. <em>Compound across every PR.</em>
+        </div>
+        <div class="quote-step quote-3">
+          And the bonus: contention turned <em>flakes</em> into <em>real production bugs.</em>
         </div>
       </div>
     </div>
