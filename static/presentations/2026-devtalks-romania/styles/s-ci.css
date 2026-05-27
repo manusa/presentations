@@ -196,6 +196,31 @@
 }
 .s-ci .intro .meta .acc { color: var(--accent-2-ink); font-weight: 600; }
 
+/* "Delivery" line — who did the work + how easy the review was. */
+.s-ci .intro .delivery {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  padding: 6px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.30);
+}
+.s-ci .intro .delivery .who {
+  font-weight: 700;
+  color: var(--accent);
+}
+.s-ci .intro .delivery .who::before {
+  content: "⚙";
+  margin-right: 8px;
+  color: var(--accent-2-ink);
+}
+.s-ci .intro .delivery .how {
+  color: var(--fg-dim);
+}
+
 /* ============================================================
    SHARED panel-bar — used in two skins (.term dark, .gh light).
    ============================================================ */
@@ -214,7 +239,8 @@
 .s-ci .panel-bar.term {
   background: rgba(255,255,255,0.03);
   border-bottom: 1px solid rgba(255,255,255,0.08);
-  color: #B4BAD8;
+  color: #C8CCE4;
+  font-size: 18px;
 }
 .s-ci .panel-bar.term .dot {
   width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
@@ -277,10 +303,10 @@
 /* Micro-gloss strip (dark cards only). */
 .s-ci .micro-gloss {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.02em;
-  color: #B4BAD8;
-  padding: 9px 22px 7px;
+  color: #C8CCE4;
+  padding: 10px 22px 8px;
   background: rgba(255,255,255,0.02);
   border-bottom: 1px dashed rgba(255,255,255,0.07);
 }
@@ -386,14 +412,14 @@
 /* Single byline replaces the truncated per-cell captions. */
 .s-ci .hero-byline {
   text-align: center;
-  font-size: 15px;
-  letter-spacing: 0.06em;
-  color: #B4BAD8;
-  padding: 6px 0 10px;
-  border-bottom: 1px dashed rgba(255,255,255,0.10);
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  color: #C8CCE4;
+  padding: 8px 0 12px;
+  border-bottom: 1px dashed rgba(255,255,255,0.12);
 }
-.s-ci .hero-byline .lbl { color: #DDE1F0; font-weight: 600; }
-.s-ci .hero-byline .dim { color: #8A93BC; }
+.s-ci .hero-byline .lbl { color: #FFFFFF; font-weight: 700; }
+.s-ci .hero-byline .dim { color: #A5B0E6; }
 
 /* Modules table. */
 .s-ci .modules {
@@ -406,11 +432,11 @@
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
   align-items: baseline;
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #B4BAD8;
-  padding: 0 8px 8px;
+  color: #C8CCE4;
+  padding: 0 8px 10px;
   border-bottom: 1px dashed rgba(255,255,255,0.12);
   font-weight: 700;
   column-gap: 18px;
@@ -438,6 +464,38 @@
   color: #9DE6AE;
   letter-spacing: 0.02em;
   min-width: 70px;
+}
+
+/* Speed-card footer — "who delivered this" persistence chip. */
+.s-ci .card-speed .delivery-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 0 0;
+  border-top: 1px dashed rgba(255,255,255,0.10);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #B4BAD8;
+}
+.s-ci .card-speed .delivery-foot .badge {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange-soft);
+  background: rgba(241, 138, 62, 0.10);
+  border: 1px solid rgba(241, 138, 62, 0.45);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.s-ci .card-speed .delivery-foot .who {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+.s-ci .card-speed .delivery-foot .how {
+  color: #8A93BC;
 }
 
 /* ============================================================
@@ -481,10 +539,17 @@
 .s-ci .cost-hero-num {
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
-  font-size: 100px;
+  font-size: 84px;
   line-height: 0.9;
   color: #1A7F37;
   letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+.s-ci .cost-hero-num .pct {
+  font-size: 52px;
+  font-weight: 600;
+  margin-left: 2px;
+  opacity: 0.85;
 }
 .s-ci .cost-hero-cap { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .s-ci .cost-hero-lbl {
@@ -513,7 +578,7 @@
   color: #1F2328;
   line-height: 1.45;
 }
-.s-ci .cost-mult > span:first-child {
+.s-ci .cost-mult .op {
   font-family: 'JetBrains Mono', monospace;
   font-size: 28px;
   color: #0969DA;

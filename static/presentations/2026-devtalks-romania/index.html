@@ -2722,7 +2722,11 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
              while the speaker introduces the thesis.
              ============================================================ -->
         <div class="intro">
-          <div class="line"><em>4 epics.</em> 30+ flakes. dozens of PRs.</div>
+          <div class="line"><em>4 epics.</em> ~30 flakes. ~40 PRs.</div>
+          <div class="delivery">
+            <span class="who">async by an agent</span>
+            <span class="how">· I just reviewed the diff (CI faster, no tests removed)</span>
+          </div>
           <div class="meta">three wins:&nbsp; <span class="acc">⏱ faster &amp; stable</span> &nbsp;·&nbsp; <span class="acc">$ cheaper</span> &nbsp;·&nbsp; <span class="acc">⚠ hidden bugs found</span></div>
         </div>
 
@@ -2780,6 +2784,14 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
                 <span class="mod-delta">-72%</span>
               </div>
             </div>
+
+            <!-- Delivery footnote — persists past step 0 so the agent-
+                 did-the-work framing is visible on subsequent cards too. -->
+            <div class="delivery-foot">
+              <span class="badge">⚙ async</span>
+              <span class="who">PRs authored by an agent</span>
+              <span class="how"> · review: did CI get faster? did any tests get removed?</span>
+            </div>
           </div>
         </article>
 
@@ -2805,15 +2817,15 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
 
             <!-- Hero stat — the actual win. -->
             <div class="cost-hero">
-              <div class="cost-hero-num">~½</div>
+              <div class="cost-hero-num">−45<span class="pct">%</span></div>
               <div class="cost-hero-cap">
-                <div class="cost-hero-lbl">the billable minutes per PR</div>
-                <div class="cost-hero-sub">~40m → ~22m per Windows PR build · similar cuts across Linux matrix</div>
+                <div class="cost-hero-lbl">billable minutes per PR</div>
+                <div class="cost-hero-sub">40m → 22m on Windows · similar cuts across the Linux matrix</div>
               </div>
             </div>
 
             <div class="cost-mult">
-              <span>×</span>
+              <span class="op">×</span>
               <span><strong>every PR · every contributor · every retry that no longer happens</strong></span>
             </div>
 
@@ -2856,7 +2868,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
             <div class="bugs-bar">
               <span class="closed-num"><span class="glyph">✓</span> 31 closed</span>
               <span class="sep">·</span>
-              <span>in the last 8 weeks · 89% of all-time</span>
+              <span>flaky issues, closed in the last 8 weeks</span>
               <span class="grow"></span>
               <span class="qry">is:closed label:flaky</span>
             </div>
