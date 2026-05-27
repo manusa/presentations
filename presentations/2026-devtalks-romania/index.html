@@ -3010,97 +3010,12 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
 </script>
 
 <script>
-/* ============================================================
-   Manual step reveal for any slide that opts in via data-step-max.
-
-   Examples:
-     .s-amplifier — three states (image-only → cards → takeaway)
-     .s-about2-flip — two states (day_job face → after_hours face)
-
-   We intercept advance/back keys + clicks in capture phase. While the
-   active slide publishes data-step-max and the step is in range, we
-   bump the step ourselves and SWALLOW the event so deck-stage doesn't
-   navigate. Only once a slide is fully revealed (or fully unwound) does
-   navigation pass through.
-
-   The .s-amplifier slides authored before this generalisation didn't
-   carry data-step-max in markup, so we still stamp them here.
-   ============================================================ */
-(function() {
-  // After init, every stepped slide carries data-step-max — amplifier slides
-  // get it stamped below, the about slide ships with it in markup. That makes
-  // [data-step-max] the canonical "is stepped" selector. Don't build a list
-  // selector like '[data-step-max], .s-amplifier' and then concat
-  // '[data-deck-active]' to it — the comma makes the trailing attribute
-  // selector bind to only the LAST item, so '[data-step-max]' starts matching
-  // inactive stepped slides and silently swallows keypresses on other slides.
-  const AMPLIFIER_MAX_STEP = 1;
-  const ADVANCE_KEYS = new Set(['ArrowRight', 'PageDown', 'Space', ' ', 'Enter']);
-  const BACK_KEYS    = new Set(['ArrowLeft',  'PageUp']);
-
-  function maxStep(slide) {
-    return parseInt(slide.getAttribute('data-step-max') || '0', 10);
-  }
-
-  // Stamp data-step-max on amplifier slides (they predate the contract).
-  document.querySelectorAll('.s-amplifier').forEach((s) => {
-    if (!s.hasAttribute('data-step-max')) {
-      s.setAttribute('data-step-max', String(AMPLIFIER_MAX_STEP));
-    }
-  });
-  // Initialise data-step on every stepped slide once attributes are stamped.
-  document.querySelectorAll('[data-step-max]').forEach((s) => {
-    if (!s.hasAttribute('data-step')) s.setAttribute('data-step', '0');
-  });
-
-  // Reset step on slide enter so re-entering replays cleanly.
-  document.addEventListener('slidechange', (e) => {
-    const slide = e.detail && e.detail.slide;
-    if (slide && slide.matches && slide.matches('[data-step-max]')) {
-      slide.setAttribute('data-step', '0');
-    }
-    const prev = e.detail && e.detail.previousSlide;
-    if (prev && prev.matches && prev.matches('[data-step-max]')) {
-      prev.setAttribute('data-step', '0');
-    }
-  });
-
-  function activeStepped() {
-    return document.querySelector('[data-step-max][data-deck-active]');
-  }
-
-  function tryAdvance(slide) {
-    const cur = parseInt(slide.getAttribute('data-step') || '0', 10);
-    if (cur < maxStep(slide)) {
-      slide.setAttribute('data-step', String(cur + 1));
-      return true;
-    }
-    return false;
-  }
-
-  function tryRetreat(slide) {
-    const cur = parseInt(slide.getAttribute('data-step') || '0', 10);
-    if (cur > 0) {
-      slide.setAttribute('data-step', String(cur - 1));
-      return true;
-    }
-    return false;
-  }
-
-  window.addEventListener('keydown', (ev) => {
-    if (ev.defaultPrevented) return;
-    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
-    const slide = activeStepped();
-    if (!slide) return;
-
-    if (ADVANCE_KEYS.has(ev.key)) {
-      if (tryAdvance(slide)) { ev.preventDefault(); ev.stopImmediatePropagation(); }
-    } else if (BACK_KEYS.has(ev.key)) {
-      if (tryRetreat(slide)) { ev.preventDefault(); ev.stopImmediatePropagation(); }
-    }
-  }, true);
-
-})();
+// Stamp data-step-max on .s-amplifier slides (they predate the deck-kit
+// contract). Everything past this point — the step machine, the
+// slide-change reset, the keyboard intercept — lives in deck-stage.js.
+document.querySelectorAll('.s-amplifier').forEach((s) => {
+  if (!s.hasAttribute('data-step-max')) s.setAttribute('data-step-max', '1');
+});
 </script>
 
 <script>
