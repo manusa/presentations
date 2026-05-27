@@ -279,7 +279,7 @@
               <div class="proj-stack">
 
                 <div class="proj-card wide">
-                  <image-slot id="logo-mcp-server" class="picon" fit="contain" placeholder="logo"></image-slot>
+                  <image-slot id="logo-mcp-server" class="picon" fit="contain" src="assets/logos/containers.png" placeholder="logo"></image-slot>
                   <div class="pinfo">
                     <div class="pname">kubernetes-mcp-server</div>
                     <div class="porg">github.com/containers/kubernetes-mcp-server</div>
@@ -291,7 +291,7 @@
                 </div>
 
                 <div class="proj-card wide">
-                  <image-slot id="logo-k8s-client" class="picon" fit="contain" placeholder="logo"></image-slot>
+                  <image-slot id="logo-k8s-client" class="picon" fit="contain" src="assets/logos/fabric8io.svg" placeholder="logo"></image-slot>
                   <div class="pinfo">
                     <div class="pname">fabric8 kubernetes-client</div>
                     <div class="porg">github.com/fabric8io/kubernetes-client</div>
@@ -303,7 +303,7 @@
                 </div>
 
                 <div class="proj-card wide">
-                  <image-slot id="logo-jkube" class="picon" fit="contain" placeholder="logo"></image-slot>
+                  <image-slot id="logo-jkube" class="picon" fit="contain" src="assets/logos/eclipse-jkube.png" placeholder="logo"></image-slot>
                   <div class="pinfo">
                     <div class="pname">Eclipse JKube</div>
                     <div class="porg">github.com/eclipse-jkube/jkube</div>
@@ -370,7 +370,7 @@
               <div class="proj-grid">
 
           <div class="proj-card compact">
-            <image-slot id="logo-helm-java" class="picon" fit="contain" placeholder="logo"></image-slot>
+            <image-slot id="logo-helm-java" class="picon" fit="contain" src="assets/logos/helm.svg" placeholder="logo"></image-slot>
             <div class="pinfo">
               <div class="pname">helm-java</div>
               <div class="porg">manusa/helm-java</div>
@@ -382,7 +382,7 @@
           </div>
 
           <div class="proj-card compact">
-            <image-slot id="logo-minikube" class="picon" fit="contain" placeholder="logo"></image-slot>
+            <image-slot id="logo-minikube" class="picon" fit="contain" src="assets/logos/minikube.svg" placeholder="logo"></image-slot>
             <div class="pinfo">
               <div class="pname">actions-setup-minikube</div>
               <div class="porg">manusa/actions-setup-minikube</div>
@@ -394,7 +394,7 @@
           </div>
 
           <div class="proj-card compact">
-            <image-slot id="logo-ai-beacon" class="picon" fit="contain" placeholder="logo"></image-slot>
+            <image-slot id="logo-ai-beacon" class="picon" fit="contain" src="assets/logos/go.svg" placeholder="logo"></image-slot>
             <div class="pinfo">
               <div class="pname">ai-beacon</div>
               <div class="porg">manusa/ai-beacon</div>
@@ -406,7 +406,7 @@
           </div>
 
           <div class="proj-card compact">
-            <image-slot id="logo-electronim" class="picon" fit="contain" placeholder="logo"></image-slot>
+            <image-slot id="logo-electronim" class="picon" fit="contain" src="assets/logos/electronim.svg" placeholder="logo"></image-slot>
             <div class="pinfo">
               <div class="pname">electronim</div>
               <div class="porg">manusa/electronim</div>
@@ -418,7 +418,7 @@
           </div>
 
           <div class="proj-card compact">
-            <image-slot id="logo-yakd" class="picon" fit="contain" placeholder="logo"></image-slot>
+            <image-slot id="logo-yakd" class="picon" fit="contain" src="assets/logos/yakd-square.svg" placeholder="logo"></image-slot>
             <div class="pinfo">
               <div class="pname">YAKD</div>
               <div class="porg">manusa/yakd</div>
@@ -430,7 +430,7 @@
           </div>
 
           <div class="proj-card compact">
-            <image-slot id="logo-podman-mcp" class="picon" fit="contain" placeholder="logo"></image-slot>
+            <image-slot id="logo-podman-mcp" class="picon" fit="contain" src="assets/logos/containers.png" placeholder="logo"></image-slot>
             <div class="pinfo">
               <div class="pname">podman-mcp-server</div>
               <div class="porg">manusa/podman-mcp-server</div>
@@ -1181,6 +1181,7 @@
       <image-slot id="amp-scene-bad"
                   class="scene-slot"
                   shape="rect"
+                  src="assets/amp-scene-bad.webp"
                   placeholder="Drop scene · chaotic ops room · AI AMPLIFIER fan blasts sludge across the room"></image-slot>
       <div class="scene-fallback">[ scene · chaotic ops room · sludge ]</div>
     </div>
@@ -1284,6 +1285,7 @@
       <image-slot id="amp-scene-good"
                   class="scene-slot"
                   shape="rect"
+                  src="assets/amp-scene-good.webp"
                   placeholder="Drop scene · clean ops room · AI AMPLIFIER fan blows clean air, sail-powered workstation"></image-slot>
       <div class="scene-fallback">[ scene · clean ops room · sail catches the tailwind ]</div>
     </div>
@@ -1470,6 +1472,7 @@
       <image-slot id="flywheel-scene"
                   class="scene-slot"
                   shape="rect"
+                  src="assets/flywheel-scene.webp"
                   placeholder="Drop scene · developer in assistive exoskeleton at workstation"></image-slot>
     </div>
 
@@ -2989,60 +2992,12 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
 <script src="../../deck-kit/deck-stage.js" defer></script>
 
 <script>
-// === AI Amplifier scene images (Act 3) — inlined per LOGO_DATA_URLS pattern ===
-// Auto-generated. Inline scene images for the .s-amplifier image-slots.
-(function(){
-  const M = {
-    "amp-scene-bad":  "assets/amp-scene-bad.webp",
-    "amp-scene-good": "assets/amp-scene-good.webp",
-    "flywheel-scene": "assets/flywheel-scene.webp"
-  };
-  function apply() {
-    for (const id in M) {
-      const el = document.getElementById(id);
-      if (el && el.tagName === "IMAGE-SLOT") el.setAttribute("src", M[id]);
-    }
-  }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", apply);
-  } else { apply(); }
-})();
-</script>
-
-<script>
 // Stamp data-step-max on .s-amplifier slides (they predate the deck-kit
 // contract). Everything past this point — the step machine, the
 // slide-change reset, the keyboard intercept — lives in deck-stage.js.
 document.querySelectorAll('.s-amplifier').forEach((s) => {
   if (!s.hasAttribute('data-step-max')) s.setAttribute('data-step-max', '1');
 });
-</script>
-
-<script>
-// === Logo data URLs (inlined because assets/ aren't served to <img>) ===
-// Auto-generated: base64 logo data URLs applied to image-slot elements.
-window.__LOGO_DATA_URLS = {
-  "logo-mcp-server": "assets/logos/containers.png",
-  "logo-podman-mcp": "assets/logos/containers.png",
-  "logo-jkube": "assets/logos/eclipse-jkube.png",
-  "logo-k8s-client": "assets/logos/fabric8io.svg",
-  "logo-electronim": "assets/logos/electronim.svg",
-  "logo-yakd": "assets/logos/yakd-square.svg",
-  "logo-helm-java": "assets/logos/helm.svg",
-  "logo-minikube": "assets/logos/minikube.svg",
-  "logo-ai-beacon": "assets/logos/go.svg"
-};
-(function(){
-  function apply(){
-    const m = window.__LOGO_DATA_URLS;
-    for (const id in m) {
-      const el = document.getElementById(id);
-      if (el && el.tagName === 'IMAGE-SLOT') el.setAttribute('src', m[id]);
-    }
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
-  else apply();
-})();
 </script>
 </body>
 </html>
