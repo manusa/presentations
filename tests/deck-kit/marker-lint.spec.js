@@ -12,7 +12,6 @@ const { startServer, bootDeck, REPO_ROOT } = require('./_helpers');
 // tracked in manusa/com.marcnuri.automated-tasks#1817; drop this set when
 // the trailing <link> tags are gone.
 const DEAD_CSS_ALLOWLIST = new Set([
-  'styles/s-about.css',
   'styles/s-agenda.css',
 ]);
 

@@ -121,6 +121,8 @@
 .s-act2 .g1-axis .tick {
   position: absolute;
   top: 0; bottom: 0;
+  width: 24px;
+  height: 24px;
   border-left: 1px solid var(--line);
   padding-left: 6px;
   color: var(--fg-mute);
