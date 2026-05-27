@@ -35,6 +35,7 @@
 <link rel="stylesheet" href="styles/s-agents-md.css" />
 <link rel="stylesheet" href="styles/s-skill.css" />
 <link rel="stylesheet" href="styles/s-specs-vs-tests.css" />
+<link rel="stylesheet" href="styles/s-blackbox.css" />
 </head>
 <body>
 
@@ -2206,6 +2207,235 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
           <span class="sub">// text waits to be read. tests run on every commit.</span>
         </div>
       </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 19 — ACT V · BLACK-BOX TESTS · THE UNIT IS BEHAVIOR
+
+       Signature opinion of the talk. ~90s. Two-step reveal that
+       *proves* the point instead of asserting it:
+
+         step 0  two tests + the production method, all clean.
+         step 1  agent refactors the production method (rename +
+                 extract helper). The white-box test ALSO gets
+                 a diff — the agent had to rewrite the verify()
+                 chain to keep it green. The black-box test is
+                 byte-for-byte identical and still passes.
+
+       The point isn't "white-box fails" (no one merges a failing
+       PR). The point is: white-box tests force the agent to
+       co-edit the test alongside the code, so the test stops
+       pinning the contract. The black-box test pins the
+       contract regardless of how the internals are reshaped.
+
+       Three-column stage:
+         LEFT   — white-box test card (mocks, verify())
+         CENTER — SUT card · PodService.java (production code)
+         RIGHT  — black-box test card (HTTP entry point, behavior)
+
+       Folds slide 18 in: the black-box card uses @DisplayName +
+       behavior-named method as a 15s prop demo. Bottom tagline
+       carries the strong opinion plus the chip strip of real
+       projects where this style of test survived agent work.
+       ============================================================ -->
+  <section class="s-blackbox light" data-label="19 Act 5 — Black-box tests: the unit is behavior" data-step-max="1">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · devtalks-act-05-codebase-feedback/BlackBoxTests.java</span>
+      <span class="spacer"></span>
+      <span class="pill">act 05 · unit of behavior · 19</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">// act 05 · the unit shifts</div>
+        <h2 class="title">Black-box tests: the unit is <em>behavior</em>.</h2>
+        <p class="sub">
+          // why my tests <span class="t-warn">survived</span> the AI era
+        </p>
+      </header>
+
+      <div class="stage">
+        <!-- ============================================================
+             LEFT — WHITE-BOX test card.
+             Mocks + verify() chain. Step 0: clean, green. Step 1:
+             the agent had to rewrite verify() lines to keep the
+             test green after the refactor — the diff is visible
+             on the test itself. "agent-edited" pill (amber, not
+             red) — the test still passes, but it no longer pins
+             the contract because both code and test are agent-
+             authored in the same change.
+             ============================================================ -->
+        <article class="card card-white">
+          <header class="panel-bar term">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">PodServiceTest.java</span>
+            <span class="grow"></span>
+            <span class="status-pill st-pass">✓ passing</span>
+            <span class="status-pill st-edited">△ AGENT-EDITED</span>
+          </header>
+          <div class="micro-gloss">// white-box · couples to internals</div>
+          <!-- step 0 view: current test, no diff -->
+          <div class="panel-body code body-step-0">
+            <div class="ln setup"><span class="t-anno">@Mock</span> <span class="t-type">Client</span> client;</div>
+            <div class="ln setup"><span class="t-anno">@Mock</span> <span class="t-type">PodOps</span> pods;</div>
+            <div class="ln setup"><span class="t-anno">@Mock</span> <span class="t-type">NamedOp</span> named;</div>
+            <div class="ln setup"><span class="t-anno">@Mock</span> <span class="t-type">Registry</span> registry;</div>
+            <div class="ln setup"><span class="t-anno">@Mock</span> <span class="t-type">EventEmitter</span> emitter;</div>
+            <div class="ln setup"><span class="t-anno">@InjectMocks</span> <span class="t-type">PodService</span> service;</div>
+            <div class="ln gap">&nbsp;</div>
+            <div class="ln"><span class="t-anno">@Test</span></div>
+            <div class="ln"><span class="t-kw">void</span> <span class="t-fn">deletesPod</span>() {</div>
+            <div class="ln indent">service.<span class="t-fn">delete</span>(<span class="t-str">"foo"</span>);</div>
+            <div class="ln">&nbsp;</div>
+            <div class="ln indent"><span class="t-fn t-vrf">verify</span>(client).<span class="t-fn">pods</span>();</div>
+            <div class="ln indent"><span class="t-fn t-vrf">verify</span>(pods).<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>);</div>
+            <div class="ln indent"><span class="t-fn t-vrf">verify</span>(named).<span class="t-fn">delete</span>();</div>
+            <div class="ln indent"><span class="t-fn t-vrf">verify</span>(registry).<span class="t-fn">unregister</span>(<span class="t-str">"foo"</span>);</div>
+            <div class="ln indent"><span class="t-fn t-vrf">verify</span>(emitter).<span class="t-fn">emit</span>(<span class="t-fn">any</span>());</div>
+            <div class="ln">}</div>
+          </div>
+          <!-- step 1 view: agent co-edited the test to match the refactor -->
+          <div class="panel-body code body-step-1">
+            <div class="ln setup"><span class="t-anno">@Mock</span> <span class="t-type">Client</span> client;</div>
+            <div class="ln setup"><span class="t-anno">@Mock</span> <span class="t-type">PodOps</span> pods;</div>
+            <div class="ln setup"><span class="t-anno">@Mock</span> <span class="t-type">NamedOp</span> named;</div>
+            <div class="ln setup"><span class="t-anno">@Mock</span> <span class="t-type">Registry</span> registry;</div>
+            <div class="ln setup"><span class="t-anno">@Mock</span> <span class="t-type">EventEmitter</span> emitter;</div>
+            <div class="ln setup"><span class="t-anno">@InjectMocks</span> <span class="t-type">PodService</span> service;</div>
+            <div class="ln gap">&nbsp;</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span><span class="t-anno">@Test</span></div>
+            <div class="ln rem"><span class="g">-</span><span class="t-kw">void</span> <span class="t-fn">deletesPod</span>() {</div>
+            <div class="ln add"><span class="g">+</span><span class="t-kw">void</span> <span class="t-fn">removesPod</span>() {</div>
+            <div class="ln rem"><span class="g">-</span>  service.<span class="t-fn">delete</span>(<span class="t-str">"foo"</span>);</div>
+            <div class="ln add"><span class="g">+</span>  service.<span class="t-fn">removePod</span>(<span class="t-type">PodRef</span>.<span class="t-fn">of</span>(<span class="t-str">"foo"</span>));</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span></div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>  <span class="t-fn t-vrf">verify</span>(client).<span class="t-fn">pods</span>();</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>  <span class="t-fn t-vrf">verify</span>(pods).<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>);</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>  <span class="t-fn t-vrf">verify</span>(named).<span class="t-fn">delete</span>();</div>
+            <div class="ln rem"><span class="g">-</span>  <span class="t-fn t-vrf">verify</span>(registry).<span class="t-fn">unregister</span>(<span class="t-str">"foo"</span>);</div>
+            <div class="ln rem"><span class="g">-</span>  <span class="t-fn t-vrf">verify</span>(emitter).<span class="t-fn">emit</span>(<span class="t-fn">any</span>());</div>
+            <div class="ln add"><span class="g">+</span>  <span class="t-fn t-vrf">verify</span>(podLifecycle).<span class="t-fn">unregisterAndEmit</span>(<span class="t-fn">any</span>());</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>}</div>
+          </div>
+          <div class="card-foot">
+            <span class="foot-glyph">⟂</span>
+            <span class="foot-msg foot-msg-0">asserts <em>who called what</em></span>
+            <span class="foot-msg foot-msg-1">agent rewrote 4 lines. <em>nothing</em> pinned the contract.</span>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             CENTER — SUT card · PodService.java.
+             The production code being refactored. Step 0: clean
+             implementation. Step 1: rename + extract-helper diff.
+             Same visual language as the side cards (dark navy
+             terminal) so it reads as a sibling file, not a PR.
+             ============================================================ -->
+        <article class="card card-sut">
+          <header class="panel-bar term">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">PodService.java</span>
+            <span class="grow"></span>
+            <span class="status-pill st-stable">// stable</span>
+            <span class="status-pill st-refactor">△ refactor applied</span>
+          </header>
+          <div class="micro-gloss">// system under test · production code</div>
+          <!-- step 0 view: clean production method -->
+          <div class="panel-body code body-step-0">
+            <div class="ln"><span class="t-kw">void</span> <span class="t-fn">delete</span>(<span class="t-type">String</span> name) {</div>
+            <div class="ln indent">client.<span class="t-fn">pods</span>()</div>
+            <div class="ln indent-2">.<span class="t-fn">withName</span>(name)</div>
+            <div class="ln indent-2">.<span class="t-fn">delete</span>();</div>
+            <div class="ln indent">registry.<span class="t-fn">unregister</span>(name);</div>
+            <div class="ln indent">emitter.<span class="t-fn">emit</span>(<span class="t-kw">new</span> <span class="t-type">DeleteEvent</span>(name));</div>
+            <div class="ln">}</div>
+          </div>
+          <!-- step 1 view: rename + extract helper -->
+          <div class="panel-body code body-step-1">
+            <div class="ln rem"><span class="g">-</span><span class="t-kw">void</span> <span class="t-fn">delete</span>(<span class="t-type">String</span> name) {</div>
+            <div class="ln add"><span class="g">+</span><span class="t-kw">void</span> <span class="t-fn">removePod</span>(<span class="t-type">PodRef</span> ref) {</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>  client.<span class="t-fn">pods</span>()</div>
+            <div class="ln rem"><span class="g">-</span>    .<span class="t-fn">withName</span>(name)</div>
+            <div class="ln add"><span class="g">+</span>    .<span class="t-fn">withName</span>(ref.<span class="t-fn">name</span>())</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>    .<span class="t-fn">delete</span>();</div>
+            <div class="ln rem"><span class="g">-</span>  registry.<span class="t-fn">unregister</span>(name);</div>
+            <div class="ln rem"><span class="g">-</span>  emitter.<span class="t-fn">emit</span>(<span class="t-kw">new</span> <span class="t-type">DeleteEvent</span>(name));</div>
+            <div class="ln add"><span class="g">+</span>  podLifecycle.<span class="t-fn">unregisterAndEmit</span>(ref);</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>}</div>
+          </div>
+          <div class="card-foot">
+            <span class="foot-glyph">✎</span>
+            <span class="foot-msg foot-msg-0">internals an agent might refactor</span>
+            <span class="foot-msg foot-msg-1">rename · extract helper · <em>same</em> behavior</span>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             RIGHT — BLACK-BOX test card.
+             Exercises the system through its public HTTP surface
+             (RestAssured-style). Same SUT as the white-box card,
+             but the assertion is on observable state — not on
+             internal method calls. The refactor leaves this test
+             byte-for-byte identical because the contract held.
+
+             @DisplayName + behavior-named method = the slide-18
+             prop folded in. 15s aside during speaking.
+             ============================================================ -->
+        <article class="card card-black">
+          <header class="panel-bar term">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">PodBehaviorIT.java</span>
+            <span class="grow"></span>
+            <span class="status-pill st-pass">✓ passing</span>
+            <span class="status-pill st-untouched">✓ UNTOUCHED</span>
+          </header>
+          <div class="micro-gloss">// black-box · asserts observable behavior</div>
+          <div class="panel-body code">
+            <div class="ln setup"><span class="t-anno">@EnableKubeAPIServer</span></div>
+            <div class="ln setup"><span class="t-type">KubernetesClient</span> kubernetes;</div>
+            <div class="ln gap">&nbsp;</div>
+            <div class="ln"><span class="t-anno">@Test</span></div>
+            <div class="ln"><span class="t-anno">@DisplayName</span>(<span class="t-str">"removes the pod from the cluster"</span>)</div>
+            <div class="ln"><span class="t-kw">void</span> <span class="t-fn">removesPodFromCluster</span>() {</div>
+            <div class="ln indent">kubernetes.<span class="t-fn">pods</span>().<span class="t-fn">resource</span>(pod).<span class="t-fn">create</span>();</div>
+            <div class="ln">&nbsp;</div>
+            <div class="ln indent"><span class="t-fn">given</span>().<span class="t-fn">when</span>()</div>
+            <div class="ln indent-2">.<span class="t-fn">delete</span>(<span class="t-str">"/api/v1/pods/foo"</span>)</div>
+            <div class="ln indent-2">.<span class="t-fn">then</span>().<span class="t-fn">statusCode</span>(<span class="t-str">204</span>);</div>
+            <div class="ln">&nbsp;</div>
+            <div class="ln indent"><span class="t-fn t-asr">assertThat</span>(kubernetes.<span class="t-fn">pods</span>().<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>).<span class="t-fn">get</span>())</div>
+            <div class="ln indent-2">.<span class="t-fn">isNull</span>();</div>
+            <div class="ln">}</div>
+          </div>
+          <div class="card-foot">
+            <span class="foot-glyph">▣</span>
+            <span class="foot-msg foot-msg-0">asserts <em>the pod is gone</em></span>
+            <span class="foot-msg foot-msg-1"><em>zero</em> test edits. contract held.</span>
+          </div>
+        </article>
+      </div>
+
+      <footer class="tag-line">
+        <div class="quote">
+          A method is not always a useful unit.
+          <span class="accent">A unit of behavior often is.</span>
+        </div>
+        <div class="chips">
+          <span class="chips-lbl">// survived agent refactors with</span>
+          <span class="chip">Fabric8 kube-api-test</span>
+          <span class="chip">QuarkusTest</span>
+          <span class="chip">Testcontainers</span>
+          <span class="chip">YAKD · Selenium</span>
+        </div>
+      </footer>
     </div>
 
     <div class="chrome-bottom">
