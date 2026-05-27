@@ -15,7 +15,7 @@
 
    Theme: light slide. Code artifacts (AGENTS.md panel, Makefile,
    Gradle) stay dark terminals so they read as files, not text
-   blocks. Same idiom as s-code.light.
+   blocks.
    ============================================================ */
 
 /* The .light class on the section pulls in cream bg + navy ink
@@ -109,9 +109,9 @@
 }
 
 /* ---------- AGENTS.md panel ----------
-   Dark terminal-style panel on the cream slide. Same idiom as
-   s-code.light. All in-panel colors are pinned explicitly so they
-   don't pick up the light theme's navy ink overrides. */
+   Dark terminal-style panel on the cream slide. All in-panel
+   colors are pinned explicitly so they don't pick up the light
+   theme's navy ink overrides. */
 .s-agents-md .agents-panel {
   grid-area: agents;
   background: #060D3A;
