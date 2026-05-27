@@ -1,0 +1,47 @@
+name: deck-kit tests
+
+on:
+  pull_request:
+    paths:
+      - 'static/deck-kit/**'
+      - 'static/presentations/**'
+      - 'tests/deck-kit/**'
+      - 'scripts/lib/deck.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/test-deck-kit.yml'
+  push:
+    branches: [main]
+
+# Cancel in-flight runs on PR push so we don't queue stale results.
+# Do NOT cancel runs on `main` — a canceled push run records as a
+# non-success status, which can surface as a red required check on
+# the next PR.
+concurrency:
+  group: test-deck-kit-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run test:deck-kit
