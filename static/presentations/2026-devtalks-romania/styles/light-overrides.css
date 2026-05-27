@@ -1,7 +1,7 @@
 /* ============================================================
-   LIGHT-THEME OVERRIDES — applied to content slides
-   Dark stays for: title, section divider, quote, full-bleed, closing.
-   Light applies to: about, agenda, content, compare, stat, code, diagram.
+   LIGHT-THEME OVERRIDES — applied to any section with .light.
+   Dark stays for: boot (title), s-section dividers, amplifier, flywheel, closing.
+   Light is opt-in per-section via the .light class on the <section>.
    Accents (pink #F02A5A, orange #E16309) carry over for continuity.
    ============================================================ */
 .light {
@@ -38,52 +38,9 @@ deck-stage section.light {
   box-shadow: 0 0 10px rgba(240, 42, 90, 0.35);
 }
 
-/* About — avatar frame on cream */
-.light .avatar-frame {
-  background: #FBF9F2;
-}
-.light .avatar-frame::before {
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-}
-
 /* Agenda — keep accent-2 active state legible on cream */
 .light .agenda-row.active .label,
 .light .agenda-row.active .duration { color: var(--accent-2); }
-
-/* Compare — soften card surface contrast on cream */
-.light .col { background: #FBF9F2; }
-.light .col.bad { border-color: rgba(225, 99, 9, 0.45); }
-.light .col.good { border-color: rgba(240, 42, 90, 0.40); }
-.light .col .col-header { color: var(--fg-dim); }
-.light .col.bad .col-header { color: var(--accent-2); }
-.light .col.good .col-header { color: var(--accent); }
-
-/* Stat — number stays pink, unit stays orange — both work on cream */
-.light .s-stat .source { color: var(--fg-mute); }
-
-/* Code slide — slide bg is light, terminal stays dark for code feel.
-   Lift the terminal off the page with a stronger drop shadow. */
-.light .terminal {
-  border: 1px solid rgba(10, 21, 84, 0.18);
-  box-shadow: 0 24px 60px rgba(10, 21, 84, 0.18),
-              0 4px 12px rgba(10, 21, 84, 0.08);
-}
-
-/* Diagram — frame surface on cream */
-.light .diagram-frame {
-  background: #FBF9F2;
-}
-.light .diagram-frame .ph-spec {
-  background: var(--bg-elev);
-}
-
-/* Bullets — ensure bullet text reads as navy ink */
-.light .bullet .txt,
-.light .bullet .txt strong { color: var(--fg); }
-
-/* Eyebrow + accent text already use --accent, which is unchanged */
 
 /* Small accent text on cream — brand pink/orange fail AA at body size,
    so reroute eyebrows, @ accents, indices, and other <24px mono uses to
@@ -94,17 +51,12 @@ deck-stage section.light {
 .light .prompt,
 .light .marker,
 .light .agenda-row .num,
-.light .bullet .idx,
-.light .col.good .col-header,
-.light .terminal .prompt,
-.light .s-quote .attrib::before,
-.light .s-stat .num-label { color: var(--accent-ink); }
+.light .terminal .prompt { color: var(--accent-ink); }
 
 .light .s-about2 .role-line .at,
 .light .agenda-row.active .label,
 .light .agenda-row.active .duration,
-.light .s-section .section-sub .accent2,
-.light .col.bad .col-header { color: var(--accent-2-ink); }
+.light .s-section .section-sub .accent2 { color: var(--accent-2-ink); }
 
 .light .s-about2 .handles-row .h .v .at,
 .light .s-closing .contact-list .row .v .at,
@@ -113,11 +65,3 @@ deck-stage section.light {
 .light .s-closing .contact-list .row .k i { color: var(--accent-ink); }
 
 /* Chrome rail dot keeps brand pink (decorative shape, not text). */
-
-/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
-   rectangles. Drop the cream-slide terminal lift in PDF; the border
-   already delineates the dark terminal from the cream background. */
-@media print {
-  .light .terminal { box-shadow: none; }
-}
-
