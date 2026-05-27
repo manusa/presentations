@@ -15,7 +15,11 @@ build step. Loaded directly via `<script src=…>`.
 ## What does **not** live here
 
 - **Per-deck content, CSS, assets.** Those stay under `static/presentations/<slug>/`.
-- **Deck-specific glue scripts** (e.g. the step-reveal handler keyed off `data-step-max`, logo / scene image registries). These remain inline in each deck's `index.html` until 2+ decks share the same contract (see rule #4 below).
+- **Deck-specific glue scripts** (e.g. logo / scene image registries; the
+  `.s-amplifier` → `data-step-max` auto-stamp loop in the DevTalks deck).
+  These remain inline in each deck's `index.html` until 2+ decks share the
+  same contract (see rule #4 below). The step-reveal mechanism itself is
+  first-class (see `data-step-max` below).
 - **A build step.** The files here are plain ES2018 — no transpile, no bundle, no minify.
 
 ## Stability promise (the five rules)
@@ -23,14 +27,14 @@ build step. Loaded directly via `<script src=…>`.
 These are non-negotiable. The components currently power one shipped (or about-to-ship) deck; as more decks adopt them, regressions break talks that have already been given.
 
 1. **Attribute-based opt-in only, never opt-out.** New features gate behind new attributes; unspecified attribute = legacy behavior. Examples: `<deck-stage noscale>` and `<deck-stage no-rail>` add behavior; nothing is opt-out.
-2. **Events out, never callbacks/imports in.** Core dispatches `CustomEvent`s; deck code listens. Core never knows about specific decks. Example: the `slidechange` event powers the deck's step-reveal script today.
+2. **Events out, never callbacks/imports in.** Core dispatches `CustomEvent`s; deck code listens. Core never knows about specific decks. Example: deck slides can listen to `slidechange` to drive their own enter/leave animations.
 3. **Append-only attributes, events, and `event.detail` shapes.** Once shipped, frozen. The `contract.spec.js` test (under `tests/deck-kit/`) enforces this mechanically — renaming or removing a name makes it fail loudly.
 4. **Composition over feature creep.** Deck-specific behavior stays in the deck until 2+ decks need the same thing.
 5. **Breaking change = new filename** (`deck-stage-v2.js`). Old decks keep pointing at the old file.
 
 ## Wiring a static deck
 
-Drop both scripts at the bottom of `<body>` with `defer`. Inline registries (logos, scene images) and `data-step-max` step-reveal glue stay inline in the deck for now and run after upgrade because they wait on `DOMContentLoaded`:
+Drop both scripts at the bottom of `<body>` with `defer`. Inline per-deck glue (logo / scene-image registries, slide-class auto-stamping) stays inline in the deck and runs after upgrade because it waits on `DOMContentLoaded`:
 
 ```html
 <!doctype html>
@@ -53,13 +57,84 @@ Drop both scripts at the bottom of `<body>` with `defer`. Inline registries (log
 </html>
 ```
 
-Attributes the components understand:
+## Supported API surface
 
-- `<deck-stage>` observed: `width`, `height`, `noscale`, `no-rail`.
-- `<deck-stage>` slide attributes read on `<section>`s: `data-label`, `data-deck-skip`.
-- `<deck-stage>` events: `slidechange` (`{index, previousIndex, total, slide, previousSlide, reason}`) and `deckchange` (`{action, from, to?, slide}`). Both bubble and cross the shadow boundary (`composed: true`).
-- `<deck-stage>` API: `index`, `length`, `goTo(i)`, `next()`, `prev()`, `reset()`.
-- `<image-slot>` observed: `shape`, `radius`, `mask`, `fit`, `position`, `placeholder`, `src`, `id`.
+The complete, frozen contract per rule #3. Every name below is asserted by
+`tests/deck-kit/contract.spec.js` — renaming or removing any of them must
+flow through rule #5 (new filename). Anything **not** listed is an
+implementation detail and may change without a filename bump.
+
+### `<deck-stage>` attributes
+
+- `width`, `height` — design viewport (default 1920×1080).
+- `noscale` — skip auto-scaling fit-to-viewport; render at 1:1.
+- `no-rail` — hide the thumbnail rail.
+
+### `<section>` attributes (read by deck-stage)
+
+- `data-label` — text shown in the rail; required for legible nav.
+- `data-deck-skip` — exclude this section from rail nav + keyboard advance.
+- `data-step-max="N"` — N+1 reveal states (`data-step="0".."N"`). Advance keys
+  (ArrowRight / PageDown / Space / Enter) bump `data-step` until it reaches
+  `N`, then resume slide advance; retreat keys (ArrowLeft / PageUp) mirror.
+- `data-step` — runtime state, managed by deck-stage. Snaps to `0` whenever
+  the slide is entered or left. Do not set manually past markup-default `0`.
+
+### Keyboard bindings
+
+- `ArrowRight` / `PageDown` / `Space` / `Enter` — advance step (when
+  `data-step-max` in range) or slide.
+- `ArrowLeft` / `PageUp` — retreat step or slide.
+- `Home` / `End` — first / last slide.
+- `0`..`9` — jump to first 10 slides (`1`→1, …, `9`→9, `0`→10).
+- `R` — reset to slide 1, step 0.
+- `F` — toggle fullscreen.
+
+### URL hash
+
+- `#<integer>` — on load, deep-link to that section index (1-based).
+  `#3` lands on the third section. Updated on every nav so an in-iframe
+  reload lands on the current slide.
+
+### `<image-slot>` attributes
+
+- `id` — persistence key; required for a dropped image to survive reload.
+- `src` — initial / fallback image URL. Set inline (preferred) or via JS.
+  A user drop overrides it; clearing the drop reveals `src` again.
+- `shape` — `'rect' | 'rounded' | 'circle' | 'pill'` (default `'rounded'`).
+- `radius` — corner radius in px for `shape="rounded"` (default 12).
+- `mask` — any CSS `clip-path` value. Overrides `shape`.
+- `fit` — `'cover' | 'contain' | 'fill'` (default `'cover'`).
+- `position` — `object-position` value for `fit=contain|fill` (default `'50% 50%'`).
+- `placeholder` — empty-state caption (default `'Drop an image'`).
+
+### `<image-slot>` CSS hooks
+
+- `[data-filled]` — set on the host once `src` (or a user drop) resolves.
+  Use `image-slot[data-filled] { … }` for fill-only styling.
+- `::part(frame)` / `::part(image)` / `::part(empty)` / `::part(ring)` —
+  expose the inner crop frame, the inner `<img>`, the empty-state container,
+  and the dashed drop-target ring for external styling.
+
+### Events
+
+Both events bubble and cross the shadow boundary (`composed: true`), so
+listeners attach either on the `<deck-stage>` element or on `document`.
+
+- `slidechange` — fires on every slide transition, including the initial
+  mount. `event.detail = { index, previousIndex, total, slide, previousSlide, reason }`
+  where `reason ∈ { 'init', 'keyboard', 'click', 'tap', 'api', 'mutation' }`.
+- `deckchange` — fires on rail-driven mutations (move / skip / unskip / delete).
+  `event.detail = { action, from, to?, slide }` where
+  `action ∈ { 'delete', 'skip', 'unskip', 'move' }` (`to` only present for `'move'`).
+
+### `<deck-stage>` JavaScript API
+
+- `index` — current 0-based slide index (read-only).
+- `length` — slide count (read-only).
+- `goTo(i)` — navigate to a 0-based index.
+- `next()` / `prev()` — advance / retreat one slide.
+- `reset()` — back to slide 0.
 
 ## Running the test suite
 

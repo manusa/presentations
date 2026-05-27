@@ -162,11 +162,12 @@ describe('deck-stage navigation', () => {
     await page.close();
   });
 
-  test('data-step-max / data-step pass through untouched (deck-kit does not clobber consumer attrs)', async () => {
-    // Step-reveal glue is deck-specific (rule #4: composition, not in
-    // deck-stage core). The contract from deck-stage's side is that
-    // sections carrying data-step-max / data-step are passed through
-    // verbatim — deck-kit must not remove, normalize, or overwrite them.
+  test('data-step-max never gets clobbered; data-step normalises to 0 on slide change', async () => {
+    // data-step-max is author-set markup; deck-stage must never modify
+    // it. data-step is owned by deck-stage's step machine: it resets to
+    // 0 whenever the slide gains or loses focus (so re-entries replay
+    // cleanly). Behavior of the step machine itself lives in
+    // contract.spec.js — this test just guards the attribute lifecycle.
     const page = await browser.newPage();
     await bootDeck(page, server.fixture('stepped-deck.html'));
     const state = await page.evaluate(() => {
@@ -182,15 +183,14 @@ describe('deck-stage navigation', () => {
     assert.equal(state.hasStep, true);
     assert.equal(state.stepMax, '2');
     assert.equal(state.step, '0');
-    // Nav around a stepped slide; attributes must survive.
     await page.evaluate(() => document.querySelector('deck-stage').goTo(1));
     await page.evaluate(() => document.querySelector('deck-stage').goTo(2));
     const after = await page.evaluate(() => {
       const stepped = document.querySelector('section[data-step-max]');
       return { stepMax: stepped.getAttribute('data-step-max'), step: stepped.getAttribute('data-step') };
     });
-    assert.equal(after.stepMax, '2');
-    assert.equal(after.step, '0');
+    assert.equal(after.stepMax, '2', 'data-step-max is author-set and must survive nav');
+    assert.equal(after.step, '0', 'data-step resets to 0 on slide leave/enter');
     await page.close();
   });
 

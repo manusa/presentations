@@ -1124,6 +1124,14 @@
         if (i === curr) s.setAttribute('data-deck-active', '');
         else s.removeAttribute('data-deck-active');
       });
+      // Step-reveal reset: any stepped slide we either entered or just
+      // left snaps data-step back to 0 so a future re-entry starts from
+      // the first reveal state. (data-step-max itself is author-set and
+      // never touched.)
+      const prevSlide = prev >= 0 ? this._slides[prev] : null;
+      const currSlide = this._slides[curr];
+      if (prevSlide && prevSlide.hasAttribute('data-step-max')) prevSlide.setAttribute('data-step', '0');
+      if (currSlide && currSlide.hasAttribute('data-step-max')) currSlide.setAttribute('data-step', '0');
       if (this._countEl) this._countEl.textContent = String(curr + 1);
       // Follow-scroll on every navigation (init deep-link, keyboard, click,
       // tap, external goTo) — the only time we *don't* want the rail to
@@ -1313,9 +1321,15 @@
     }
 
     _onKey(e) {
-      // Ignore when the user is typing.
+      // Ignore when the user is interacting with a form field or focused
+      // button. BUTTON matters because Enter (and Space) advance both via
+      // the button's native click activation AND via this nav handler —
+      // suppressing here lets the button keep its native semantics.
+      // Shadow-DOM overlay buttons retarget to the deck-stage host on
+      // window-level events, so the guard only kicks in for light-DOM
+      // buttons authored inside slides.
       const t = e.target;
-      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(t.tagName))) return;
       // Confirm dialog swallows nav keys while open; Escape cancels. Enter
       // is left to the focused button's native activation so Tab→Cancel
       // →Enter activates Cancel, not the window-level confirm path.
@@ -1333,15 +1347,48 @@
       const key = e.key;
       let handled = true;
 
-      if (key === 'ArrowRight' || key === 'PageDown' || key === ' ' || key === 'Spacebar') {
+      // Step-reveal: a slide carrying data-step-max="N" expands into N+1
+      // sub-states (0..N), navigable inline. Advance keys bump data-step
+      // until step == max, then fall through to the next slide; retreat
+      // mirrors. data-step itself is owned by deck-stage (reset in
+      // _applyIndex) so re-entering a stepped slide replays cleanly.
+      const isAdvance = (key === 'ArrowRight' || key === 'PageDown' || key === ' ' || key === 'Spacebar' || key === 'Enter');
+      const isRetreat = (key === 'ArrowLeft'  || key === 'PageUp');
+      if (isAdvance || isRetreat) {
+        const slide = this._slides[this._index];
+        const max = slide && parseInt(slide.getAttribute('data-step-max') || '0', 10);
+        if (slide && max > 0) {
+          const cur = parseInt(slide.getAttribute('data-step') || '0', 10);
+          if (isAdvance && cur < max) {
+            slide.setAttribute('data-step', String(cur + 1));
+            e.preventDefault();
+            this._flashOverlay();
+            return;
+          }
+          if (isRetreat && cur > 0) {
+            slide.setAttribute('data-step', String(cur - 1));
+            e.preventDefault();
+            this._flashOverlay();
+            return;
+          }
+        }
+      }
+
+      if (isAdvance) {
         this._advance(1, 'keyboard');
-      } else if (key === 'ArrowLeft' || key === 'PageUp') {
+      } else if (isRetreat) {
         this._advance(-1, 'keyboard');
       } else if (key === 'Home') {
         this._go(0, 'keyboard');
       } else if (key === 'End') {
         this._go(this._slides.length - 1, 'keyboard');
       } else if (key === 'r' || key === 'R') {
+        // _go short-circuits when already on slide 0, which would otherwise
+        // skip _applyIndex's step-reset and leave data-step stuck at its
+        // current value for an opening stepped slide. Reset here before
+        // dispatching so R always lands on "slide 1, step 0" per README.
+        const cur = this._slides[this._index];
+        if (cur && cur.hasAttribute('data-step-max')) cur.setAttribute('data-step', '0');
         this._go(0, 'keyboard');
       } else if (key === 'f' || key === 'F') {
         // Plain 'f' as the single cross-platform toggle. Not F11: Chromium
