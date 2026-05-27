@@ -2116,7 +2116,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
        (a real fabric8 invariant). The form difference is the
        entire point of the slide.
        ============================================================ -->
-  <section class="s-specs-vs-tests light" data-label="17 Act 5 — Specs explain intent. Tests enforce it.">
+  <section class="s-specs-vs-tests light" data-label="17 Act 5 — Specs explain intent. Tests enforce it." data-step-max="1">
     <div class="chrome-top">
       <span class="dot"></span>
       <span>~/dev/devtalks-2026 · devtalks-act-05-codebase-feedback/SpecsVsTests.java</span>
@@ -2127,7 +2127,10 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
     <div class="body">
       <header class="head">
         <div class="eyebrow">// act 05 · the codebase pushes back</div>
-        <h2 class="title">Specs <em>explain</em> intent. Tests <em>enforce</em> it.</h2>
+        <!-- Two-step reveal: step 0 shows only "Specs explain intent." (the
+             problem framing); step 1 reveals "Tests enforce it." alongside
+             the test card on the right. -->
+        <h2 class="title">Specs <em>explain</em> intent. <span class="title-tail">Tests <em>enforce</em> it.</span></h2>
         <p class="sub">
           But <span class="t-warn">text doesn't push back.</span>
         </p>
@@ -2146,14 +2149,14 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
             <span class="enforce-pill advisory">// advisory</span>
           </header>
           <div class="panel-body">
-            <div class="ln md-h"># Default namespace</div>
+            <div class="ln md-h"># Default API server</div>
             <div class="ln sep"></div>
-            <div class="ln prose">When no namespace is configured,</div>
-            <div class="ln prose">fall back to <code>kubernetes.default.svc</code>.</div>
+            <div class="ln prose">When no API server URL is configured,</div>
+            <div class="ln prose">fall back to <code>https://kubernetes.default.svc/</code>.</div>
             <div class="ln sep"></div>
             <div class="ln cmt">// an agent may read this.</div>
             <div class="ln cmt">// or skip it.</div>
-            <div class="ln cmt">// or break it. and not notice.</div>
+            <div class="ln cmt">// or break it and still get a green build.</div>
           </div>
         </article>
 
@@ -2184,10 +2187,10 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
           <div class="panel-body code">
             <div class="ln"><span class="t-anno">@Test</span></div>
             <div class="ln"><span class="t-anno">@DisplayName</span>(<span class="t-str">"falls back to kubernetes.default.svc"</span>)</div>
-            <div class="ln"><span class="t-kw">void</span> <span class="t-fn">fallsBackToDefaultNamespace</span>() {</div>
-            <div class="ln indent">assertThat(<span class="t-kw">new</span> <span class="t-type">ConfigBuilder</span>().build())</div>
-            <div class="ln indent-2">.hasFieldOrPropertyWithValue(</div>
-            <div class="ln indent-3"><span class="t-str">"masterUrl"</span>, <span class="t-str">"https://kubernetes.default.svc/"</span>);</div>
+            <div class="ln"><span class="t-kw">void</span> <span class="t-fn">fallsBackToDefaultApiServer</span>() {</div>
+            <div class="ln indent"><span class="t-kw">var</span> config = <span class="t-kw">new</span> <span class="t-type">ConfigBuilder</span>().build();</div>
+            <div class="ln indent">assertThat(config.<span class="t-fn">getMasterUrl</span>())</div>
+            <div class="ln indent-2">.isEqualTo(<span class="t-str">"https://kubernetes.default.svc/"</span>);</div>
             <div class="ln">}</div>
           </div>
           <!-- Inline failure console — what the agent sees when wrong. -->
@@ -2195,10 +2198,10 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
             <div class="cf-head">
               <span class="cf-glyph">✗</span>
               <span class="cf-label">BUILD FAILED</span>
-              <span class="cf-sub">— ConfigTest › falls back to kubernetes.default.svc</span>
+              <span class="cf-sub">- ConfigTest &gt; falls back to kubernetes.default.svc</span>
             </div>
-            <div class="cf-detail">  <span class="cf-key">expected:</span> <span class="cf-ok">"https://kubernetes.default.svc/"</span></div>
-            <div class="cf-detail">  <span class="cf-key">actual:</span>   <span class="cf-bad">"https://my-cluster.example.com/"</span></div>
+            <div class="cf-detail"><span class="cf-key">expected:</span> <span class="cf-ok">"https://kubernetes.default.svc/"</span></div>
+            <div class="cf-detail"><span class="cf-key">actual:</span>   <span class="cf-bad">"https://my-cluster.example.com/"</span></div>
             <div class="cf-foot">// what the agent sees when it gets it wrong.</div>
           </div>
         </article>
@@ -2207,7 +2210,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
       <div class="tag-line">
         <span class="lbl">// takeaway</span>
         <div class="quote">
-          In Java, the best spec is the one that <em>compiles</em>.
+          In Java, the best spec <em>compiles, runs, and fails loudly.</em>
           <span class="sub">// text waits to be read. tests run on every commit.</span>
         </div>
       </div>
