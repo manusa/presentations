@@ -153,14 +153,31 @@ Same pattern whether the change is supposed to be invisible (refactor) or very v
 
 ## Deploy
 
-Two GitHub Actions publish on every push to `main`:
+Two channels publish on every push to `main`, plus a separate per-PR preview environment on a different vendor.
 
-| Channel | Workflow | Notes |
-|---|---|---|
-| GitHub Pages → `presentations.marcnuri.com` | `.github/workflows/publish-gh-pages.yml` | Always runs. CNAME comes from `static/CNAME`. |
-| NPM `@marcnuri/presentations` | `.github/workflows/publish-npm.yml` | Requires a `version` bump in `package.json` to publish a new release. Uses OIDC Trusted Publisher (no `NPM_TOKEN`). The `bin: mn-presentations` (`index.js`) serves `public/` via Express. |
+| Channel | Trigger | Workflow / Vendor | Notes |
+|---|---|---|---|
+| **Production** → `presentations.marcnuri.com` | push to `main` | `.github/workflows/publish-gh-pages.yml` (GitHub Pages) | Always runs. CNAME comes from `static/CNAME`. |
+| **NPM** `@marcnuri/presentations` | push to `main` | `.github/workflows/publish-npm.yml` | Requires a `version` bump in `package.json` to publish a new release. Uses OIDC Trusted Publisher (no `NPM_TOKEN`). The `bin: mn-presentations` (`index.js`) serves `public/` via Express. |
+| **Per-PR preview** → `*.presentations-a7o.pages.dev` | push to any non-main branch / PR | Cloudflare Pages (separate vendor) | Static decks only (`static/` is the published output dir, no build command). Production branch in Cloudflare is `main` so a mirror at `presentations-a7o.pages.dev` exists; previews land at `<commit-sha>.presentations-a7o.pages.dev`. Cloudflare posts a sticky PR comment with the URL. |
 
 The NPM workflow runs `replaceDependencies.sh` before publish — it rewrites `dependencies` down to `express` only, so the installed package is a tiny static-server runtime, not a full Gatsby build.
+
+### Production isolation
+
+The three channels are configured so that **only `publish-gh-pages.yml` can affect `presentations.marcnuri.com`**:
+
+- Cloudflare Pages and the NPM publish workflow have no write access to the `gh-pages` branch, `static/CNAME`, or DNS for `marcnuri.com`.
+- A bug or misconfiguration in the Cloudflare project — or the loss of the Cloudflare account — can't take the production deck domain down. The blast radius is bounded to the `.pages.dev` mirror and the per-PR preview URLs.
+- This was the load-bearing requirement when picking Cloudflare Pages over a same-branch path-scoped approach on `gh-pages` (see manusa/com.marcnuri.automated-tasks#1819).
+
+### Preview access control
+
+All `*.presentations-a7o.pages.dev` URLs (the production mirror and every per-PR preview) are gated by **Cloudflare Access**. Authentication is via **GitHub OAuth** with a policy of `login is manusa` — drafts and PR previews are visible only to the repo owner. The production deck at `presentations.marcnuri.com` is unaffected and stays publicly served by GitHub Pages.
+
+### Preview landing page
+
+Cloudflare Pages comments on PRs with the deployment's **root URL** (e.g. `https://<commit>.presentations-a7o.pages.dev/`). The root serves `static/index.html`, a generated listing of every deck under `static/presentations/`. Generate or refresh it with `npm run gen:landing` (idempotent; chained into `npm run serve:static` for local dev). Per-deck metadata comes from a `meta.json` next to the deck's `README.md`; see "Adding a New Deck" below.
 
 ## Adding a New Deck
 
