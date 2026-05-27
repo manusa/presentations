@@ -1,0 +1,810 @@
+/* ============================================================
+   .s-ci — Act 5 · Fabric8 CI: slow/flaky → fast/stable.
+
+   Thesis-first. The title carries the argument:
+     "Tech debt is not optional polish. It caps throughput."
+   The slide is the case study that proves it.
+
+   Four-step reveal (data-step-max="3"):
+     step 0  Thesis only.       Title + subtitle; stage shows a
+                                small "case study coming" framing
+                                block.
+     step 1  Speed evidence.    Speed card (dark terminal) appears
+                                in the LEFT slot. 40m → 22m hero +
+                                per-module surefire cuts.
+     step 2  Money beat.        Cost card (LIGHT GitHub-UI) reveals
+                                in the RIGHT slot — actual Actions
+                                runner pricing + the two billing
+                                moves (#7798 x64→arm, #7814 macOS
+                                →arm).
+     step 3  Bonus win.         Speed + cost cards fade out. Bugs
+                                card (LIGHT GitHub-issues mockup)
+                                slides in FULL-WIDTH and gets the
+                                stage alone.
+
+   Theme contract:
+     - speed card  → DARK navy terminal   (matches CI/log feel)
+     - cost card   → LIGHT GitHub UI      (matches billing page)
+     - bugs card   → LIGHT GitHub UI      (matches issues page)
+   Slide 14 (.s-skill) is the precedent: dark = file/artifact,
+   light = GitHub web UI.
+   ============================================================ */
+
+.s-ci::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Body grid — header / stage / tagline.
+   IMPORTANT: use `>` so this does NOT match nested `.body` divs
+   inside issue cards (those are content containers).
+   ============================================================ */
+.s-ci > .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 1;
+  padding: 30px var(--pad-x) 26px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 22px;
+}
+
+/* === Header — thesis + case-study setup === */
+.s-ci .head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: 48px;
+}
+.s-ci .head .eyebrow {
+  grid-column: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: var(--accent-ink);
+  margin-bottom: 14px;
+}
+.s-ci .head .title {
+  grid-column: 1;
+  font-size: 62px;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+}
+.s-ci .head .title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-ci .head .sub {
+  grid-column: 2;
+  margin: 0 0 12px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  line-height: 1.3;
+  color: var(--fg-dim);
+  text-align: right;
+}
+.s-ci .head .sub em { font-style: normal; color: var(--accent-2-ink); font-weight: 600; }
+.s-ci .head .sub .t-warn { color: var(--accent-2-ink); font-weight: 600; }
+
+/* ============================================================
+   Stage — relative box; cards are absolutely positioned and
+   layered. Fixed height so the layout doesn't reflow between
+   steps.
+   ============================================================ */
+.s-ci .stage {
+  position: relative;
+  min-height: 0;
+}
+
+/* Cards share base envelope; skin differs by .card-* class. */
+.s-ci .card {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+/* DARK terminal envelope — speed card. */
+.s-ci .card-speed {
+  background: #060D3A;
+  border: 1px solid rgba(10, 21, 84, 0.30);
+  box-shadow:
+    0 24px 60px rgba(10, 21, 84, 0.22),
+    0 4px 12px rgba(10, 21, 84, 0.10);
+}
+
+/* LIGHT GitHub-UI envelope — cost + bugs cards. */
+.s-ci .card-cost,
+.s-ci .card-bugs {
+  background: #FFFFFF;
+  border: 1px solid #D1D9E0;
+  box-shadow: 0 4px 16px rgba(10, 21, 84, 0.10);
+}
+
+/* ── Card positions per step ──
+   Speed:   center at step 1, left at step 2, off-left at step 3.
+   Cost:    off-right at step 0–1, right at step 2, off-right at step 3.
+   Bugs:    off-bottom at step 0–2, center FULL-WIDTH at step 3.
+   Step 0 hides all three. */
+
+/* widths */
+.s-ci .card-speed { width: calc((100% - 30px) / 2); left: calc(25% + 7.5px); opacity: 0; }
+.s-ci .card-cost  { width: calc((100% - 30px) / 2); left: 110%;                opacity: 0; }
+.s-ci .card-bugs  { width: 100%;                    left: 110%;                opacity: 0; }
+
+/* step 1 — speed reveal in LEFT slot (centered alone) */
+.s-ci[data-step="1"] .card-speed { left: calc(25% + 7.5px); opacity: 1; }
+
+/* step 2 — speed shifts to true LEFT; cost enters RIGHT */
+.s-ci[data-step="2"] .card-speed { left: 0;                  opacity: 1; }
+.s-ci[data-step="2"] .card-cost  { left: calc(50% + 15px);   opacity: 1; }
+
+/* step 3 — speed + cost slide off left; bugs takes full width */
+.s-ci[data-step="3"] .card-speed { left: -55%;               opacity: 0; }
+.s-ci[data-step="3"] .card-cost  { left: -55%;               opacity: 0; }
+.s-ci[data-step="3"] .card-bugs  { left: 0;                  opacity: 1; }
+
+/* ============================================================
+   Step 0 INTRO — a small centered framing block ("case study
+   coming"). Lives outside the cards so it doesn't compete with
+   the dark/light card envelopes.
+   ============================================================ */
+.s-ci .intro {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--fg-dim);
+  transition: opacity 280ms ease;
+}
+.s-ci[data-step="1"] .intro,
+.s-ci[data-step="2"] .intro,
+.s-ci[data-step="3"] .intro { opacity: 0; pointer-events: none; }
+.s-ci .intro .line {
+  font-family: 'Inter', sans-serif;
+  font-size: 84px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: -0.018em;
+  line-height: 1.1;
+}
+.s-ci .intro .line em { font-style: normal; color: var(--accent); }
+.s-ci .intro .meta {
+  font-size: 26px;
+  color: var(--fg-dim);
+  letter-spacing: 0.04em;
+  font-family: 'JetBrains Mono', monospace;
+}
+.s-ci .intro .meta .acc { color: var(--accent-2-ink); font-weight: 600; }
+
+/* "Delivery" line — who did the work + how easy the review was. */
+.s-ci .intro .delivery {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  padding: 6px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.30);
+}
+.s-ci .intro .delivery .who {
+  font-weight: 700;
+  color: var(--accent);
+}
+.s-ci .intro .delivery .who::before {
+  content: "⚙";
+  margin-right: 8px;
+  color: var(--accent-2-ink);
+}
+.s-ci .intro .delivery .how {
+  color: var(--fg-dim);
+}
+
+/* ============================================================
+   SHARED panel-bar — used in two skins (.term dark, .gh light).
+   ============================================================ */
+.s-ci .panel-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+/* Dark/terminal flavor — used by .card-speed only. */
+.s-ci .panel-bar.term {
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: #C8CCE4;
+  font-size: 18px;
+}
+.s-ci .panel-bar.term .dot {
+  width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+}
+.s-ci .panel-bar.term .dot.r { background: #FF5F57; }
+.s-ci .panel-bar.term .dot.y { background: #FEBC2E; }
+.s-ci .panel-bar.term .dot.g { background: #28C840; }
+.s-ci .panel-bar.term .path  { margin-left: 12px; color: #DDE1F0; font-weight: 500; }
+.s-ci .panel-bar.term .grow  { flex: 1 1 auto; }
+
+/* GitHub light flavor — used by .card-cost and .card-bugs. */
+.s-ci .panel-bar.gh {
+  background: #F6F8FA;                              /* GitHub canvas-subtle */
+  border-bottom: 1px solid #D1D9E0;
+  color: #59636E;                                   /* GitHub fg-muted */
+  font-size: 16px;
+}
+.s-ci .panel-bar.gh .gh-icon { color: #1F2328; font-size: 18px; }
+.s-ci .panel-bar.gh .repo    { color: #1F2328; font-weight: 600; }
+.s-ci .panel-bar.gh .sep     { color: #59636E; }
+.s-ci .panel-bar.gh .path    { color: #59636E; font-weight: 400; }
+.s-ci .panel-bar.gh .grow    { flex: 1 1 auto; }
+
+/* Status pills */
+.s-ci .status-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.10em;
+  text-transform: lowercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.s-ci .status-pill.st-stable {
+  color: #9DE6AE;
+  background: rgba(40, 200, 64, 0.10);
+  border-color: rgba(157, 230, 174, 0.55);
+}
+/* Light-card status (GitHub green/yellow) */
+.s-ci .gh-pill {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.s-ci .gh-pill.docs {
+  background: #DDF4FF;
+  border: 1px solid #54AEFF;
+  color: #0969DA;                                /* GitHub blue */
+}
+.s-ci .gh-pill.flaky {
+  background: #FFF1E5;
+  border: 1px solid #FFB18C;
+  color: #B35900;
+}
+
+/* Micro-gloss strip (dark cards only). */
+.s-ci .micro-gloss {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  color: #C8CCE4;
+  padding: 10px 22px 8px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px dashed rgba(255,255,255,0.07);
+}
+
+/* ============================================================
+   LEFT — SPEED card (DARK terminal).
+   Hero on top, single byline beneath, modules grid below.
+   ============================================================ */
+.s-ci .card-speed .speed-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 26px 20px;
+  gap: 18px;
+  color: #DDE1F0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Hero row: BEFORE / arrow + delta / AFTER. */
+.s-ci .hero-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  justify-items: center;
+  column-gap: 24px;
+  padding: 8px 0 4px;
+}
+.s-ci .hero-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+.s-ci .hero-num .unit {
+  font-weight: 500;
+  margin-left: 3px;
+  color: inherit;
+  opacity: 0.85;
+}
+.s-ci .hero-before .hero-num {
+  color: #A5B0E6;
+  opacity: 0.7;
+  font-size: 72px;
+}
+.s-ci .hero-before .hero-num .unit { font-size: 32px; }
+.s-ci .hero-after .hero-num {
+  color: #9DE6AE;
+  font-size: 112px;
+}
+.s-ci .hero-after .hero-num .unit { font-size: 50px; }
+
+/* Stability tags beneath each hero number — encode "was flaky → now stable"
+   so the speed win and the stability win share the same hero. */
+.s-ci .hero-tag {
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+.s-ci .hero-before { display: flex; flex-direction: column; align-items: center; }
+.s-ci .hero-after  { display: flex; flex-direction: column; align-items: center; }
+.s-ci .hero-tag.flaky {
+  color: #FFA1AB;
+  background: rgba(240, 42, 90, 0.10);
+  border: 1px solid rgba(255, 161, 171, 0.45);
+}
+.s-ci .hero-tag.stable {
+  color: #9DE6AE;
+  background: rgba(40, 200, 64, 0.10);
+  border: 1px solid rgba(157, 230, 174, 0.55);
+}
+
+.s-ci .hero-arrow-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.s-ci .hero-arrow {
+  font-size: 56px;
+  color: var(--orange-soft);
+  font-weight: 700;
+  line-height: 1;
+}
+.s-ci .hero-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  color: #9DE6AE;
+  background: rgba(40, 200, 64, 0.12);
+  border: 1px solid rgba(157, 230, 174, 0.55);
+  border-radius: 999px;
+  padding: 4px 16px;
+  line-height: 1;
+}
+
+/* Single byline replaces the truncated per-cell captions. */
+.s-ci .hero-byline {
+  text-align: center;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  color: #C8CCE4;
+  padding: 8px 0 12px;
+  border-bottom: 1px dashed rgba(255,255,255,0.12);
+}
+.s-ci .hero-byline .lbl { color: #FFFFFF; font-weight: 700; }
+.s-ci .hero-byline .dim { color: #A5B0E6; }
+
+/* Modules table. */
+.s-ci .modules {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 4px;
+}
+.s-ci .modules .mod-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+  align-items: baseline;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #C8CCE4;
+  padding: 0 8px 10px;
+  border-bottom: 1px dashed rgba(255,255,255,0.12);
+  font-weight: 700;
+  column-gap: 18px;
+}
+.s-ci .modules .mod-head .col-cut { text-align: right; min-width: 70px; }
+.s-ci .mod-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+  align-items: baseline;
+  padding: 10px 8px;
+  font-size: 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  column-gap: 18px;
+}
+.s-ci .mod-row:last-child { border-bottom: 0; }
+.s-ci .mod-name { color: #FFFFFF; font-weight: 500; }
+.s-ci .mod-times { color: #DDE1F0; font-size: 20px; }
+.s-ci .mod-times .before { color: #FFA1AB; }
+.s-ci .mod-times .arrow  { color: var(--orange-soft); margin: 0 8px; }
+.s-ci .mod-times .after  { color: #9DE6AE; font-weight: 700; }
+.s-ci .mod-delta {
+  text-align: right;
+  font-weight: 700;
+  font-size: 22px;
+  color: #9DE6AE;
+  letter-spacing: 0.02em;
+  min-width: 70px;
+}
+
+/* Speed-card footer — "who delivered this" persistence chip. */
+.s-ci .card-speed .delivery-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 0 0;
+  border-top: 1px dashed rgba(255,255,255,0.10);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #B4BAD8;
+}
+.s-ci .card-speed .delivery-foot .badge {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange-soft);
+  background: rgba(241, 138, 62, 0.10);
+  border: 1px solid rgba(241, 138, 62, 0.45);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.s-ci .card-speed .delivery-foot .who {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+.s-ci .card-speed .delivery-foot .how {
+  color: #8A93BC;
+}
+
+/* ============================================================
+   RIGHT — COST card (LIGHT GitHub UI).
+   Mimics docs.github.com / GH Actions billing page.
+   ============================================================ */
+.s-ci .card-cost .cost-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 26px 20px;
+  gap: 14px;
+  color: #1F2328;
+  font-family: 'Inter', sans-serif;
+}
+.s-ci .card-cost .cost-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: #1F2328;
+}
+.s-ci .card-cost .cost-sub {
+  margin: 0;
+  font-size: 16px;
+  color: #59636E;
+  line-height: 1.4;
+}
+
+/* Hero stat — the wall-clock cut, the actual lever. */
+.s-ci .cost-hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 22px;
+  padding: 16px 18px;
+  background: #DAFBE1;                 /* GitHub success-subtle */
+  border: 1px solid #4AC26B;
+  border-radius: 8px;
+}
+.s-ci .cost-hero-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 84px;
+  line-height: 0.9;
+  color: #1A7F37;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+.s-ci .cost-hero-num .pct {
+  font-size: 52px;
+  font-weight: 600;
+  margin-left: 2px;
+  opacity: 0.85;
+}
+.s-ci .cost-hero-cap { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.s-ci .cost-hero-lbl {
+  font-size: 19px;
+  font-weight: 700;
+  color: #1F2328;
+  line-height: 1.2;
+}
+.s-ci .cost-hero-sub {
+  font-size: 14px;
+  color: #59636E;
+  line-height: 1.4;
+}
+
+/* "× every PR · every contributor · ..." multiplier callout. */
+.s-ci .cost-mult {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 14px;
+  padding: 12px 18px;
+  background: #F6F8FA;
+  border: 1px dashed #D1D9E0;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #1F2328;
+  line-height: 1.45;
+}
+.s-ci .cost-mult .op {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  color: #0969DA;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Footer block — the runner swaps, demoted. */
+.s-ci .cost-foot-card {
+  margin-top: auto;
+  border: 1px solid #D1D9E0;
+  border-radius: 6px;
+  padding: 12px 14px;
+  background: #F6F8FA;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #1F2328;
+}
+.s-ci .cost-foot-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed #D1D9E0;
+}
+.s-ci .cost-foot-lbl {
+  font-size: 13px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #59636E;
+  font-weight: 700;
+}
+.s-ci .cost-foot-sub { font-size: 13px; color: #59636E; }
+.s-ci .cost-foot-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.s-ci .cost-foot-rows .move {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  column-gap: 10px;
+  font-size: 14px;
+}
+.s-ci .cost-foot-rows .move .arrow { color: #0969DA; font-weight: 700; }
+.s-ci .cost-foot-rows .move .what  { color: #1F2328; }
+.s-ci .cost-foot-rows .move .what .ident {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #0550AE;
+  background: #DDF4FF;
+  padding: 0 5px;
+  border-radius: 4px;
+}
+.s-ci .cost-foot-rows .move .save {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #59636E;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   BUGS card (LIGHT GitHub UI · issues list).
+   Full-width at step 3.
+   ============================================================ */
+.s-ci .card-bugs .bugs-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 28px 22px;
+  gap: 14px;
+  color: #1F2328;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header strip on the bugs card — search + count. */
+.s-ci .bugs-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 14px;
+  background: #F6F8FA;
+  border: 1px solid #D1D9E0;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #1F2328;
+}
+.s-ci .bugs-bar .closed-num {
+  font-weight: 700;
+  color: #8250DF;                 /* GitHub merged-purple */
+  font-size: 17px;
+}
+.s-ci .bugs-bar .closed-num .glyph { color: #8250DF; margin-right: 6px; }
+.s-ci .bugs-bar .sep { color: #D1D9E0; }
+.s-ci .bugs-bar .qry { font-family: 'JetBrains Mono', monospace; font-size: 14px;
+                       background: #FFFFFF; padding: 2px 8px; border-radius: 6px;
+                       border: 1px solid #D1D9E0; color: #1F2328; }
+.s-ci .bugs-bar .spacer { flex: 1; }
+.s-ci .bugs-bar .grow { flex: 1; }
+
+/* Issue rows — GitHub issues-list aesthetic. */
+.s-ci .issue-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #D1D9E0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+.s-ci .issue {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 16px;
+  padding: 14px 18px;
+  border-top: 1px solid #D1D9E0;
+}
+.s-ci .issue:first-child { border-top: 0; }
+.s-ci .issue .glyph {
+  font-size: 20px;
+  color: #8250DF;                 /* merged-purple = closed-completed */
+  line-height: 1.2;
+  margin-top: 2px;
+}
+.s-ci .issue .body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.s-ci .issue .title-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+}
+.s-ci .issue .title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1F2328;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+  min-width: 0;
+}
+.s-ci .issue .num {
+  color: #59636E;
+  font-size: 17px;
+  font-weight: 400;
+  justify-self: end;
+  white-space: nowrap;
+}
+.s-ci .issue .labels { display: flex; gap: 6px; }
+.s-ci .issue .lbl {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+.s-ci .issue .lbl.flaky    { background: #FFF1E5; color: #B35900; border: 1px solid #FFB18C; }
+.s-ci .issue .lbl.bug      { background: #FFEBE9; color: #82071E; border: 1px solid #FF8182; }
+.s-ci .issue .lbl.realbug  { background: #FFEBE9; color: #82071E; border: 1px solid #CF222E; }
+.s-ci .issue .meta {
+  font-size: 14px;
+  color: #59636E;
+  line-height: 1.4;
+}
+.s-ci .issue .meta .closed-by { color: #1A7F37; font-weight: 600; }
+.s-ci .issue .meta .ident { font-family: 'JetBrains Mono', monospace; color: #0550AE; }
+.s-ci .issue .cause {
+  margin: 4px 0 0;
+  font-size: 16px;
+  color: #1F2328;
+  line-height: 1.45;
+}
+.s-ci .issue .cause .ident { font-family: 'JetBrains Mono', monospace; color: #0550AE; }
+.s-ci .issue .cause em { font-style: normal; color: #82071E; font-weight: 700; }
+.s-ci .issue .right {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #59636E;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Footer note under issues list. */
+.s-ci .bugs-foot {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 4px 4px 0;
+  font-size: 16px;
+  color: #1F2328;
+  font-family: 'Inter', sans-serif;
+}
+.s-ci .bugs-foot em { font-style: normal; color: #B35900; font-weight: 700; }
+.s-ci .bugs-foot .num {
+  font-weight: 700;
+  color: #8250DF;
+  font-size: 20px;
+}
+
+/* ============================================================
+   Tag-line at the bottom — per-step narration cue.
+   ============================================================ */
+.s-ci .tag-line {
+  padding: 2px 0 0;
+}
+.s-ci .tag-line .quote-step {
+  display: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--fg);
+  line-height: 1.22;
+  letter-spacing: -0.012em;
+}
+.s-ci .tag-line .quote-step em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-ci .tag-line .quote-step .ident {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 23px;
+  color: var(--accent-2-ink);
+}
+.s-ci .tag-line .quote-0 { display: block; }
+.s-ci[data-step="1"] .tag-line .quote-0,
+.s-ci[data-step="2"] .tag-line .quote-0,
+.s-ci[data-step="3"] .tag-line .quote-0 { display: none; }
+.s-ci[data-step="1"] .tag-line .quote-1 { display: block; }
+.s-ci[data-step="2"] .tag-line .quote-2 { display: block; }
+.s-ci[data-step="3"] .tag-line .quote-3 { display: block; }

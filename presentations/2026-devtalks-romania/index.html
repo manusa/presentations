@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="styles/s-specs-vs-tests.css" />
 <link rel="stylesheet" href="styles/s-blackbox.css" />
 <link rel="stylesheet" href="styles/s-feedback-ladder.css" />
+<link rel="stylesheet" href="styles/s-ci.css" />
 </head>
 <body>
 
@@ -2673,7 +2674,301 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 15 — ACT VI DIVIDER (Maven reactor)
+       SLIDE 22 — ACT V · FABRIC8 CI: SLOW/FLAKY → FAST/STABLE
+
+       Thesis-first. The title carries the argument; the slide
+       is the case study that proves it.
+
+       Three-step reveal:
+         step 0  speed evidence:   40m → 22m hero + per-module
+                                   cuts from #7648. Bottom narrates
+                                   the actual fix.
+         step 1  money beat:       a "CI spend per merged PR"
+                                   math panel reveals inside the
+                                   speed card: ~½ minutes × ~½
+                                   per-minute cost = ~¼ the spend.
+         step 2  bonus win:        right card reveals — flakes
+                                   that turned out to be real
+                                   production bugs (#7741 hero,
+                                   #7700 secondary, 31 counter).
+
+       Eyebrow bridges from slide 21 (feedback ladder ended with
+       "the faster the loop, the more attempts the agent can
+       afford"): the pipeline is the loop you can't fit in a
+       unit test — the slowest rung of the same ladder.
+       ============================================================ -->
+  <section class="s-ci light" data-label="22 Act 5 — Fabric8 CI: tech debt caps throughput" data-step-max="3">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · devtalks-act-05-codebase-feedback/CIPipeline.md</span>
+      <span class="spacer"></span>
+      <span class="pill">act 05 · ci · 22</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">// act 05 · the feedback loop you can't fit in a unit test</div>
+        <h2 class="title">Tech debt is <em>not optional polish.</em> It <em>caps throughput.</em></h2>
+        <p class="sub">
+          // case in point:<br>
+          <em>Fabric8 CI</em>
+        </p>
+      </header>
+
+      <div class="stage">
+        <!-- ============================================================
+             STEP 0 INTRO — case-study setup. Hidden at step 1+. Lives
+             over the empty stage so the slide doesn't look unfinished
+             while the speaker introduces the thesis.
+             ============================================================ -->
+        <div class="intro">
+          <div class="line"><em>4 epics.</em> ~30 flakes. ~40 PRs.</div>
+          <div class="delivery">
+            <span class="who">async by an agent</span>
+            <span class="how">· I just reviewed the diff (CI faster, no tests removed)</span>
+          </div>
+          <div class="meta">three wins:&nbsp; <span class="acc">⏱ faster &amp; stable</span> &nbsp;·&nbsp; <span class="acc">$ cheaper</span> &nbsp;·&nbsp; <span class="acc">⚠ hidden bugs found</span></div>
+        </div>
+
+        <!-- ============================================================
+             SPEED card — DARK terminal. Revealed at step 1, shifts left
+             at step 2, slides off at step 3.
+             ============================================================ -->
+        <article class="card card-speed">
+          <header class="panel-bar term">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">fabric8io/kubernetes-client · windows-build</span>
+            <span class="grow"></span>
+            <span class="status-pill st-stable">✓ stable</span>
+          </header>
+          <div class="micro-gloss">// wall-clock per pipeline run · same matrix, same hardware</div>
+          <div class="speed-body">
+            <div class="hero-row">
+              <div class="hero-before">
+                <div class="hero-num">40<span class="unit">m</span></div>
+                <div class="hero-tag flaky">flaky · retried 2–5×</div>
+              </div>
+              <div class="hero-arrow-col">
+                <div class="hero-arrow">→</div>
+                <div class="hero-pct">−45%</div>
+              </div>
+              <div class="hero-after">
+                <div class="hero-num">22<span class="unit">m</span></div>
+                <div class="hero-tag stable">stable · first try</div>
+              </div>
+            </div>
+            <div class="hero-byline">
+              <span class="lbl">windows build</span>
+              <span class="dim"> · 40m flaky (run #22430057522) → ~22m stable (current main)</span>
+            </div>
+
+            <div class="modules">
+              <div class="mod-head">
+                <span>module · surefire test phase</span>
+                <span>before → after</span>
+                <span class="col-cut">cut</span>
+              </div>
+              <div class="mod-row">
+                <span class="mod-name">kubernetes-tests</span>
+                <span class="mod-times"><span class="before">266s</span><span class="arrow">→</span><span class="after">109s</span></span>
+                <span class="mod-delta">-59%</span>
+              </div>
+              <div class="mod-row">
+                <span class="mod-name">kubernetes-client-api</span>
+                <span class="mod-times"><span class="before">84s</span><span class="arrow">→</span><span class="after">31s</span></span>
+                <span class="mod-delta">-62%</span>
+              </div>
+              <div class="mod-row">
+                <span class="mod-name">kubernetes-client</span>
+                <span class="mod-times"><span class="before">153s</span><span class="arrow">→</span><span class="after">43s</span></span>
+                <span class="mod-delta">-72%</span>
+              </div>
+            </div>
+
+            <!-- Delivery footnote — persists past step 0 so the agent-
+                 did-the-work framing is visible on subsequent cards too. -->
+            <div class="delivery-foot">
+              <span class="badge">⚙ async</span>
+              <span class="who">PRs authored by an agent</span>
+              <span class="how"> · review: did CI get faster? did any tests get removed?</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             COST card — LIGHT GitHub UI. Revealed at step 2.
+             Leads with the wall-clock cut (the real win); the runner
+             swaps from #7798 + #7814 are demoted to a footer block.
+             ============================================================ -->
+        <article class="card card-cost">
+          <header class="panel-bar gh">
+            <span class="gh-icon"><i class="fa-brands fa-github"></i></span>
+            <span class="repo">github.com / settings</span>
+            <span class="sep">·</span>
+            <span class="path">billing &amp; plans / usage</span>
+            <span class="grow"></span>
+            <span class="gh-pill docs">Billing</span>
+          </header>
+          <div class="cost-body">
+            <h3 class="cost-title">CI spend per merged PR</h3>
+            <p class="cost-sub">
+              Actions runners bill by the minute. The biggest lever is wall-clock.
+            </p>
+
+            <!-- Hero stat — the actual win. -->
+            <div class="cost-hero">
+              <div class="cost-hero-num">−45<span class="pct">%</span></div>
+              <div class="cost-hero-cap">
+                <div class="cost-hero-lbl">billable minutes per PR</div>
+                <div class="cost-hero-sub">40m → 22m on Windows · similar cuts across the Linux matrix</div>
+              </div>
+            </div>
+
+            <div class="cost-mult">
+              <span class="op">×</span>
+              <span><strong>every PR · every contributor · every retry that no longer happens</strong></span>
+            </div>
+
+            <!-- Footer: the runner moves, as smaller secondary wins. -->
+            <div class="cost-foot-card">
+              <div class="cost-foot-head">
+                <span class="cost-foot-lbl">also: cheaper runner SKUs</span>
+                <span class="cost-foot-sub">(smaller compound)</span>
+              </div>
+              <div class="cost-foot-rows">
+                <div class="move">
+                  <span class="arrow">→</span>
+                  <span class="what"><span class="ident">generate-model</span> + <span class="ident">javadocs</span>: macOS → ARM64</span>
+                  <span class="save">$0.062 → $0.005 / min</span>
+                </div>
+                <div class="move">
+                  <span class="arrow">→</span>
+                  <span class="what">Linux build: x64 → ARM64</span>
+                  <span class="save">$0.006 → $0.005 / min</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             BUGS card — LIGHT GitHub UI (issues list). Revealed at
+             step 3, full-width, after speed + cost slide off.
+             ============================================================ -->
+        <article class="card card-bugs">
+          <header class="panel-bar gh">
+            <span class="gh-icon"><i class="fa-brands fa-github"></i></span>
+            <span class="repo">fabric8io / kubernetes-client</span>
+            <span class="sep">·</span>
+            <span class="path">issues?q=is:closed+label:flaky</span>
+            <span class="grow"></span>
+            <span class="gh-pill flaky">label: flaky</span>
+          </header>
+          <div class="bugs-body">
+            <div class="bugs-bar">
+              <span class="closed-num"><span class="glyph">✓</span> 31 closed</span>
+              <span class="sep">·</span>
+              <span>flaky issues, closed in the last 8 weeks</span>
+              <span class="grow"></span>
+              <span class="qry">is:closed label:flaky</span>
+            </div>
+
+            <div class="issue-list">
+              <article class="issue">
+                <span class="glyph">✓</span>
+                <div class="body">
+                  <div class="title-row">
+                    <span class="title"><span class="ident">ExecWebSocketListener.onError</span> drops exit code on peer-close race</span>
+                    <span class="num">#7700</span>
+                  </div>
+                  <div class="labels">
+                    <span class="lbl flaky">flaky</span>
+                    <span class="lbl realbug">production bug</span>
+                  </div>
+                  <p class="cause">
+                    Triggered by a flaky <span class="ident">PodTest.testExecWithExitCode</span>.
+                    Root cause: <span class="ident">cleanUpOnce()</span> synchronously shut down the
+                    SerialExecutor, discarding the queued <span class="ident">handleExitStatus</span>
+                    — so <em>any</em> caller of <span class="ident">exec()</span> could lose the parsed exit code.
+                  </p>
+                </div>
+                <div class="right">closed<br>27 days ago<br>by manusa</div>
+              </article>
+
+              <article class="issue">
+                <span class="glyph">✓</span>
+                <div class="body">
+                  <div class="title-row">
+                    <span class="title"><span class="ident">ExecListener.onClose / onFailure</span> lost on close-handshake race</span>
+                    <span class="num">#7779</span>
+                  </div>
+                  <div class="labels">
+                    <span class="lbl flaky">flaky</span>
+                    <span class="lbl realbug">production bug</span>
+                  </div>
+                  <p class="cause">
+                    Surfaced via flake <span class="ident">#7756</span>.
+                    Any production transport that drops the close handshake under load
+                    left callers blocked on a latch <em>forever</em>.
+                  </p>
+                </div>
+                <div class="right">closed<br>14 days ago<br>by manusa</div>
+              </article>
+
+              <article class="issue">
+                <span class="glyph">✓</span>
+                <div class="body">
+                  <div class="title-row">
+                    <span class="title"><span class="ident">SharedProcessor.distribute()</span> NPEs if called after <span class="ident">informer.stop()</span></span>
+                    <span class="num">#7716</span>
+                  </div>
+                  <div class="labels">
+                    <span class="lbl flaky">flaky</span>
+                    <span class="lbl realbug">production bug</span>
+                  </div>
+                  <p class="cause">
+                    Flake report on <span class="ident">SharedProcessorTest</span>. Root cause:
+                    <span class="ident">SerialExecutor.execute()</span> after shutdown — any production
+                    code stopping an informer mid-flight could hit the same NPE.
+                  </p>
+                </div>
+                <div class="right">closed<br>22 days ago<br>by manusa</div>
+              </article>
+            </div>
+
+            <div class="bugs-foot">
+              <span class="num">5+</span>
+              <span>of the 31 closed flakes were <em>real production bugs</em>, hidden under low CI contention.</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="tag-line">
+        <div class="quote-step quote-0">
+          When AI makes everything move fast, tech debt shows up as a <em>throughput cap.</em>
+        </div>
+        <div class="quote-step quote-1">
+          <em>40 minutes and flaky</em>, retried 2–5×.&nbsp; Now <em>22 and stable</em>, first try.
+        </div>
+        <div class="quote-step quote-2">
+          <em>Half</em> the billable minutes, <em>every PR</em>. Some jobs got cheaper runners too.
+        </div>
+        <div class="quote-step quote-3">
+          And the bonus: when the retry loop went away, <em>flakes</em> turned into <em>real production bugs.</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 23 — ACT VI DIVIDER (Maven reactor)
        ============================================================ -->
   <section class="s-section" data-label="Act VI — Close">
     <div class="chrome-top">
