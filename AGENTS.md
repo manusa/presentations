@@ -33,6 +33,14 @@ Visiting `/` shows a dev-only index of every deck under `static/presentations/`,
 
 **Cleanup is automatic** for Claude Code sessions. The wrapper also writes `.live-server.pid`; the Stop hook in `.claude/settings.json` runs `npm run --silent serve:static:stop` when the session ends, which reads the PID, verifies it still belongs to a `live-server` process (scoped check so it never kills another worktree's server), terminates it, and removes both sidecar files. Outside a Claude session, run the same command manually: `npm run serve:static:stop`.
 
+**Deep-linking to a slide** — static decks accept a `#<N>` hash on initial load (1-indexed) to land on section N. Useful when iterating on one slide so the browser re-opens where you left off:
+
+```
+http://localhost:$(cat .live-server.port)/presentations/<slug>/#19
+```
+
+This is part of the deck-kit contract (`static/deck-kit/README.md` § URL hash). The `screenshot` script exposes the same entry point via `--slide N [--step K]` for one-shot captures of a specific (section, step) state without manual ArrowRight clicking.
+
 ## Visual Review (Screenshots + PDF)
 
 Four Playwright-backed scripts produce visual artifacts. All output goes under `./screenshots/` (gitignored). All capture at 1920×1080.
@@ -48,9 +56,14 @@ npm run screenshot -- http://localhost:8000/ landing
 npm run screenshot -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ early-state --delay 200
 ```
 
-**Whole deck → PNG per slide** — `screenshot:deck`. Walks a `<deck-stage>`-style deck via `ArrowRight` keypress, captures each slide after animations settle. Outputs `screenshots/<name>/slide-NN.png`.
+**Whole deck → PNG per (section, step)** — `screenshot:deck`. Walks a `<deck-stage>`-style deck via `ArrowRight` keypress, captures each (section, step) state after animations settle. Outputs `screenshots/<name>/slide-NN.png` for non-stepped sections and `screenshots/<name>/slide-NN-step-K.png` for sections with `data-step-max`.
 ```bash
 npm run screenshot:deck -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ devtalks-current
+```
+
+**Single slide at a specific step** — `screenshot --slide N [--step K]`. Loads the deck, jumps to section N (1-indexed), advances to step K, captures. Equivalent to loading the URL with the `#N` hash plus K manual `ArrowRight` presses, without the manual clicking.
+```bash
+npm run screenshot -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ s19-step1 --slide 19 --step 1
 ```
 
 **Whole deck → multi-page PDF** — `export:pdf`. Renders straight to a 1920×1080 vector PDF via Chromium's `page.pdf()` against the deck's `@media print` rule — text remains selectable, file size stays small (no rasterised slides). Photographic WebP `<image-slot>` sources are transcoded to JPEG just-in-time before render, because PDF doesn't support WebP and would otherwise embed each one as a multi-megabyte FlateDecode bitmap. Hand the output to conference organizers who require PDF.
@@ -58,9 +71,9 @@ npm run screenshot:deck -- http://localhost:$(cat .live-server.port)/presentatio
 npm run export:pdf -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ /tmp/devtalks-2026.pdf
 ```
 
-**Step-aware capture**: a `<section>` that publishes `data-step-max="N"` becomes N+1 PDF pages, rendered at `data-step="0..N"`. This is the contract `.s-amplifier` uses (3 states per slide); any future stepping slide should follow it and `export:pdf` will pick it up with no code changes.
+**Step-aware capture**: a `<section>` that publishes `data-step-max="N"` becomes N+1 PDF pages (in `export:pdf`) and N+1 PNGs (in `screenshot:deck` / snapshot scripts), rendered at `data-step="0..N"`. This is the contract `.s-amplifier` uses (3 states per slide); any future stepping slide should follow it and all four scripts will pick it up with no code changes.
 
-`screenshot:deck` and the snapshot scripts walk the deck via **keyboard simulation** (`ArrowRight`) — agnostic of any specific `deck-stage` API, so they keep working as `deck-stage.js` evolves. `export:pdf` takes a different path (DOM-clone the step states, render once in print media) because per-slide PNGs can't preserve vector text or compress photos efficiently.
+`screenshot:deck` and the snapshot scripts walk the deck via **keyboard simulation** (`ArrowRight`) — agnostic of any specific `deck-stage` API, so they keep working as `deck-stage.js` evolves. The walker is step-aware: it discovers `(section, step)` pairs up front from `data-step-max` and presses ArrowRight once per pair, matching the deck's own step-reveal handler. `export:pdf` takes a different path (DOM-clone the step states, render once in print media) because per-slide PNGs can't preserve vector text or compress photos efficiently.
 
 ## Snapshot Regression Tests
 
@@ -138,7 +151,7 @@ Same pattern whether the change is supposed to be invisible (refactor) or very v
 2. **Before editing**: `npm run snapshot:baseline -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ <deck-name>` to capture the "before" state.
 3. Edit files. Browser auto-reloads.
 4. `npm run snapshot:diff -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ <deck-name>`.
-5. Review every flagged slide under `snapshots/<deck-name>/diff/slide-NN.png`. Confirm each delta matches intent:
+5. Review every flagged capture under `snapshots/<deck-name>/diff/slide-NN[-step-K].png`. Confirm each delta matches intent:
    - Refactor: expect 0 diffs. Any diff is a regression — investigate, don't shrug.
    - Visual change: expect diffs only on the slides you touched. Anything else is collateral damage.
 6. Commit code changes only. `snapshots/` is gitignored — nothing to add there.

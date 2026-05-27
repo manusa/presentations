@@ -2,20 +2,20 @@
 /* eslint-disable no-console */
 const path = require('path');
 const fs = require('fs');
-const {walkDeck} = require('./lib/deck');
+const {walkDeck, slideFilename} = require('./lib/deck');
 
 const USAGE = `Usage: npm run snapshot:diff -- <deck-url> <deck-name>
 
   <deck-url>   URL of a deck (single page containing <deck-stage> with <section> children)
   <deck-name>  Short slug matching a previously-captured baseline
 
-Captures the deck's current state, then pixel-diffs each slide against the committed
-baseline at snapshots/<deck-name>/baseline/. Anti-aliasing differences are tolerated;
-real visual changes are surfaced.
+Captures the deck's current state, then pixel-diffs each (section, step) capture
+against the baseline at snapshots/<deck-name>/baseline/. Anti-aliasing differences
+are tolerated; real visual changes are surfaced.
 
-Outputs:
-  snapshots/<deck-name>/current/slide-NN.png   (gitignored — last capture)
-  snapshots/<deck-name>/diff/slide-NN.png      (gitignored — only when that slide differs)
+Outputs (mirrors the baseline filename scheme):
+  snapshots/<deck-name>/current/slide-NN[-step-K].png   (gitignored — last capture)
+  snapshots/<deck-name>/diff/slide-NN[-step-K].png      (gitignored — only when that capture differs)
 
 Console report: per-slide pixel diff count + %.
 Exit code: 0 if all slides identical, 1 if any differ (or slide count changed).
@@ -86,20 +86,10 @@ try {
     const page = await context.newPage();
     await page.goto(url, {waitUntil: 'networkidle', timeout: 30_000});
 
-    const total = await page.evaluate(() => {
-      const stage = document.querySelector('deck-stage');
-      return stage ? stage.querySelectorAll(':scope > section').length : 0;
-    });
-    if (total === 0) {
-      console.error('No <deck-stage> > <section> elements found at this URL.');
-      process.exit(1);
-    }
-    const padLen = Math.max(2, String(total).length);
-
-    console.log(`Capturing current state of "${deckName}" — ${total} slides`);
+    console.log(`Capturing current state of "${deckName}"`);
     const currentPaths = [];
-    await walkDeck(page, async (i, n) => {
-      const p = path.join(currentDir, `slide-${String(i).padStart(padLen, '0')}.png`);
+    const total = await walkDeck(page, async (slide) => {
+      const p = path.join(currentDir, slideFilename(slide));
       await page.screenshot({path: p, fullPage: false});
       currentPaths.push(p);
     });
@@ -155,13 +145,13 @@ try {
 
     console.log('');
     if (regressions === 0) {
-      console.log(`✓ all ${total} slides identical to baseline`);
+      console.log(`✓ all ${total} captures identical to baseline`);
       process.exit(0);
     } else {
-      console.log(`✗ ${regressions} slide(s) differ from baseline`);
-      if (extras.length) console.log(`  new slides:     ${extras.join(', ')}`);
-      if (missing.length) console.log(`  removed slides: ${missing.join(', ')}`);
-      console.log(`  diff overlays:  ${path.relative(process.cwd(), diffDir)}/`);
+      console.log(`✗ ${regressions} capture(s) differ from baseline`);
+      if (extras.length) console.log(`  new captures:     ${extras.join(', ')}`);
+      if (missing.length) console.log(`  removed captures: ${missing.join(', ')}`);
+      console.log(`  diff overlays:    ${path.relative(process.cwd(), diffDir)}/`);
       process.exit(1);
     }
   } finally {

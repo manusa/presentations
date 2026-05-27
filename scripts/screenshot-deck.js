@@ -2,18 +2,19 @@
 /* eslint-disable no-console */
 const path = require('path');
 const fs = require('fs');
-const {walkDeck} = require('./lib/deck');
+const {walkDeck, slideFilename} = require('./lib/deck');
 
 const USAGE = `Usage: npm run screenshot:deck -- <deck-url> <name>
 
   <deck-url>  URL of a deck (single page containing <deck-stage> with <section> children)
   <name>      Output subdirectory name under screenshots/
 
-Captures one PNG per slide at 1920x1080:
-  ./screenshots/<name>/slide-01.png, slide-02.png, ...
+Captures one PNG per (section, step) at 1920x1080:
+  ./screenshots/<name>/slide-NN.png            for non-stepped sections
+  ./screenshots/<name>/slide-NN-step-K.png     for sections with data-step-max="N" (one PNG per step state)
 
 How it works:
-  - Loads the deck, counts <deck-stage> > <section> children
+  - Loads the deck, discovers (section, step) pairs from <deck-stage> > <section>[data-step-max]
   - Navigates via ArrowRight keypress (agnostic of any deck-stage internals)
   - Waits for non-looping CSS animations to finish before each capture
 
@@ -60,26 +61,14 @@ try {
     const page = await context.newPage();
     await page.goto(url, {waitUntil: 'networkidle', timeout: 30_000});
 
-    // We don't know the total until walkDeck queries it, but we want zero-padded
-    // filenames. Discover count up-front so pad width is known.
-    const total = await page.evaluate(() => {
-      const stage = document.querySelector('deck-stage');
-      return stage ? stage.querySelectorAll(':scope > section').length : 0;
-    });
-    if (total === 0) {
-      console.error('No <deck-stage> > <section> elements found at this URL.');
-      process.exit(1);
-    }
-    const padLen = Math.max(2, String(total).length);
-
-    console.log(`Capturing ${total} slides from ${url}`);
-    await walkDeck(page, async (i, n) => {
-      const outPath = path.join(outDir, `slide-${String(i).padStart(padLen, '0')}.png`);
+    console.log(`Capturing from ${url}`);
+    const total = await walkDeck(page, async (slide, totalPairs, captureIndex) => {
+      const outPath = path.join(outDir, slideFilename(slide));
       await page.screenshot({path: outPath, fullPage: false});
-      console.log(`  [${i}/${n}] ${outPath}`);
+      console.log(`  [${captureIndex}/${totalPairs}] ${outPath}`);
     });
 
-    console.log(`✓ ${total} slides → ${outDir}`);
+    console.log(`✓ ${total} captures → ${outDir}`);
   } finally {
     await browser.close();
   }
