@@ -41,9 +41,11 @@
 }
 
 /* ============================================================
-   Body grid — header / stage / tagline
+   Body grid — header / stage / tagline.
+   IMPORTANT: use `>` so this does NOT match nested `.body` divs
+   inside issue cards (those are content containers).
    ============================================================ */
-.s-ci .body {
+.s-ci > .body {
   position: absolute;
   inset: 56px 0 56px 0;
   z-index: 1;
@@ -330,6 +332,32 @@
 }
 .s-ci .hero-after .hero-num .unit { font-size: 50px; }
 
+/* Stability tags beneath each hero number — encode "was flaky → now stable"
+   so the speed win and the stability win share the same hero. */
+.s-ci .hero-tag {
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+.s-ci .hero-before { display: flex; flex-direction: column; align-items: center; }
+.s-ci .hero-after  { display: flex; flex-direction: column; align-items: center; }
+.s-ci .hero-tag.flaky {
+  color: #FFA1AB;
+  background: rgba(240, 42, 90, 0.10);
+  border: 1px solid rgba(255, 161, 171, 0.45);
+}
+.s-ci .hero-tag.stable {
+  color: #9DE6AE;
+  background: rgba(40, 200, 64, 0.10);
+  border: 1px solid rgba(157, 230, 174, 0.55);
+}
+
 .s-ci .hero-arrow-col {
   display: flex;
   flex-direction: column;
@@ -421,89 +449,133 @@
   display: flex;
   flex-direction: column;
   padding: 22px 26px 20px;
-  gap: 16px;
+  gap: 14px;
   color: #1F2328;
   font-family: 'Inter', sans-serif;
 }
 .s-ci .card-cost .cost-title {
   margin: 0;
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   letter-spacing: -0.005em;
   color: #1F2328;
 }
 .s-ci .card-cost .cost-sub {
   margin: 0;
-  font-size: 15px;
+  font-size: 16px;
   color: #59636E;
   line-height: 1.4;
 }
 
-/* Pricing table — mirrors GH docs typography. */
-.s-ci .price-table {
-  border: 1px solid #D1D9E0;
-  border-radius: 6px;
-  overflow: hidden;
-  font-family: 'Inter', sans-serif;
-}
-.s-ci .price-row {
+/* Hero stat — the wall-clock cut, the actual lever. */
+.s-ci .cost-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr) auto;
+  grid-template-columns: auto 1fr;
   align-items: center;
-  column-gap: 12px;
-  padding: 8px 14px;
-  font-size: 15px;
-  border-top: 1px solid #D1D9E0;
+  column-gap: 22px;
+  padding: 16px 18px;
+  background: #DAFBE1;                 /* GitHub success-subtle */
+  border: 1px solid #4AC26B;
+  border-radius: 8px;
 }
-.s-ci .price-row:first-child { border-top: 0; }
-.s-ci .price-row.head {
-  background: #F6F8FA;
-  font-size: 13px;
-  font-weight: 600;
+.s-ci .cost-hero-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 100px;
+  line-height: 0.9;
+  color: #1A7F37;
+  letter-spacing: -0.04em;
+}
+.s-ci .cost-hero-cap { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.s-ci .cost-hero-lbl {
+  font-size: 19px;
+  font-weight: 700;
+  color: #1F2328;
+  line-height: 1.2;
+}
+.s-ci .cost-hero-sub {
+  font-size: 14px;
   color: #59636E;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 8px 14px;
+  line-height: 1.4;
 }
-.s-ci .price-row .os    { color: #1F2328; }
-.s-ci .price-row .sku   { color: #59636E; font-family: 'JetBrains Mono', monospace; font-size: 14px;
-                          background: #F6F8FA; padding: 1px 8px; border-radius: 6px;
-                          border: 1px solid #D1D9E0; justify-self: start; }
-.s-ci .price-row .rate  { text-align: right; font-weight: 600; color: #1F2328; }
-/* Highlighted rows — fabric8 destinations + previous home. */
-.s-ci .price-row.hot { background: #DDF4FF; }
-.s-ci .price-row.hot .os, .s-ci .price-row.hot .rate { color: #0550AE; font-weight: 700; }
-.s-ci .price-row.was { background: #FFF1E5; }
-.s-ci .price-row.was .rate { color: #B35900; font-weight: 700; }
 
-/* The moves callout — annotates Fabric8's actual swaps. */
-.s-ci .cost-moves {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 12px 14px;
+/* "× every PR · every contributor · ..." multiplier callout. */
+.s-ci .cost-mult {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 14px;
+  padding: 12px 18px;
   background: #F6F8FA;
-  border: 1px solid #D1D9E0;
+  border: 1px dashed #D1D9E0;
   border-radius: 6px;
-  font-size: 15px;
+  font-size: 16px;
   color: #1F2328;
   line-height: 1.45;
 }
-.s-ci .cost-moves .move { display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; column-gap: 10px; }
-.s-ci .cost-moves .move .arrow { color: #0969DA; font-weight: 700; }
-.s-ci .cost-moves .move .what { color: #1F2328; }
-.s-ci .cost-moves .move .what .ident { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #0550AE; background: #DDF4FF; padding: 0 6px; border-radius: 4px; }
-.s-ci .cost-moves .move .save { color: #1A7F37; font-weight: 700; white-space: nowrap; }
-
-.s-ci .cost-foot {
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid #D1D9E0;
-  font-size: 16px;
-  color: #1F2328;
-  font-weight: 500;
+.s-ci .cost-mult > span:first-child {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  color: #0969DA;
+  font-weight: 700;
+  line-height: 1;
 }
-.s-ci .cost-foot em { font-style: normal; color: #1A7F37; font-weight: 700; }
+
+/* Footer block — the runner swaps, demoted. */
+.s-ci .cost-foot-card {
+  margin-top: auto;
+  border: 1px solid #D1D9E0;
+  border-radius: 6px;
+  padding: 12px 14px;
+  background: #F6F8FA;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #1F2328;
+}
+.s-ci .cost-foot-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed #D1D9E0;
+}
+.s-ci .cost-foot-lbl {
+  font-size: 13px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #59636E;
+  font-weight: 700;
+}
+.s-ci .cost-foot-sub { font-size: 13px; color: #59636E; }
+.s-ci .cost-foot-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.s-ci .cost-foot-rows .move {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  column-gap: 10px;
+  font-size: 14px;
+}
+.s-ci .cost-foot-rows .move .arrow { color: #0969DA; font-weight: 700; }
+.s-ci .cost-foot-rows .move .what  { color: #1F2328; }
+.s-ci .cost-foot-rows .move .what .ident {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #0550AE;
+  background: #DDF4FF;
+  padding: 0 5px;
+  border-radius: 4px;
+}
+.s-ci .cost-foot-rows .move .save {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #59636E;
+  white-space: nowrap;
+}
 
 /* ============================================================
    BUGS card (LIGHT GitHub UI · issues list).
