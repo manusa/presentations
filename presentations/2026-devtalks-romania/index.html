@@ -36,6 +36,7 @@
 <link rel="stylesheet" href="styles/s-skill.css" />
 <link rel="stylesheet" href="styles/s-specs-vs-tests.css" />
 <link rel="stylesheet" href="styles/s-blackbox.css" />
+<link rel="stylesheet" href="styles/s-feedback-ladder.css" />
 </head>
 <body>
 
@@ -2437,6 +2438,270 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
           <span class="chip">QuarkusTest</span>
           <span class="chip">Testcontainers</span>
           <span class="chip">YAKD · Selenium</span>
+        </div>
+      </footer>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 21 — ACT V · FAST FEEDBACK LOOPS
+       "An agent is only as fast as the feedback loop."
+
+       Two-step reveal:
+         step 0  THE PROBLEM. WebLogic + EAR, 2010. A frozen
+                 startup log on the left, a stopwatch parked at
+                 ~30 min on the right. Below: the anchor line —
+                 "the agent lives in this exact loop."
+         step 1  THE ANSWER. The WebLogic card demotes into a
+                 compact ribbon at the top (☠ legacy, ~30 min)
+                 and a 4-rung Java tooling ladder cascades in
+                 below it, fastest at the top. Footer tagline:
+                 "the faster the loop, the more attempts the
+                 agent can afford."
+
+       Timing numbers are real (per-author measurements + own
+       projects' CI logs):
+         tier 1 — Fabric8 @EnableKubernetesMockClient
+                  PriorityClassTest · ~50 ms / test
+         tier 2 — Fabric8 @EnableKubeAPIServer (kube-api-test)
+                  PaginationIT · ~3 s class (then ~5 ms / test)
+         tier 3 — YAKD @QuarkusTest + @WithKubernetesTestServer
+                  NamespaceTest · ~0.4 s class
+         tier 4 — Helm Java KindContainer (Testcontainers + KinD)
+                  HelmKubernetesTest · ~50 s startup (CI log)
+       ============================================================ -->
+  <section class="s-feedback-ladder light" data-label="21 Act 5 — Fast feedback loops: the agent must learn quickly" data-step-max="1">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · devtalks-act-05-codebase-feedback/FeedbackLoops.md</span>
+      <span class="spacer"></span>
+      <span class="pill">act 05 · feedback loops · 21</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">
+          <span class="eb-0">// act 05 · the loop you remember</span>
+          <span class="eb-1">// act 05 · the loop is the bottleneck</span>
+        </div>
+        <h2 class="title">
+          <span class="t-0">Fast feedback loops — the agent must <em>learn quickly</em>.</span>
+          <span class="t-1">An agent is only as fast as the <em>feedback loop</em>.</span>
+        </h2>
+        <p class="sub">
+          <span class="s-0">// the loop you remember from 2010 is now<br>the loop your <span class="t-warn">agent is trapped in</span></span>
+          <span class="s-1">// measured on my projects:<br><span class="t-warn">every lower tier buys confidence at a cost</span></span>
+        </p>
+      </header>
+
+      <div class="stage">
+        <!-- ============================================================
+             LEGACY PANEL.
+             Step 0: hero card with a WebLogic startup log on the left
+             and a stopwatch frozen at ~30 min on the right.
+             Step 1: collapses into a compact ribbon — the panel-bar
+             stays, the body disappears (.legacy-body) and a small
+             inline summary (.legacy-mini) takes its place at the right.
+             ============================================================ -->
+        <article class="legacy-panel">
+          <header class="panel-bar term">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">WebLogic 10.3 · app.ear<span class="path-strong"> · 2010</span></span>
+            <span class="grow"></span>
+            <span class="legacy-mini">// changing a button label · one cycle <span class="badge-time">~30 min</span></span>
+            <span class="status-pill st-stuck">☠ legacy</span>
+          </header>
+          <div class="legacy-body">
+            <!-- WebLogic startup log — synthesized but believable; the
+                 timestamps tell the story: ~26 min from "Starting" to
+                 the deploy completing, half an hour gone for a one-line
+                 change. -->
+            <div class="legacy-log">
+              <div class="ln"><span class="t-mute">[</span><span class="t-time">14:03:11</span><span class="t-mute">]</span> <span class="t-info">&lt;Notice&gt;</span> &lt;WebLogicServer&gt; Starting WebLogic Server&hellip;</div>
+              <div class="ln"><span class="t-mute">[</span><span class="t-time">14:05:42</span><span class="t-mute">]</span> &lt;JDBC&gt; pool 'AppPool' created, awaiting datasource&hellip;</div>
+              <div class="ln"><span class="t-mute">[</span><span class="t-time">14:08:19</span><span class="t-mute">]</span> &lt;Deployer&gt; Deploying application 'app.ear'&hellip;</div>
+              <div class="ln"><span class="t-mute">[</span><span class="t-time">14:14:07</span><span class="t-mute">]</span> &lt;EJB&gt; Initializing 312 session beans&hellip;</div>
+              <div class="ln"><span class="t-mute">[</span><span class="t-time">14:21:55</span><span class="t-mute">]</span> &lt;JNDI&gt; Re-binding 187 names into context&hellip;</div>
+              <div class="ln"><span class="t-mute">[</span><span class="t-time">14:28:34</span><span class="t-mute">]</span> <span class="t-warn">&lt;Warning&gt;</span> Slow startup. Re-deploy after each change.</div>
+              <div class="ln"><span class="t-mute">[</span><span class="t-time">14:31:02</span><span class="t-mute">]</span> Application available at /app<span class="cursor">&nbsp;</span></div>
+            </div>
+            <!-- Stopwatch — the punchline. Big, red, frozen at 30 min. -->
+            <div class="stopwatch">
+              <div class="sw-glyph">⏱</div>
+              <div class="sw-time">~30</div>
+              <div class="sw-unit">minutes</div>
+              <div class="sw-task">one button-label change.<br>one feedback cycle.</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Step-0 anchor — the speaker's bridge from anecdote to thesis.
+             Hidden at step 1; the ladder takes over the same vertical
+             real estate. -->
+        <p class="legacy-anchor">
+          // the agent is <em>trapped in this loop too</em>. shrink it.
+        </p>
+
+        <!-- ============================================================
+             LADDER. Five rungs, fastest at top, real cluster dimmed
+             at the bottom. Each rung shows:
+               • tier label  — arrow direction + a single label that
+                               agrees with the badge ("seconds" not
+                               "sub-second class")
+               • annotation  — canonical one-liner that turns the
+                               tooling on; readable enough that an
+                               agent in the room recognizes it
+               • gloss       — project + framework + the actual test
+                               class used to measure the timing
+               • cadence     — the portfolio cue: when in the dev cycle
+                               this tier runs and (implicitly) how many
+                               of these tests you write
+               • badge       — per-class cold-start wallclock; the
+                               number the agent actually waits on.
+                               Consistent unit across all rungs.
+
+             All timings are per-class cold wallclock, picked because
+             that is what the agent observes between "push change"
+             and "see green/red". Per-test timings would be more
+             impressive on tiers 1-2 but the cold-start cost is the
+             real iteration bottleneck.
+             ============================================================ -->
+        <div class="ladder">
+          <!-- TIER 1 — in-process mock. Fabric8 KubernetesMockServer.
+               Measured: PriorityClassTest 7 tests in 1.06 s class
+               total. Headline: ~1 s / class. Cadence: every save,
+               majority of the suite. -->
+          <article class="rung rung-1">
+            <div class="tier">
+              <div class="arrow">▲</div>
+              <div class="label">seconds</div>
+              <div class="scale">in-process · zero containers</div>
+            </div>
+            <div class="divider" aria-hidden="true"></div>
+            <div class="tooling">
+              <div class="anno"><span class="t-anno">@EnableKubernetesMockClient</span>(https = false)</div>
+              <div class="gloss">Fabric8 · <em>KubernetesMockServer</em> · <span class="src">PriorityClassTest</span></div>
+              <div class="cadence">// run on <em>every save</em> · default inner loop</div>
+            </div>
+            <div class="badge">
+              <div class="num">~1</div>
+              <div class="unit">s / class</div>
+            </div>
+          </article>
+
+          <!-- TIER 2 — in-process real apiserver. Fabric8 kube-api-test.
+               Measured: PaginationIT 2 tests in 3.05 s class total
+               (apiserver + etcd cold start). Headline: ~3 s / class.
+               Cadence: every save, many of these. -->
+          <article class="rung rung-2">
+            <div class="tier">
+              <div class="arrow">▲</div>
+              <div class="label">seconds</div>
+              <div class="scale">real apiserver · no kubelet</div>
+            </div>
+            <div class="divider" aria-hidden="true"></div>
+            <div class="tooling">
+              <div class="anno"><span class="t-anno">@EnableKubeAPIServer</span></div>
+              <div class="gloss">Fabric8 · <em>kube-api-test</em> (envtest) · <span class="src">PaginationIT</span></div>
+              <div class="cadence">// run on <em>every save</em> · many of these</div>
+            </div>
+            <div class="badge">
+              <div class="num">~3</div>
+              <div class="unit">s / class</div>
+            </div>
+          </article>
+
+          <!-- TIER 3 — full stack in-process. Quarkus + RestAssured
+               + KubernetesTestServer. YAKD CI: NamespaceTest 0.432 s
+               warm. Cold a single @QuarkusTest class adds ~4-5 s of
+               Quarkus boot, so the honest "cold first class" wall-
+               clock is ~5 s. Cadence: every commit, fewer of these. -->
+          <article class="rung rung-3">
+            <div class="tier">
+              <div class="arrow">▼</div>
+              <div class="label">seconds</div>
+              <div class="scale">your app · booted · in-process</div>
+            </div>
+            <div class="divider" aria-hidden="true"></div>
+            <div class="tooling">
+              <div class="anno"><span class="t-anno">@QuarkusTest</span> <span class="t-anno">@WithKubernetesTestServer</span></div>
+              <div class="gloss">YAKD · Quarkus + RestAssured (+ Selenium) · <span class="src">NamespaceTest</span></div>
+              <div class="cadence">// run on <em>every commit</em> · fewer of these</div>
+            </div>
+            <div class="badge">
+              <div class="num">~5</div>
+              <div class="unit">s / class</div>
+            </div>
+          </article>
+
+          <!-- TIER 4 — KinD cluster, in a container. Helm Java +
+               kindcontainer (Testcontainers extension). helm-java
+               CI run 26324052133: HelmKubernetesTest total 102.4 s;
+               KinD container startup ~50 s. Headline: ~50 s startup,
+               the cluster boot you pay before tests run. NOT a real
+               cluster — a real Kubernetes cluster in a container.
+               This is "final confidence", not "last resort". -->
+          <article class="rung rung-4">
+            <div class="tier">
+              <div class="arrow">▼</div>
+              <div class="label">minute</div>
+              <div class="scale">kind cluster · final confidence</div>
+            </div>
+            <div class="divider" aria-hidden="true"></div>
+            <div class="tooling">
+              <div class="anno"><span class="t-kw">new</span> <span class="t-type">KindContainer</span>&lt;&gt;().<span class="t-fn">start</span>()</div>
+              <div class="gloss">Helm Java · Testcontainers + KinD · <span class="src">HelmKubernetesTest</span></div>
+              <div class="cadence">// run on <em>every PR</em> · few of these</div>
+            </div>
+            <div class="badge">
+              <div class="num">~50</div>
+              <div class="unit">s / class</div>
+            </div>
+          </article>
+
+          <!-- TIER 5 — real dev cluster. No annotation, no container —
+               just a KubernetesClient pointed at the actual kubeconfig.
+               Network-bound, schedule-bound, contention-prone. The
+               agent should rarely iterate here; this is where you
+               smoke-test before release. Dimmed visually (opacity 0.62
+               via .rung-5 in CSS) to telegraph "not the iteration
+               loop". -->
+          <article class="rung rung-5">
+            <div class="tier">
+              <div class="arrow">▼</div>
+              <div class="label">minutes</div>
+              <div class="scale">real dev cluster · pre-release</div>
+            </div>
+            <div class="divider" aria-hidden="true"></div>
+            <div class="tooling">
+              <div class="anno"><span class="t-kw">new</span> <span class="t-type">KubernetesClientBuilder</span>().<span class="t-fn">build</span>()</div>
+              <div class="gloss">your real cluster · <span class="src">kubectl apply</span> manifests · smoke tests</div>
+              <div class="cadence">// run <em>before release</em> · a handful</div>
+            </div>
+            <div class="badge">
+              <div class="num">~10</div>
+              <div class="unit">min / suite</div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <footer class="tag-line">
+        <div class="quote">
+          The faster the loop,
+          <span class="accent">the more attempts the agent can afford.</span>
+        </div>
+        <div class="chips">
+          <span class="chips-lbl">// the rule of thumb</span>
+          <span class="chip">many at the top</span>
+          <span class="chip">few at the bottom</span>
+          <span class="chip">the agent iterates where it's cheap</span>
         </div>
       </footer>
     </div>
