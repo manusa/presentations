@@ -1,0 +1,570 @@
+/* ============================================================
+   .s-feedback-ladder — Act 5 · Fast feedback loops.
+   "An agent is only as fast as the feedback loop."
+
+   Two-step reveal:
+     step 0  THE PROBLEM. WebLogic + EAR, 2010. A frozen startup
+             log and a stopwatch parked at ~30 min, centered.
+             Speaker delivers the analogy: the agent lives in this
+             same loop.
+     step 1  THE ANSWER. The WebLogic card demotes to a compact
+             "legacy" strip pinned to the top of the stage; below
+             it, a 4-rung Java tooling ladder cascades in — fastest
+             at top, slowest at bottom — with real timing badges
+             keyed to a green→amber→red speed rail.
+
+   Visual idiom: shares the dark-navy terminal-card chrome with
+   .s-blackbox and .s-specs-vs-tests so it reads as a sibling
+   surface in the same Act V room.
+   ============================================================ */
+
+.s-feedback-ladder::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Body grid — header / stage / tagline
+   ============================================================ */
+.s-feedback-ladder .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 1;
+  padding: 30px var(--pad-x) 24px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 18px;
+}
+
+/* === Header === */
+.s-feedback-ladder .head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: 48px;
+}
+.s-feedback-ladder .head .eyebrow {
+  grid-column: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: var(--accent-ink);
+  margin-bottom: 12px;
+}
+/* Eyebrow swaps between steps to mirror the act of the slide. */
+.s-feedback-ladder .head .eyebrow .eb-1 { display: none; }
+.s-feedback-ladder[data-step="1"] .head .eyebrow .eb-0 { display: none; }
+.s-feedback-ladder[data-step="1"] .head .eyebrow .eb-1 { display: inline; }
+
+.s-feedback-ladder .head .title {
+  grid-column: 1;
+  font-size: 56px;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+}
+.s-feedback-ladder .head .title em {
+  font-style: normal;
+  color: var(--accent);
+}
+/* Title content swaps between steps. */
+.s-feedback-ladder .head .title .t-1 { display: none; }
+.s-feedback-ladder[data-step="1"] .head .title .t-0 { display: none; }
+.s-feedback-ladder[data-step="1"] .head .title .t-1 { display: inline; }
+
+.s-feedback-ladder .head .sub {
+  grid-column: 2;
+  margin: 0 0 10px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--fg-dim);
+  text-align: right;
+}
+.s-feedback-ladder .head .sub .t-warn { color: var(--accent-2-ink); font-weight: 600; }
+.s-feedback-ladder .head .sub .s-1 { display: none; }
+.s-feedback-ladder[data-step="1"] .head .sub .s-0 { display: none; }
+.s-feedback-ladder[data-step="1"] .head .sub .s-1 { display: inline; }
+
+/* ============================================================
+   STAGE — holds two cooperating layers:
+     .legacy-panel  the WebLogic card. Big and centered at step 0,
+                    demoted to a compact strip at step 1.
+     .ladder        the four-rung Java tooling stack. Hidden at
+                    step 0, cascades in at step 1.
+   ============================================================ */
+.s-feedback-ladder .stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+}
+
+/* ============================================================
+   LEGACY PANEL — step 0: hero card. step 1: compact ribbon.
+
+   No transitions between states — both states hard-swap. The
+   "feels weird, things move with no clear purpose" complaint
+   came from cascading rungs + collapsing panel happening at
+   once. A single deliberate state change reads cleaner.
+   ============================================================ */
+.s-feedback-ladder .legacy-panel {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #060D3A;
+  border: 1px solid rgba(10, 21, 84, 0.30);
+  box-shadow:
+    0 24px 60px rgba(10, 21, 84, 0.22),
+    0 4px 12px rgba(10, 21, 84, 0.10);
+}
+
+/* --- shared panel-bar (mac dots + path) --- */
+.s-feedback-ladder .panel-bar.term {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: #8A93BC;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.s-feedback-ladder .panel-bar.term .dot {
+  width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0;
+}
+.s-feedback-ladder .panel-bar.term .dot.r { background: #FF5F57; }
+.s-feedback-ladder .panel-bar.term .dot.y { background: #FEBC2E; }
+.s-feedback-ladder .panel-bar.term .dot.g { background: #28C840; }
+.s-feedback-ladder .panel-bar.term .path  { margin-left: 8px; color: #B4BAD8; font-weight: 500; }
+.s-feedback-ladder .panel-bar.term .grow  { flex: 1 1 auto; }
+
+/* status pill on the legacy panel — red "stuck" badge */
+.s-feedback-ladder .status-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.s-feedback-ladder .status-pill.st-stuck {
+  color: #FF8794;
+  background: rgba(240, 42, 90, 0.14);
+  border-color: rgba(255, 135, 148, 0.55);
+}
+
+/* --- step 0 (hero) — log + stopwatch grid --- */
+.s-feedback-ladder .legacy-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) auto;
+  align-items: stretch;
+  gap: 0;
+}
+
+.s-feedback-ladder .legacy-log {
+  padding: 18px 22px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px;
+  line-height: 1.55;
+  color: #C8CCE4;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.s-feedback-ladder .legacy-log .ln { min-height: 1.55em; }
+.s-feedback-ladder .legacy-log .t-mute { color: #5F668F; }
+.s-feedback-ladder .legacy-log .t-time { color: #8A93BC; }
+.s-feedback-ladder .legacy-log .t-info { color: #8FC8E6; }
+.s-feedback-ladder .legacy-log .t-warn { color: #F2C266; }
+.s-feedback-ladder .legacy-log .t-bad  { color: #FF8794; font-weight: 600; }
+.s-feedback-ladder .legacy-log .cursor {
+  display: inline-block;
+  width: 0.55em;
+  background: #C8CCE4;
+  animation: fbl-blink 1.05s steps(1) infinite;
+}
+@keyframes fbl-blink { 50% { background: transparent; } }
+
+.s-feedback-ladder .stopwatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 22px 32px 24px;
+  background: linear-gradient(to bottom, rgba(240, 42, 90, 0.10), rgba(240, 42, 90, 0.03));
+  min-width: 320px;
+}
+.s-feedback-ladder .stopwatch .sw-glyph {
+  font-size: 36px;
+  color: #FF8794;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+.s-feedback-ladder .stopwatch .sw-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 80px;
+  font-weight: 700;
+  line-height: 1;
+  color: #FF8794;
+  letter-spacing: -0.02em;
+}
+.s-feedback-ladder .stopwatch .sw-unit {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.20em;
+  color: #FFB0B8;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.s-feedback-ladder .stopwatch .sw-task {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #B4BAD8;
+  text-align: center;
+  margin-top: 6px;
+  max-width: 240px;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+/* --- step 0 footer line below the panel ("the agent is trapped in this loop") --- */
+.s-feedback-ladder .legacy-anchor {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  color: var(--fg-dim);
+  letter-spacing: 0.02em;
+  margin-top: 14px;
+  text-align: center;
+}
+.s-feedback-ladder .legacy-anchor em {
+  font-style: normal;
+  color: var(--accent-2-ink);
+  font-weight: 600;
+}
+.s-feedback-ladder[data-step="1"] .legacy-anchor {
+  display: none;
+}
+
+/* --- step 1: collapse the legacy panel into a compact strip --- */
+.s-feedback-ladder[data-step="1"] .legacy-panel {
+  border-color: rgba(255, 135, 148, 0.30);
+  box-shadow:
+    0 12px 24px rgba(10, 21, 84, 0.18),
+    0 2px 6px rgba(10, 21, 84, 0.08);
+}
+.s-feedback-ladder[data-step="1"] .legacy-body {
+  display: none;
+}
+.s-feedback-ladder[data-step="1"] .legacy-panel .panel-bar.term .path {
+  color: #C8CCE4;
+}
+.s-feedback-ladder[data-step="1"] .legacy-panel .panel-bar.term .path-strong {
+  color: #FFB0B8;
+  font-weight: 600;
+  margin-left: 4px;
+}
+.s-feedback-ladder[data-step="1"] .legacy-panel .badge-time {
+  color: #FF8794;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-left: 8px;
+}
+
+/* The mini-stat that appears only in the collapsed bar at step 1. */
+.s-feedback-ladder .legacy-mini { display: none; }
+.s-feedback-ladder[data-step="1"] .legacy-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #B4BAD8;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+}
+
+/* ============================================================
+   LADDER — five rungs, fastest at top.
+   Each rung is a horizontal row: a colored left-edge accent
+   keyed to the tier's place on the green→red speed gradient,
+   a tier label, a tooling block (annotation + project gloss +
+   cadence line), and a timing badge on the right.
+
+   Step toggle is a hard display swap — no cascading or fade.
+   The slide is a deliberate "here is the problem" / "here is
+   the answer" flip, not an animated reveal.
+
+   Tier 5 (real cluster) is intentionally dimmed (opacity 0.55,
+   desaturated border) to communicate "this is where you don't
+   iterate" — the agent should rarely touch this rung.
+   ============================================================ */
+.s-feedback-ladder .ladder {
+  display: none;
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.s-feedback-ladder[data-step="1"] .ladder { display: grid; }
+
+.s-feedback-ladder .rung {
+  display: grid;
+  grid-template-columns:
+    /* tier label */     minmax(140px, 0.85fr)
+    /* divider */        auto
+    /* tooling + gloss */ minmax(0, 2.5fr)
+    /* timing badge */    minmax(150px, auto);
+  align-items: center;
+  column-gap: 22px;
+  padding: 12px 22px 12px 26px;
+  border-radius: 10px;
+  background: #060D3A;
+  border: 1px solid rgba(10, 21, 84, 0.30);
+  /* Per-rung tier color is applied via border-left only, so the
+     rail-bleeding artifact (rounded card corners exposing the
+     pseudo-rail behind) is gone. The border-left is part of the
+     card edge — no z-stack overlap. */
+  border-left: 5px solid #8FD79F;
+  box-shadow:
+    0 10px 20px rgba(10, 21, 84, 0.14),
+    0 2px 6px rgba(10, 21, 84, 0.08);
+  position: relative;
+}
+
+/* Tier label — left column. Big mono numeral + arrow + verbal. */
+.s-feedback-ladder .rung .tier {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  color: #B4BAD8;
+}
+.s-feedback-ladder .rung .tier .arrow {
+  font-size: 16px;
+  line-height: 1;
+  font-weight: 700;
+}
+.s-feedback-ladder .rung .tier .label {
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  font-weight: 600;
+  color: #C8CCE4;
+}
+.s-feedback-ladder .rung .tier .scale {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8A93BC;
+}
+
+/* Color-key each rung — left border, tier label, badge number.
+   Five-tier gradient: green → lime → amber → orange → red. */
+.s-feedback-ladder .rung-1 { border-left-color: #8FD79F; }
+.s-feedback-ladder .rung-2 { border-left-color: #C8E07A; }
+.s-feedback-ladder .rung-3 { border-left-color: #F2C266; }
+.s-feedback-ladder .rung-4 { border-left-color: #FF9F66; }
+.s-feedback-ladder .rung-5 { border-left-color: #FF6B7E; }
+
+.s-feedback-ladder .rung-1 .tier .arrow,
+.s-feedback-ladder .rung-1 .tier .label { color: #8FD79F; }
+.s-feedback-ladder .rung-2 .tier .arrow,
+.s-feedback-ladder .rung-2 .tier .label { color: #C8E07A; }
+.s-feedback-ladder .rung-3 .tier .arrow,
+.s-feedback-ladder .rung-3 .tier .label { color: #F2C266; }
+.s-feedback-ladder .rung-4 .tier .arrow,
+.s-feedback-ladder .rung-4 .tier .label { color: #FF9F66; }
+.s-feedback-ladder .rung-5 .tier .arrow,
+.s-feedback-ladder .rung-5 .tier .label { color: #FF6B7E; }
+
+/* Rung 5 — dimmed. The slide's portfolio message is "rarely
+   iterate against the real cluster." Visually demote it: pull
+   opacity back, mute the card background, drop the box-shadow. */
+.s-feedback-ladder .rung-5 {
+  opacity: 0.62;
+  background: rgba(6, 13, 58, 0.85);
+  box-shadow:
+    0 6px 14px rgba(10, 21, 84, 0.10),
+    0 1px 4px rgba(10, 21, 84, 0.06);
+}
+
+/* Thin vertical divider between tier label and tooling block. */
+.s-feedback-ladder .rung .divider {
+  width: 1px;
+  height: 56%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Tooling block — annotation + class + gloss line. */
+.s-feedback-ladder .rung .tooling {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.s-feedback-ladder .rung .tooling .anno {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: #C8CCE4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.s-feedback-ladder .rung .tooling .anno .t-anno { color: var(--orange-soft); }
+.s-feedback-ladder .rung .tooling .anno .t-kw   { color: #B89AE8; }
+.s-feedback-ladder .rung .tooling .anno .t-type { color: var(--cyan); }
+.s-feedback-ladder .rung .tooling .anno .t-fn   { color: var(--cyan); }
+.s-feedback-ladder .rung .tooling .gloss {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #8A93BC;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.s-feedback-ladder .rung .tooling .gloss em {
+  font-style: normal;
+  color: #B4BAD8;
+}
+.s-feedback-ladder .rung .tooling .gloss .src {
+  color: #8FC8E6;
+  letter-spacing: 0.04em;
+}
+
+/* Cadence line — the portfolio cue. "// run every save · many
+   of these" tells the audience how to allocate across the ladder. */
+.s-feedback-ladder .rung .tooling .cadence {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--orange-soft);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.s-feedback-ladder .rung .tooling .cadence em {
+  font-style: normal;
+  color: #F8D78A;
+  font-weight: 600;
+}
+
+/* Timing badge — right edge. Big mono number + unit beneath. */
+.s-feedback-ladder .rung .badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.s-feedback-ladder .rung .badge .num {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: #FFF;
+}
+.s-feedback-ladder .rung .badge .unit {
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Color-key the badge numbers to the per-rung tier color. */
+.s-feedback-ladder .rung-1 .badge .num { color: #8FD79F; }
+.s-feedback-ladder .rung-1 .badge .unit { color: rgba(143, 215, 159, 0.85); }
+.s-feedback-ladder .rung-2 .badge .num { color: #C8E07A; }
+.s-feedback-ladder .rung-2 .badge .unit { color: rgba(200, 224, 122, 0.85); }
+.s-feedback-ladder .rung-3 .badge .num { color: #F2C266; }
+.s-feedback-ladder .rung-3 .badge .unit { color: rgba(242, 194, 102, 0.85); }
+.s-feedback-ladder .rung-4 .badge .num { color: #FF9F66; }
+.s-feedback-ladder .rung-4 .badge .unit { color: rgba(255, 159, 102, 0.85); }
+.s-feedback-ladder .rung-5 .badge .num { color: #FF6B7E; }
+.s-feedback-ladder .rung-5 .badge .unit { color: rgba(255, 107, 126, 0.85); }
+
+/* ============================================================
+   Tagline — bottom line + tooling chips. Hidden at step 0;
+   appears with the ladder at step 1.
+   ============================================================ */
+.s-feedback-ladder .tag-line {
+  position: relative;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 56px;
+}
+.s-feedback-ladder[data-step="1"] .tag-line {
+  display: flex;
+}
+.s-feedback-ladder .tag-line .quote {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.s-feedback-ladder .tag-line .quote .accent {
+  color: var(--accent);
+}
+.s-feedback-ladder .tag-line .chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+}
+.s-feedback-ladder .tag-line .chips-lbl {
+  color: var(--fg-mute);
+  letter-spacing: 0.08em;
+  margin-right: 4px;
+}
+.s-feedback-ladder .tag-line .chip {
+  color: var(--fg-dim);
+  padding: 3px 10px;
+  border: 1px solid rgba(10, 21, 84, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Step 0 — center the legacy panel vertically inside the stage.
+   The ladder is collapsed at this step (max-height 0), so the
+   stage's flex layout would push the legacy panel to the top.
+   Re-center it with margin-block:auto and constrain its width
+   so the WebLogic card reads as a hero, not a banner.
+   ============================================================ */
+.s-feedback-ladder:not([data-step="1"]) .legacy-panel {
+  max-width: 1300px;
+  margin: auto;
+  margin-top: 32px;
+}
+.s-feedback-ladder:not([data-step="1"]) .legacy-anchor {
+  margin-top: 22px;
+}
+
+/* No transitions anywhere — step swap is a hard display flip.
+   Print rules are a no-op since nothing depends on motion. */
