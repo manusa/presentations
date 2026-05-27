@@ -2878,25 +2878,6 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
                 <span class="glyph">✓</span>
                 <div class="body">
                   <div class="title-row">
-                    <span class="title">Every <span class="ident">exec/attach/getLog</span> does a doomed LIST round-trip</span>
-                    <span class="num">#7741</span>
-                  </div>
-                  <div class="labels">
-                    <span class="lbl flaky">flaky</span>
-                    <span class="lbl realbug">production bug</span>
-                  </div>
-                  <p class="cause">
-                    <span class="ident">DEFAULT_POD_READY_WAIT_TIMEOUT_MS</span> default flipped to <em>0</em>
-                    in 2024. The LIST timed out instantly before the real call ran. Two years in production.
-                  </p>
-                </div>
-                <div class="right">closed<br>3 days ago<br>by manusa</div>
-              </article>
-
-              <article class="issue">
-                <span class="glyph">✓</span>
-                <div class="body">
-                  <div class="title-row">
                     <span class="title"><span class="ident">ExecWebSocketListener.onError</span> drops exit code on peer-close race</span>
                     <span class="num">#7700</span>
                   </div>
@@ -2905,11 +2886,13 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
                     <span class="lbl realbug">production bug</span>
                   </div>
                   <p class="cause">
-                    Race in <span class="ident">SerialExecutor</span> shutdown. The queued
-                    <span class="ident">handleExitStatus</span> task was discarded before the parsed exit code surfaced.
+                    Triggered by a flaky <span class="ident">PodTest.testExecWithExitCode</span>.
+                    Root cause: <span class="ident">cleanUpOnce()</span> synchronously shut down the
+                    SerialExecutor, discarding the queued <span class="ident">handleExitStatus</span>
+                    — so <em>any</em> caller of <span class="ident">exec()</span> could lose the parsed exit code.
                   </p>
                 </div>
-                <div class="right">closed<br>5 days ago<br>by manusa</div>
+                <div class="right">closed<br>27 days ago<br>by manusa</div>
               </article>
 
               <article class="issue">
@@ -2924,11 +2907,32 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
                     <span class="lbl realbug">production bug</span>
                   </div>
                   <p class="cause">
-                    Any transport that drops the close handshake under load left callers
-                    blocked on a latch <em>forever</em>.
+                    Surfaced via flake <span class="ident">#7756</span>.
+                    Any production transport that drops the close handshake under load
+                    left callers blocked on a latch <em>forever</em>.
                   </p>
                 </div>
-                <div class="right">closed<br>1 day ago<br>by manusa</div>
+                <div class="right">closed<br>14 days ago<br>by manusa</div>
+              </article>
+
+              <article class="issue">
+                <span class="glyph">✓</span>
+                <div class="body">
+                  <div class="title-row">
+                    <span class="title"><span class="ident">SharedProcessor.distribute()</span> NPEs if called after <span class="ident">informer.stop()</span></span>
+                    <span class="num">#7716</span>
+                  </div>
+                  <div class="labels">
+                    <span class="lbl flaky">flaky</span>
+                    <span class="lbl realbug">production bug</span>
+                  </div>
+                  <p class="cause">
+                    Flake report on <span class="ident">SharedProcessorTest</span>. Root cause:
+                    <span class="ident">SerialExecutor.execute()</span> after shutdown — any production
+                    code stopping an informer mid-flight could hit the same NPE.
+                  </p>
+                </div>
+                <div class="right">closed<br>22 days ago<br>by manusa</div>
               </article>
             </div>
 
