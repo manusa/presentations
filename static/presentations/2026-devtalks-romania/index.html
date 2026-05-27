@@ -2188,7 +2188,8 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
             <div class="ln"><span class="t-anno">@Test</span></div>
             <div class="ln"><span class="t-anno">@DisplayName</span>(<span class="t-str">"falls back to kubernetes.default.svc"</span>)</div>
             <div class="ln"><span class="t-kw">void</span> <span class="t-fn">fallsBackToDefaultApiServer</span>() {</div>
-            <div class="ln indent">assertThat(<span class="t-kw">new</span> <span class="t-type">ConfigBuilder</span>().build().<span class="t-fn">getMasterUrl</span>())</div>
+            <div class="ln indent"><span class="t-kw">var</span> config = <span class="t-kw">new</span> <span class="t-type">ConfigBuilder</span>().build();</div>
+            <div class="ln indent">assertThat(config.<span class="t-fn">getMasterUrl</span>())</div>
             <div class="ln indent-2">.isEqualTo(<span class="t-str">"https://kubernetes.default.svc/"</span>);</div>
             <div class="ln">}</div>
           </div>

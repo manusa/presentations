@@ -277,12 +277,16 @@
 .s-specs-vs-tests .card-test .t-str  { color: #B6E3A8; }
 
 /* ---------- inline BUILD FAILED console (under the @Test body) ---------- */
+/* The failure console is the punchline of the slide ("what the agent
+   sees when it gets it wrong") — sizes are deliberately on the larger
+   side of the panel's typographic scale to stay legible on a conference
+   projector from 10+ metres back. */
 .s-specs-vs-tests .card-test .console-fail {
   border-top: 1px solid rgba(255,255,255,0.08);
   background: linear-gradient(to bottom, rgba(240,42,90,0.10), rgba(240,42,90,0.04));
-  padding: 20px 30px 22px;
+  padding: 22px 30px 24px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.5;
   color: #E8C8CF;
   display: flex;
@@ -299,18 +303,18 @@
 .s-specs-vs-tests .card-test .console-fail .cf-glyph {
   color: var(--pink);
   font-weight: 700;
-  font-size: 24px;
+  font-size: 26px;
 }
 .s-specs-vs-tests .card-test .console-fail .cf-label {
   color: #FF6B7E;
   font-weight: 700;
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  font-size: 19px;
+  font-size: 22px;
 }
 .s-specs-vs-tests .card-test .console-fail .cf-sub {
   color: #B4BAD8;
-  font-size: 18px;
+  font-size: 20px;
 }
 .s-specs-vs-tests .card-test .console-fail .cf-detail {
   color: #C8CCE4;
@@ -327,7 +331,7 @@
   margin-top: 14px;
   color: #8A93BC;
   font-style: italic;
-  font-size: 19px;
+  font-size: 20px;
 }
 
 /* ============================================================
