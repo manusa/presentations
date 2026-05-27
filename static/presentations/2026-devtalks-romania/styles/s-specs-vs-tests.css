@@ -92,8 +92,12 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 80px minmax(0, 1fr);
   column-gap: 0;
-  align-items: stretch;
+  /* Cards sit at their natural height so the right (test) card doesn't
+     get an empty dark band when the spec card on the left is taller.
+     The vs-axis is forced to stretch so the rail still spans the row. */
+  align-items: start;
 }
+.s-specs-vs-tests .vs-axis { align-self: stretch; }
 
 /* ---------- VS axis ---------- */
 .s-specs-vs-tests .vs-axis {
@@ -228,7 +232,10 @@
    ============================================================ */
 .s-specs-vs-tests .card-test {
   background: #060D3A;
-  border: 1px solid rgba(10, 21, 84, 0.30);
+  /* 3px to match the spec card's dashed border so the two panel-bars
+     share an optical top edge (border-box pushes the bar content down
+     by the border thickness). Solid vs dashed still distinguishes them. */
+  border: 3px solid rgba(10, 21, 84, 0.30);
   box-shadow:
     0 24px 60px rgba(10, 21, 84, 0.22),
     0 4px 12px rgba(10, 21, 84, 0.10);
@@ -247,20 +254,21 @@
 .s-specs-vs-tests .card-test .panel-bar.term .path { margin-left: 14px; color: #B4BAD8; }
 
 .s-specs-vs-tests .card-test .panel-body.code {
-  padding: 22px 30px 24px;
+  padding: 26px 30px 28px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
-  line-height: 1.45;
+  font-size: 23px;
+  line-height: 1.5;
   color: #C8CCE4;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
   white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
-.s-specs-vs-tests .card-test .ln.indent   { padding-left: 22px; }
-.s-specs-vs-tests .card-test .ln.indent-2 { padding-left: 44px; }
-.s-specs-vs-tests .card-test .ln.indent-3 { padding-left: 66px; }
+.s-specs-vs-tests .card-test .ln.indent   { padding-left: 26px; }
+.s-specs-vs-tests .card-test .ln.indent-2 { padding-left: 52px; }
+.s-specs-vs-tests .card-test .ln.indent-3 { padding-left: 78px; }
 
 .s-specs-vs-tests .card-test .t-anno { color: var(--orange-soft); }
 .s-specs-vs-tests .card-test .t-kw   { color: #B89AE8; }
@@ -272,37 +280,37 @@
 .s-specs-vs-tests .card-test .console-fail {
   border-top: 1px solid rgba(255,255,255,0.08);
   background: linear-gradient(to bottom, rgba(240,42,90,0.10), rgba(240,42,90,0.04));
-  padding: 16px 30px 18px;
+  padding: 20px 30px 22px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 17px;
+  font-size: 20px;
   line-height: 1.5;
   color: #E8C8CF;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 .s-specs-vs-tests .card-test .console-fail .cf-head {
   display: flex;
   align-items: baseline;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 .s-specs-vs-tests .card-test .console-fail .cf-glyph {
   color: var(--pink);
   font-weight: 700;
-  font-size: 20px;
+  font-size: 24px;
 }
 .s-specs-vs-tests .card-test .console-fail .cf-label {
   color: #FF6B7E;
   font-weight: 700;
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  font-size: 16px;
+  font-size: 19px;
 }
 .s-specs-vs-tests .card-test .console-fail .cf-sub {
   color: #B4BAD8;
-  font-size: 15px;
+  font-size: 18px;
 }
 .s-specs-vs-tests .card-test .console-fail .cf-detail {
   color: #C8CCE4;
@@ -316,10 +324,10 @@
 .s-specs-vs-tests .card-test .console-fail .cf-ok  { color: #8FD79F; }
 .s-specs-vs-tests .card-test .console-fail .cf-bad { color: #FF8794; text-decoration: line-through; text-decoration-color: rgba(255,135,148,0.5); }
 .s-specs-vs-tests .card-test .console-fail .cf-foot {
-  margin-top: 10px;
+  margin-top: 14px;
   color: #8A93BC;
   font-style: italic;
-  font-size: 17px;
+  font-size: 19px;
 }
 
 /* ============================================================
@@ -362,9 +370,42 @@
 }
 
 /* ============================================================
+   Two-step reveal.
+
+   step 0 (problem)    — spec card + "Specs explain intent." +
+                         "But text doesn't push back."
+   step 1 (resolution) — adds "Tests enforce it.", vs axis,
+                         test card with BUILD FAILED, takeaway.
+
+   Hidden elements stay in the layout (opacity-only) so the
+   spec card and title don't reflow when step 1 fires.
+   ============================================================ */
+.s-specs-vs-tests .title-tail,
+.s-specs-vs-tests .vs-axis,
+.s-specs-vs-tests .card-test,
+.s-specs-vs-tests .tag-line {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+.s-specs-vs-tests .title-tail { transform: none; }   /* inline; no rise */
+
+.s-specs-vs-tests[data-step="1"] .title-tail,
+.s-specs-vs-tests[data-step="1"] .vs-axis,
+.s-specs-vs-tests[data-step="1"] .card-test,
+.s-specs-vs-tests[data-step="1"] .tag-line {
+  opacity: 1;
+  transform: none;
+}
+.s-specs-vs-tests[data-step="1"] .vs-axis    { transition-delay: 80ms; }
+.s-specs-vs-tests[data-step="1"] .card-test  { transition-delay: 120ms; }
+.s-specs-vs-tests[data-step="1"] .tag-line   { transition-delay: 240ms; }
+
+/* ============================================================
    Print — drop shadows / gradient so Chromium's page.pdf()
-   doesn't rasterise them as opaque rectangles. The slide is
-   single-state so no step rules to flatten.
+   doesn't rasterise them as opaque rectangles. Step rendering
+   (export:pdf walks data-step="0..N") needs each state legible
+   without animation, which the opacity rules above already give.
    ============================================================ */
 @media print {
   .s-specs-vs-tests .card-spec,
@@ -372,4 +413,8 @@
   .s-specs-vs-tests .card-test .console-fail {
     background: rgba(240,42,90,0.10);
   }
+  .s-specs-vs-tests .title-tail,
+  .s-specs-vs-tests .vs-axis,
+  .s-specs-vs-tests .card-test,
+  .s-specs-vs-tests .tag-line { transition: none; }
 }
