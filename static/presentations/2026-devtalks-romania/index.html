@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="styles/s-agents-md.css" />
 <link rel="stylesheet" href="styles/s-skill.css" />
 <link rel="stylesheet" href="styles/s-specs-vs-tests.css" />
+<link rel="stylesheet" href="styles/s-failure-spec.css" />
 <link rel="stylesheet" href="styles/s-blackbox.css" />
 <link rel="stylesheet" href="styles/s-feedback-ladder.css" />
 <link rel="stylesheet" href="styles/s-ci.css" />
@@ -2178,6 +2179,145 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
+       18 ACT 5 · A FAILING TEST SHOULD EXPLAIN THE BROKEN BEHAVIOR
+
+       Short increment on slide 17. Slide 17 gave the agent a
+       one-line BUILD FAILED pointer. Slide 18 upgrades that
+       pointer into a behavioral breadcrumb: when the assertion
+       blows up inside a @Nested + @DisplayName hierarchy,
+       Surefire prints the whole scenario tree on the way to the
+       failed leaf — the agent reads the failure as a spec.
+
+       Asymmetric two-column stage (40/60):
+         LEFT  — abridged ConfigDisableAutoConfigurationTest
+                 from Fabric8. Nested classes + @DisplayName.
+                 Supporting context.
+         RIGHT — the Surefire failure tree (hero). Indented to
+                 mirror the @Nested depth. expected/actual sit
+                 at the deepest level. Same colour key as the
+                 slide-17 BUILD FAILED console for continuity.
+
+       Two-step reveal:
+         step 0  test file visible; failure card shows a "mvn
+                 running" stub so the audience reads the test
+                 first before the failure resolves.
+         step 1  the tree replaces the stub; tagline drops in.
+       ============================================================ -->
+  <section class="s-failure-spec light" data-label="Act 5 — A failing test should explain the broken behavior" data-step-max="1">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · devtalks-act-05-codebase-feedback/FailureAsSpec.java</span>
+      <span class="spacer"></span>
+      <span class="pill">act 05 · failure as spec · 18</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">// act 05 · same break · richer pointer</div>
+        <h2 class="title">A failing test should <em>explain</em> the broken behavior.</h2>
+        <p class="sub">
+          // surefire prints a <span class="t-warn">behavior breadcrumb</span>
+        </p>
+      </header>
+
+      <div class="stage">
+        <!-- ============================================================
+             LEFT — TEST card. Abridged ConfigDisableAutoConfigurationTest
+             from fabric8 (kubernetes-client-api). The shape of the
+             @Nested hierarchy is the signal; ellipses absorb the body
+             of the assertion chain so the panel stays short enough
+             that the failure tree on the right reads as the hero.
+             ============================================================ -->
+        <article class="card card-test">
+          <header class="panel-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">ConfigDisableAutoConfigurationTest.java</span>
+            <span class="grow"></span>
+            <span class="state-pill nested">@nested · @displayname</span>
+          </header>
+          <div class="panel-body code">
+            <div class="ln"><span class="t-anno">@Nested</span></div>
+            <div class="ln"><span class="t-anno">@DisplayName</span>(<span class="t-str">"via kubernetes.disable.autoConfig=true"</span>)</div>
+            <div class="ln"><span class="t-kw">class</span> <span class="t-type">AutoConfigDisabledViaProperty</span> {</div>
+            <div class="ln gap">&nbsp;</div>
+            <div class="ln indent"><span class="t-anno">@Nested</span></div>
+            <div class="ln indent"><span class="t-anno">@DisplayName</span>(<span class="t-str">"And inside Kubernetes Cluster</span></div>
+            <div class="ln indent-2"><span class="t-str">with ServiceAccount mounted"</span>)</div>
+            <div class="ln indent"><span class="t-kw">class</span> <span class="t-type">InsideKubernetesCluster</span> {</div>
+            <div class="ln gap">&nbsp;</div>
+            <div class="ln indent-2"><span class="t-anno">@Test</span></div>
+            <div class="ln indent-2"><span class="t-anno">@DisplayName</span>(<span class="t-str">"then use default values"</span>)</div>
+            <div class="ln indent-2"><span class="t-kw">void</span> <span class="t-fn">whenConfigDisabled_thenUseDefaults</span>() {</div>
+            <div class="ln indent-3"><span class="t-fn">assertThat</span>(<span class="t-kw">new</span> <span class="t-type">ConfigBuilder</span>().<span class="t-fn">build</span>())</div>
+            <div class="ln broken">.<span class="t-fn">hasFieldOrPropertyWithValue</span>(<span class="t-str">"masterUrl"</span>,</div>
+            <div class="ln broken"><span class="t-str">&nbsp;&nbsp;"https://kubernetes.default.svc/"</span>);</div>
+            <div class="ln indent-2">}</div>
+            <div class="ln indent">}</div>
+            <div class="ln">}</div>
+          </div>
+        </article>
+
+        <!-- ============================================================
+             RIGHT — SUREFIRE FAILURE TREE (hero). Same dark navy
+             terminal as slide 17's BUILD FAILED console, but the
+             whole panel is dedicated to the output so the tree
+             reads as a sentence: each level of nesting becomes
+             one rung in the breadcrumb. The leaf carries the
+             failed assertion; expected/actual sit one rung deeper.
+             Step 0 shows the "running" stub; step 1 swaps in
+             the tree.
+             ============================================================ -->
+        <article class="card card-failure">
+          <header class="panel-bar">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">target/surefire-reports · ConfigDisable…Test</span>
+            <span class="grow"></span>
+            <span class="state-pill broken">// agent broke the contract</span>
+          </header>
+          <div class="panel-body">
+            <!-- step 0 stub: command kicked off, "running" pulse -->
+            <div class="stub">
+              <div class="cmd"><span class="prompt">$</span> mvn -pl kubernetes-client-api -Dtest=ConfigDisable…Test test</div>
+              <div>&nbsp;</div>
+              <div class="ellipsis">running . . .</div>
+            </div>
+
+            <!-- step 1 tree: the behavior breadcrumb -->
+            <div class="tree" aria-live="polite">
+              <div class="head-row">
+                <span class="glyph">✗</span>
+                <span class="head-label">BUILD FAILED</span>
+                <span class="head-sub">— ConfigDisableAutoConfigurationTest</span>
+              </div>
+              <div class="tr scenario d0"><em>via kubernetes.disable.autoConfig=true</em></div>
+              <div class="tr scenario d1"><span class="branch">└─</span>And inside Kubernetes Cluster with ServiceAccount mounted</div>
+              <div class="tr leaf d2"><span class="branch">└─</span><span class="x">✗</span>then use default values</div>
+              <div class="tr d3">&nbsp;</div>
+              <div class="tr detail d3"><span class="key">expected:</span><span class="ok">"https://kubernetes.default.svc/"</span></div>
+              <div class="tr detail d3"><span class="key">actual:&nbsp;&nbsp;</span><span class="bad">"https://my-cluster.example.com/"</span></div>
+              <div class="tree-foot">// the agent reads the failure as a behavior breadcrumb.</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <footer class="tag-line">
+        <span class="lbl">// takeaway</span>
+        <div class="quote">
+          The failing test reads like <em>a sentence</em> — top to bottom.
+          <span class="sub">// @Nested + @DisplayName + descriptive assertions ⇒ this output, for free.</span>
+        </div>
+      </footer>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
        19 ACT 5 · BLACK-BOX TESTS — THE UNIT IS BEHAVIOR
 
        Signature opinion of the talk. ~90s. Two-step reveal that
@@ -2201,10 +2341,11 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
          CENTER — SUT card · PodService.java (production code)
          RIGHT  — black-box test card (HTTP entry point, behavior)
 
-       Folds slide 18 in: the black-box card uses @DisplayName +
-       behavior-named method as a 15s prop demo. Bottom tagline
-       carries the strong opinion plus the chip strip of real
-       projects where this style of test survived agent work.
+       The black-box card uses @DisplayName + behavior-named
+       method, picking up where slide 18 leaves off. Bottom
+       tagline carries the strong opinion plus the chip strip
+       of real projects where this style of test survived agent
+       work.
        ============================================================ -->
   <section class="s-blackbox light" data-label="Act 5 — Black-box tests: the unit is behavior" data-step-max="1">
     <div class="chrome-top">
