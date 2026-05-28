@@ -2516,18 +2516,18 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
           <div class="micro-gloss">// black-box · asserts observable behavior</div>
           <div class="panel-body code">
             <div class="ln setup"><span class="t-anno">@EnableKubeAPIServer</span></div>
-            <div class="ln setup"><span class="t-type">KubernetesClient</span> kubernetes;</div>
+            <div class="ln setup"><span class="t-type">KubernetesClient</span> k8s;</div>
             <div class="ln gap">&nbsp;</div>
             <div class="ln"><span class="t-anno">@Test</span></div>
             <div class="ln"><span class="t-anno">@DisplayName</span>(<span class="t-str">"removes the pod from the cluster"</span>)</div>
             <div class="ln"><span class="t-kw">void</span> <span class="t-fn">removesPodFromCluster</span>() {</div>
-            <div class="ln indent">kubernetes.<span class="t-fn">pods</span>().<span class="t-fn">resource</span>(pod).<span class="t-fn">create</span>();</div>
+            <div class="ln indent">k8s.<span class="t-fn">pods</span>().<span class="t-fn">resource</span>(pod).<span class="t-fn">create</span>();</div>
             <div class="ln">&nbsp;</div>
             <div class="ln indent"><span class="t-fn">given</span>().<span class="t-fn">when</span>()</div>
             <div class="ln indent-2">.<span class="t-fn">delete</span>(<span class="t-str">"/api/v1/pods/foo"</span>)</div>
             <div class="ln indent-2">.<span class="t-fn">then</span>().<span class="t-fn">statusCode</span>(<span class="t-str">204</span>);</div>
             <div class="ln">&nbsp;</div>
-            <div class="ln indent"><span class="t-fn t-asr">assertThat</span>(kubernetes.<span class="t-fn">pods</span>().<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>).<span class="t-fn">get</span>())</div>
+            <div class="ln indent"><span class="t-fn t-asr">assertThat</span>(k8s.<span class="t-fn">pods</span>().<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>).<span class="t-fn">get</span>())</div>
             <div class="ln indent-2">.<span class="t-fn">isNull</span>();</div>
             <div class="ln">}</div>
           </div>
