@@ -31,6 +31,8 @@
 <link rel="stylesheet" href="styles/s-project-story.css" />
 <link rel="stylesheet" href="styles/s-feedback-ladder.css" />
 <link rel="stylesheet" href="styles/s-ci.css" />
+<link rel="stylesheet" href="styles/s-xp-reframe.css" />
+<link rel="stylesheet" href="styles/s-recap.css" />
 </head>
 <body>
 
@@ -3334,6 +3336,55 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
+       23 XP REFRAME — Act V close ("Did I just advertise XP?").
+       Single static reveal: the audience has been listening to
+       XP for 30 minutes. Visual emptiness is deliberate.
+       ============================================================ -->
+  <section class="s-xp-reframe light" data-label="Act 5 — Did I just advertise XP?">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · devtalks-act-05-codebase-feedback/Reframe.java</span>
+      <span class="spacer"></span>
+      <span class="pill">act 05 · the reframe · 23</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <h2 class="title">Did I just advertise <em>XP</em>?</h2>
+      </header>
+
+      <div class="reveal">
+        <div class="reveal-stamp">
+          <span class="stamp-title">Extreme Programming</span>
+          <span class="stamp-rule"></span>
+          <span class="stamp-sub">est. 1999</span>
+        </div>
+
+        <span class="reveal-arrow" aria-hidden="true">→</span>
+
+        <ul class="practices">
+          <li>TDD</li>
+          <li>small steps</li>
+          <li>continuous integration</li>
+          <li>shared knowledge</li>
+          <li>simple design</li>
+        </ul>
+      </div>
+
+      <div class="reveal-closers">
+        <p class="reveal-line">Discipline. <em>Just renamed.</em></p>
+        <p class="reveal-line reveal-line-sub">AI just made the cost of <em>skipping it</em> obvious.</p>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
        ACT VI DIVIDER — CLOSE (Maven reactor)
        ============================================================ -->
   <section class="s-section" data-label="Act VI — Close">
@@ -3422,6 +3473,78 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
           <span class="state">BUILDING</span>
           <span class="dur">...</span>
         </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       24 RECAP — Act VI: Map · Roads · Guardrails + this-week
+       checklist + bookend quote. Single static state.
+       ============================================================ -->
+  <section class="s-recap light" data-label="Act 6 — Recap: Map · Roads · Guardrails">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · devtalks-act-06-close/Recap.java</span>
+      <span class="spacer"></span>
+      <span class="pill">act 06 · recap · 24</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">// act 06 · recap</div>
+        <h2 class="title">
+          <span class="w-map">Map</span><span class="sep">·</span><span class="w-roads">Roads</span><span class="sep">·</span><span class="w-guard">Guardrails</span>.
+        </h2>
+      </header>
+
+      <div class="pillars">
+        <article class="pillar pillar-map">
+          <h3 class="pillar-name">Map</h3>
+          <div class="pillar-action">
+            <span class="pillar-action-lbl">// this week</span>
+            <ul class="pillar-action-list">
+              <li><code>git add AGENTS.md</code></li>
+              <li>Document one thing every maintainer knows</li>
+            </ul>
+          </div>
+          <i class="pillar-icon fa-solid fa-map" aria-hidden="true"></i>
+        </article>
+
+        <article class="pillar pillar-roads">
+          <h3 class="pillar-name">Roads</h3>
+          <div class="pillar-action">
+            <span class="pillar-action-lbl">// this week</span>
+            <ul class="pillar-action-list">
+              <li>Turn one maintainer routine into a <code>SKILL.md</code></li>
+            </ul>
+          </div>
+          <i class="pillar-icon fa-solid fa-road" aria-hidden="true"></i>
+        </article>
+
+        <article class="pillar pillar-guardrails">
+          <h3 class="pillar-name">Guardrails</h3>
+          <div class="pillar-action">
+            <span class="pillar-action-lbl">// this week</span>
+            <ul class="pillar-action-list">
+              <li>Fix one flaky test for real</li>
+              <li>Turn one bug report into a failing test</li>
+            </ul>
+          </div>
+          <i class="pillar-icon fa-solid fa-shield-halved" aria-hidden="true"></i>
+        </article>
+      </div>
+
+      <div class="closer">
+        <p class="closer-quote">
+          AI takes the repetitive grind.<br>
+          <em>You keep the judgment.</em>
+        </p>
       </div>
     </div>
 
