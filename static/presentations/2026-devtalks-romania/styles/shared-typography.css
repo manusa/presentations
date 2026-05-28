@@ -1,0 +1,25 @@
+/* ============================================================
+   SHARED TYPOGRAPHY — .eyebrow + .h-title base rules.
+
+   Used as base typography by most content slides via the
+   cascade: s-act2, s-about2, s-audience, s-skill, s-agents-md,
+   s-feedback-ladder, s-blackbox, s-specs-vs-tests, s-ci,
+   s-fieldnotes, s-flywheel.
+
+   Light-theme accent overrides for .eyebrow live in
+   light-overrides.css.
+   ============================================================ */
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-eyebrow);
+  color: var(--accent);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.h-title {
+  font-size: var(--type-title);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin: 24px 0 0 0;
+}
