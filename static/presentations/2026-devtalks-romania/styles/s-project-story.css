@@ -19,6 +19,16 @@
                audience parses instantly, no Act-5 collision.
    ============================================================ */
 
+/* Scoped semantic palette — "ok" = passed / green / contract-held.
+   Used by the contract panel's halo, the Σ stamp block, the
+   step-1 foot wash, and the .t-done token. One source of truth
+   so the green can be retuned in one place rather than ~17. */
+.s-project-story {
+  --ok: var(--ok);       /* core green — text emphasis, glyphs, accents */
+  --ok-deep: var(--ok-deep);  /* darker green for body text on green washes */
+  --ok-rgb: 46, 127, 70; /* rgb triple for rgba() washes / halos */
+}
+
 .s-project-story::before {
   content: "";
   position: absolute;
@@ -220,6 +230,15 @@
   color: var(--fg-mute);
   flex-shrink: 0;
 }
+/* image-slot variant — used for the grunt-work head where the
+   glyph is the Claude mark (the agent that handled the change),
+   not a text symbol. Same footprint as the text glyph so the
+   head rhythm reads the same. */
+.s-project-story image-slot.sp-glyph {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+}
 .s-project-story .sp-label {
   flex: 1 1 auto;
   font-weight: 600;
@@ -292,67 +311,6 @@
   font-weight: 700;
 }
 
-/* Contract panel — the totals row at the bottom of the test list.
-   Slightly elevated so it lands as the "the spec" summary. */
-.s-project-story .sp-totals {
-  margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px solid rgba(10, 21, 84, 0.18);
-  border-bottom: none;
-}
-.s-project-story .sp-totals .sp-row-key {
-  color: var(--accent);
-  font-size: 22px;
-  font-weight: 700;
-}
-.s-project-story .sp-totals .sp-row-val {
-  color: var(--fg);
-  font-weight: 600;
-}
-
-/* Σ-as-trust-beat row.
-   Subtle green wash + accent stripe + emphasized "0" so the row
-   breaks the table rhythm and the audience reads it as the
-   punchline-in-data, not just another summary line. */
-.s-project-story .sp-row.sp-sigma {
-  background: rgba(46, 127, 70, 0.10);
-  border-radius: 6px;
-  padding: 8px 12px;
-  margin: 4px -12px 0;
-  border-top-color: rgba(46, 127, 70, 0.45);
-  box-shadow: inset 3px 0 0 rgba(46, 127, 70, 0.85);
-}
-.s-project-story .sp-sigma .sp-row-key {
-  color: #2E7F46;
-  font-weight: 800;
-}
-.s-project-story .sp-sigma .sp-row-val {
-  color: #1B5A30;
-  font-weight: 700;
-  font-size: 22px;
-  letter-spacing: -0.005em;
-}
-.s-project-story .sp-sigma .sp-row-note {
-  color: #2E7F46;
-  font-weight: 500;
-}
-.s-project-story .t-zero {
-  color: #2E7F46;
-  font-weight: 800;
-  font-size: 1.4em;
-  line-height: 0.9;
-  padding-right: 2px;
-  vertical-align: -0.05em;
-}
-
-/* Test rows — the class-name key looks like a clickable identifier */
-.s-project-story .sp-test .sp-row-key {
-  color: var(--fg);
-}
-.s-project-story .sp-test .sp-row-key a.ref-link {
-  border-bottom: 1px dotted rgba(10, 21, 84, 0.30);
-}
-
 /* ============================================================
    Panel foot — mono one-liner(s) per panel. Multi-line variant
    uses .foot-line children so the grunt-work panel can carry
@@ -381,7 +339,7 @@
   font-weight: 700;
 }
 .s-project-story .t-done {
-  color: #2E7F46;
+  color: var(--ok);
   font-weight: 700;
 }
 
@@ -467,10 +425,10 @@
 .s-project-story .portfolio-sigma {
   margin-top: auto;
   padding: 16px 22px;
-  background: rgba(46, 127, 70, 0.12);
+  background: rgba(var(--ok-rgb), 0.12);
   border-radius: 10px;
-  border: 1px solid rgba(46, 127, 70, 0.45);
-  box-shadow: inset 5px 0 0 rgba(46, 127, 70, 0.90);
+  border: 1px solid rgba(var(--ok-rgb), 0.45);
+  box-shadow: inset 5px 0 0 rgba(var(--ok-rgb), 0.90);
   display: flex;
   align-items: center;
   gap: 18px;
@@ -478,7 +436,7 @@
 .s-project-story .sigma-glyph {
   font-size: 44px;
   font-weight: 700;
-  color: #2E7F46;
+  color: var(--ok);
   line-height: 1;
   flex-shrink: 0;
 }
@@ -491,12 +449,12 @@
 .s-project-story .sigma-label {
   font-size: 30px;
   font-weight: 700;
-  color: #1B5A30;
+  color: var(--ok-deep);
   line-height: 1.18;
   letter-spacing: -0.01em;
 }
 .s-project-story .sigma-soft {
-  color: #2E7F46;
+  color: var(--ok);
   font-weight: 500;
   font-size: 18px;
   letter-spacing: 0.02em;
@@ -515,26 +473,26 @@
 .s-project-story[data-step="1"] .contract-panel {
   opacity: 1;
   filter: none;
-  border-color: rgba(46, 127, 70, 0.50);
+  border-color: rgba(var(--ok-rgb), 0.50);
   box-shadow:
-    0 0 0 1px rgba(46, 127, 70, 0.32),
-    0 16px 36px rgba(46, 127, 70, 0.14),
-    0 2px 8px rgba(46, 127, 70, 0.08);
+    0 0 0 1px rgba(var(--ok-rgb), 0.32),
+    0 16px 36px rgba(var(--ok-rgb), 0.14),
+    0 2px 8px rgba(var(--ok-rgb), 0.08);
 }
 .s-project-story[data-step="1"] .contract-panel .sp-head {
-  background: rgba(46, 127, 70, 0.08);
-  border-bottom-color: rgba(46, 127, 70, 0.25);
+  background: rgba(var(--ok-rgb), 0.08);
+  border-bottom-color: rgba(var(--ok-rgb), 0.25);
 }
 .s-project-story[data-step="1"] .contract-panel .sp-glyph {
-  color: #2E7F46;
+  color: var(--ok);
 }
 .s-project-story[data-step="1"] .contract-panel .sp-foot {
   background: linear-gradient(
     to bottom,
-    rgba(46, 127, 70, 0.10),
-    rgba(46, 127, 70, 0.04)
+    rgba(var(--ok-rgb), 0.10),
+    rgba(var(--ok-rgb), 0.04)
   );
-  border-top-color: rgba(46, 127, 70, 0.30);
+  border-top-color: rgba(var(--ok-rgb), 0.30);
 }
 
 /* ============================================================
@@ -565,12 +523,6 @@
 }
 .s-project-story .tag-line .quote .accent {
   color: var(--accent);
-}
-.s-project-story .tag-line .caption {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
-  color: var(--fg-mute);
-  letter-spacing: 0.04em;
 }
 
 /* ============================================================
