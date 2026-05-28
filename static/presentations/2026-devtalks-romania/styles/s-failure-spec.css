@@ -197,7 +197,11 @@
 .s-failure-spec .card-test .ln.indent   { padding-left: 26px; }
 .s-failure-spec .card-test .ln.indent-2 { padding-left: 52px; }
 .s-failure-spec .card-test .ln.indent-3 { padding-left: 78px; }
-.s-failure-spec .card-test .ln.gap      { height: 4px; }
+/* indent-3 + 2 character widths (~24px @ 20px Mono). Chain
+   continuation under assertThat(...) — same depth shared by the
+   .broken line so the chain visually unifies. */
+.s-failure-spec .card-test .ln.chain   { padding-left: 102px; }
+.s-failure-spec .card-test .ln.gap     { height: 4px; }
 
 /* Annotations / keywords / types / fns stay muted — they are scaffolding
    for the @DisplayName strings, which are the real link to the failure
@@ -353,6 +357,19 @@
   margin-right: 12px;
   font-size: 32px;
 }
+/* AssertJ .as(...) description row. Sits between the leaf and the
+   expected/actual lines. Orange to visually tie back to the orange
+   @DisplayName breadcrumb scenarios — "everything orange is
+   natural-language documentation the agent can read." Bracketed
+   like AssertJ's own failure output format. */
+.s-failure-spec .card-failure .tr.desc {
+  font-size: 22px;
+  color: var(--orange-soft);
+  font-weight: 500;
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+
 /* expected / actual — supporting detail. Visually demoted so they
    don't outshout the leaf. Same colour key as slide 17's BUILD
    FAILED console for continuity. */

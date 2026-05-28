@@ -2250,8 +2250,11 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
             <div class="ln indent-2"><span class="t-anno">@Test</span> <span class="t-anno">@DisplayName</span>(<span class="t-str">"applies the discount before tax"</span>)</div>
             <div class="ln indent-2"><span class="t-kw">void</span> <span class="t-fn">appliesDiscountBeforeTax</span>() {</div>
             <div class="ln indent-3"><span class="t-fn">assertThat</span>(cart.<span class="t-fn">total</span>())</div>
+            <div class="ln chain">.<span class="t-fn">as</span>(<span class="t-str">"discount must apply before tax"</span>)</div>
             <div class="ln broken">.<span class="t-fn">isEqualTo</span>(<span class="t-fn">money</span>(<span class="t-str">"90.00"</span>));</div>
-            <div class="ln indent-2">} } }</div>
+            <div class="ln indent-2">}</div>
+            <div class="ln indent">}</div>
+            <div class="ln">}</div>
           </div>
         </article>
 
@@ -2289,6 +2292,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
               <div class="tr scenario d0"><em>during checkout</em></div>
               <div class="tr scenario d1"><span class="branch">└─</span>with a discount code</div>
               <div class="tr leaf d2"><span class="branch">└─</span><span class="x">✗</span>applies the discount before tax</div>
+              <div class="tr desc d3">[discount must apply before tax]</div>
               <div class="tr detail d3"><span class="key">expected:</span><span class="ok">$90.00</span></div>
               <div class="tr detail d3"><span class="key">actual:&nbsp;&nbsp;</span><span class="bad">$99.00</span></div>
             </div>
