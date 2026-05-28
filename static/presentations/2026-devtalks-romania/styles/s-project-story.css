@@ -457,41 +457,49 @@
   font-weight: 600;
 }
 /* The Σ punchline block — green wash + thick left accent stripe.
-   Number is huge so the audience parses "ZERO" before they read
-   the label. */
+   Stamp-style: a check glyph + declarative sentence.
+
+   Why a check, not a giant "0": a 64px lonely numeral reads as
+   detached chrome until the eye crosses the gap to the label.
+   "Zero" as a *word* reads as one beat with the sentence; the
+   "✓" carries the safe/green/passed semantic the digit could
+   never do alone. Mnemonic shape (✓) > mnemonic count (0). */
 .s-project-story .portfolio-sigma {
   margin-top: auto;
-  padding: 16px 20px;
+  padding: 16px 22px;
   background: rgba(46, 127, 70, 0.12);
   border-radius: 10px;
   border: 1px solid rgba(46, 127, 70, 0.45);
   box-shadow: inset 5px 0 0 rgba(46, 127, 70, 0.90);
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 18px;
 }
-.s-project-story .sigma-num {
-  font-size: 64px;
-  font-weight: 800;
+.s-project-story .sigma-glyph {
+  font-size: 44px;
+  font-weight: 700;
   color: #2E7F46;
   line-height: 1;
-  letter-spacing: -0.03em;
   flex-shrink: 0;
 }
+.s-project-story .sigma-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
 .s-project-story .sigma-label {
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 700;
   color: #1B5A30;
-  line-height: 1.22;
-  letter-spacing: -0.005em;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
 }
 .s-project-story .sigma-soft {
-  display: block;
   color: #2E7F46;
   font-weight: 500;
   font-size: 18px;
   letter-spacing: 0.02em;
-  margin-top: 3px;
 }
 
 /* ============================================================
