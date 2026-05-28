@@ -334,6 +334,14 @@
   transform: rotateY(180deg);
 }
 
+/* backface-visibility:hidden hides the back face from view, but its
+   descendants (interactive elements such as our overlay anchors) default to
+   backface-visibility:visible and remain hit-testable from behind. Drop
+   pointer-events on the non-visible face per step so a click on the empty
+   area of the visible face never activates a link on the hidden one. */
+.s-about2-flip[data-step="0"] .face-back  { pointer-events: none; }
+.s-about2-flip[data-step="1"] .face-front { pointer-events: none; }
+
 /* Print / PDF: collapse the 3D so each face is captured as a flat
    page. export:pdf renders this slide at data-step="0" then
    data-step="1"; we hide the off-step face on each. */
