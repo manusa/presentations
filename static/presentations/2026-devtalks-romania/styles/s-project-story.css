@@ -24,8 +24,8 @@
    step-1 foot wash, and the .t-done token. One source of truth
    so the green can be retuned in one place rather than ~17. */
 .s-project-story {
-  --ok: var(--ok);       /* core green — text emphasis, glyphs, accents */
-  --ok-deep: var(--ok-deep);  /* darker green for body text on green washes */
+  --ok: #2E7F46;         /* core green — text emphasis, glyphs, accents */
+  --ok-deep: #1B5A30;    /* darker green for body text on green washes */
   --ok-rgb: 46, 127, 70; /* rgb triple for rgba() washes / halos */
 }
 
@@ -181,6 +181,16 @@
 .s-project-story .pr-issue {
   color: var(--accent);
   font-weight: 600;
+}
+/* The PR card carries an overlay anchor (.ref-link.overlay) at
+   z-index: 5 covering the whole card. Inline issue refs would
+   sit underneath it and route every click to the PR. Lift the
+   inline anchor's stacking context so its rect wins both for
+   hit-testing (cursor) and Chromium's page.pdf() link
+   annotations. */
+.s-project-story .pr-card .pr-issue .ref-link {
+  position: relative;
+  z-index: 6;
 }
 
 /* ============================================================
