@@ -116,7 +116,7 @@
 }
 .s-specs-vs-tests .vs-axis .vs {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--fg-mute);
@@ -142,22 +142,25 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 14px 22px;
+  padding: 11px 14px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
 .s-specs-vs-tests .panel-bar .grow { flex: 1 1 auto; }
 .s-specs-vs-tests .panel-bar .path { font-weight: 500; }
 
-/* enforce-pill — the headline contrast tag on each card */
+/* enforce-pill — the headline contrast tag on each card.
+   Size, padding, letter-spacing kept in sync with slide 19's
+   .status-pill so the panel-bar pills across slides 17/18/19
+   read as the same component. */
 .s-specs-vs-tests .enforce-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 0.10em;
+  font-size: 18px;
+  letter-spacing: 0.08em;
   text-transform: lowercase;
-  padding: 3px 10px;
+  padding: 2px 10px;
   border-radius: 999px;
   border: 1px solid currentColor;
   white-space: nowrap;
@@ -346,7 +349,7 @@
 }
 .s-specs-vs-tests .tag-line .lbl {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fg-mute);
