@@ -122,9 +122,9 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 14px 22px;
+  padding: 11px 14px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.04em;
   flex-shrink: 0;
   background: rgba(255,255,255,0.03);
@@ -149,13 +149,16 @@
 .s-failure-spec .panel-bar .dot.g { background: #28C840; }
 .s-failure-spec .panel-bar .path { margin-left: 14px; color: #B4BAD8; font-weight: 500; }
 
-/* state-pill — small label on the right of each panel-bar */
+/* state-pill — label on the right of each panel-bar.
+   Size, padding, letter-spacing kept in sync with slide 19's
+   .status-pill so the panel-bar pills across slides 17/18/19
+   read as the same component. */
 .s-failure-spec .state-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 0.10em;
+  font-size: 18px;
+  letter-spacing: 0.08em;
   text-transform: lowercase;
-  padding: 3px 10px;
+  padding: 2px 10px;
   border-radius: 999px;
   border: 1px solid currentColor;
   white-space: nowrap;
@@ -400,7 +403,7 @@
 }
 .s-failure-spec .tag-line .lbl {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fg-mute);
