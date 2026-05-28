@@ -142,21 +142,21 @@
    Step 0 hides all three. */
 
 /* widths */
-.s-ci .card-speed { width: calc((100% - 30px) / 2); left: calc(25% + 7.5px); opacity: 0; }
-.s-ci .card-cost  { width: calc((100% - 30px) / 2); left: 110%;                opacity: 0; }
-.s-ci .card-bugs  { width: 100%;                    left: 110%;                opacity: 0; }
+.s-ci .card-speed { width: calc((100% - 30px) / 2); left: calc(25% + 7.5px); opacity: 0; pointer-events: none; }
+.s-ci .card-cost  { width: calc((100% - 30px) / 2); left: 110%;                opacity: 0; pointer-events: none; }
+.s-ci .card-bugs  { width: 100%;                    left: 110%;                opacity: 0; pointer-events: none; }
 
 /* step 1 — speed reveal in LEFT slot (centered alone) */
-.s-ci[data-step="1"] .card-speed { left: calc(25% + 7.5px); opacity: 1; }
+.s-ci[data-step="1"] .card-speed { left: calc(25% + 7.5px); opacity: 1; pointer-events: auto; }
 
 /* step 2 — speed shifts to true LEFT; cost enters RIGHT */
-.s-ci[data-step="2"] .card-speed { left: 0;                  opacity: 1; }
-.s-ci[data-step="2"] .card-cost  { left: calc(50% + 15px);   opacity: 1; }
+.s-ci[data-step="2"] .card-speed { left: 0;                  opacity: 1; pointer-events: auto; }
+.s-ci[data-step="2"] .card-cost  { left: calc(50% + 15px);   opacity: 1; pointer-events: auto; }
 
 /* step 3 — speed + cost slide off left; bugs takes full width */
-.s-ci[data-step="3"] .card-speed { left: -55%;               opacity: 0; }
-.s-ci[data-step="3"] .card-cost  { left: -55%;               opacity: 0; }
-.s-ci[data-step="3"] .card-bugs  { left: 0;                  opacity: 1; }
+.s-ci[data-step="3"] .card-speed { left: -55%;               opacity: 0; pointer-events: none; }
+.s-ci[data-step="3"] .card-cost  { left: -55%;               opacity: 0; pointer-events: none; }
+.s-ci[data-step="3"] .card-bugs  { left: 0;                  opacity: 1; pointer-events: auto; }
 
 /* ============================================================
    Step 0 INTRO — a small centered framing block ("case study

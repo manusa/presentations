@@ -139,6 +139,48 @@ deck-stage section {
 .chrome-bottom .spacer { flex: 1; }
 .chrome-bottom .sep { color: var(--fg-mute); opacity: 0.5; }
 
+/* Invisible reference link: native pointer on hover, nothing else.
+   Two usage patterns:
+   (1) Inline text wrap — <span><a class="ref-link">…</a></span> for PR/issue
+       numbers, panel-bar paths, etc. The anchor inherits inline flow.
+   (2) Overlay click target — <div class="card"><a class="ref-link"></a>…</div>
+       on cards / rows / handles. The anchor is positioned absolutely over the
+       container so it has a finite rect (required for Chromium page.pdf() to
+       emit a PDF link annotation) without disturbing layout. The container
+       gets position:relative locally next to where the overlay is declared. */
+.ref-link,
+.ref-link:link,
+.ref-link:visited,
+.ref-link:hover,
+.ref-link:active {
+  color: inherit;
+  text-decoration: none;
+  background: transparent;
+}
+/* Suppress the mouse-focus halo (which would otherwise persist after clicking
+   a link and bleed into snapshot captures) without removing keyboard focus
+   visibility — :focus-visible only fires for keyboard-initiated focus. */
+.ref-link:focus { outline: none; }
+.ref-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.ref-link.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+/* Scoped to the host containers that actually need a positioning context
+   added — keeps the rule from accidentally re-positioning unrelated DOM.
+   Not listed because they already have their own:
+     .proj-card                — already position:relative
+     .s-fieldnotes .card.repo  — position:absolute (also a positioning ctx) */
+.s-about2 .handles-row .h:has(> .ref-link.overlay),
+.s-closing .contact-list .row:has(> .ref-link.overlay) {
+  position: relative;
+}
+
 /* Common slide body */
 .slide-body {
   position: absolute;
