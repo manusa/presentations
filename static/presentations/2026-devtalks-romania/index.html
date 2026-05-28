@@ -2642,16 +2642,10 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
       <article class="pr-card">
         <a class="ref-link overlay" href="https://github.com/manusa/yakd/pull/172" target="_blank" rel="noopener noreferrer" aria-label="YAKD PR #172 on GitHub"></a>
         <header class="pr-bar">
-          <span class="pr-octo" aria-hidden="true">⎇</span>
+          <image-slot class="pr-logo" id="pr-logo-yakd" src="assets/logos/yakd-square.svg" fit="contain" placeholder="YAKD" aria-hidden="true"></image-slot>
           <span class="pr-repo mono">manusa/yakd</span>
           <span class="pr-num mono">PR #172</span>
           <span class="pr-status st-merged">merged</span>
-          <span class="pr-grow"></span>
-          <span class="pr-stats mono">
-            <span class="diff-add">+57</span> / <span class="diff-rem">−147</span>
-            <span class="pr-sep">·</span> 10 files
-            <span class="pr-sep">·</span> 1 squashed commit
-          </span>
         </header>
         <div class="pr-body">
           <div class="pr-title">Update Quarkus to <span class="t-bump">3.30</span> and Fabric8 to <span class="t-bump">7</span></div>
@@ -2708,7 +2702,8 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
             </li>
           </ul>
           <footer class="sp-foot mono">
-            // i handed this to <span class="t-claude">Claude</span>.
+            <div class="foot-line">// the <span class="t-guard">compiler</span> steered the renames · the <span class="t-guard">tests</span> steered the behavior</div>
+            <div class="foot-line">// i handed it all to <span class="t-claude">Claude</span>.</div>
           </footer>
         </article>
 
@@ -2729,37 +2724,35 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
         <article class="story-panel contract-panel">
           <header class="sp-head">
             <span class="sp-glyph">▣</span>
-            <span class="sp-label">Already in the repo</span>
-            <span class="sp-tag mono">// existing IT suite</span>
+            <span class="sp-label">The test portfolio</span>
+            <span class="sp-tag mono">// already in the repo</span>
           </header>
-          <ul class="sp-list sp-tests">
-            <li class="sp-row sp-test">
-              <span class="sp-row-key mono">
-                <a class="ref-link" href="https://github.com/manusa/yakd/blob/main/src/test/java/com/marcnuri/yakd/HomeIT.java" target="_blank" rel="noopener noreferrer">HomeIT</a>
-              </span>
-              <span class="sp-row-val mono">home page · event list</span>
-              <span class="sp-row-note mono">3 @Test</span>
-            </li>
-            <li class="sp-row sp-test">
-              <span class="sp-row-key mono">
-                <a class="ref-link" href="https://github.com/manusa/yakd/blob/main/src/test/java/com/marcnuri/yakd/pod/PodLogsIT.java" target="_blank" rel="noopener noreferrer">PodLogsIT</a>
-              </span>
-              <span class="sp-row-val mono">log stream · container switch</span>
-              <span class="sp-row-note mono">4 @Test</span>
-            </li>
-            <li class="sp-row sp-test">
-              <span class="sp-row-key mono">
-                <a class="ref-link" href="https://github.com/manusa/yakd/blob/main/src/test/java/com/marcnuri/yakd/pod/PodExecIT.java" target="_blank" rel="noopener noreferrer">PodExecIT</a>
-              </span>
-              <span class="sp-row-val mono">exec terminal · container picker</span>
-              <span class="sp-row-note mono">3 @Test</span>
-            </li>
-            <li class="sp-row sp-totals">
-              <span class="sp-row-key mono">Σ</span>
-              <span class="sp-row-val mono">10 @Test · Selenium · KubernetesServer</span>
-              <span class="sp-row-note mono">no mocks of the app</span>
-            </li>
-          </ul>
+          <div class="portfolio">
+            <div class="portfolio-headline">
+              Black-box coverage <span class="port-soft">across the full stack</span>
+            </div>
+            <ul class="portfolio-chips">
+              <li class="port-chip">
+                <span class="chip-name mono">REST Assured</span>
+                <span class="chip-intent mono">backend HTTP</span>
+              </li>
+              <li class="port-chip">
+                <span class="chip-name mono">Selenium IT</span>
+                <span class="chip-intent mono">UI → backend → K8s</span>
+              </li>
+              <li class="port-chip">
+                <span class="chip-name mono">Quarkus infra</span>
+                <span class="chip-intent mono">WebSocket · watchers</span>
+              </li>
+            </ul>
+            <div class="portfolio-connector mono">
+              // all use <span class="t-conn">@QuarkusTest · @WithKubernetesTestServer</span>
+            </div>
+            <div class="portfolio-sigma">
+              <span class="sigma-num mono">0</span>
+              <span class="sigma-label">assertion changes <span class="sigma-soft mono">across the upgrade</span></span>
+            </div>
+          </div>
           <footer class="sp-foot mono">
             // when these pass, the upgrade is <span class="t-done">done</span>.
           </footer>
@@ -2768,11 +2761,10 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
 
       <footer class="tag-line">
         <div class="quote">
-          The agent took the grunt work.
-          <span class="accent">The tests defined done.</span>
+          The <span class="accent">contract</span> held.
         </div>
         <div class="caption mono">
-          // the unglamorous work ships safely when behavior is pinned
+          // zero assertion changes across the upgrade
         </div>
       </footer>
     </div>

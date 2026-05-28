@@ -114,11 +114,11 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 19px;
 }
-.s-project-story .pr-octo {
-  color: var(--accent);
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1;
+.s-project-story .pr-logo {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
 }
 .s-project-story .pr-repo {
   color: var(--fg);
@@ -144,14 +144,6 @@
   background: rgba(123, 63, 191, 0.10);
   border-color: rgba(91, 45, 160, 0.55);
 }
-.s-project-story .pr-grow { flex: 1 1 auto; }
-.s-project-story .pr-stats {
-  font-size: 18px;
-  color: var(--fg);
-  letter-spacing: 0.02em;
-}
-.s-project-story .pr-stats .pr-sep { color: var(--fg-mute); margin: 0 4px; }
-.s-project-story .diff-add { color: #2E7F46; font-weight: 700; }
 .s-project-story .diff-rem { color: #B83454; font-weight: 700; }
 
 .s-project-story .pr-body {
@@ -318,6 +310,41 @@
   font-weight: 600;
 }
 
+/* Σ-as-trust-beat row.
+   Subtle green wash + accent stripe + emphasized "0" so the row
+   breaks the table rhythm and the audience reads it as the
+   punchline-in-data, not just another summary line. */
+.s-project-story .sp-row.sp-sigma {
+  background: rgba(46, 127, 70, 0.10);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 4px -12px 0;
+  border-top-color: rgba(46, 127, 70, 0.45);
+  box-shadow: inset 3px 0 0 rgba(46, 127, 70, 0.85);
+}
+.s-project-story .sp-sigma .sp-row-key {
+  color: #2E7F46;
+  font-weight: 800;
+}
+.s-project-story .sp-sigma .sp-row-val {
+  color: #1B5A30;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.005em;
+}
+.s-project-story .sp-sigma .sp-row-note {
+  color: #2E7F46;
+  font-weight: 500;
+}
+.s-project-story .t-zero {
+  color: #2E7F46;
+  font-weight: 800;
+  font-size: 1.4em;
+  line-height: 0.9;
+  padding-right: 2px;
+  vertical-align: -0.05em;
+}
+
 /* Test rows — the class-name key looks like a clickable identifier */
 .s-project-story .sp-test .sp-row-key {
   color: var(--fg);
@@ -327,25 +354,144 @@
 }
 
 /* ============================================================
-   Panel foot — one mono one-liner per panel.
+   Panel foot — mono one-liner(s) per panel. Multi-line variant
+   uses .foot-line children so the grunt-work panel can carry
+   the dual-guidance attribution (compiler + tests) plus the
+   "i handed it to Claude" line without breaking layout.
    ============================================================ */
 .s-project-story .sp-foot {
   border-top: 1px solid rgba(10, 21, 84, 0.10);
   padding: 11px 18px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 19px;
+  font-size: 18px;
   color: var(--fg-dim);
   letter-spacing: 0.02em;
   flex-shrink: 0;
   background: rgba(10, 21, 84, 0.025);
+  line-height: 1.4;
 }
+.s-project-story .sp-foot .foot-line { display: block; }
+.s-project-story .sp-foot .foot-line + .foot-line { margin-top: 2px; }
 .s-project-story .t-claude {
   color: var(--accent-2-ink, var(--accent-2));
+  font-weight: 700;
+}
+.s-project-story .t-guard {
+  color: var(--accent);
   font-weight: 700;
 }
 .s-project-story .t-done {
   color: #2E7F46;
   font-weight: 700;
+}
+
+/* ============================================================
+   Portfolio body — replaces the old .sp-list table on the
+   contract panel. The grunt-work panel still uses .sp-list.
+
+   Hierarchy (top → bottom):
+     headline     Black-box coverage across the full stack
+     chips        3 intent chips (REST Assured · Selenium IT · Quarkus infra)
+     connector    // all use @QuarkusTest + @WithKubernetesTestServer
+     sigma block  big 0  ·  assertion changes across the upgrade
+   ============================================================ */
+.s-project-story .portfolio {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 12px;
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 14px;
+}
+.s-project-story .portfolio-headline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  line-height: 1.22;
+}
+.s-project-story .port-soft {
+  color: var(--fg-mute);
+  font-weight: 500;
+}
+.s-project-story .portfolio-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.s-project-story .port-chip {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 14px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(10, 21, 84, 0.16);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.s-project-story .chip-name {
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.005em;
+}
+.s-project-story .chip-intent {
+  color: var(--fg-mute);
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.s-project-story .portfolio-connector {
+  font-size: 17px;
+  color: var(--fg-mute);
+  letter-spacing: 0.02em;
+  padding-left: 2px;
+}
+.s-project-story .t-conn {
+  color: var(--accent);
+  font-weight: 600;
+}
+/* The Σ punchline block — green wash + thick left accent stripe.
+   Number is huge so the audience parses "ZERO" before they read
+   the label. */
+.s-project-story .portfolio-sigma {
+  margin-top: auto;
+  padding: 16px 20px;
+  background: rgba(46, 127, 70, 0.12);
+  border-radius: 10px;
+  border: 1px solid rgba(46, 127, 70, 0.45);
+  box-shadow: inset 5px 0 0 rgba(46, 127, 70, 0.90);
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.s-project-story .sigma-num {
+  font-size: 64px;
+  font-weight: 800;
+  color: #2E7F46;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  flex-shrink: 0;
+}
+.s-project-story .sigma-label {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1B5A30;
+  line-height: 1.22;
+  letter-spacing: -0.005em;
+}
+.s-project-story .sigma-soft {
+  display: block;
+  color: #2E7F46;
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  margin-top: 3px;
 }
 
 /* ============================================================
