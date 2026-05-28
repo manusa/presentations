@@ -1,0 +1,145 @@
+/* ============================================================
+   S-XP-REFRAME — Act V close ("Did I just advertise XP?").
+   Three-row vertical rhythm: headline · reveal (stamp →
+   bullets) · two-line closer. The visual carries the
+   recognition; the headline carries the rhetorical question.
+   ============================================================ */
+.s-xp-reframe .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  padding: 96px var(--pad-x) 84px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 48px;
+}
+
+/* ---------- Headline (top) ---------- */
+.s-xp-reframe .head {
+  display: grid;
+  row-gap: 14px;
+}
+.s-xp-reframe .head .title {
+  font-family: 'Inter', sans-serif;
+  font-size: 96px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.028em;
+  color: var(--fg);
+  margin: 0;
+}
+.s-xp-reframe .head .title em {
+  font-style: normal;
+  color: var(--accent-ink);
+}
+
+/* ---------- Reveal — three-column composition ---------- */
+.s-xp-reframe .reveal {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  column-gap: 64px;
+  align-items: center;
+  justify-content: start;
+  align-self: center;
+}
+
+/* ---------- Left column — the stamp ---------- */
+.s-xp-reframe .reveal-stamp {
+  position: relative;
+  border: 5px solid var(--accent-ink);
+  background: rgba(184, 23, 66, 0.04);
+  color: var(--accent-ink);
+  padding: 36px 56px 30px;
+  display: grid;
+  row-gap: 14px;
+  justify-items: center;
+  border-radius: 8px;
+  transform: rotate(-1.4deg);
+  box-shadow: 0 6px 20px rgba(184, 23, 66, 0.10);
+}
+.s-xp-reframe .stamp-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+.s-xp-reframe .stamp-rule {
+  width: 80%;
+  height: 3px;
+  background: var(--accent-ink);
+  opacity: 0.5;
+  border-radius: 1.5px;
+}
+.s-xp-reframe .stamp-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ---------- Middle column — arrow ---------- */
+.s-xp-reframe .reveal-arrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 96px;
+  font-weight: 800;
+  color: var(--accent-ink);
+  line-height: 1;
+  align-self: center;
+}
+
+/* ---------- Right column — the practices bullets ---------- */
+.s-xp-reframe .practices {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  row-gap: 14px;
+}
+.s-xp-reframe .practices li {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-subtitle);
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  display: grid;
+  grid-template-columns: 36px auto;
+  align-items: baseline;
+  column-gap: 4px;
+}
+.s-xp-reframe .practices li::before {
+  content: "▸";
+  color: var(--accent-ink);
+  font-weight: 700;
+  text-align: left;
+}
+
+/* ---------- Closing block (bottom) ---------- */
+.s-xp-reframe .reveal-closers {
+  display: grid;
+  row-gap: 12px;
+}
+.s-xp-reframe .reveal-line {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-h2);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  color: var(--fg);
+  margin: 0;
+}
+.s-xp-reframe .reveal-line em {
+  font-style: normal;
+  color: var(--accent-ink);
+}
+.s-xp-reframe .reveal-line-sub {
+  font-size: var(--type-subtitle);
+  font-weight: 600;
+  color: var(--fg-dim);
+}
+.s-xp-reframe .reveal-line-sub em {
+  color: var(--accent-ink);
+  font-weight: 800;
+}
