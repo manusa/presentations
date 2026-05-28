@@ -2188,20 +2188,26 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
        Surefire prints the whole scenario tree on the way to the
        failed leaf — the agent reads the failure as a spec.
 
-       Asymmetric two-column stage (40/60):
-         LEFT  — abridged ConfigDisableAutoConfigurationTest
-                 from Fabric8. Nested classes + @DisplayName.
-                 Supporting context.
-         RIGHT — the Surefire failure tree (hero). Indented to
-                 mirror the @Nested depth. expected/actual sit
-                 at the deepest level. Same colour key as the
-                 slide-17 BUILD FAILED console for continuity.
+       Side-by-side, 40/60 (cause → effect reading order):
+         LEFT  — abridged synthetic test (ShoppingCartTest ·
+                 discount-before-tax). Nested classes +
+                 @DisplayName. Supporting context.
+         RIGHT — Surefire failure tree (hero). Indented to
+                 mirror the @Nested depth. expected/actual
+                 sit at the deepest level. Same colour key as
+                 slide 17's BUILD FAILED console for continuity.
 
        Two-step reveal:
          step 0  test file visible; failure card shows a "mvn
                  running" stub so the audience reads the test
                  first before the failure resolves.
          step 1  the tree replaces the stub; tagline drops in.
+
+       Synthetic on purpose: slide 19 already carries a
+       project-grounded Fabric8 example. Slide 18 needs the
+       PATTERN to land in ≤2 seconds, so it uses a universal
+       domain (cart · checkout · discount) the audience can
+       parse without any Kubernetes context.
        ============================================================ -->
   <section class="s-failure-spec light" data-label="Act 5 — A failing test should explain the broken behavior" data-step-max="1">
     <div class="chrome-top">
@@ -2222,38 +2228,30 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
 
       <div class="stage">
         <!-- ============================================================
-             LEFT — TEST card. Abridged ConfigDisableAutoConfigurationTest
-             from fabric8 (kubernetes-client-api). The shape of the
-             @Nested hierarchy is the signal; ellipses absorb the body
-             of the assertion chain so the panel stays short enough
-             that the failure tree on the right reads as the hero.
+             LEFT — TEST card. Synthetic ShoppingCartTest with a
+             two-level @Nested hierarchy and the broken assertion
+             highlighted in pink. Annotations and structural keywords
+             are desaturated so the audience's eye lands on the
+             @DisplayName strings, which reappear verbatim in the
+             breadcrumb tree on the right.
              ============================================================ -->
         <article class="card card-test">
           <header class="panel-bar">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <span class="path">ConfigDisableAutoConfigurationTest.java</span>
+            <span class="path">ShoppingCartTest.java</span>
             <span class="grow"></span>
             <span class="state-pill nested">@nested · @displayname</span>
           </header>
           <div class="panel-body code">
-            <div class="ln"><span class="t-anno">@Nested</span></div>
-            <div class="ln"><span class="t-anno">@DisplayName</span>(<span class="t-str">"via kubernetes.disable.autoConfig=true"</span>)</div>
-            <div class="ln"><span class="t-kw">class</span> <span class="t-type">AutoConfigDisabledViaProperty</span> {</div>
-            <div class="ln gap">&nbsp;</div>
-            <div class="ln indent"><span class="t-anno">@Nested</span></div>
-            <div class="ln indent"><span class="t-anno">@DisplayName</span>(<span class="t-str">"And inside Kubernetes Cluster</span></div>
-            <div class="ln indent-2"><span class="t-str">with ServiceAccount mounted"</span>)</div>
-            <div class="ln indent"><span class="t-kw">class</span> <span class="t-type">InsideKubernetesCluster</span> {</div>
-            <div class="ln gap">&nbsp;</div>
-            <div class="ln indent-2"><span class="t-anno">@Test</span></div>
-            <div class="ln indent-2"><span class="t-anno">@DisplayName</span>(<span class="t-str">"then use default values"</span>)</div>
-            <div class="ln indent-2"><span class="t-kw">void</span> <span class="t-fn">whenConfigDisabled_thenUseDefaults</span>() {</div>
-            <div class="ln indent-3"><span class="t-fn">assertThat</span>(<span class="t-kw">new</span> <span class="t-type">ConfigBuilder</span>().<span class="t-fn">build</span>())</div>
-            <div class="ln broken">.<span class="t-fn">hasFieldOrPropertyWithValue</span>(<span class="t-str">"masterUrl"</span>,</div>
-            <div class="ln broken"><span class="t-str">&nbsp;&nbsp;"https://kubernetes.default.svc/"</span>);</div>
-            <div class="ln indent-2">}</div>
-            <div class="ln indent">}</div>
-            <div class="ln">}</div>
+            <div class="ln"><span class="t-anno">@Nested</span> <span class="t-anno">@DisplayName</span>(<span class="t-str">"during checkout"</span>)</div>
+            <div class="ln"><span class="t-kw">class</span> <span class="t-type">DuringCheckout</span> {</div>
+            <div class="ln indent"><span class="t-anno">@Nested</span> <span class="t-anno">@DisplayName</span>(<span class="t-str">"with a discount code"</span>)</div>
+            <div class="ln indent"><span class="t-kw">class</span> <span class="t-type">WithDiscount</span> {</div>
+            <div class="ln indent-2"><span class="t-anno">@Test</span> <span class="t-anno">@DisplayName</span>(<span class="t-str">"applies the discount before tax"</span>)</div>
+            <div class="ln indent-2"><span class="t-kw">void</span> <span class="t-fn">appliesDiscountBeforeTax</span>() {</div>
+            <div class="ln indent-3"><span class="t-fn">assertThat</span>(cart.<span class="t-fn">total</span>())</div>
+            <div class="ln broken">.<span class="t-fn">isEqualTo</span>(<span class="t-fn">money</span>(<span class="t-str">"90.00"</span>));</div>
+            <div class="ln indent-2">} } }</div>
           </div>
         </article>
 
@@ -2270,15 +2268,14 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
         <article class="card card-failure">
           <header class="panel-bar">
             <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <span class="path">target/surefire-reports · ConfigDisable…Test</span>
+            <span class="path">surefire · ShoppingCartTest</span>
             <span class="grow"></span>
             <span class="state-pill broken">// agent broke the contract</span>
           </header>
           <div class="panel-body">
             <!-- step 0 stub: command kicked off, "running" pulse -->
             <div class="stub">
-              <div class="cmd"><span class="prompt">$</span> mvn -pl kubernetes-client-api -Dtest=ConfigDisable…Test test</div>
-              <div>&nbsp;</div>
+              <div class="cmd"><span class="prompt">$</span> mvn -Dtest=ShoppingCartTest test</div>
               <div class="ellipsis">running . . .</div>
             </div>
 
@@ -2287,15 +2284,13 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
               <div class="head-row">
                 <span class="glyph">✗</span>
                 <span class="head-label">BUILD FAILED</span>
-                <span class="head-sub">— ConfigDisableAutoConfigurationTest</span>
+                <span class="head-sub">— ShoppingCartTest</span>
               </div>
-              <div class="tr scenario d0"><em>via kubernetes.disable.autoConfig=true</em></div>
-              <div class="tr scenario d1"><span class="branch">└─</span>And inside Kubernetes Cluster with ServiceAccount mounted</div>
-              <div class="tr leaf d2"><span class="branch">└─</span><span class="x">✗</span>then use default values</div>
-              <div class="tr d3">&nbsp;</div>
-              <div class="tr detail d3"><span class="key">expected:</span><span class="ok">"https://kubernetes.default.svc/"</span></div>
-              <div class="tr detail d3"><span class="key">actual:&nbsp;&nbsp;</span><span class="bad">"https://my-cluster.example.com/"</span></div>
-              <div class="tree-foot">// the agent reads the failure as a behavior breadcrumb.</div>
+              <div class="tr scenario d0"><em>during checkout</em></div>
+              <div class="tr scenario d1"><span class="branch">└─</span>with a discount code</div>
+              <div class="tr leaf d2"><span class="branch">└─</span><span class="x">✗</span>applies the discount before tax</div>
+              <div class="tr detail d3"><span class="key">expected:</span><span class="ok">$90.00</span></div>
+              <div class="tr detail d3"><span class="key">actual:&nbsp;&nbsp;</span><span class="bad">$99.00</span></div>
             </div>
           </div>
         </article>

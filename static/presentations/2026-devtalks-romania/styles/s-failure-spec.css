@@ -86,15 +86,19 @@
 .s-failure-spec .head .sub .t-warn { color: var(--accent-2-ink); font-weight: 600; }
 
 /* ============================================================
-   Stage — 40/60 grid. The failure tree wins on width.
-   Cards align at their tops; intrinsic heights differ.
+   Stage — side-by-side, 50/50. Cause (left) → effect (right).
+   With the shorter shopping-cart @DisplayName strings, the
+   failure tree no longer needs extra width to keep the leaf
+   readable, so an even split reads cleaner than the earlier
+   40/60. The "running . . ." stub in step 0 sits on its own
+   line so the step-0 right card doesn't demand extra width.
    ============================================================ */
 .s-failure-spec .stage {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
-  column-gap: 36px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 32px;
+  align-items: stretch;
 }
 
 /* ============================================================
@@ -128,6 +132,15 @@
   color: #8A93BC;
 }
 .s-failure-spec .panel-bar .grow { flex: 1 1 auto; }
+.s-failure-spec .panel-bar .path {
+  /* prevent path from wrapping onto a second line when the
+     panel-bar is narrow (50/50 split makes each card ~half the
+     stage); truncate via ellipsis instead. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
 .s-failure-spec .panel-bar .dot {
   width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0;
 }
@@ -165,25 +178,26 @@
    the failure tree on the right reads as the hero.
    ============================================================ */
 .s-failure-spec .card-test .panel-body.code {
-  padding: 22px 26px 24px;
+  padding: 18px 32px 18px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: 20px;
+  line-height: 1.35;
   /* Base color is muted; only the @DisplayName strings and the broken
-     assertion stay bright. The left card is supporting context, not the
-     hero — desaturating non-essential tokens makes the failure tree on
-     the right read as dominant at projector distance. */
+     assertion stay bright. The test card is supporting context — the
+     failure tree below is the hero. Desaturating non-essential tokens
+     keeps the reading order: scan the @DisplayName strings, see them
+     reappear in the breadcrumb. */
   color: #6F78A0;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 0;
   white-space: nowrap;
   overflow: hidden;
 }
-.s-failure-spec .card-test .ln.indent   { padding-left: 22px; }
-.s-failure-spec .card-test .ln.indent-2 { padding-left: 44px; }
-.s-failure-spec .card-test .ln.indent-3 { padding-left: 66px; }
-.s-failure-spec .card-test .ln.gap      { height: 6px; }
+.s-failure-spec .card-test .ln.indent   { padding-left: 26px; }
+.s-failure-spec .card-test .ln.indent-2 { padding-left: 52px; }
+.s-failure-spec .card-test .ln.indent-3 { padding-left: 78px; }
+.s-failure-spec .card-test .ln.gap      { height: 4px; }
 
 /* Annotations / keywords / types / fns stay muted — they are scaffolding
    for the @DisplayName strings, which are the real link to the failure
@@ -198,17 +212,20 @@
 .s-failure-spec .card-test .t-str { color: var(--orange-soft); font-weight: 500; }
 .s-failure-spec .card-test .t-cmt { color: #6F78A0; font-style: italic; }
 /* Highlight the broken assert line so the eye lands on it as the
-   left/right anchor (pink here, pink leaf on the right). */
+   left/right anchor (pink here, pink leaf in the failure tree).
+   Padding is indent-3 (78px) + 2 character widths (~24px @ 20px
+   Mono) so the chain continuation reads as nested under the
+   parent assertThat(...) line. */
 .s-failure-spec .card-test .ln.broken {
   color: #C8CCE4;
   background: rgba(240, 42, 90, 0.10);
   border-left: 2px solid #FF6B7E;
-  padding-left: 64px;
+  padding-left: 102px;
   margin-left: -2px;
 }
 .s-failure-spec .card-test .ln.broken .t-str {
   color: #B6E3A8;  /* the expected literal stays green — matches the
-                     right-card "expected:" colour for continuity. */
+                     failure card's "expected:" colour for continuity. */
 }
 
 /* ============================================================
@@ -226,46 +243,45 @@
   border-bottom-color: rgba(255, 123, 134, 0.25);
 }
 .s-failure-spec .card-failure .panel-body {
-  padding: 24px 30px 26px;
+  padding: 20px 32px 22px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 22px;
-  line-height: 1.5;
+  line-height: 1.4;
   color: #C8CCE4;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  min-height: 480px;
+  gap: 2px;
+  /* Reserve height so the panel doesn't grow when the tree replaces the
+     stub. Sized for the tree at step 1 — step 0 leaves intentional
+     headroom that the pulsing stub anchors to. */
+  min-height: 260px;
 }
 
 /* The "// running" stub shown in step 0 before the tree resolves.
-   Compact top-aligned strip so the empty panel reads as "waiting
-   room", not "forgotten". */
+   Top-aligned, two-line layout: command on the first line,
+   "running . . ." pulse on the second. Keeps the right card from
+   needing extra horizontal width to fit the stub on one row. */
 .s-failure-spec .card-failure .stub {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 10px;
   color: #8A93BC;
-  font-style: italic;
-  font-size: 19px;
-  /* anchor to the top of the panel so the lower half intentionally
-     reads as "the answer will appear here" rather than dead space. */
+  font-size: 22px;
   align-self: flex-start;
-  width: 100%;
 }
 .s-failure-spec .card-failure .stub .cmd {
   color: #B4BAD8;
-  font-style: normal;
 }
-.s-failure-spec .card-failure .stub .cmd .prompt { color: var(--cyan); }
+.s-failure-spec .card-failure .stub .cmd .prompt { color: var(--cyan); margin-right: 6px; }
 .s-failure-spec .card-failure .stub .ellipsis {
   color: #FEBC2E;
   letter-spacing: 0.3em;
-  font-style: normal;
   /* Subtle pulse so the empty panel reads as actively running. */
   animation: s-failure-spec-pulse 1.2s ease-in-out infinite;
 }
 @keyframes s-failure-spec-pulse {
-  0%, 100% { opacity: 0.55; }
+  0%, 100% { opacity: 0.45; }
   50%      { opacity: 1; }
 }
 
@@ -278,69 +294,70 @@
 .s-failure-spec .card-failure .tree .head-row {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  margin-bottom: 14px;
+  gap: 14px;
+  margin-bottom: 12px;
 }
 .s-failure-spec .card-failure .tree .glyph {
   color: var(--pink);
   font-weight: 700;
-  font-size: 26px;
+  font-size: 30px;
 }
 .s-failure-spec .card-failure .tree .head-label {
   color: #FF6B7E;
   font-weight: 700;
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  font-size: 22px;
+  font-size: 24px;
 }
 .s-failure-spec .card-failure .tree .head-sub {
-  color: #6F78A0;
-  font-size: 18px;
+  color: #8A93BC;
+  font-size: 20px;
 }
 /* Each row in the tree. Indentation expresses the @Nested depth.
    Bigger indent steps + heavier branch glyphs so the nesting reads
-   as nesting from the back row. */
+   as nesting from the back row of the auditorium. */
 .s-failure-spec .card-failure .tr   { color: #C8CCE4; }
 .s-failure-spec .card-failure .tr.d0 { padding-left: 0; }
-.s-failure-spec .card-failure .tr.d1 { padding-left: 36px; }
-.s-failure-spec .card-failure .tr.d2 { padding-left: 72px; }
-.s-failure-spec .card-failure .tr.d3 { padding-left: 108px; }
+.s-failure-spec .card-failure .tr.d1 { padding-left: 44px; }
+.s-failure-spec .card-failure .tr.d2 { padding-left: 88px; }
+.s-failure-spec .card-failure .tr.d3 { padding-left: 132px; }
 .s-failure-spec .card-failure .tr .branch {
   color: rgba(180, 186, 216, 0.55);
-  margin-right: 10px;
+  margin-right: 12px;
   font-weight: 600;
 }
 /* SCENARIO ROWS (d0, d1) — the breadcrumb. Both levels are bright
    orange to make the visual link to the orange @DisplayName strings
-   on the left card unmistakable: "the annotation literally becomes
-   this breadcrumb line." */
+   on the test card above unmistakable: "the annotation literally
+   becomes this breadcrumb line." */
 .s-failure-spec .card-failure .tr.scenario {
   color: var(--orange-soft);
   font-weight: 600;
   font-size: 24px;
+  line-height: 1.35;
 }
 .s-failure-spec .card-failure .tr.scenario em { font-style: normal; }
-/* LEAF — the failed test. This is the payload of the slide; it must
-   be the brightest, largest line on the right card so the eye lands
-   here first. */
+/* LEAF — the failed test. The payload of the slide. Brightest,
+   largest line on the failure card so the eye lands here first. */
 .s-failure-spec .card-failure .tr.leaf {
   color: #FFE3E7;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 30px;
+  line-height: 1.25;
   margin-top: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .s-failure-spec .card-failure .tr.leaf .x {
   color: var(--pink);
   font-weight: 700;
-  margin-right: 10px;
-  font-size: 30px;
+  margin-right: 12px;
+  font-size: 32px;
 }
 /* expected / actual — supporting detail. Visually demoted so they
    don't outshout the leaf. Same colour key as slide 17's BUILD
    FAILED console for continuity. */
 .s-failure-spec .card-failure .tr.detail {
-  font-size: 18px;
+  font-size: 22px;
   color: #8A93BC;
 }
 .s-failure-spec .card-failure .tr.detail .key { color: #6F78A0; margin-right: 6px; }
@@ -348,10 +365,10 @@
 .s-failure-spec .card-failure .tr.detail .bad { color: #FF8794; text-decoration: line-through; text-decoration-color: rgba(255,135,148,0.5); }
 
 .s-failure-spec .card-failure .tree-foot {
-  margin-top: 18px;
+  margin-top: 16px;
   color: #6F78A0;
   font-style: italic;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 /* ============================================================
