@@ -43,7 +43,9 @@
   position: absolute;
   inset: 56px 0 56px 0;
   z-index: 1;
-  padding: 30px var(--pad-x) 24px;
+  /* Scoped pad-x override: this slide needs wider cards so every
+     console line can sit at the 18px floor without horizontal clip. */
+  padding: 30px 72px 24px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 20px;
@@ -97,7 +99,7 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-  column-gap: 18px;
+  column-gap: 12px;
   align-items: stretch;
 }
 
@@ -124,12 +126,12 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 12px 16px;
+  padding: 11px 14px;
   background: rgba(255,255,255,0.03);
   border-bottom: 1px solid rgba(255,255,255,0.08);
   color: #8A93BC;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
+  font-size: 18px;
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
@@ -145,10 +147,10 @@
 /* Status pills inside the panel bar — flip with step */
 .s-blackbox .status-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 0.10em;
+  font-size: 18px;
+  letter-spacing: 0.08em;
   text-transform: lowercase;
-  padding: 3px 10px;
+  padding: 2px 10px;
   border-radius: 999px;
   border: 1px solid currentColor;
   white-space: nowrap;
@@ -203,10 +205,10 @@
 /* Micro-glossary one-liner under the panel bar */
 .s-blackbox .micro-gloss {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
+  font-size: 18px;
   letter-spacing: 0.02em;
   color: #8A93BC;
-  padding: 7px 18px 5px;
+  padding: 7px 14px 5px;
   background: rgba(255,255,255,0.015);
   border-bottom: 1px dashed rgba(255,255,255,0.07);
 }
@@ -216,9 +218,9 @@
    ============================================================ */
 .s-blackbox .panel-body.code {
   flex: 1 1 auto;
-  padding: 12px 18px 14px;
+  padding: 12px 14px 14px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.42;
   color: #C8CCE4;
   display: flex;
@@ -232,14 +234,12 @@
 .s-blackbox .ln.indent-2  { padding-left: 44px; }
 
 /* Setup block: the field declarations above @Test.
-   Visually muted so the test method itself stays the focus, but
-   the @Mock / @EnableKubeAPIServer annotations carry the contrast
-   between "this test needs mocks" and "this test uses a real
-   Kubernetes API server". */
+   Visually muted (dim color, not smaller size) so the test method
+   itself stays the focus, but the @Mock / @EnableKubeAPIServer
+   annotations carry the contrast between "this test needs mocks"
+   and "this test uses a real Kubernetes API server". Size matches
+   the rest of the code body — no sub-18px text on this slide. */
 .s-blackbox .ln.setup {
-  font-size: 13px;
-  line-height: 1.55;
-  min-height: 1.55em;
   color: #8A93BC;
   letter-spacing: -0.005em;
 }
@@ -304,18 +304,18 @@
    ============================================================ */
 .s-blackbox .card-foot {
   border-top: 1px solid rgba(255,255,255,0.08);
-  padding: 11px 18px;
+  padding: 11px 14px;
   display: flex;
   align-items: center;
   gap: 10px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
+  font-size: 18px;
   color: #B4BAD8;
   flex-shrink: 0;
   min-height: 44px;
 }
 .s-blackbox .card-foot .foot-glyph {
-  font-size: 18px;
+  font-size: 21px;
   color: #8A93BC;
 }
 .s-blackbox .card-foot .foot-msg em {
@@ -399,7 +399,7 @@
   align-items: center;
   gap: 8px 10px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
+  font-size: 18px;
 }
 .s-blackbox .tag-line .chips-lbl {
   color: var(--fg-mute);
