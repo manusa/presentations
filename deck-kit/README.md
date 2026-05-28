@@ -46,8 +46,8 @@ Drop both scripts at the bottom of `<body>` with `defer`. Inline per-deck glue (
 </head>
 <body>
 <deck-stage width="1920" height="1080">
-  <section data-label="01 Title">…</section>
-  <section data-label="02 Agenda">…</section>
+  <section data-label="Title">…</section>
+  <section data-label="Agenda">…</section>
   <!-- … -->
 </deck-stage>
 

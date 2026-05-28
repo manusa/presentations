@@ -81,9 +81,9 @@ These four SVGs sit in `assets/logos/` but are not referenced from any source fi
 
 ## Slide model
 
-- Slides are direct children of `<deck-stage>`: `<section class="s-title" data-label="01 Title">…</section>`.
+- Slides are direct children of `<deck-stage>`: `<section class="s-title" data-label="Title">…</section>`. `data-label` is a bare title with **no numeric prefix**. deck-kit auto-stamps `data-screen-label="NN <label>"` based on the slide's 1-indexed section position; that is the canonical number used by deep-link (`#N`), screenshot filenames (`slide-NN.png`), and the rail thumbnails. It changes automatically when slides are added, removed, or reordered.
 - The deck is the real talk arc only: Title → Acts I–VI (Act VI is the Q&A close). The trailing template-demo and exploration sections that shipped with the upstream Claude Design handoff were removed in #1817 (and the matching `styles/s-{about,content,compare,quote,stat,code,diagram,fullbleed}.css` files with them).
-- `data-label` numbering currently has gaps (12/13, 15/16, 18, 20, 23/24) — these are intentional reservations for slides that have not been implemented yet. Renumber only after a deck-arc decision is made; not part of routine doc-sync work.
+- The **talk-arc number** (the planned slide number from the structure document) lives on the `.pill` chrome inside each slide (e.g., `act 04 · skill · 14`) and on the `<!-- SLIDE NN — TITLE -->` banner comment above each `<section>`. These two carry the storyteller's sequence number, which deliberately has gaps (12/13, 15/16, 18, 20, 23/24) for slides not yet implemented. Renumber only after a deck-arc decision is made; not part of routine doc-sync work. The pill is the canonical source; the banner comment is an authoring aid.
 - Theming is centralized in `:root` CSS custom properties at the top of `index.html` (`--bg`, `--accent`, `--accent-2`, `--pink`, `--purple`, type scale, padding tokens).
 - Per-slide CSS is namespaced by class prefix (`.s-title { … }`, `.s-amplifier { … }`, etc.).
 - `<deck-stage>` and `<image-slot>` are repo-wide web components loaded from `../../deck-kit/` at the bottom of `index.html`. The contract is append-only and pinned by Playwright tests (see `static/deck-kit/README.md`). This deck does not define its own copy.
