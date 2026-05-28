@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="styles/tokens.css" />
 <link rel="stylesheet" href="styles/shared.css" />
 <link rel="stylesheet" href="styles/s-about2.css" />
-<link rel="stylesheet" href="styles/s-agenda.css" />
+<link rel="stylesheet" href="styles/shared-typography.css" />
 <link rel="stylesheet" href="styles/s-section.css" />
 <link rel="stylesheet" href="styles/s-fieldnotes.css" />
 <link rel="stylesheet" href="styles/s-amplifier.css" />
@@ -35,7 +35,7 @@
 <deck-stage width="1920" height="1080">
 
   <!-- ============================================================
-       SLIDE 1 — TITLE (JVM boot / SLF4J startup)
+       01 TITLE (JVM boot / SLF4J startup)
        ============================================================ -->
   <section class="s-boot" data-label="01 Title">
     <div class="chrome-top">
@@ -119,7 +119,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE 2 — ACT I DIVIDER (Maven build)
+       ACT I DIVIDER — CONTEXT (Maven build)
        ============================================================ -->
   <section class="s-section" data-label="Act I — Context">
     <div class="chrome-top">
@@ -218,10 +218,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE 3 — ABOUT (DAY JOB)
-       ============================================================ -->
-  <!-- ============================================================
-       SLIDE 3 — ABOUT (DAY JOB / AFTER HOURS) — single stepped slide.
+       02 ABOUT — DAY JOB + AFTER HOURS (single stepped slide).
        Two faces of the same person: front = day_job, back = after_hours.
        data-step="0" shows front; data-step="1" flips to back.
        The stepping handler at the bottom of this file (the same one
@@ -469,7 +466,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE 4 — FIELD NOTES (Act I calibration: humility, not doctrine)
+       03 FIELD NOTES (Act I calibration: humility, not doctrine)
        Sits at the end of Act I, immediately after "About — After hours".
        ============================================================ -->
   <section class="s-fieldnotes light" data-label="03 Field notes">
@@ -606,7 +603,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE 6 — ACT II DIVIDER (Maven reactor build)
+       ACT II DIVIDER — UNIT OF PRODUCTIVITY (Maven reactor build)
        ============================================================ -->
   <section class="s-section" data-label="Act II — Unit of productivity">
     <div class="chrome-top">
@@ -705,7 +702,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE 4b — ACT 2 · OLD WORLD (Gantt)
+       04 ACT 2 · OLD WORLD (Gantt)
        The day, 10 months ago: one developer, one task at a time.
        ============================================================ -->
   <section class="s-act2 light" data-label="04 Act 2 — Old World">
@@ -777,7 +774,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE 4c — ACT 2 · NEW WORLD (Gantt)
+       05 ACT 2 · NEW WORLD (Gantt)
        The day, today: you orchestrate; agents execute.
        ============================================================ -->
   <section class="s-act2 light" data-label="05 Act 2 — New World" data-step-max="1">
@@ -937,7 +934,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE 5 — ACT III DIVIDER (Maven reactor build)
+       ACT III DIVIDER — THE CATCH (Maven reactor build)
        Template for the 6-act talk. To duplicate this slide for another
        act: change (1) the chrome path's act number, (2) the .mvn-cmd
        artifact id, (3) the [INFO] preamble's groupId+artifact and the
@@ -1042,7 +1039,7 @@
   </section>
 
 <!-- ============================================================
-       SLIDE 5pre — ACT 3 OPENER · AUDIENCE INTERACTION
+       06 ACT 3 OPENER · AUDIENCE INTERACTION
        "Who tried AI on a real Java project… and got slop?"
        Sets up the next slide (.s-amplifier bad / poorly-architected).
        ============================================================ -->
@@ -1144,7 +1141,7 @@
   </section>
 
 <!-- ============================================================
-       SLIDE 5a — ACT 3 AI AMPLIFIER · BAD PROJECT
+       07 ACT 3 AI AMPLIFIER · BAD PROJECT
        ============================================================ -->
   <section class="s-amplifier bad" data-label="07 Act 3 — Bad project amplified">
 
@@ -1249,7 +1246,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE 5b — ACT 3 AI AMPLIFIER · GOOD PROJECT
+       08 ACT 3 AI AMPLIFIER · GOOD PROJECT
        ============================================================ -->
   <section class="s-amplifier good" data-label="08 Act 3 — Good project amplified">
 
@@ -1343,7 +1340,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE — LEGACY FRAMING (Act 3 closer · two-column contrast)
+       09 LEGACY FRAMING (Act 3 closer · two-column contrast)
        Long-lived Java codebase (calm, structured) vs new AI-assisted
        codebase (fast, risky). "Legacy" = unsafe change, not age.
        ============================================================ -->
@@ -1433,7 +1430,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE — AI-READINESS FLYWHEEL (Act 3 closer · bridge to Act IV)
+       10 AI-READINESS FLYWHEEL (Act 3 closer · bridge to Act IV)
        Optimistic turn: even an un-AI-ready project can use AI to
        become AI-ready. Build 1 = exoskeleton scene + title + quote.
        Build 2 = circular flywheel diagram dominates the right side.
@@ -1548,7 +1545,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE 13 — ACT IV DIVIDER (Maven reactor)
+       ACT IV DIVIDER — TEACH AGENTS (Maven reactor)
        ============================================================ -->
   <section class="s-section" data-label="Act IV — Teach agents">
     <div class="chrome-top">
@@ -1647,7 +1644,7 @@
   </section>
 
   <!-- ============================================================
-       SLIDE 11 — ACT IV · ENCODE PROJECT-SPECIFIC KNOWLEDGE
+       11 ACT 4 · ENCODE PROJECT-SPECIFIC KNOWLEDGE
        Step 0: AGENTS.md excerpt + 3 annotated gems.
        Step 1: Makefile / build.gradle.kts side-by-side for the
                same quick-build ritual; AGENTS.md panel collapses.
@@ -1785,7 +1782,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 14 — ACT IV · ENCODE PROJECT-SPECIFIC TASKS AS SKILLS
+       14 ACT 4 · ENCODE PROJECT-SPECIFIC TASKS AS SKILLS
 
        Real story: cluster-api-provider-metal3 1.9.3 → 1.12.2
          · Dependabot PR #7528 opened 2026-03-06, failed CI, sat 5 days
@@ -1960,7 +1957,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 15 — ACT V DIVIDER (Maven reactor)
+       ACT V DIVIDER — CODEBASE FEEDBACK (Maven reactor)
        ============================================================ -->
   <section class="s-section" data-label="Act V — Codebase feedback">
     <div class="chrome-top">
@@ -2059,7 +2056,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 17 — ACT V · OPENER · SPECS EXPLAIN INTENT, TESTS ENFORCE IT
+       17 ACT 5 · SPECS EXPLAIN INTENT. TESTS ENFORCE IT.
 
        The hinge of the whole talk: text can be skipped, code can't.
        Single static state (no steps) — frame-setter, ~75s of speech.
@@ -2181,7 +2178,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 19 — ACT V · BLACK-BOX TESTS · THE UNIT IS BEHAVIOR
+       19 ACT 5 · BLACK-BOX TESTS — THE UNIT IS BEHAVIOR
 
        Signature opinion of the talk. ~90s. Two-step reveal that
        *proves* the point instead of asserting it:
@@ -2410,7 +2407,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 21 — ACT V · FAST FEEDBACK LOOPS
+       21 ACT 5 · FAST FEEDBACK LOOPS
        "An agent is only as fast as the feedback loop."
 
        Two-step reveal:
@@ -2674,7 +2671,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 22 — ACT V · FABRIC8 CI: SLOW/FLAKY → FAST/STABLE
+       22 ACT 5 · FABRIC8 CI: TECH DEBT CAPS THROUGHPUT
 
        Thesis-first. The title carries the argument; the slide
        is the case study that proves it.
@@ -2968,7 +2965,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 23 — ACT VI DIVIDER (Maven reactor)
+       ACT VI DIVIDER — CLOSE (Maven reactor)
        ============================================================ -->
   <section class="s-section" data-label="Act VI — Close">
     <div class="chrome-top">
@@ -3067,14 +3064,14 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
   </section>
 
   <!-- ============================================================
-       SLIDE 17 — Q&A / CLOSING (Act VI content)
+       25 Q&A / CLOSING (Act VI content)
        ============================================================ -->
-  <section class="s-closing" data-label="22 Act 6 — Q&A">
+  <section class="s-closing" data-label="25 Act 6 — Q&A">
     <div class="chrome-top">
       <span class="dot"></span>
       <span>~/dev/devtalks-2026 · close/Questions.java</span>
       <span class="spacer"></span>
-      <span class="pill">act 06 · q-and-a · 22</span>
+      <span class="pill">act 06 · q-and-a · 25</span>
     </div>
 
     <div class="body">

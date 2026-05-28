@@ -38,10 +38,6 @@ deck-stage section.light {
   box-shadow: 0 0 10px rgba(240, 42, 90, 0.35);
 }
 
-/* Agenda — keep accent-2 active state legible on cream */
-.light .agenda-row.active .label,
-.light .agenda-row.active .duration { color: var(--accent-2); }
-
 /* Small accent text on cream — brand pink/orange fail AA at body size,
    so reroute eyebrows, @ accents, indices, and other <24px mono uses to
    the darker ink variants. Big numerals, pills, headlines keep brand pink. */
@@ -50,12 +46,9 @@ deck-stage section.light {
 .light .clabel,
 .light .prompt,
 .light .marker,
-.light .agenda-row .num,
 .light .terminal .prompt { color: var(--accent-ink); }
 
 .light .s-about2 .role-line .at,
-.light .agenda-row.active .label,
-.light .agenda-row.active .duration,
 .light .s-section .section-sub .accent2 { color: var(--accent-2-ink); }
 
 .light .s-about2 .handles-row .h .v .at,
