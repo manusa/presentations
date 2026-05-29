@@ -94,7 +94,6 @@ Listed worst-first.
 | # | Slide | Offending content | px | ≈pt | Note |
 |---|---|---|---|---|---|
 | 25 | **Act 5 — Fabric8 CI** | GitHub issue rows, meta, runner-cost rows, badges (`.issue .meta/.right`, `.cost-foot-*`, `.bugs-bar`) | **13–17** | **6.5–8.5** | The substance of the case study (issues, numbers, "40m flaky → 22m stable") is 6.5–8.5pt. Most sub-8pt text in the deck. Narration cue is 26px, but the *evidence* is tiny. |
-| 4 | **Field notes** | repo names 18, snippet code 16, repo-org / labels 13, CI pill 12 | **12–18** | **6–9** | The "these are real projects" proof is an unreadable wall of small cards; primary text (repo names) at 9pt. |
 | 24 | **Act 5 — Feedback ladder** | tier units, module heads, tooling glosses, badges | **14–16** | **7–8** | Log body 21px is borderline; the meaningful labels around it are 7–8pt. |
 | 18 | **Act 4 — Skill (SKILL.md)** | SKILL.md body 20, step code 18, status pills 13 | **13–20** | **6.5–10** | Core "ritual" content at 9–10pt; status chrome at 6.5pt. |
 | 23 | **Act 5 — Project story** | PR-metadata: `.sp-row-note/-val/-key`, tags, foot | **17–20** | **8.5–10** | Dense PR storytelling; the detail the speaker points at is 8.5–9pt. (PR title 28px is fine.) |
@@ -180,6 +179,20 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 ---
 
 ## Resolved
+
+- **Slide 4 — Field notes (maintainer-desk collage).** The "these are real projects" proof
+  was a wall of 6–9pt cards. Applied the playbook: **reclaimed width first** — cut the slide
+  padding symmetrically (120→80px each side, gutters stay equal) and rebalanced the columns
+  55/45 → 50/50, widening the notebook collage ~720→852px; then widened the repo cards
+  (254→360px) and the sticky/console notes to match. With the extra room the fonts came up —
+  repo names 18→21, repo-org/meta 13→16, console 16→19, CI label/pills 12–13→15–16, collage
+  heading 20→22 — and the longest repo name ("kubernetes-mcp-server") now fits without
+  truncating. Replaced the single-letter repo glyphs with the **real owner logos**
+  (eclipse-jkube, containers, fabric8io, helm) via `<image-slot fit=contain>`, and gave the
+  two cards that were missing a star count their real numbers (mcp-server ★1.6k, helm-java
+  ★67) so all four read consistently. (Org sub-lines on the two longest paths still ellipsize —
+  acceptable, the full repo name above carries identity. The `containers.png` mark has a baked-in
+  wordmark that reads slightly busy at 38px; swap for a glyph-only asset if it bothers.)
 
 - **Slide 18 — Act 4 "From prompt to skill" (SKILL.md conveyor).** Lifted the
   card content off the 6.5–10pt floor: RAMP prompt runs 24→30px; FAIL-card PR
