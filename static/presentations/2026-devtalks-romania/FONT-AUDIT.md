@@ -94,7 +94,6 @@ Listed worst-first.
 | # | Slide | Offending content | px | ≈pt | Note |
 |---|---|---|---|---|---|
 | 24 | **Act 5 — Feedback ladder** | tier units, module heads, tooling glosses, badges | **14–16** | **7–8** | Log body 21px is borderline; the meaningful labels around it are 7–8pt. |
-| 23 | **Act 5 — Project story** | PR-metadata: `.sp-row-note/-val/-key`, tags, foot | **17–20** | **8.5–10** | Dense PR storytelling; the detail the speaker points at is 8.5–9pt. (PR title 28px is fine.) |
 | 22 | **Act 5 — Black-box tests** | code panel `.panel-body.code` | **18** | **9** | Code the speaker walks through, at 9pt. Takeaway quote 30px is fine. |
 | 16 | **Act 4 — Boundaries** | scope badges 15, panel / role annotations 16 | **15–16** | **7.5–8** | Annotations carry the point ("public API · compiler-checked") at 7.5–8pt. |
 | 17 | **Act 4 — Leverage** | issue labels 14, cost label 16, inline code 18 | **14–18** | **7–9** | |
@@ -182,6 +181,24 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 ---
 
 ## Resolved
+
+- **Slide 23 — Act 5 "Project story" (YAKD PR #172, 2 steps).** The PR-storytelling
+  detail the speaker points at — the grunt-work upgrade rows (`.sp-row-key/-val/-note`),
+  the panel tags/heads/foots, the PR metadata, and the contract panel's chips/connector
+  — sat at 8.5–10pt. Unlike the truly dense Act-5 slides this one had **abundant slack**
+  in both axes (both story panels were half-empty below their content), so the fix was to
+  **grow into it** rather than triage. Trimmed the body gutter 72→64px (matching the chrome
+  bar, gutters kept equal) for a little extra width and title alignment, then lifted the
+  content tier: grunt-work rows — key 20→26, value 19→26, note 17→22; panel heads — label
+  20→24, tag 17→22, glyph/mono base 19→24; panel foots 18→22; PR card — bar 19→24, merged
+  pill 16→19, meta line (issue refs/date) 18→22; header sub 22→24; contract panel —
+  headline 24→26, chip-name 20→26, chip-intent 18→22, connector 17→22, sigma-soft 18→22.
+  Left untouched the already-fine display tier (title 60, PR title 28, sigma label 30,
+  takeaway quote 30). The grunt-work foot's parallel "compiler steered the renames · tests
+  steered the behavior" line was split across two stacked `.foot-line`s (dropping the now-
+  redundant "·") so it reads as a clean parallel pair using the vertical slack, instead of
+  wrapping a dangling "behavior" at the wider type. All rows still fit one line; no overflow
+  in either panel at either step. Whole-deck `snapshot:diff` shows only this slide changed.
 
 - **Slide 13 — Act 3 "AI-readiness flywheel" (the diagram).** Not Critical (it
   was in the yellow tier), but the diagram text was needlessly small given how
