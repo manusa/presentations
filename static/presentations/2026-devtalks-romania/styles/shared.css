@@ -193,9 +193,10 @@ deck-stage section {
 
 /* ============================================================
    Pillar watermark — large, faint Map · Roads · Guardrails glyph
-   (fa-map / fa-road) echoing the recap pillar cards, anchored
-   bottom-right of a slide body. Used on the Act 4 slides whose
-   act divider declares @Delivers(...).
+   (fa-map / fa-road / fa-shield-halved) echoing the recap pillar
+   cards, anchored bottom-right of a slide body. Used on the Act 4
+   (Map, Roads) and Act 5 (Guardrails) content slides, whose act
+   dividers declare @Delivers(...).
 
    Stacking: every host .body is position:absolute; z-index:1 and
    transparent, so a z-index:-1 child paints below all body content
@@ -217,5 +218,6 @@ deck-stage section {
   pointer-events: none;
   z-index: -1;
 }
-.map-watermark  { color: var(--cyan-ink); }      /* Map   — cream-safe teal */
-.road-watermark { color: var(--accent-2-ink); }  /* Roads — cream-safe orange */
+.map-watermark   { color: var(--cyan-ink); }      /* Map        — cream-safe teal */
+.road-watermark  { color: var(--accent-2-ink); }  /* Roads      — cream-safe orange */
+.guard-watermark { color: var(--accent-ink); }    /* Guardrails — cream-safe pink */

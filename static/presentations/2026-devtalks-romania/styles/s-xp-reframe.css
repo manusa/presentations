@@ -7,6 +7,7 @@
 .s-xp-reframe .body {
   position: absolute;
   inset: 56px 0 56px 0;
+  z-index: 1;                /* stacking context so the pillar-watermark (z-index:-1) sits above the section grid */
   padding: 96px var(--pad-x) 84px;
   display: grid;
   grid-template-rows: auto 1fr auto;
