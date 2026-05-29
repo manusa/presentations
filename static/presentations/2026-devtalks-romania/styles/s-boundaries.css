@@ -456,3 +456,26 @@
   .s-boundaries .problem-panel,
   .s-boundaries .pr-card { box-shadow: none; }
 }
+
+/* ============================================================
+   Roads watermark — fa-road, echoes the recap Roads card.
+   This is an Act 4 "Roads" slide (the act divider declares
+   @Delivers(Map, Roads)). Large + faint, bottom-right, bleeding
+   off the corner like the recap card. Sits behind content via
+   z-index:-1 inside .body's stacking context (.body is
+   position:absolute; z-index:1), which keeps it above the
+   section's dotted-grid ::before but below all body content —
+   so cards/panels occlude it and it shows only through gaps.
+   Cream-safe orange. Mirrors .s-agents-md .map-watermark.
+   ============================================================ */
+.s-boundaries .road-watermark {
+  position: absolute;
+  right: -10px;
+  bottom: -24px;
+  font-size: 300px;
+  line-height: 1;
+  color: var(--accent-2-ink);
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: -1;
+}
