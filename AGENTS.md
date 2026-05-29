@@ -75,6 +75,35 @@ npm run export:pdf -- http://localhost:$(cat .live-server.port)/presentations/20
 
 `screenshot:deck` and the snapshot scripts walk the deck via **keyboard simulation** (`ArrowRight`) — agnostic of any specific `deck-stage` API, so they keep working as `deck-stage.js` evolves. The walker is step-aware: it discovers `(section, step)` pairs up front from `data-step-max` and presses ArrowRight once per pair, matching the deck's own step-reveal handler. `export:pdf` takes a different path (DOM-clone the step states, render once in print media) because per-slide PNGs can't preserve vector text or compress photos efficiently.
 
+## Font Sizing & Legibility (Static Decks)
+
+Static decks are authored on a monitor at arm's length, so the instinct is to size text like a web page. **Resist it** — these slides get *projected*, and the back row reads them at distance. A deck that looks balanced on your screen is routinely 1.5–2× too small in the room.
+
+**The conversion.** A `<deck-stage>` renders on a fixed **1920×1080 canvas** scaled uniformly to fit the screen, so legibility is governed by *letter height as a fraction of slide height* — invariant of the physical screen. A 16:9 slide in PowerPoint/Keynote/Google Slides is 7.5 in = **540 pt** tall, and 1080px maps onto it, so:
+
+```
+presentation-pt-equivalent  =  px ÷ 2          (e.g. 24px = 12pt, 48px = 24pt)
+% of slide height            =  px ÷ 1080
+```
+
+Published presentation guidance (24pt minimum body, 30pt "ideal", 18pt hard floor; corroborated by Extron's videowall rule and DIN 1450's visual-angle method) translates to these **authoring floors in deck-px**:
+
+| Role | Floor (px) | ≈pt | Notes |
+|---|---|---|---|
+| Slide title / hero numeral | **≥ 72** | ≥ 36 | display tier; bigger is fine |
+| Body the audience must read | **≥ 48** ideal, **36 hard floor** | 24 / 18 | never put must-read prose/labels below 36px |
+| Code / console / mono content | **≥ 28** | ≥ 14 | the speaker walks through it — it's must-read |
+| Decorative chrome only | 20–24 | 10–12 | rails, eyebrows, non-informational pills |
+
+**Rules of thumb:**
+
+- **Nothing the audience must read goes below ~28px (14pt).** If content only fits at a smaller size, the slide is **over-stuffed** — cut rows, split it, or summarize a UI mockup instead of reproducing it pixel-for-pixel. Shrinking the font is not the fix.
+- The "decorative chrome only" tier is for text that carries **no information the audience needs**. A status pill reading `Open`/`Merged`, an issue number, or an axis value is *not* decorative — size it as content.
+- This supersedes the older informal "console/terminal ≥ 20px" floor; 20px is 10pt, already below the research minimum. Use **≥ 28px** for mono content the speaker reads aloud.
+- Verify in the room's terms, not the editor's: capture with `screenshot:deck` and check whether body text clears ~36px / titles ~72px. The default type scale in `tokens.css` (`--type-body: 32px`, `--type-small/mono/eyebrow: 24px`) sits *below* these floors — treat it as a starting point to push up, not a target.
+
+Full research, per-slide findings, and source citations live in each deck's `FONT-AUDIT.md` when one exists (e.g. `static/presentations/2026-devtalks-romania/FONT-AUDIT.md`).
+
 ## Snapshot Regression Tests
 
 Pixel-diff guard against unintended visual changes during a work session. Backed by `pixelmatch` with anti-aliasing tolerance (real changes flagged, sub-pixel font noise ignored).

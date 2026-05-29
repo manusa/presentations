@@ -1,0 +1,173 @@
+# Font Readability Audit — DevTalks Romania 2026 Deck
+
+> Talk: *"Turning Your Java Project Into an AI-Ready Codebase"* — DevTalks Romania, Java Stage, 03 Jun 2026.
+> Audit scope: every `<section>` in `index.html` + all 24 `styles/s-*.css` files.
+> Question: will the text be readable when projected on a conference screen?
+
+---
+
+## How this was measured
+
+The deck renders on a **fixed 1920×1080 canvas** that `deck-stage` scales uniformly to whatever
+screen it is projected on (`../../deck-kit/deck-stage.js:10-11, 69-70`). Every `px` value is therefore
+locked to a **1080px-tall slide**, and the property that actually governs legibility is **letter height
+as a fraction of slide height** — that fraction is invariant regardless of the physical screen size.
+
+That lets us compare directly against published presentation guidance, which is stated in points.
+A 16:9 slide in PowerPoint / Keynote / Google Slides is **7.5 in = 540 pt tall**. This canvas is 1080px
+tall, so:
+
+```
+pt-equivalent  =  px ÷ 2
+% of height    =  px ÷ 1080
+```
+
+Only **3** font-size declarations in the entire deck use relative units (`em`); everything else is
+hard-coded `px`. So these numbers are deterministic — a live render produces no different values.
+
+### Research thresholds, translated into this deck's px
+
+| Guideline | In points | In deck px | % of height |
+|---|---|---|---|
+| Ideal body ("30pt rule") | 30 pt | **60 px** | 5.6% |
+| Comfortable body | 28 pt | **56 px** | 5.2% |
+| Widely-cited **minimum** body | 24 pt | **48 px** | 4.4% |
+| Small-room / seminar floor | 20 pt | **40 px** | 3.7% |
+| **Hard floor — "difficult to read in any room"** | 18 pt | **36 px** | 3.3% |
+| Titles | 36–44 pt | 72–88 px | — |
+
+Cross-checked against two **distance-based** rules that do not rely on slide conventions:
+
+- **Extron videowall rule** — ≥1 inch of letter height per 15 ft of viewing distance. A 50 ft back row
+  needs ~3 in letters (≈40px+ here).
+- **DIN 1450 visual-angle method** — at 1 m viewing distance, x-height ≥ 3 mm (≈ 16pt Arial); multiply
+  by distance in metres.
+
+All three methods agree: **anything in the teens of px is far below legible** for a conference room, and
+~24px is already marginal. The exact floor depends on the Java-stage room (screen size + back-row
+distance), which is unknown — but the verdict below holds across all three methods.
+
+**Typeface choice is fine.** Inter (sans) + JetBrains Mono on a dark background is exactly what the
+research recommends for projection. The problem is purely **size**.
+
+---
+
+## Bottom line
+
+**The deck's entire type scale is pitched ~1.5–2× too small for projection.** It was authored as an HTML
+page read on a monitor at arm's length, so its tokens are web-sized:
+
+```
+--type-body:    32px  = 16pt
+--type-small:   24px  = 12pt
+--type-mono:    24px  = 12pt
+--type-eyebrow: 24px  = 12pt
+```
+
+The content-dense slides then override *even smaller* — down to **11–16px (5.5–8pt)** — to cram panels
+in. **No body content anywhere in the deck reaches the 24pt (48px) minimum**; the body tier runs
+**18–32px (9–16pt)**.
+
+The heading / display hierarchy, by contrast, is genuinely good. So this is not a few stray small labels
+— it is a **structural mismatch**, worst on the slides carrying the most content.
+
+### Size distribution (font-size declaration counts, all CSS)
+
+```
+ 5.5–8pt  (11–16px)   ████████████████████████████  97 declarations
+ 8.5–10pt (17–20px)   ██████████████████████████     102
+ 10.5–12pt(21–24px)   ████████████████               70
+ 13–16pt  (26–32px)   ███████████                    48
+ 17pt+    (34px+)      ██████                          43
+```
+
+Over **half** of all text declarations sit at **≤10pt-equivalent**. The single most common sizes are
+20px (46×), 18px (40×), 16px (32×), 22px (32×) — i.e. the body/content layer clusters at 8–11pt.
+
+---
+
+## 🔴 Critical — will not read past the front rows
+
+Slides that put **content the audience must read to follow the argument** at **9pt-equivalent or below**.
+Listed worst-first.
+
+| # | Slide | Offending content | px | ≈pt | Note |
+|---|---|---|---|---|---|
+| 6 / 7 | **Act 2 — Old / New World (Gantt)** | gantt task-block labels `.g1-block` | **14** | **7** | This *is* the slide's content — what each agent/task does — at 7pt. Axis ticks 16px. Worst case in the deck. |
+| 25 | **Act 5 — Fabric8 CI** | GitHub issue rows, meta, runner-cost rows, badges (`.issue .meta/.right`, `.cost-foot-*`, `.bugs-bar`) | **13–17** | **6.5–8.5** | The substance of the case study (issues, numbers, "40m flaky → 22m stable") is 6.5–8.5pt. Most sub-8pt text in the deck. Narration cue is 26px, but the *evidence* is tiny. |
+| 4 | **Field notes** | repo names 18, snippet code 16, repo-org / labels 13, CI pill 12 | **12–18** | **6–9** | The "these are real projects" proof is an unreadable wall of small cards; primary text (repo names) at 9pt. |
+| 24 | **Act 5 — Feedback ladder** | tier units, module heads, tooling glosses, badges | **14–16** | **7–8** | Log body 21px is borderline; the meaningful labels around it are 7–8pt. |
+| 18 | **Act 4 — Skill (SKILL.md)** | SKILL.md body 20, step code 18, status pills 13 | **13–20** | **6.5–10** | Core "ritual" content at 9–10pt; status chrome at 6.5pt. |
+| 23 | **Act 5 — Project story** | PR-metadata: `.sp-row-note/-val/-key`, tags, foot | **17–20** | **8.5–10** | Dense PR storytelling; the detail the speaker points at is 8.5–9pt. (PR title 28px is fine.) |
+| 22 | **Act 5 — Black-box tests** | code panel `.panel-body.code` | **18** | **9** | Code the speaker walks through, at 9pt. Takeaway quote 30px is fine. |
+| 15 | **Act 4 — AGENTS.md** | callout descriptions 16, quick-build tags 12 | **12–16** | **6–8** | The callouts *are* the explanation, at 8pt; tags at 6pt. AGENTS.md body 22px. |
+| 16 | **Act 4 — Boundaries** | scope badges 15, panel / role annotations 16 | **15–16** | **7.5–8** | Annotations carry the point ("public API · compiler-checked") at 7.5–8pt. |
+| 17 | **Act 4 — Leverage** | issue labels 14, cost label 16, inline code 18 | **14–18** | **7–9** | |
+
+**Common thread:** every critical slide is **over-stuffed**. The fonts are small *because the content
+does not fit otherwise*. Enlarging tokens alone will overflow these — they need **content triage first**
+(fewer rows, split into two slides, or summarize the GitHub/IDE-UI mockups instead of reproducing them
+pixel-for-pixel).
+
+> Against the project's own standing rule (console/terminal text ≥ 20px): much of the code/console here
+> (13–18px) already **violates that floor** — and the 20px floor itself sits at 10pt, *below* the research
+> minimum. Meeting the guidelines means going past the current rule, not just up to it.
+
+---
+
+## 🟡 Might pass — below ideal, plausibly legible in a medium room
+
+Primary content in the **20–32px (10–16pt)** band. Short, high-contrast, or genuinely secondary text that
+a front-to-middle audience in a modest room can likely read — but back rows will strain. Bump where cheap.
+
+| # | Slide | Primary content | px | ≈pt |
+|---|---|---|---|---|
+| 12 | Act 3 — Legacy framing | signal list `.signals li` | **32** | **16** *(closest to acceptable of any content slide)* |
+| 3 | About | project names 30, role line 26 | 26–30 | 13–15 |
+| 10 / 11 | Act 3 — Amplifier (bad / good) | cards `.card .txt` | 26 | 13 |
+| 9 | Act 3 — Show of hands | terminal lines 26–28, command 24 | 24–28 | 12–14 |
+| 26 | Act 5 — XP reframe | practices list | ~28–32 | 14–16 |
+| 29 | Act 6 — Q&A close | contact list | 26 | 13 |
+| 20 / 21 | Act 5 — Specs / Failure-spec | code panels `.panel-body.code` | 22 | 11 |
+| 13 | Act 3 — Flywheel | node titles 21 (callout 28) | 21 | 10.5 |
+| 28 | Act 6 — Recap | pillar action labels | 24 | 12 |
+
+The **persistent chrome rails** (top/bottom, 24px = 12pt) and **eyebrows / pills** (20–24px) are fine to
+leave small *as long as they are decorative* — but watch for "pills" that actually carry information the
+audience needs (issue numbers, status, `Open`/`Merged`), which graduates them into the critical tier.
+
+---
+
+## 🟢 Fine — meets or exceeds guidance
+
+- **Slide titles** `.h-title` 72px (36pt); boot title 88px (44pt) ✓
+- **Section divider numerals / hero stats** 104–200px (52–100pt) ✓
+- **Recap pillar number** 168px ✓
+- **h2** 56px (28pt); **subtitle** 44px (22pt — just under the 24pt body minimum, but acceptable for a subtitle) ✓
+
+The heading / display hierarchy is well-judged. The fix is entirely in the body and content tiers.
+
+---
+
+## Recommended path
+
+1. **Set a hard floor:** nothing the audience must read below **~28px (14pt)**; ideally lift body content
+   toward **36–48px (18–24pt)** where it fits. Truly decorative chrome can stay at 20–24px.
+2. **Triage the 10 critical slides before resizing** — they are small *because* they are dense. The CI,
+   field-notes, feedback-ladder, project-story and gantt slides reproduce GitHub/IDE UI at full fidelity;
+   summarize instead of mirroring, so larger type fits.
+3. **Lift the root tokens** (`--type-body` 32→48px, `--type-small`/`mono` 24→28–32px) *after* the dense
+   slides are thinned, then sweep the per-slide px overrides.
+4. Use the existing **`snapshot:baseline` → edit → `snapshot:diff`** loop (AGENTS.md workflow #2) to keep
+   each pass honest. Note: a fresh worktree needs `npm install` before the screenshot/serve scripts run.
+
+---
+
+## Sources
+
+- [Beautiful.ai — what font size is best for presentations](https://www.beautiful.ai/blog/what-font-size-is-best-for-presentations)
+- [Autoppt — PowerPoint minimum font size, best practices](https://autoppt.com/blog/powerpoint-minimum-font-size-best-practices/)
+- [MagicSlides — guide to font size in presentations](https://www.magicslides.app/blog/guide-font-size-presentations-balance)
+- [Slidor — minimum font size for PowerPoint](https://www.slidor.agency/blog/quelle-taille-de-police-minimum-pour-powerpoint)
+- [Extron — font size and legibility for videowall content](https://www.extron.com/article/videowallfontsize)
+- [legibility.info — font size calculator (DIN 1450 visual-angle method)](https://legibility.info/font-size-calculator)
