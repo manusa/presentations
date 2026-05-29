@@ -93,7 +93,6 @@ Listed worst-first.
 
 | # | Slide | Offending content | px | ≈pt | Note |
 |---|---|---|---|---|---|
-| 25 | **Act 5 — Fabric8 CI** | GitHub issue rows, meta, runner-cost rows, badges (`.issue .meta/.right`, `.cost-foot-*`, `.bugs-bar`) | **13–17** | **6.5–8.5** | The substance of the case study (issues, numbers, "40m flaky → 22m stable") is 6.5–8.5pt. Most sub-8pt text in the deck. Narration cue is 26px, but the *evidence* is tiny. |
 | 24 | **Act 5 — Feedback ladder** | tier units, module heads, tooling glosses, badges | **14–16** | **7–8** | Log body 21px is borderline; the meaningful labels around it are 7–8pt. |
 | 18 | **Act 4 — Skill (SKILL.md)** | SKILL.md body 20, step code 18, status pills 13 | **13–20** | **6.5–10** | Core "ritual" content at 9–10pt; status chrome at 6.5pt. |
 | 23 | **Act 5 — Project story** | PR-metadata: `.sp-row-note/-val/-key`, tags, foot | **17–20** | **8.5–10** | Dense PR storytelling; the detail the speaker points at is 8.5–9pt. (PR title 28px is fine.) |
@@ -186,6 +185,22 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 ---
 
 ## Resolved
+
+- **Slide 25 — Act 5 "Fabric8 CI" (case-study, 4 steps).** The substance of the
+  case study — the runner-cost rows, the GitHub issue causes/dates, the badges —
+  sat at 6.5–8.5pt, the most sub-8pt text in the deck. **Reclaimed width first:**
+  cut the body gutter symmetrically 120→64px (matching the chrome bar's
+  `--chrome-pad-x`, so the title now aligns with it and settles onto one line).
+  With the room, lifted each card off the floor — **speed** (dark terminal):
+  stability tags 14→18, run byline 17→20, module head 15→18, module rows 22→24,
+  delivery footnote 14→17; **cost** (GitHub billing): sub 16→20, hero caption
+  14→18, multiplier 16→20, and the demoted runner-SKU footer rows 13–14→17–18
+  (mono `$/min` still fits one line); **bugs** (GitHub issues): issue titles
+  22→25, the bug-cause prose 16→20, the closed/date/author column 13→18, labels
+  12→16, the "31 closed" count 16→19, the "5+ were real production bugs" takeaway
+  16/20→20/25. Tightened the speed-card body gap and issue-row padding to absorb
+  the taller rows. Step 0 (intro) was already large; left it. Whole-deck
+  `snapshot:diff` shows only this slide changed.
 
 - **Slide 4 — Field notes (maintainer-desk collage).** The "these are real projects" proof
   was a wall of 6–9pt cards. Applied the playbook: **reclaimed width first** — cut the slide
