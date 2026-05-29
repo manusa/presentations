@@ -147,23 +147,31 @@
   box-shadow: 0 2px 8px rgba(10, 21, 84, 0.10);
 }
 
-/* ── Default positions (step 0) ─────────────────────────────
-   FAIL card centered alone; the other two are off-stage to the right. */
-.s-skill .card-fail   { left: calc(25% + 10px); }
+/* ── Default positions (step 0 = RAMP) ──────────────────────
+   The RAMP panel owns the stage (centered, see skin block below). The three
+   conveyor cards wait off-stage: FAIL is pre-staged at CENTER but invisible
+   so it can cross-fade in exactly where the ramp fades out; SKILL/GREEN sit
+   off to the right. */
+.s-skill .card-fail   { left: calc(25% + 10px); opacity: 0; }
 .s-skill .card-skill  { left: 110%; opacity: 0; }
 .s-skill .card-green  { left: 110%; opacity: 0; }
 
 /* ── Step 1 ─────────────────────────────────────────────────
-   FAIL slides to LEFT slot; SKILL enters from off-right into RIGHT slot. */
-.s-skill[data-step="1"] .card-fail  { left: 0; }
-.s-skill[data-step="1"] .card-skill { left: calc(50% + 20px); opacity: 1; }
+   RAMP fades out; FAIL fades in at CENTER (the problem, alone). No slide —
+   it's a cross-fade in place, so the conceptual prequel hands off cleanly. */
+.s-skill[data-step="1"] .card-fail  { opacity: 1; }
 
 /* ── Step 2 ─────────────────────────────────────────────────
+   FAIL slides to LEFT slot; SKILL enters from off-right into RIGHT slot. */
+.s-skill[data-step="2"] .card-fail  { left: 0; opacity: 1; }
+.s-skill[data-step="2"] .card-skill { left: calc(50% + 20px); opacity: 1; }
+
+/* ── Step 3 ─────────────────────────────────────────────────
    FAIL exits OFF-LEFT (problem is gone); SKILL shifts to LEFT;
    GREEN enters from off-right into RIGHT slot. */
-.s-skill[data-step="2"] .card-fail  { left: -55%; opacity: 0; }
-.s-skill[data-step="2"] .card-skill { left: 0; opacity: 1; }
-.s-skill[data-step="2"] .card-green { left: calc(50% + 20px); opacity: 1; }
+.s-skill[data-step="3"] .card-fail  { left: -55%; opacity: 0; }
+.s-skill[data-step="3"] .card-skill { left: 0; opacity: 1; }
+.s-skill[data-step="3"] .card-green { left: calc(50% + 20px); opacity: 1; }
 
 /* ============================================================
    Panel chrome (top bar of each card) — two variants:
@@ -394,8 +402,9 @@
 .s-skill .card-skill .panel-body {
   padding: 20px 26px 24px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
-  line-height: 1.45;
+  /* >=20px floor: console text must read from the back of the room. */
+  font-size: 20px;
+  line-height: 1.4;
   color: #C8CCE4;
   display: flex;
   flex-direction: column;
@@ -432,7 +441,7 @@
   border-radius: 4px;
   padding: 1px 6px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 18px;
 }
 .s-skill .card-skill .ln.step .anno {
   color: var(--cyan);
@@ -659,10 +668,114 @@
 
 /* All quotes hidden by default; the matching one is shown per step. */
 .s-skill .tag-line .quote { opacity: 0; }
-.s-skill[data-step="0"] .tag-line .quote.q-0,
-.s-skill:not([data-step]) .tag-line .quote.q-0 { opacity: 1; }
-.s-skill[data-step="1"] .tag-line .quote.q-1 { opacity: 1; }
-.s-skill[data-step="2"] .tag-line .quote.q-2 { opacity: 1; }
+.s-skill[data-step="0"] .tag-line .quote.q-ramp,
+.s-skill:not([data-step]) .tag-line .quote.q-ramp { opacity: 1; }
+.s-skill[data-step="1"] .tag-line .quote.q-0 { opacity: 1; }
+.s-skill[data-step="2"] .tag-line .quote.q-1 { opacity: 1; }
+.s-skill[data-step="3"] .tag-line .quote.q-2 { opacity: 1; }
+
+/* ============================================================
+   RAMP card (step 0) — the lead-in: three escalating prompt "runs".
+
+   Reuses the dark terminal skin so the PROMPT panel reads as the same
+   artifact that later becomes the SKILL.md panel. The escalation is carried
+   pre-attentively by line LENGTH growing 01 -> 02 -> 03 (no per-line color),
+   and ONE accent wins the eye: run 03, the prompt worth writing down.
+
+   It does not slide through the conveyor — it is the conceptual prequel, so
+   it only fades (opacity), centered, while the FAIL card cross-fades in.
+   ============================================================ */
+.s-skill .card-ramp {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(1180px, 72%);
+  height: auto;
+  background: #060D3A;
+  border: 1px solid rgba(10, 21, 84, 0.22);
+  box-shadow: 0 2px 8px rgba(10, 21, 84, 0.12);
+}
+/* Visible at step 0 / no-step; gone once the conveyor begins. */
+.s-skill[data-step="1"] .card-ramp,
+.s-skill[data-step="2"] .card-ramp,
+.s-skill[data-step="3"] .card-ramp { opacity: 0; pointer-events: none; }
+
+/* PROMPT pill — orange sibling of the cyan SKILL pill, so PROMPT -> SKILL
+   reads as one artifact maturing. */
+.s-skill .panel-bar.term .status.prompt {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--orange-soft);
+  color: var(--orange-soft);
+}
+
+.s-skill .card-ramp .panel-body {
+  padding: 46px 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* One prompt run: [number] [chevron] [text]. */
+.s-skill .card-ramp .run {
+  display: grid;
+  grid-template-columns: 2.1em 0.9em 1fr;
+  column-gap: 14px;
+  align-items: baseline;
+  font-size: 24px;            /* >=20px console floor; ramp is the focus */
+  line-height: 1.42;
+}
+.s-skill .card-ramp .run .gut { color: var(--orange-soft); font-weight: 700; }
+.s-skill .card-ramp .run .chev { color: #5B6499; font-weight: 700; }
+/* Runs 01 & 02 are muted — they are the climb, not the point. */
+.s-skill .card-ramp .run .say { color: #8A93BC; }
+.s-skill .card-ramp .run code {
+  color: #B4BAD8;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 4px;
+  padding: 0 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.92em;
+}
+
+/* Run 03 — the hero: the best prompt, the one worth writing down.
+   The only accented element on the panel (orange rule + bright text). */
+.s-skill .card-ramp .run.hero {
+  grid-template-rows: auto auto;
+  margin-left: -22px;
+  padding-left: 19px;
+  /* Orange rule keeps the panel's accent system to orange (structure) + cyan
+     (destination chip); pink-red --accent stays reserved for slide-level key
+     words (the title's "skill", the takeaway's "That's a skill"). */
+  border-left: 3px solid var(--orange-soft);
+}
+.s-skill .card-ramp .run.hero .say { grid-column: 3; grid-row: 1; color: #FFFFFF; }
+.s-skill .card-ramp .run.hero code { color: #FFFFFF; }
+/* The clause that makes the work returnable without babysitting. */
+.s-skill .card-ramp .run.hero em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--orange-soft);
+}
+/* Destination chip — cyan, matching the SKILL pill it is heading toward. */
+.s-skill .card-ramp .run.hero .chip {
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: end;
+  margin-top: 12px;
+  font-size: 18px;
+  letter-spacing: 0.01em;
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+  border-radius: 999px;
+  padding: 4px 14px;
+}
 
 /* ============================================================
    Print — drop heavy shadows for PDF export. Step rendering
