@@ -94,10 +94,8 @@ Listed worst-first.
 | # | Slide | Offending content | px | ≈pt | Note |
 |---|---|---|---|---|---|
 | 24 | **Act 5 — Feedback ladder** | tier units, module heads, tooling glosses, badges | **14–16** | **7–8** | Log body 21px is borderline; the meaningful labels around it are 7–8pt. |
-| 18 | **Act 4 — Skill (SKILL.md)** | SKILL.md body 20, step code 18, status pills 13 | **13–20** | **6.5–10** | Core "ritual" content at 9–10pt; status chrome at 6.5pt. |
 | 23 | **Act 5 — Project story** | PR-metadata: `.sp-row-note/-val/-key`, tags, foot | **17–20** | **8.5–10** | Dense PR storytelling; the detail the speaker points at is 8.5–9pt. (PR title 28px is fine.) |
 | 22 | **Act 5 — Black-box tests** | code panel `.panel-body.code` | **18** | **9** | Code the speaker walks through, at 9pt. Takeaway quote 30px is fine. |
-| 15 | **Act 4 — AGENTS.md** | callout descriptions 16, quick-build tags 12 | **12–16** | **6–8** | The callouts *are* the explanation, at 8pt; tags at 6pt. AGENTS.md body 22px. |
 | 16 | **Act 4 — Boundaries** | scope badges 15, panel / role annotations 16 | **15–16** | **7.5–8** | Annotations carry the point ("public API · compiler-checked") at 7.5–8pt. |
 | 17 | **Act 4 — Leverage** | issue labels 14, cost label 16, inline code 18 | **14–18** | **7–9** | |
 
@@ -185,6 +183,15 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 ---
 
 ## Resolved
+
+- **Slide 15 — Act 4 "AGENTS.md" (the Map pillar).** Resolved *upstream* by the
+  Map·Roads·Guardrails refactor (#46), not by this audit pass — confirmed after
+  rebasing the font-audit branch onto it. The old wall of 6–8pt callout
+  descriptions and 6pt "quick-build tags" is gone: the slide was rebuilt as a
+  three-gem map legend (golden path / known trap / local checkpoint). Smallest
+  content is now 24px — callout labels and descriptions 24, AGENTS.md panel body
+  22→24, takeaway 32 — with only genuine chrome (eyebrow, panel path, gem index
+  numbers, "TAKEAWAY" label) left at 20px. Verified via full-res crops.
 
 - **Slide 25 — Act 5 "Fabric8 CI" (case-study, 4 steps).** The substance of the
   case study — the runner-cost rows, the GitHub issue causes/dates, the badges —
