@@ -186,17 +186,22 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
   the audit's "annotations 16px" figure was **stale** — the genuine sub-floor
   offenders were the per-step *scope badge* (15px — and it carries the slide's
   punchline, "no module boundaries" → "the change has a home", so it's content,
-  not chrome) plus the panel/GitHub-bar chrome (14–16). **No width reclaim:**
-  this slide shares the Act-4 header construction and `--pad-x` gutter with its
-  siblings (15 AGENTS.md, 17 Leverage), so moving its gutter would have shifted
-  the title out of alignment with them mid-navigation; the lifts fit in the
-  existing width (verified the panel bars don't collide and tree-row notes stay
-  one-line). Lifted: scope badge 15→20, tree-panel path 16→20, role notes 20→22,
+  not chrome) plus the panel/GitHub-bar chrome (14–16). First pass (no width
+  reclaim): scope badge 15→20, tree-panel path 16→20, role notes 20→22,
   problem-panel econ key 16→18, GitHub bar 16→20 (icon 18→20), merged pill 14→18,
   PR title 21→22, diff inline code 18→20, takeaway label 16→18. Left the avatar
-  glyph (icon, not text) and the already-fine display tier. Whole-deck
-  `snapshot:diff` shows only this slide changed (1.4–1.9%, no reflow — header
-  stayed put).
+  glyph (icon, not text) and the already-fine display tier.
+  **Second pass — header subtitle 20→24** (matching the #46-refactored slide 15,
+  which sets the Act-4 target; 16 and 17 were the 20px laggards). The header grid
+  is `title (1fr) | sub (auto)`, so the wider 24px subtitle stole title width and
+  wrapped "Make Java boundaries / obvious." onto two lines — the exact caveat
+  noted in step 2 of the Recommended path. Fix: reclaimed width by trimming the
+  body gutter 120→64px (chrome-bar width, gutters equal), which un-wraps the title
+  and aligns it to the chrome. This *does* shift slide 16's title left of slide 15
+  (still at 120px, short sub) — consistent instead with the deck's dominant
+  reclaimed-gutter slides (4, 13, 18, 23–25); slide 17 gets the same treatment so
+  the 16/17 pair stays aligned. Whole-deck `snapshot:diff` shows only this slide
+  changed.
 
 - **Slide 24 — Act 5 "Feedback ladder" (fast feedback loops, 2 steps).** The
   deck's worst offender — the tier scale labels, tooling glosses, cadence cues,

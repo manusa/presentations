@@ -43,7 +43,10 @@
   position: absolute;
   inset: 56px 0 56px 0;
   z-index: 1;
-  padding: 36px var(--pad-x) 40px;
+  /* Gutter trimmed to the chrome bar's --chrome-pad-x (64px) so the
+     24px subtitle's auto column no longer squeezes the title onto a
+     second line. Gutters stay equal (title aligns to the chrome). */
+  padding: 36px 64px 40px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 22px;
@@ -82,7 +85,7 @@
   grid-column: 2;
   margin: 0 0 8px 0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1.45;
   color: var(--fg-dim);
   text-align: right;
