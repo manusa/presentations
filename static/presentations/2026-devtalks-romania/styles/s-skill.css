@@ -801,7 +801,7 @@
 .s-skill .road-watermark {
   position: absolute;
   right: -10px;
-  bottom: -24px;
+  bottom: 0;                /* rest at .body's bottom = footer top; never spill into chrome-bottom */
   font-size: 300px;
   line-height: 1;
   color: var(--accent-2-ink);
