@@ -93,7 +93,6 @@ Listed worst-first.
 
 | # | Slide | Offending content | px | ≈pt | Note |
 |---|---|---|---|---|---|
-| 6 / 7 | **Act 2 — Old / New World (Gantt)** | gantt task-block labels `.g1-block` | **14** | **7** | This *is* the slide's content — what each agent/task does — at 7pt. Axis ticks 16px. Worst case in the deck. |
 | 25 | **Act 5 — Fabric8 CI** | GitHub issue rows, meta, runner-cost rows, badges (`.issue .meta/.right`, `.cost-foot-*`, `.bugs-bar`) | **13–17** | **6.5–8.5** | The substance of the case study (issues, numbers, "40m flaky → 22m stable") is 6.5–8.5pt. Most sub-8pt text in the deck. Narration cue is 26px, but the *evidence* is tiny. |
 | 4 | **Field notes** | repo names 18, snippet code 16, repo-org / labels 13, CI pill 12 | **12–18** | **6–9** | The "these are real projects" proof is an unreadable wall of small cards; primary text (repo names) at 9pt. |
 | 24 | **Act 5 — Feedback ladder** | tier units, module heads, tooling glosses, badges | **14–16** | **7–8** | Log body 21px is borderline; the meaningful labels around it are 7–8pt. |
@@ -153,13 +152,25 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 
 1. **Set a hard floor:** nothing the audience must read below **~28px (14pt)**; ideally lift body content
    toward **36–48px (18–24pt)** where it fits. Truly decorative chrome can stay at 20–24px.
-2. **Triage the 10 critical slides before resizing** — they are small *because* they are dense. The CI,
-   field-notes, feedback-ladder, project-story and gantt slides reproduce GitHub/IDE UI at full fidelity;
+2. **Triage the critical slides before resizing** — they are small *because* they are dense. The CI,
+   field-notes, feedback-ladder and project-story slides reproduce GitHub/IDE UI at full fidelity;
    summarize instead of mirroring, so larger type fits.
 3. **Lift the root tokens** (`--type-body` 32→48px, `--type-small`/`mono` 24→28–32px) *after* the dense
    slides are thinned, then sweep the per-slide px overrides.
 4. Use the existing **`snapshot:baseline` → edit → `snapshot:diff`** loop (AGENTS.md workflow #2) to keep
    each pass honest. Note: a fresh worktree needs `npm install` before the screenshot/serve scripts run.
+
+---
+
+## Resolved
+
+- **Slides 6 / 7 — Act 2 Old / New World (Gantt).** Block labels lifted from 14px (7pt) to 20–22px
+  (10–11pt) — the readable ceiling for a time-proportional gantt at this scale. Reclaimed width by
+  trimming margins (90→64px) and the dead lane gutter (200→150px symmetric, which also re-centered the
+  track). Slide 6: widened the cramped chore blocks (Standup, Review PRs) by borrowing from the oversized
+  "Implement feature #42". Slide 7: merged the 16-block "You" lane into 9 readable phases aligned to the
+  agent timeline + spawn arrows, and moved the narrow agent follow-up tasks to outside-the-bar labels
+  (the gap-filling gantt pattern) so they read at full size. Vertical overflow on slide 7 fixed.
 
 ---
 
