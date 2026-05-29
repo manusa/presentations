@@ -157,12 +157,19 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
    gutter on each side is generous for projection; pulling the content area wider lets type grow with no
    copy loss. **This is the first lever to reach for on any dense slide** — only triage (step 3) what still
    doesn't fit after the width is reclaimed.
-   - If the whole content column can move out (no cross-slide alignment to honor), reduce the section's
-     body `padding` off `--pad-x`.
-   - If a header/title/tagline must stay aligned with sibling slides (e.g. the shared Act 4 header),
-     widen **only the inner content container** with a negative horizontal margin and leave the prose at
-     `--pad-x`. On slide 18 the conveyor `.stage` got `margin: 0 -60px` (≈+120px of card width) while the
-     header and takeaway stayed put — enough to un-wrap the SKILL.md steps at 24px.
+   - **Keep the slide's left and right gutters EQUAL — always.** This is the non-negotiable rule:
+     reducing the padding on *one* side only (e.g. trimming the right gutter while the title stays at
+     `--pad-x` on the left) makes the whole slide read as lopsided/broken. *(Learned the hard way on
+     slide 4: a first cut of `padding: 70px 56px 70px var(--pad-x)` — 120px left, 56px right — looked
+     wrong immediately.)* Two safe shapes, both symmetric:
+   - **Symmetric padding** — reduce `padding` equally on both sides (`70px 80px`, not `70px 56px 70px
+     var(--pad-x)`) and rebalance the columns toward the dense side. The title/prose shift inward with
+     the gutter, but the slide stays centered. This is what slide 4 ended on (120→80px each side,
+     columns 55/45 → 50/50). Use when the title may move (a standalone slide).
+   - **Symmetric negative margin** — if a header/title/tagline must stay aligned with sibling slides
+     (e.g. the shared Act 4 header), leave the prose at `--pad-x` and widen **only the inner content
+     container** with a negative horizontal margin applied to *both* sides (`margin: 0 -60px`). Slide 18's
+     conveyor `.stage` did this to un-wrap the SKILL.md steps while the header/takeaway stayed put.
    - Caveat: a wider element that shares a grid row with auto-sized siblings can steal their track and
      reflow them (a 24px subtitle in the shared Act 4 header widened its `auto` column and re-wrapped the
      longer titles on slides 15–17). Re-check the whole slide with `snapshot:diff`, not just the element
