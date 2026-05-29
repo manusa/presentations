@@ -283,29 +283,8 @@
   .s-agents-md .callouts .co { box-shadow: none; }
 }
 
-/* ============================================================
-   Map watermark — echoes the recap Map card glyph (fa-map).
-   THIS SLIDE ONLY (the Map pillar). Large + faint in the
-   bottom-right of the slide body, bleeding off the corner like
-   the recap card. The opaque callout cards / chrome occlude its
-   top edge, so it reads as a glyph behind the content rather
-   than a floating sticker. Cream-safe teal.
-   ============================================================ */
-.s-agents-md .map-watermark {
-  position: absolute;
-  right: -10px;
-  bottom: 0;                /* rest at .body's bottom = footer top; never spill into chrome-bottom */
-  font-size: 300px;
-  line-height: 1;
-  color: var(--cyan-ink);
-  opacity: 0.06;
-  pointer-events: none;
-  z-index: 0;
-}
-/* keep all body content above the watermark */
-.s-agents-md .head,
-.s-agents-md .stage,
-.s-agents-md .tag-line { position: relative; z-index: 1; }
+/* The Map pillar watermark (.pillar-watermark.map-watermark) is
+   defined in shared.css — same glyph treatment as the Roads slides. */
 
 /* ============================================================
    Chrome-path filename cycler — THIS SLIDE ONLY.
