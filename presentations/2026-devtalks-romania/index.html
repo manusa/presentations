@@ -24,6 +24,8 @@
 <link rel="stylesheet" href="styles/s-legacy.css" />
 <link rel="stylesheet" href="styles/s-flywheel.css" />
 <link rel="stylesheet" href="styles/s-agents-md.css" />
+<link rel="stylesheet" href="styles/s-boundaries.css" />
+<link rel="stylesheet" href="styles/s-leverage.css" />
 <link rel="stylesheet" href="styles/s-skill.css" />
 <link rel="stylesheet" href="styles/s-specs-vs-tests.css" />
 <link rel="stylesheet" href="styles/s-failure-spec.css" />
@@ -1789,6 +1791,256 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
         <div class="quotes">
           <span class="quote q-0">Not generic. <em>Project-specific.</em></span>
           <span class="quote q-1">Project-specific. <em>And executable.</em></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       12 ACT 4 · MAKE JAVA BOUNDARIES OBVIOUS
+
+       The roads, after slide 11's map. Maven modules are reasoning
+       boundaries: a Vert.x change has an obvious home and a small
+       blast radius. Real proof — commit 68991cb8 (fabric8io/
+       kubernetes-client, 2026-05-18): 4 test files, both Vert.x
+       modules, 0 public-API files, 0 generated files.
+
+       Step 0 — structure: full module tree + commit card.
+       Step 1 — proof: non-Vert.x rows dim, the Vert.x row keeps a
+                pink marker, the reasoning-radius caption lands.
+       ============================================================ -->
+  <section class="s-boundaries light" data-label="Act 4 — Make Java boundaries obvious" data-step-max="1">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · fabric8io/kubernetes-client/pom.xml</span>
+      <span class="spacer"></span>
+      <span class="pill">act 04 · boundaries · 12</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">// act 04 · boundaries</div>
+        <h2 class="title">Make Java boundaries <em>obvious</em>.</h2>
+        <p class="sub">
+          The agent shouldn't have to reason about the whole<br/>
+          repo to make a <em>local</em> change.
+        </p>
+      </header>
+
+      <div class="stage">
+        <!-- ============================================================
+             PROBLEM layer (step 0) — a HYPOTHETICAL monolith. One
+             module, one package, everything mixed: the structure tells
+             the agent nothing, so it reasons about the whole repo.
+             ============================================================ -->
+        <div class="layer layer-problem">
+          <article class="tree-panel synth">
+            <header class="panel-bar">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="path">your-java-project</span>
+              <span class="grow"></span>
+              <span class="scope bad">no module boundaries</span>
+            </header>
+            <div class="tree">
+              <div class="tline">acme-platform/</div>
+              <div class="tline sub">└ src/main/java/com/acme/app/</div>
+              <div class="t"><span class="dot"></span><span class="mod">VertxConnector.java</span></div>
+              <div class="t"><span class="dot"></span><span class="mod">OkHttpConnector.java</span></div>
+              <div class="t"><span class="dot"></span><span class="mod">ClusterClient.java</span></div>
+              <div class="t"><span class="dot"></span><span class="mod">ModelTypes.java</span></div>
+              <div class="t"><span class="dot"></span><span class="mod">CrdSupport.java</span></div>
+              <div class="t"><span class="dot"></span><span class="mod">Extensions.java</span></div>
+              <div class="t more"><span class="dot"></span><span class="mod">… + ~600 more files, one module</span></div>
+            </div>
+          </article>
+
+          <div class="problem-panel">
+            <div class="pp-eyebrow">// imagine a project like this</div>
+            <div class="pp-statement">No module boundaries.<br/>The agent reasons about the <em>whole repo</em>, and changes <em>too much</em>.</div>
+            <div class="pp-econ">
+              <span class="k">// context &amp; economics</span>
+              the whole repo in the window: more tokens, slower loops, more wrong turns.
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================
+             SOLUTION layer (step 1) — the REAL fabric8 repo. Maven
+             modules are the boundaries; the Vert.x change has an
+             obvious home. Proof: merged PR #7812 (manusa, 2026-05-18).
+             ============================================================ -->
+        <div class="layer layer-solution">
+          <article class="tree-panel fab">
+            <header class="panel-bar">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="path">fabric8io / kubernetes-client</span>
+              <span class="grow"></span>
+              <span class="scope good">the change has a home</span>
+            </header>
+            <div class="tree">
+              <div class="t api"><span class="dot"></span><span class="mod">kubernetes-client-api/</span><span class="note">public API · <span class="seed">compiler-checked</span></span></div>
+              <div class="t"><span class="dot"></span><span class="mod">kubernetes-client/</span><span class="note">implementation</span></div>
+              <div class="t sib"><span class="dot"></span><span class="mod">httpclient-{jdk, okhttp, jetty}/</span><span class="note">other backends</span></div>
+              <div class="t hit"><span class="dot"></span><span class="mod">httpclient-{vertx, vertx-5}/</span><span class="note">the change</span></div>
+              <div class="t gen"><span class="dot"></span><span class="mod">kubernetes-model-generator/</span><span class="note">generated · don't hand-edit</span></div>
+              <div class="t"><span class="dot"></span><span class="mod">extensions/</span><span class="note">knative · tekton · istio</span></div>
+              <div class="t"><span class="dot"></span><span class="mod">openshift-client/</span><span class="note">openshift support</span></div>
+            </div>
+          </article>
+
+          <article class="pr-card">
+            <header class="panel-bar gh">
+              <span class="gh-icon"><i class="fa-brands fa-github"></i></span>
+              <span class="repo">fabric8io / kubernetes-client</span>
+              <span class="sep">·</span>
+              <a class="prnum" href="https://github.com/fabric8io/kubernetes-client/pull/7812" target="_blank" rel="noopener noreferrer">#7812</a>
+              <span class="grow"></span>
+              <span class="status merged">Merged</span>
+            </header>
+            <div class="pr-body">
+              <h3 class="pr-title"><span class="scope-tag">test:</span> use ephemeral ports in httpclient-vertx{,-5} SSL/body-stream tests</h3>
+              <div class="pr-author"><span class="avatar"><i class="fa-solid fa-user"></i></span><span class="who">manusa</span><span class="dim">merged · 2026-05-18</span></div>
+              <div class="diff">
+                <div class="row"><span class="g">±</span><span class="k">4 files</span><span class="v">+20 −12</span></div>
+                <div class="row"><span class="g">▣</span><span class="k">2 modules</span><span class="v"><code>httpclient-vertx{,-5}</code></span></div>
+                <div class="row good"><span class="g">✓</span><span class="k">0 public API</span><span class="v">· 0 generated</span></div>
+              </div>
+              <div class="pr-cap">// the change had a home.</div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="tag-line">
+        <span class="lbl">// takeaway</span>
+        <div class="quotes">
+          <span class="quote q-0">Can't tell where a change belongs? The agent <em>changes everything</em>.</span>
+          <span class="quote q-1">The safer the boundary, the <em>smaller the reasoning radius</em>.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>devtalks.ro · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       13 ACT 4 · SHAPE THE WORK UPSTREAM
+
+       The calm slide — the exhale after three dense ones. Expensive
+       reasoning once → cheap execution N times. Artifact: helm-java
+       #351 (OPEN · good first issue), short because the recipe was
+       already extracted into AGENTS.md + a named reference impl
+       (StatusCommand). Also the cost/token beat: think expensively
+       once, run cheaply N times.
+
+       Step 0 — equation + issue collapsed to title + labels.
+       Step 1 — issue body reveals (acceptance · Java-8 · ref impl);
+                the "anyone can run it" channels light up.
+       ============================================================ -->
+  <section class="s-leverage light" data-label="Act 4 — Shape the work upstream" data-step-max="1">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/devtalks-2026 · manusa/helm-java/issues/351</span>
+      <span class="spacer"></span>
+      <span class="pill">act 04 · leverage · 13</span>
+    </div>
+
+    <div class="body">
+      <header class="head">
+        <div class="eyebrow">// act 04 · leverage</div>
+        <h2 class="title">Shape the work <em>upstream</em>.</h2>
+        <p class="sub">
+          Use your best reasoning to shape the work,<br/>
+          not just to <em>write the code</em>.
+        </p>
+      </header>
+
+      <div class="stage">
+        <!-- ============================================================
+             Principle (left): spend the expensive model once →
+             cheap implementation N times. Cheap half reveals on step 1.
+             ============================================================ -->
+        <div class="principle">
+          <div class="band expensive">
+            <div class="brow">
+              <span class="cost"><span class="amt">$$$</span><span class="lbl">think once</span></span>
+              <span class="bhead"><i class="fa-solid fa-brain"></i>strongest model, upstream</span>
+            </div>
+            <div class="work">understand the change · explore the codebase<br/>surface edge cases<br/>define acceptance criteria · propose the tests</div>
+          </div>
+
+          <div class="flow-arrow"><span class="arr">↓</span> produces a detailed spec</div>
+
+          <div class="band cheap">
+            <div class="brow">
+              <span class="cost"><span class="amt">¢</span><span class="lbl">× N</span></span>
+              <span class="bhead">then cheap execution</span>
+            </div>
+            <ul class="implementers">
+              <li><i class="fa-solid fa-robot"></i>a smaller, faster model</li>
+              <li><i class="fa-solid fa-user-group"></i>an external contributor</li>
+              <li><i class="fa-solid fa-clock-rotate-left"></i>future-you</li>
+            </ul>
+          </div>
+
+          <div class="spec-hint">↳ a <b>spec-driven workflow</b>: formalize it with a framework, or keep it free-form.</div>
+        </div>
+
+        <!-- ============================================================
+             Artifact (right): the real, DETAILED helm-java #351.
+             Compatibility + Validation = where the expensive thinking
+             went, so a cheap executor can run it safely.
+             ============================================================ -->
+        <article class="issue">
+          <header class="panel-bar gh">
+            <span class="gh-icon"><i class="fa-brands fa-github"></i></span>
+            <span class="repo">manusa / helm-java</span>
+            <span class="sep">·</span>
+            <a class="num" href="https://github.com/manusa/helm-java/issues/351" target="_blank" rel="noopener noreferrer">#351</a>
+            <span class="grow"></span>
+            <span class="status open">Open</span>
+          </header>
+          <div class="issue-head">
+            <h3 class="issue-title">feat: implement helm rollback command</h3>
+            <div class="labels">
+              <span class="lab enhancement">enhancement</span>
+              <span class="lab help">help wanted</span>
+              <span class="lab gfi">good first issue</span>
+            </div>
+          </div>
+          <div class="issue-body">
+            <div class="block">
+              <div class="bh">Compatibility</div>
+              <div class="ln"><span class="hot">Java 8 baseline</span> · no var, no records</div>
+              <div class="ln">additive public API only</div>
+              <div class="ln">preserve existing behavior</div>
+            </div>
+            <div class="block">
+              <div class="bh">Validation</div>
+              <div class="ln">add a JUnit regression test</div>
+              <div class="ln">run <code>./mvnw test -pl helm-java</code></div>
+              <div class="ln">don't hand-edit generated native code</div>
+            </div>
+            <div class="ref">reference impl → <code>StatusCommand.java</code></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="tag-line">
+        <span class="lbl">// takeaway</span>
+        <div class="quotes">
+          <span class="quote q-0">Spend the expensive model on the <em>problem</em>, not the typing.</span>
+          <span class="quote q-1">Cheap implementation is possible when the problem was <em>expensive to think through</em>.</span>
         </div>
       </div>
     </div>
