@@ -94,7 +94,6 @@ Listed worst-first.
 | # | Slide | Offending content | px | ≈pt | Note |
 |---|---|---|---|---|---|
 | 22 | **Act 5 — Black-box tests** | code panel `.panel-body.code` | **18** | **9** | Code the speaker walks through, at 9pt. Takeaway quote 30px is fine. |
-| 16 | **Act 4 — Boundaries** | scope badges 15, panel / role annotations 16 | **15–16** | **7.5–8** | Annotations carry the point ("public API · compiler-checked") at 7.5–8pt. |
 | 17 | **Act 4 — Leverage** | issue labels 14, cost label 16, inline code 18 | **14–18** | **7–9** | |
 
 **Common thread:** every critical slide is **over-stuffed**. The fonts are small *because the content
@@ -180,6 +179,24 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 ---
 
 ## Resolved
+
+- **Slide 16 — Act 4 "Boundaries" (Maven modules as boundaries, 2 steps).**
+  A lighter touch than the dense Act-5 slides: the content tier was already
+  ≥20px (trees 22, role notes 20, panel bodies/captions 20, PR title 21), so
+  the audit's "annotations 16px" figure was **stale** — the genuine sub-floor
+  offenders were the per-step *scope badge* (15px — and it carries the slide's
+  punchline, "no module boundaries" → "the change has a home", so it's content,
+  not chrome) plus the panel/GitHub-bar chrome (14–16). **No width reclaim:**
+  this slide shares the Act-4 header construction and `--pad-x` gutter with its
+  siblings (15 AGENTS.md, 17 Leverage), so moving its gutter would have shifted
+  the title out of alignment with them mid-navigation; the lifts fit in the
+  existing width (verified the panel bars don't collide and tree-row notes stay
+  one-line). Lifted: scope badge 15→20, tree-panel path 16→20, role notes 20→22,
+  problem-panel econ key 16→18, GitHub bar 16→20 (icon 18→20), merged pill 14→18,
+  PR title 21→22, diff inline code 18→20, takeaway label 16→18. Left the avatar
+  glyph (icon, not text) and the already-fine display tier. Whole-deck
+  `snapshot:diff` shows only this slide changed (1.4–1.9%, no reflow — header
+  stayed put).
 
 - **Slide 24 — Act 5 "Feedback ladder" (fast feedback loops, 2 steps).** The
   deck's worst offender — the tier scale labels, tooling glosses, cadence cues,
