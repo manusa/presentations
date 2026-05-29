@@ -59,6 +59,28 @@ async function applyExportHidden(page) {
 }
 
 /**
+ * Disable the thumbnail rail so the capture is the slide and nothing else.
+ *
+ * By default <deck-stage> reserves a left-hand thumbnail rail and scales the
+ * fixed 1920×1080 design canvas to fit the *remaining* width — so a raw
+ * viewport screenshot picks up the dark rail strip on the left plus
+ * top/bottom letterbox bars where the down-scaled canvas no longer fills the
+ * 16:9 viewport. Setting the `no-rail` attribute makes `_railWidth()` return
+ * 0; the synchronous `_fit()` in attributeChangedCallback then anchors the
+ * stage at left:0 and scales the canvas 1:1, so it exactly fills the
+ * 1920×1080 viewport. The resulting PNG is the slide alone — no black frame,
+ * shareable as-is.
+ *
+ * No-op if the page has no <deck-stage> (e.g. the landing page).
+ */
+async function disableRail(page) {
+  await page.evaluate(() => {
+    const stage = document.querySelector('deck-stage');
+    if (stage) stage.setAttribute('no-rail', '');
+  });
+}
+
+/**
  * Expand stepped slides into one section per step state. For every section
  * with `data-step-max="N"`, inserts N clones right after it (preserving DOM
  * order) and sets `data-step="0..N"` across the resulting N+1 sections.
@@ -144,6 +166,7 @@ async function walkDeck(page, onSlide) {
   }
 
   await applyExportHidden(page);
+  await disableRail(page);
 
   for (let i = 0; i < sequence.length; i++) {
     if (i > 0) {
@@ -211,4 +234,4 @@ async function goToStep(page, sectionIdx, step) {
   await settleAnimations(page);
 }
 
-module.exports = {settleAnimations, applyExportHidden, expandStepClones, walkDeck, slideFilename, goToStep};
+module.exports = {settleAnimations, applyExportHidden, disableRail, expandStepClones, walkDeck, slideFilename, goToStep};

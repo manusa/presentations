@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 const path = require('path');
 const fs = require('fs');
-const {settleAnimations, goToStep} = require('./lib/deck');
+const {settleAnimations, goToStep, disableRail, applyExportHidden} = require('./lib/deck');
 
 const USAGE = `Usage: npm run screenshot -- <url> [name] [--delay <ms>] [--slide N [--step K]]
 
@@ -112,6 +112,12 @@ try {
   const context = await browser.newContext({viewport: {width: 1920, height: 1080}});
   const page = await context.newPage();
   await page.goto(url, {waitUntil: 'networkidle', timeout: 30_000});
+
+  // Drop the thumbnail rail so the capture is the slide alone (no black
+  // rail strip / letterbox), and hide the deck-stage chrome (nav overlay,
+  // tapzones). No-op on pages without a <deck-stage>.
+  await disableRail(page);
+  await applyExportHidden(page);
 
   if (slide !== null) {
     try {
