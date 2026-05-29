@@ -65,7 +65,7 @@
 }
 .s-section .mvn-anno {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--fg-mute);
   display: flex;
   align-items: center;
@@ -77,12 +77,18 @@
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  font-size: 18px;
 }
 .s-section .mvn-anno .at   { color: var(--accent); }
 .s-section .mvn-anno .deco { color: var(--fg-mute); }
 .s-section .mvn-anno .ja   { color: var(--mvn-cyan); }
 .s-section .mvn-anno .num  { color: var(--accent-2); font-weight: 600; }
+/* Map · Roads · Guardrails pillar tokens inside @Delivers(...).
+   Colors are the back-row-safe ramp on navy (Roads uses --orange-soft,
+   NOT the saturated --accent-2). Matches the recap pillar colors. */
+.s-section .mvn-anno .pillar       { font-weight: 700; }
+.s-section .mvn-anno .pillar-map   { color: var(--cyan); }
+.s-section .mvn-anno .pillar-roads { color: var(--orange-soft); }
+.s-section .mvn-anno .pillar-guard { color: var(--accent); }
 .s-section .mvn-msg {
   font-family: 'Inter', sans-serif;
   font-size: 88px;
