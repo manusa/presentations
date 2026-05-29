@@ -2069,7 +2069,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
          step 2 — failing PR exits OFF-LEFT, SKILL shifts LEFT,
                   green merged PR enters RIGHT
        ============================================================ -->
-  <section class="s-skill light" data-label="Act 4 — Encode project tasks as skills" data-step-max="2">
+  <section class="s-skill light" data-label="Act 4 — Encode project tasks as skills" data-step-max="3">
     <div class="chrome-top">
       <span class="dot"></span>
       <span>~/dev/devtalks-2026 · .claude/skills/regen-java-models-from-upstream/SKILL.md</span>
@@ -2080,7 +2080,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
     <div class="body">
       <header class="head">
         <div class="eyebrow">// act 04 · skill</div>
-        <h2 class="title">Encode project-specific <em>tasks</em>.</h2>
+        <h2 class="title">From prompt to <em>skill</em>.</h2>
         <p class="sub">
           <span class="t-prev">AGENTS.md</span> was the map.<br/>
           <span class="t-this">SKILL.md</span> is the ritual.
@@ -2089,8 +2089,40 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
 
       <div class="stage">
         <!-- ============================================================
+             RAMP card — the lead-in (step 0 only).
+             Three escalating prompt "runs" the dev keeps typing at the
+             agent; the prompt accretes until it's worth writing down.
+             Centered + narrow; fades out as the conveyor begins (step 1+).
+             Visual rhyme: the dark PROMPT panel becomes the dark SKILL.md
+             panel. The third (hero) run is the only accented element.
+             ============================================================ -->
+        <article class="card card-ramp">
+          <header class="panel-bar term">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="path">~/dev/fabric8-kubernetes-client · claude</span>
+            <span class="grow"></span>
+            <span class="status prompt">PROMPT</span>
+          </header>
+          <div class="panel-body">
+            <div class="run">
+              <span class="gut">01</span><span class="chev">&gt;</span>
+              <span class="say">Implement issue <code>#1337</code>.</span>
+            </div>
+            <div class="run">
+              <span class="gut">02</span><span class="chev">&gt;</span>
+              <span class="say">Implement issue <code>#1337</code> using TDD and project conventions.</span>
+            </div>
+            <div class="run hero">
+              <span class="gut">03</span><span class="chev">&gt;</span>
+              <span class="say">Implement issue <code>#1337</code> using TDD and project conventions, then run <em>adversarial review agents</em> and address substantive findings before returning to me.</span>
+              <span class="chip">→ returns reviewable work</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ============================================================
              FAIL card — failing Dependabot PR #7528.
-             Step 0: CENTER (alone). Step 1: LEFT. Step 2: OFF-LEFT (gone).
+             Step 1: CENTER (alone). Step 2: LEFT. Step 3: OFF-LEFT (gone).
              ============================================================ -->
         <article class="card card-fail">
           <header class="panel-bar gh">
@@ -2142,7 +2174,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
 
         <!-- ============================================================
              SKILL.md card — the encoded ritual.
-             Step 0: off-right. Step 1: RIGHT slot. Step 2: LEFT slot.
+             Step 1: off-right. Step 2: RIGHT slot. Step 3: LEFT slot.
              ============================================================ -->
         <article class="card card-skill">
           <header class="panel-bar term">
@@ -2169,7 +2201,7 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
 
         <!-- ============================================================
              GREEN card — merged fix PR #7544.
-             Step 0/1: off-right. Step 2: RIGHT slot.
+             Step 1/2: off-right. Step 3: RIGHT slot.
              ============================================================ -->
         <article class="card card-green">
           <header class="panel-bar gh">
@@ -2204,6 +2236,10 @@ tasks.<span class="t-fn">register</span>(<span class="t-str">"quickBuild"</span>
       <div class="tag-line">
         <span class="lbl">// takeaway</span>
         <div class="quotes">
+          <span class="quote q-ramp">
+            The tenth time, you write the prompt down. <em>That's a skill.</em>
+            <span class="sub">// the prompt you got tired of retyping.</span>
+          </span>
           <span class="quote q-0">
             5 days. No humans. <em>Still red.</em>
             <span class="sub">// upstream Go reorg · nobody wants to read it.</span>
