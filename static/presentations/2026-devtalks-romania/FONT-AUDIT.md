@@ -125,7 +125,6 @@ a front-to-middle audience in a modest room can likely read — but back rows wi
 | 26 | Act 5 — XP reframe | practices list | ~28–32 | 14–16 |
 | 29 | Act 6 — Q&A close | contact list | 26 | 13 |
 | 20 / 21 | Act 5 — Specs / Failure-spec | code panels `.panel-body.code` | 22 | 11 |
-| 13 | Act 3 — Flywheel | node titles 21 (callout 28) | 21 | 10.5 |
 | 28 | Act 6 — Recap | pillar action labels | 24 | 12 |
 
 The **persistent chrome rails** (top/bottom, 24px = 12pt) and **eyebrows / pills** (20–24px) are fine to
@@ -183,6 +182,22 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 ---
 
 ## Resolved
+
+- **Slide 13 — Act 3 "AI-readiness flywheel" (the diagram).** Not Critical (it
+  was in the yellow tier), but the diagram text was needlessly small given how
+  much empty space the slide has — the opposite problem from the dense slides.
+  The four node cards carried their labels at 21px and their mono sub-lines at
+  **14px (7pt)**. Rather than shrink, **grew into the slack** — and reclaimed
+  width the same way the dense slides do: cut the slide gutter symmetrically
+  120→64px (matching the chrome bar) so the wheel column widened, then let the
+  wheel fill it (`width: 100%`, was a fixed 940px) so the side cards spread out
+  and clear the center "Compounding AI leverage" label with room to spare. With
+  that room, widened the node cards (340→460px) and lifted the type — node titles
+  21→26, node subs **14→20**, leader-strip numbers 22→26, center label 28→32,
+  eyebrow 22→24, Java hint chips 17→20. Subs still sit on one line (verified
+  node-by-node); no card overlaps the ring center. Also retitled node 3 "Agents
+  become safer" → "…safer & faster" (still one line at 460px). `snapshot:diff`
+  shows only this slide changed.
 
 - **Slide 15 — Act 4 "AGENTS.md" (the Map pillar).** Resolved *upstream* by the
   Map·Roads·Guardrails refactor (#46), not by this audit pass — confirmed after
