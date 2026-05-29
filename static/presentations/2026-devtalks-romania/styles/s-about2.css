@@ -147,6 +147,12 @@
   border-radius: 10px;
   overflow: hidden;
 }
+/* Compact (back-face "side quests") cards stay all-4-lines but tighten
+   padding/gap so the modest font bumps below don't grow row height and
+   overflow the slide — the dense grid is intentional ("juggles many
+   projects"); the nudge just lifts names/stars toward the projection
+   legibility floor without thinning the wall. */
+.proj-card.compact { padding: 18px 20px; gap: 11px; }
 .proj-card.compact .picon { width: 56px; height: 56px; border-radius: 8px; }
 .proj-card .picon::part(frame) { background: transparent; }
 .proj-card .picon::part(ring)  { border-color: transparent; }
@@ -172,7 +178,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.proj-card.compact .pname { font-size: 24px; }
+.proj-card.compact .pname { font-size: 26px; }
 .proj-card .porg {
   font-family: 'JetBrains Mono', monospace;
   font-size: 24px;
@@ -182,7 +188,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.proj-card.compact .porg { font-size: 18px; }
+.proj-card.compact .porg { font-size: 20px; }
 
 .proj-card .pmeta {
   display: flex;
@@ -191,7 +197,7 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 24px;
 }
-.proj-card.compact .pmeta { font-size: 20px; gap: 10px; }
+.proj-card.compact .pmeta { font-size: 22px; gap: 10px; }
 .proj-card.wide .pmeta { margin-left: auto; flex-shrink: 0; }
 
 .lang-pill {
@@ -204,7 +210,7 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
-.proj-card.compact .lang-pill { font-size: 14px; padding: 4px 11px; }
+.proj-card.compact .lang-pill { font-size: 16px; padding: 4px 12px; }
 .lang-pill.java { background: rgba(176, 114, 25, 0.14); color: #7A4F11; border: 1px solid rgba(176, 114, 25, 0.35); }
 .lang-pill.go   { background: rgba(0, 173, 216, 0.14); color: #006A82; border: 1px solid rgba(0, 173, 216, 0.4);  }
 .lang-pill.js   { background: rgba(217, 184, 30, 0.18); color: #6B5708; border: 1px solid rgba(217, 184, 30, 0.5);  }
