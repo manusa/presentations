@@ -93,7 +93,6 @@ Listed worst-first.
 
 | # | Slide | Offending content | px | ≈pt | Note |
 |---|---|---|---|---|---|
-| 24 | **Act 5 — Feedback ladder** | tier units, module heads, tooling glosses, badges | **14–16** | **7–8** | Log body 21px is borderline; the meaningful labels around it are 7–8pt. |
 | 22 | **Act 5 — Black-box tests** | code panel `.panel-body.code` | **18** | **9** | Code the speaker walks through, at 9pt. Takeaway quote 30px is fine. |
 | 16 | **Act 4 — Boundaries** | scope badges 15, panel / role annotations 16 | **15–16** | **7.5–8** | Annotations carry the point ("public API · compiler-checked") at 7.5–8pt. |
 | 17 | **Act 4 — Leverage** | issue labels 14, cost label 16, inline code 18 | **14–18** | **7–9** | |
@@ -181,6 +180,25 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 ---
 
 ## Resolved
+
+- **Slide 24 — Act 5 "Feedback ladder" (fast feedback loops, 2 steps).** The
+  deck's worst offender — the tier scale labels, tooling glosses, cadence cues,
+  badge units and the collapsed-bar mini-stats sat at 7–8pt. This slide still
+  carried the **full 120px default gutter**, so the biggest lever was width:
+  trimmed the body gutter 120→64px (matching the chrome bar, gutters equal),
+  reclaiming ~112px for the dense step-1 ladder. With that room, lifted the
+  content tier — **ladder rungs:** tier label 21→24, scale line 15→18, arrow
+  18→20, gloss 16→20, cadence 16→20, badge unit 15→18 (anno already fine at 26,
+  badge num at 34, left as-is); **collapsed legacy bar:** panel-bar path 15→18,
+  status pill 13→16, mini-stat 14→18, badge-time 15→18; **step-0 hero:** WebLogic
+  log 21→23, stopwatch unit 18→20, stopwatch task 14→18, anchor line 22→24;
+  **tagline chips** 15→18. Widening the type pushed the longer scale labels
+  ("your app · booted · in-process") onto a second line, so widened the rung's
+  tier track (`minmax(140px, 0.85fr)` → `minmax(160px, 1.1fr)`, giving back from
+  the roomy annotation column) to keep every scale on one line; all glosses /
+  annos / cadences stay single-line with no ellipsis. Both steps fit with no
+  overflow. Whole-deck `snapshot:diff` shows only this slide changed (step-1
+  reflowed substantially — width reclaim + wider tier track + larger type).
 
 - **Slide 23 — Act 5 "Project story" (YAKD PR #172, 2 steps).** The PR-storytelling
   detail the speaker points at — the grunt-work upgrade rows (`.sp-row-key/-val/-note`),

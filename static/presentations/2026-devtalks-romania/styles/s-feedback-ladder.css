@@ -35,7 +35,10 @@
   position: absolute;
   inset: 56px 0 56px 0;
   z-index: 1;
-  padding: 30px var(--pad-x) 24px;
+  /* Gutter matches the chrome bar's --chrome-pad-x (64px), reclaiming
+     ~112px of width for the dense 5-rung ladder so its tooling lines can
+     grow off the 7–8pt floor. Gutters stay equal (title aligns to chrome). */
+  padding: 30px 64px 24px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 18px;
@@ -137,7 +140,7 @@
   border-bottom: 1px solid rgba(255,255,255,0.08);
   color: #8A93BC;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
+  font-size: 18px;
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
@@ -153,7 +156,7 @@
 /* status pill on the legacy panel — red "stuck" badge */
 .s-feedback-ladder .status-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+  font-size: 16px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 3px 10px;
@@ -178,7 +181,7 @@
 .s-feedback-ladder .legacy-log {
   padding: 22px 28px 24px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 21px;
+  font-size: 23px;
   line-height: 1.55;
   color: #C8CCE4;
   white-space: nowrap;
@@ -225,7 +228,7 @@
 }
 .s-feedback-ladder .stopwatch .sw-unit {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.20em;
   color: #FFB0B8;
   text-transform: uppercase;
@@ -233,12 +236,12 @@
 }
 .s-feedback-ladder .stopwatch .sw-task {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
+  font-size: 18px;
   letter-spacing: 0.02em;
   color: #B4BAD8;
   text-align: center;
   margin-top: 6px;
-  max-width: 240px;
+  max-width: 280px;
   white-space: normal;
   line-height: 1.4;
 }
@@ -246,7 +249,7 @@
 /* --- step 0 footer line below the panel ("the agent is trapped in this loop") --- */
 .s-feedback-ladder .legacy-anchor {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--fg-dim);
   letter-spacing: 0.02em;
   margin-top: 14px;
@@ -282,7 +285,7 @@
 .s-feedback-ladder[data-step="1"] .legacy-panel .badge-time {
   color: #FF8794;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.04em;
   margin-left: 8px;
@@ -296,7 +299,7 @@
   gap: 10px;
   color: #B4BAD8;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 /* ============================================================
@@ -326,7 +329,7 @@
 .s-feedback-ladder .rung {
   display: grid;
   grid-template-columns:
-    /* tier label */     minmax(140px, 0.85fr)
+    /* tier label */     minmax(160px, 1.1fr)
     /* divider */        auto
     /* tooling + gloss */ minmax(0, 2.5fr)
     /* timing badge */    minmax(150px, auto);
@@ -357,19 +360,19 @@
   color: #B4BAD8;
 }
 .s-feedback-ladder .rung .tier .arrow {
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1;
   font-weight: 700;
 }
 .s-feedback-ladder .rung .tier .label {
-  font-size: 21px;
+  font-size: 24px;
   letter-spacing: 0.06em;
   text-transform: lowercase;
   font-weight: 600;
   color: #C8CCE4;
 }
 .s-feedback-ladder .rung .tier .scale {
-  font-size: 15px;
+  font-size: 18px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #8A93BC;
@@ -435,7 +438,7 @@
 .s-feedback-ladder .rung .tooling .anno .t-fn   { color: var(--cyan); }
 .s-feedback-ladder .rung .tooling .gloss {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 20px;
   color: #8A93BC;
   letter-spacing: 0.02em;
   white-space: nowrap;
@@ -455,7 +458,7 @@
    of these" tells the audience how to allocate across the ladder. */
 .s-feedback-ladder .rung .tooling .cadence {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 20px;
   letter-spacing: 0.04em;
   color: var(--orange-soft);
   margin-top: 2px;
@@ -485,7 +488,7 @@
   color: #FFF;
 }
 .s-feedback-ladder .rung .badge .unit {
-  font-size: 15px;
+  font-size: 18px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 600;
@@ -534,7 +537,7 @@
   align-items: center;
   gap: 8px 10px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
+  font-size: 18px;
 }
 .s-feedback-ladder .tag-line .chips-lbl {
   color: var(--fg-mute);
