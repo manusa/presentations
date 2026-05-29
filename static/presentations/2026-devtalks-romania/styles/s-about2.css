@@ -55,12 +55,6 @@
   color: var(--fg-mute);
   letter-spacing: 0.04em;
 }
-.s-about2 .photo-caption .tag {
-  border: 1px solid var(--line-strong);
-  padding: 4px 12px;
-  border-radius: 999px;
-  color: var(--fg-dim);
-}
 .s-about2 .photo-caption .mood {
   color: var(--accent);
   font-weight: 600;
