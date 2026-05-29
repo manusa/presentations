@@ -89,11 +89,9 @@
 .s-agents-md .head .sub .arrow { color: var(--fg-mute); margin: 0 6px; }
 
 /* ============================================================
-   Stage — 2-col grid:
-     col1 = AGENTS.md panel (left) + Makefile (bottom-left)
-     col2 = callouts (right) + Gradle (bottom-right)
-   The cmd-pair + caption are zero-height on step 0 and reveal
-   on step 1; the AGENTS.md panel compresses at the same time.
+   Stage — single-row 2-col grid:
+     col1 = AGENTS.md panel (left)
+     col2 = annotation callouts / map legend (right)
    ============================================================ */
 .s-agents-md .stage {
   position: relative;
