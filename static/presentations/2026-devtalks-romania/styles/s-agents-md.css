@@ -3,9 +3,11 @@
    "Give the agent a project map."
 
    Single-step. A real AGENTS.md excerpt (fabric8 K8s client)
-   with three annotated gems: canonical command, operational
-   gotcha (the ~7-8s TLS/Vert.x cold-start — the landing beat),
-   CI reproduction. The audience reads the artifact, not bullets.
+   read through a map legend of three gems:
+     Golden path      — what should I run?      (canonical command)
+     Known trap       — what will waste time?   (~7-8s TLS gotcha, the landing beat)
+     Local checkpoint — how do I know before opening a PR? (CI repro)
+   The audience reads the artifact, not bullets.
 
    The chrome-path filename cycles AGENTS.md / CLAUDE.md /
    GEMINI.md / .cursorrules to show the convention is tool-
