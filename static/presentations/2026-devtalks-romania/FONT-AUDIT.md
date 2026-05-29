@@ -164,6 +164,19 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 
 ## Resolved
 
+- **Slide 18 — Act 4 "From prompt to skill" (SKILL.md conveyor).** Lifted the
+  card content off the 6.5–10pt floor: RAMP prompt runs 24→30px; FAIL-card PR
+  title 22→26, failing-CI checks 16→22, "0 humans" zeros 18→24; SKILL.md body
+  20→24 with inline code 18→22; GREEN-card diff rows 15→20 and the 13px inline
+  code (the deck's smallest) →18; shared panel-bar paths/pills 12–15→16–18. The
+  SKILL.md card is the structural tight spot — a dense real file at half the
+  conveyor width — so at 24px its long steps now **wrap onto a hanging-indented
+  second line** (annotations preserved) instead of truncating. Reclaimed the
+  width that costs by pulling the conveyor `.stage` wider than the prose column
+  (`margin: 0 -60px`), keeping the header/tagline aligned with the rest of Act 4.
+  Verified all four steps via crops; whole-deck `snapshot:diff` shows only this
+  slide changed.
+
 - **Slides 6 / 7 — Act 2 Old / New World (Gantt).** Block labels lifted from 14px (7pt) to 20–22px
   (10–11pt) — the readable ceiling for a time-proportional gantt at this scale. Reclaimed width by
   trimming margins (90→64px) and the dead lane gutter (200→150px symmetric, which also re-centered the
