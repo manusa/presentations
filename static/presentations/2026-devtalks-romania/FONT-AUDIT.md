@@ -104,9 +104,10 @@ Listed worst-first.
 | 17 | **Act 4 — Leverage** | issue labels 14, cost label 16, inline code 18 | **14–18** | **7–9** | |
 
 **Common thread:** every critical slide is **over-stuffed**. The fonts are small *because the content
-does not fit otherwise*. Enlarging tokens alone will overflow these — they need **content triage first**
-(fewer rows, split into two slides, or summarize the GitHub/IDE-UI mockups instead of reproducing them
-pixel-for-pixel).
+does not fit otherwise*. Enlarging tokens alone will overflow these — so the order of operations is
+**reclaim width first** (cut the slide padding / widen the inner container — see "Recommended path" step 2),
+**then triage** only what still doesn't fit (fewer rows, split into two slides, wrap long lines, or
+summarize the GitHub/IDE-UI mockups instead of reproducing them pixel-for-pixel).
 
 > Against the project's own standing rule (console/terminal text ≥ 20px): much of the code/console here
 > (13–18px) already **violates that floor** — and the 20px floor itself sits at 10pt, *below* the research
@@ -152,12 +153,28 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 
 1. **Set a hard floor:** nothing the audience must read below **~28px (14pt)**; ideally lift body content
    toward **36–48px (18–24pt)** where it fits. Truly decorative chrome can stay at 20–24px.
-2. **Triage the critical slides before resizing** — they are small *because* they are dense. The CI,
-   field-notes, feedback-ladder and project-story slides reproduce GitHub/IDE UI at full fidelity;
-   summarize instead of mirroring, so larger type fits.
-3. **Lift the root tokens** (`--type-body` 32→48px, `--type-small`/`mono` 24→28–32px) *after* the dense
+2. **Reclaim width *first* — before shrinking fonts or cutting content.** The dense slides are short on
+   *horizontal* room, and the cheapest space is the slide's own padding. The default `--pad-x: 120px`
+   gutter on each side is generous for projection; pulling the content area wider lets type grow with no
+   copy loss. **This is the first lever to reach for on any dense slide** — only triage (step 3) what still
+   doesn't fit after the width is reclaimed.
+   - If the whole content column can move out (no cross-slide alignment to honor), reduce the section's
+     body `padding` off `--pad-x`.
+   - If a header/title/tagline must stay aligned with sibling slides (e.g. the shared Act 4 header),
+     widen **only the inner content container** with a negative horizontal margin and leave the prose at
+     `--pad-x`. On slide 18 the conveyor `.stage` got `margin: 0 -60px` (≈+120px of card width) while the
+     header and takeaway stayed put — enough to un-wrap the SKILL.md steps at 24px.
+   - Caveat: a wider element that shares a grid row with auto-sized siblings can steal their track and
+     reflow them (a 24px subtitle in the shared Act 4 header widened its `auto` column and re-wrapped the
+     longer titles on slides 15–17). Re-check the whole slide with `snapshot:diff`, not just the element
+     you touched.
+3. **Triage what *still* doesn't fit** — slides are small *because* they are dense, and width alone won't
+   always save them. The CI, field-notes, feedback-ladder and project-story slides reproduce GitHub/IDE UI
+   at full fidelity; summarize instead of mirroring, or let long lines wrap (hanging indent) rather than
+   truncate, so larger type fits.
+4. **Lift the root tokens** (`--type-body` 32→48px, `--type-small`/`mono` 24→28–32px) *after* the dense
    slides are thinned, then sweep the per-slide px overrides.
-4. Use the existing **`snapshot:baseline` → edit → `snapshot:diff`** loop (AGENTS.md workflow #2) to keep
+5. Use the existing **`snapshot:baseline` → edit → `snapshot:diff`** loop (AGENTS.md workflow #2) to keep
    each pass honest. Note: a fresh worktree needs `npm install` before the screenshot/serve scripts run.
 
 ---
