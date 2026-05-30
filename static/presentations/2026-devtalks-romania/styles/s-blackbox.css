@@ -82,9 +82,12 @@
 }
 .s-blackbox .head .sub {
   grid-column: 2;
+  /* Drop the sub onto the title baseline (see s-specs-vs-tests). Uniform Act 5. */
+  position: relative;
+  top: 10px;
   margin: 0 0 10px 0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1.3;
   color: var(--fg-dim);
   text-align: right;

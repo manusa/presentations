@@ -180,6 +180,40 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 
 ## Resolved
 
+- **Act 5 subtitle uniformity (slides 20–25).** The Act-5 content slides shared a
+  similar header but their subtitles had drifted: prefixed with a code-comment
+  `// ` (21/22/23/24/25 — slide 20 was already clean), scattered sizes (20→26px,
+  21→24, 22→22, 23→24, 24→20, 25→22), and the same title-baseline float Act 4 had
+  (the title's tight `~1.06` line-height lets glyphs overflow the line box, so the
+  grid-bottom-aligned sub floats high). Fixes: **removed the `// ` prefix** from
+  every header subtitle (eyebrows keep their `// ` — that's the deck-wide eyebrow
+  style, Act 4 too); **unified subtitle size to 24px** (kept Act-5's existing
+  `line-height: 1.3`, margin `0 0 10px 0`); **baseline-aligned** each subtitle with
+  `position: relative; top: 10px` (visual-only nudge, out of grid track sizing).
+  The nudge is 10px here vs Act 4's 12px because Act-5 subs use lh 1.3 (Act 4 uses
+  1.45 → ~1.8px more bottom-leading); measured the float per slide via a Playwright
+  probe (12.3–13.3px line-box, converging to a 10px baseline nudge across all title
+  sizes 56–64px). Verified on 1-line titles (22/23/25, 20-step0, 21-sub), 2-line
+  titles (21/24 both steps, 20-step1) — all baseline-align. Gutters/titles/stages
+  left as-is (the slides already read as a set). Slide 26 ("Did I just advertise
+  XP?") has no eyebrow/subtitle — left alone.
+  **One consequence the wider sub caused:** on slide 24 (feedback ladder), the
+  step-1 title ("An agent is only as fast as the *feedback loop*.") is the longest
+  in Act 5, and beside a uniform 24px subtitle it genuinely no longer fits one line
+  (~155px over the available title column). The deficit is too large to claw back
+  by tightening the header gap, so this title now **wraps to two lines** — which is
+  fine and in-family (the deck already has 2-line titles: slide 21, and slide 24's
+  own step-0 title). Gave it `text-wrap: balance` so it splits evenly ("An agent is
+  only as fast" / "as the feedback loop.") with the accent phrase intact instead of
+  orphaning a trailing "loop." on its own line. The 2-line header sits ~30px taller,
+  shifting the 5-rung ladder down — all rungs still render with no overflow, so the
+  ~15% step-1 diff is the *intended* reflow, not breakage (chosen over the
+  alternatives of shrinking only this title below its siblings or exempting it from
+  the uniform 24px). Slide 25's per-step diffs (≤3.6%) are a benign uniform shift —
+  the 22→24 sub makes its header a few px taller, nudging the stage down (no
+  overflow; tagline well within the floor). (Slides 22/25 still carry separate
+  *content* offenders on the Critical list — code panel, etc. — own passes.)
+
 - **Act 4 header uniformity (slides 15 / 16 / 17 / 18).** The four content slides
   share a `title (1fr) | sub (auto)` header but had drifted: subtitle 20px on 17
   vs 24px on 15/16/18, top padding 34 vs 36, gutters 64 (16) vs 120 (15/17/18),
