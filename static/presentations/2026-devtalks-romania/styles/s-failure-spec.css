@@ -48,7 +48,7 @@
 .s-failure-spec .head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
+  align-items: center;
   column-gap: 48px;
 }
 .s-failure-spec .head .eyebrow {
@@ -76,10 +76,7 @@
 }
 .s-failure-spec .head .sub {
   grid-column: 2;
-  /* Drop the sub onto the title baseline (see s-specs-vs-tests). Uniform Act 5. */
-  position: relative;
-  top: 10px;
-  margin: 0 0 10px 0;
+  margin: 0;
   font-family: 'JetBrains Mono', monospace;
   font-size: 24px;
   line-height: 1.3;
