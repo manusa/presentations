@@ -20,7 +20,9 @@
             contributor · future-you), the takeaway lands.
 
    A lightweight spec-driven workflow; the slide hints at going
-   deeper. Content type sizes held at >=20px.
+   deeper. Content lifted off the 7-9pt floor for projection
+   (FONT-AUDIT slide 17): principle bands 22-28px, GitHub-issue
+   artifact 18-22px. Width already reclaimed (64px chrome-bar gutter).
    ============================================================ */
 
 /* Faint dotted grid — atmosphere only, same idiom as siblings */
@@ -140,15 +142,15 @@
   font-family: 'JetBrains Mono', monospace;
   flex-shrink: 0;
 }
-.s-leverage .band .cost .amt { font-size: 23px; font-weight: 700; letter-spacing: -0.01em; }
-.s-leverage .band .cost .lbl { font-size: 16px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
-.s-leverage .band.expensive .cost .amt { color: var(--accent-2-ink); font-size: 25px; }
+.s-leverage .band .cost .amt { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+.s-leverage .band .cost .lbl { font-size: 20px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.s-leverage .band.expensive .cost .amt { color: var(--accent-2-ink); font-size: 28px; }
 .s-leverage .band.expensive .cost .lbl { color: var(--accent-2-ink); }
 .s-leverage .band.cheap .cost .amt { color: var(--cyan-ink); }
 .s-leverage .band.cheap .cost .lbl { color: var(--cyan-ink); }
 .s-leverage .band .bhead {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 23px;
+  font-size: 24px;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--fg);
@@ -157,7 +159,7 @@
 
 .s-leverage .band .work {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.5;
   color: var(--fg-dim);
 }
@@ -174,14 +176,14 @@
   align-items: center;
   gap: 12px;
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 21px;
+  font-size: 22px;
   color: var(--fg);
 }
 .s-leverage .band .implementers li i {
   color: var(--cyan-ink);
   width: 26px;
   text-align: center;
-  font-size: 19px;
+  font-size: 20px;
   flex-shrink: 0;
 }
 
@@ -193,15 +195,15 @@
   padding-left: 8px;
   font-family: 'JetBrains Mono', monospace;
   color: var(--fg-dim);
-  font-size: 19px;
+  font-size: 22px;
 }
-.s-leverage .flow-arrow .arr { color: var(--accent-ink); font-weight: 700; font-size: 24px; }
+.s-leverage .flow-arrow .arr { color: var(--accent-ink); font-weight: 700; font-size: 26px; }
 
 /* spec-driven hint */
 .s-leverage .spec-hint {
   margin-top: 4px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 1.45;
   color: var(--fg-mute);
 }
@@ -228,18 +230,18 @@
   background: #F6F8FA;
   border-bottom: 1px solid #D1D9E0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.02em;
   color: #59636E;
 }
-.s-leverage .issue .panel-bar.gh .gh-icon { color: #1F2328; font-size: 18px; }
+.s-leverage .issue .panel-bar.gh .gh-icon { color: #1F2328; font-size: 20px; }
 .s-leverage .issue .panel-bar.gh .repo { color: #1F2328; font-weight: 600; }
 .s-leverage .issue .panel-bar.gh .sep { color: #59636E; }
 .s-leverage .issue .panel-bar.gh .num { color: #59636E; text-decoration: none; }
 .s-leverage .issue .panel-bar.gh .num:hover { color: #0969DA; text-decoration: underline; }
 .s-leverage .issue .panel-bar.gh .grow { flex: 1; }
 .s-leverage .issue .panel-bar.gh .status.open {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
   padding: 4px 12px;
   border-radius: 999px;
@@ -276,7 +278,7 @@
 .s-leverage .issue .labels { display: flex; flex-wrap: wrap; gap: 8px; }
 .s-leverage .issue .labels .lab {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
   padding: 3px 12px;
   border-radius: 999px;
@@ -289,7 +291,7 @@
 .s-leverage .issue .issue-body {
   padding: 18px 24px 20px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.5;
   color: #1F2328;
   display: flex;
@@ -319,7 +321,7 @@
   border-radius: 4px;
   padding: 0 6px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 20px;
 }
 .s-leverage .issue .block .ln .hot {
   color: #A04707;
@@ -328,7 +330,7 @@
 .s-leverage .issue .ref {
   border-top: 1px dashed #D1D9E0;
   padding-top: 12px;
-  font-size: 18px;
+  font-size: 20px;
   color: #59636E;
 }
 .s-leverage .issue .ref code {
@@ -337,7 +339,7 @@
   border: 1px solid rgba(130, 80, 223, 0.20);
   border-radius: 4px;
   padding: 0 6px;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 /* ============================================================
@@ -352,7 +354,7 @@
 }
 .s-leverage .tag-line .lbl {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 20px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fg-mute);

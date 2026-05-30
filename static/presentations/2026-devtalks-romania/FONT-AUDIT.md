@@ -94,7 +94,6 @@ Listed worst-first.
 | # | Slide | Offending content | px | ≈pt | Note |
 |---|---|---|---|---|---|
 | 22 | **Act 5 — Black-box tests** | code panel `.panel-body.code` | **18** | **9** | Code the speaker walks through, at 9pt. Takeaway quote 30px is fine. |
-| 17 | **Act 4 — Leverage** | issue labels 14, cost label 16, inline code 18 | **14–18** | **7–9** | |
 
 **Common thread:** every critical slide is **over-stuffed**. The fonts are small *because the content
 does not fit otherwise*. Enlarging tokens alone will overflow these — so the order of operations is
@@ -179,6 +178,31 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 ---
 
 ## Resolved
+
+- **Slide 17 — Act 4 "Leverage" (shape the work upstream, 2 steps).** The
+  economics-of-delegation slide: a principle column (spend the expensive model
+  once → cheap execution that runs N times) beside a real, detailed GitHub issue
+  (helm-java #351) as the proof artifact. Content sat at 7–9pt — issue labels and
+  the "Open" status pill 14, cost labels and the GitHub bar 16, inline code / ref
+  line 18, the flow-arrow connector 19. Width was already reclaimed in the Act-4
+  header pass (64px chrome-bar gutter), so this was a straight lift into existing
+  room, no triage needed. **Principle column** (the must-read argument): cost
+  amount 23→26 (expensive 25→28), cost label 16→20, band heading 23→24, work
+  description 20→22, implementer rows 21→22 (icon 19→20), flow-arrow 19→22 (glyph
+  24→26), spec-hint 18→22. **GitHub-issue artifact** (illustrative texture, kept
+  deliberately modest so the card doesn't outgrow the stage band): panel-bar 16→18
+  (icon 18→20), "Open" pill 14→18, labels 14→18, issue body 20→22, inline code
+  18→20, ref line 18→20 (ref code 16→18); issue title left at 24 (already fine).
+  **Takeaway label** 16→20. Smallest remaining text is 18px (9pt) and only on the
+  GitHub-mockup chrome — the status/label pills and the ref-impl inline code —
+  which read as faithful GitHub texture rather than must-read prose (the same call
+  made for slide 25's issues panel). Change is isolated to `s-leverage.css`
+  (git-confirmed single file). Both steps share the identical issue-card layout
+  (step 1 only lights the cheap band via opacity), and the type geometry leaves
+  each stage column (~500px) comfortably inside the stage band (~680px) — no
+  overflow. (A pixel capture via `screenshot`/`snapshot:diff` was blocked this
+  session by a Playwright `networkidle` timeout against the dev server; worth a
+  quick eyeball when the tool is healthy.)
 
 - **Header vertical alignment — Act 4 + Act 5 (slides 15–18, 20–25).** The
   title/subtitle header is a 2-col grid (`title 1fr | sub auto`). It was
