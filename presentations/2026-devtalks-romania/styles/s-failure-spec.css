@@ -48,7 +48,7 @@
 .s-failure-spec .head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
+  align-items: center;
   column-gap: 48px;
 }
 .s-failure-spec .head .eyebrow {
@@ -76,7 +76,7 @@
 }
 .s-failure-spec .head .sub {
   grid-column: 2;
-  margin: 0 0 10px 0;
+  margin: 0;
   font-family: 'JetBrains Mono', monospace;
   font-size: 24px;
   line-height: 1.3;
@@ -124,7 +124,7 @@
   gap: 9px;
   padding: 11px 14px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.04em;
   flex-shrink: 0;
   background: rgba(255,255,255,0.03);
@@ -155,7 +155,7 @@
    read as the same component. */
 .s-failure-spec .state-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.08em;
   text-transform: lowercase;
   padding: 2px 10px;
@@ -183,7 +183,7 @@
 .s-failure-spec .card-test .panel-body.code {
   padding: 18px 32px 18px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.35;
   /* Base color is muted; only the @DisplayName strings and the broken
      assertion stay bright. The test card is supporting context — the
@@ -252,7 +252,7 @@
 .s-failure-spec .card-failure .panel-body {
   padding: 20px 32px 22px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1.4;
   color: #C8CCE4;
   display: flex;
@@ -274,7 +274,7 @@
   align-items: flex-start;
   gap: 10px;
   color: #8A93BC;
-  font-size: 22px;
+  font-size: 24px;
   align-self: flex-start;
 }
 .s-failure-spec .card-failure .stub .cmd {
@@ -318,7 +318,7 @@
 }
 .s-failure-spec .card-failure .tree .head-sub {
   color: #8A93BC;
-  font-size: 20px;
+  font-size: 22px;
 }
 /* Each row in the tree. Indentation expresses the @Nested depth.
    Bigger indent steps + heavier branch glyphs so the nesting reads
@@ -366,7 +366,7 @@
    natural-language documentation the agent can read." Bracketed
    like AssertJ's own failure output format. */
 .s-failure-spec .card-failure .tr.desc {
-  font-size: 22px;
+  font-size: 24px;
   color: var(--orange-soft);
   font-weight: 500;
   margin-top: 4px;
@@ -377,7 +377,7 @@
    don't outshout the leaf. Same colour key as slide 17's BUILD
    FAILED console for continuity. */
 .s-failure-spec .card-failure .tr.detail {
-  font-size: 22px;
+  font-size: 24px;
   color: #8A93BC;
 }
 .s-failure-spec .card-failure .tr.detail .key { color: #6F78A0; margin-right: 6px; }
@@ -388,7 +388,7 @@
   margin-top: 16px;
   color: #6F78A0;
   font-style: italic;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 /* ============================================================
@@ -403,7 +403,7 @@
 }
 .s-failure-spec .tag-line .lbl {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fg-mute);
@@ -424,7 +424,7 @@
   display: block;
   margin-top: 6px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 400;
   color: var(--fg-dim);
   letter-spacing: 0;

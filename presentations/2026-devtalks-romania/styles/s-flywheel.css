@@ -116,6 +116,10 @@
   position: absolute;
   inset: 56px 0 56px 0;
   z-index: 2;
+  /* Reclaim width (FONT-AUDIT playbook): symmetric gutter 120->64px,
+     matching the chrome bar's --chrome-pad-x. The extra width flows to
+     the 1fr wheel column so the side cards clear the center label with
+     room to spare and the diagram type can grow. */
   padding: 56px var(--pad-x) 60px var(--pad-x);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 540px);
@@ -132,7 +136,7 @@
 }
 .s-flywheel .lead .eyebrow {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
+  font-size: 24px;
   letter-spacing: 0.18em;
   text-transform: lowercase;
   color: var(--cyan);
@@ -182,7 +186,7 @@
 }
 .s-flywheel .lead .hints li {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 17px;
+  font-size: 20px;
   letter-spacing: 0.04em;
   color: var(--cyan);
   padding: 6px 12px;
@@ -202,7 +206,10 @@
    ============================================================ */
 .s-flywheel .wheel {
   position: relative;
-  width: 940px;
+  /* Fill the (now wider) left column so the side nodes spread outward and
+     clear the center label. The SVG ring + center stay fixed-size and
+     centered; the extra width is breathing room for the side cards. */
+  width: 100%;
   height: 620px;
   max-width: 100%;
   margin: 0 auto;
@@ -254,7 +261,7 @@
   pointer-events: none;
 }
 .s-flywheel .wheel-center .c-title {
-  font-size: 28px;
+  font-size: 32px;
   line-height: 1.18;
   font-weight: 700;
   color: var(--fg);
@@ -268,8 +275,8 @@
    leader-strip side faces the ring. */
 .s-flywheel .node {
   position: absolute;
-  width: 340px;
-  min-height: 88px;
+  width: 460px;
+  min-height: 104px;
   display: grid;
   grid-template-columns: 46px 1fr;
   grid-template-rows: 1fr 1fr;
@@ -308,7 +315,7 @@
   align-self: stretch;
   margin: -12px 0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--bg);
   background: var(--cyan);
@@ -322,7 +329,7 @@
 .s-flywheel .node .n-title {
   grid-column: 2;
   align-self: end;
-  font-size: 21px;
+  font-size: 26px;
   line-height: 1.18;
   font-weight: 600;
   color: var(--fg);
@@ -333,8 +340,8 @@
   grid-column: 2;
   align-self: start;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  letter-spacing: 0.02em;
+  font-size: 20px;
+  letter-spacing: 0;
   color: rgba(91, 233, 240, 0.90);
   line-height: 1.32;
   white-space: nowrap;
