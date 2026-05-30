@@ -21,10 +21,10 @@
 }
 
 .s-act2 .a2-head {
-  padding: 56px 90px 28px;
+  padding: 44px var(--pad-x) 22px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 .s-act2 .a2-head .eyebrow {
   font-family: 'JetBrains Mono', monospace;
@@ -52,8 +52,8 @@
 }
 
 .s-act2 .a2-takeaway {
-  margin: 0 90px 28px;
-  padding: 22px 28px;
+  margin: 0 64px 20px;
+  padding: 16px 28px;
   border-left: 4px solid var(--accent);
   background: rgba(255,255,255,0.03);
   font-family: 'JetBrains Mono', monospace;
@@ -98,16 +98,16 @@
 /* — Gantt stage / axis / board — */
 .s-act2 .g1-stage {
   flex: 1;
-  margin: 0 90px;
+  margin: 0 64px;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   min-height: 0;
 }
 .s-act2 .g1-axis {
   display: grid;
-  grid-template-columns: 200px 1fr 200px;
+  grid-template-columns: 150px 1fr 150px;
   align-items: center;
   font-family: 'JetBrains Mono', monospace;
   font-size: 20px;
@@ -126,12 +126,12 @@
   border-left: 1px solid var(--line);
   padding-left: 6px;
   color: var(--fg-mute);
-  font-size: 16px;
+  font-size: 20px;
 }
 .s-act2 .g1-axis .tick.major {
   border-left-color: var(--line-strong);
   color: var(--fg-dim);
-  font-size: 18px;
+  font-size: 22px;
 }
 .s-act2 .g1-axis .tick.minor { opacity: 0.55; }
 
@@ -139,26 +139,26 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-top: 36px; /* reserves room for spawn-arrow labels above the You lane */
+  gap: 6px;
+  padding-top: 28px; /* reserves room for spawn-arrow labels above the You lane */
   position: relative;
 }
 .s-act2 .g1-lane {
   display: grid;
-  grid-template-columns: 200px 1fr 200px;
+  grid-template-columns: 150px 1fr 150px;
   align-items: center;
   gap: 0;
 }
 .s-act2 .g1-lane .lane-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-size: 22px;
   color: var(--fg-dim);
   padding-right: 24px;
   text-align: right;
 }
 .s-act2 .g1-lane .lane-label .sub {
   display: block;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--fg-mute);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -167,7 +167,7 @@
 .s-act2 .g1-lane.you .lane-label {
   color: var(--fg);
   font-weight: 700;
-  font-size: 24px;
+  font-size: 26px;
 }
 .s-act2 .g1-lane.you .lane-label .sub { color: var(--accent); }
 .s-act2 .g1-lane.ghost { opacity: 0.32; }
@@ -175,7 +175,7 @@
 .s-act2 .g1-lane.ghost .lane-label .sub { color: var(--fg-mute); }
 .s-act2 .g1-track {
   position: relative;
-  height: 60px;
+  height: 56px;
   border-top: 1px dashed var(--line);
   border-bottom: 1px dashed var(--line);
   background:
@@ -198,15 +198,15 @@
   position: absolute;
   top: 6px; bottom: 6px;
   border-radius: 4px;
-  padding: 3px 5px;
+  padding: 5px 9px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 1.0;
+  line-height: 1.06;
   letter-spacing: -0.005em;
   color: #fff;
   border: 1px solid rgba(0,0,0,0.25);
@@ -216,7 +216,7 @@
   word-break: keep-all;
   hyphens: none;
 }
-.s-act2 .g1-lane.you .g1-block { font-weight: 700; }
+.s-act2 .g1-lane.you .g1-block { font-weight: 700; font-size: 22px; }
 .s-act2 .g1-block.you-chore { background: #4A589C; color: #E6EAFF; }
 .s-act2 .g1-block.you-impl  { background: var(--orange); color: #1A0B00; }
 .s-act2 .g1-block.you-bug   { background: #B53D5F; }
@@ -226,6 +226,24 @@
 .s-act2 .g1-block.agent     { background: var(--purple); }
 .s-act2 .g1-block.agent.alt { background: #5C2FA0; }
 .s-act2 .g1-block.agent.tn  { background: #8E5BCC; }
+
+/* Narrow bars: when a block is too short to hold its label at a readable
+   size, drop the label OUT to the right of the bar into the lane's idle gap
+   (standard gantt pattern). The bar stays a colored marker; the label sits in
+   dark ink on the slide bg so it reads at full size instead of clipping. */
+.s-act2 .g1-block.label-out {
+  overflow: visible;
+  justify-content: flex-start;
+}
+.s-act2 .g1-block.label-out > .lbl {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  color: var(--fg);
+  font-weight: 600;
+}
 
 /* Spawn-arrow markers */
 .s-act2 .g1-spawn {
@@ -249,7 +267,7 @@
   position: absolute;
   left: 4px; top: -18px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+  font-size: 16px;
   color: var(--cyan);
   white-space: nowrap;
 }
@@ -325,7 +343,7 @@
    on the warm scrim. */
 .s-act2 .a2-cue {
   position: absolute;
-  left: 90px;
+  left: 64px;
   top: 470px;
   display: inline-block;
   padding: 14px 22px 12px;
@@ -353,7 +371,7 @@
 }
 .s-act2 .a2-cue .cue-sub {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 500;
   letter-spacing: 0.10em;
   text-transform: uppercase;

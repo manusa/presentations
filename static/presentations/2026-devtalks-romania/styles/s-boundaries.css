@@ -43,6 +43,9 @@
   position: absolute;
   inset: 56px 0 56px 0;
   z-index: 1;
+  /* Gutter trimmed to the chrome bar's --chrome-pad-x (64px) so the
+     24px subtitle's auto column no longer squeezes the title onto a
+     second line. Gutters stay equal (title aligns to the chrome). */
   padding: 36px var(--pad-x) 40px;
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -53,7 +56,8 @@
 .s-boundaries .head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
+  /* Center the subtitle against the title's vertical midline (uniform Act 4 + 5). */
+  align-items: center;
   column-gap: 48px;
 }
 .s-boundaries .head .eyebrow {
@@ -80,9 +84,9 @@
 }
 .s-boundaries .head .sub {
   grid-column: 2;
-  margin: 0 0 8px 0;
+  margin: 0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1.45;
   color: var(--fg-dim);
   text-align: right;
@@ -142,7 +146,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 20px;
   color: #8A93BC;
   letter-spacing: 0.04em;
   flex-shrink: 0;
@@ -154,12 +158,14 @@
 .s-boundaries .tree-panel .panel-bar .path { margin-left: 14px; color: #B4BAD8; }
 .s-boundaries .tree-panel .panel-bar .grow { flex: 1; }
 
-/* reasoning-surface badge — red on the monolith, green on Fabric8 */
+/* reasoning-surface badge — red on the monolith, green on Fabric8.
+   This is the per-step punchline ("no module boundaries" → "the change
+   has a home"), not decorative chrome — sized as content. */
 .s-boundaries .tree-panel .scope {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
+  font-size: 20px;
   letter-spacing: 0.02em;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 999px;
   white-space: nowrap;
 }
@@ -208,7 +214,7 @@
 .s-boundaries .t .mod { color: #C8CCE4; }
 .s-boundaries .t .note {
   margin-left: 6px;
-  font-size: 20px;
+  font-size: 22px;
   color: #7C86B4;
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -278,7 +284,7 @@
 }
 .s-boundaries .problem-panel .pp-econ .k {
   display: block;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--fg-mute);
@@ -308,18 +314,18 @@
   background: #F6F8FA;
   border-bottom: 1px solid #D1D9E0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 20px;
   letter-spacing: 0.02em;
   color: #59636E;
 }
-.s-boundaries .pr-card .panel-bar.gh .gh-icon { color: #1F2328; font-size: 18px; }
+.s-boundaries .pr-card .panel-bar.gh .gh-icon { color: #1F2328; font-size: 20px; }
 .s-boundaries .pr-card .panel-bar.gh .repo { color: #1F2328; font-weight: 600; }
 .s-boundaries .pr-card .panel-bar.gh .sep { color: #59636E; }
 .s-boundaries .pr-card .panel-bar.gh .prnum { color: #59636E; text-decoration: none; }
 .s-boundaries .pr-card .panel-bar.gh .prnum:hover { color: #0969DA; text-decoration: underline; }
 .s-boundaries .pr-card .panel-bar.gh .grow { flex: 1; }
 .s-boundaries .pr-card .panel-bar.gh .status.merged {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
   padding: 4px 12px;
   border-radius: 999px;
@@ -341,7 +347,7 @@
 .s-boundaries .pr-card .pr-title {
   margin: 0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 21px;
+  font-size: 22px;
   line-height: 1.4;
   font-weight: 500;
   color: #1F2328;
@@ -394,7 +400,7 @@
   border-radius: 4px;
   padding: 0 7px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 20px;
 }
 .s-boundaries .pr-card .pr-cap {
   margin-top: 4px;
@@ -416,7 +422,7 @@
 }
 .s-boundaries .tag-line .lbl {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fg-mute);

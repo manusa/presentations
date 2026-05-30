@@ -51,7 +51,7 @@
   z-index: 1;
   /* Scoped pad-x override: this slide needs wider cards so every
      console line can sit at the 18px floor without horizontal clip. */
-  padding: 30px 72px 24px;
+  padding: 30px var(--pad-x) 24px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 20px;
@@ -61,7 +61,8 @@
 .s-blackbox .head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
+  /* Center the subtitle against the title's vertical midline (uniform Act 4 + 5). */
+  align-items: center;
   column-gap: 48px;
 }
 .s-blackbox .head .eyebrow {
@@ -88,9 +89,9 @@
 }
 .s-blackbox .head .sub {
   grid-column: 2;
-  margin: 0 0 10px 0;
+  margin: 0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1.3;
   color: var(--fg-dim);
   text-align: right;

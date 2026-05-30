@@ -522,7 +522,7 @@
         <div class="card repo repo-1">
           <a class="ref-link overlay" href="https://github.com/eclipse-jkube/jkube" target="_blank" rel="noopener noreferrer" aria-label="eclipse-jkube/jkube on GitHub"></a>
           <div class="repo-head">
-            <span class="repo-icon">J</span>
+            <image-slot class="repo-icon" fit="contain" src="assets/logos/eclipse-jkube.png" placeholder="logo" aria-hidden="true"></image-slot>
             <div>
               <div class="repo-name">eclipse-jkube</div>
               <div class="repo-org">eclipse-jkube/jkube</div>
@@ -538,7 +538,7 @@
         <div class="card repo repo-2">
           <a class="ref-link overlay" href="https://github.com/containers/kubernetes-mcp-server" target="_blank" rel="noopener noreferrer" aria-label="containers/kubernetes-mcp-server on GitHub"></a>
           <div class="repo-head">
-            <span class="repo-icon">G</span>
+            <image-slot class="repo-icon" fit="contain" src="assets/logos/containers.png" placeholder="logo" aria-hidden="true"></image-slot>
             <div>
               <div class="repo-name">kubernetes-mcp-server</div>
               <div class="repo-org">containers/kubernetes-mcp-server</div>
@@ -546,6 +546,7 @@
           </div>
           <div class="repo-meta">
             <span class="lang"><span class="lang-dot go"></span>Go</span>
+            <span><span class="star">&#9733;</span> 1.6k</span>
             <span><span class="issue-icon">&#9679;</span> 8 issues</span>
           </div>
         </div>
@@ -553,7 +554,7 @@
         <div class="card repo repo-3">
           <a class="ref-link overlay" href="https://github.com/fabric8io/kubernetes-client" target="_blank" rel="noopener noreferrer" aria-label="fabric8io/kubernetes-client on GitHub"></a>
           <div class="repo-head">
-            <span class="repo-icon">J</span>
+            <image-slot class="repo-icon" fit="contain" src="assets/logos/fabric8io.svg" placeholder="logo" aria-hidden="true"></image-slot>
             <div>
               <div class="repo-name">kubernetes-client</div>
               <div class="repo-org">fabric8io/kubernetes-client</div>
@@ -569,7 +570,7 @@
         <div class="card repo repo-4">
           <a class="ref-link overlay" href="https://github.com/manusa/helm-java" target="_blank" rel="noopener noreferrer" aria-label="manusa/helm-java on GitHub"></a>
           <div class="repo-head">
-            <span class="repo-icon">J</span>
+            <image-slot class="repo-icon" fit="contain" src="assets/logos/helm.svg" placeholder="logo" aria-hidden="true"></image-slot>
             <div>
               <div class="repo-name">helm-java</div>
               <div class="repo-org">manusa/helm-java</div>
@@ -577,6 +578,7 @@
           </div>
           <div class="repo-meta">
             <span class="lang"><span class="lang-dot java"></span>Java</span>
+            <span><span class="star">&#9733;</span> 67</span>
             <span><span class="issue-icon">&#9679;</span> 4 issues</span>
           </div>
         </div>
@@ -762,14 +764,14 @@
         <div class="g1-lane you">
           <div class="lane-label">You<span class="sub">solo dev</span></div>
           <div class="g1-track">
-            <div class="g1-block you-chore" style="left:0%;  width:5%;">Email</div>
-            <div class="g1-block you-meet"  style="left:5%;  width:5%;">Standup</div>
-            <div class="g1-block you-impl"  style="left:10%; width:30%;">Implement feature #42</div>
-            <div class="g1-block you-mgmt"  style="left:40%; width:5%;">Review PRs</div>
-            <div class="g1-block you-chore" style="left:45%; width:10%;">Expenses &amp; chores</div>
-            <div class="g1-block you-bug"   style="left:55%; width:20%;">Fix bug #18 + tests</div>
-            <div class="g1-block you-meet"  style="left:75%; width:5%;">1-1</div>
-            <div class="g1-block you-impl"  style="left:80%; width:20%;">Implement #42 (cont.)</div>
+            <div class="g1-block you-chore" style="left:0%;  width:6%;">Email</div>
+            <div class="g1-block you-meet"  style="left:6%;  width:8%;">Standup</div>
+            <div class="g1-block you-impl"  style="left:14%; width:26%;">Implement feature #42</div>
+            <div class="g1-block you-mgmt"  style="left:40%; width:8%;">Review PRs</div>
+            <div class="g1-block you-chore" style="left:48%; width:9%;">Expenses &amp; chores</div>
+            <div class="g1-block you-bug"   style="left:57%; width:18%;">Fix bug #18 + tests</div>
+            <div class="g1-block you-meet"  style="left:75%; width:6%;">1-1</div>
+            <div class="g1-block you-impl"  style="left:81%; width:19%;">Implement #42 (cont.)</div>
           </div>
           <div></div>
         </div>
@@ -869,22 +871,15 @@
             <div class="g1-spawn" style="left:75%;"><span class="tag">↑ A6</span></div>
             <div class="g1-spawn" style="left:95%;"><span class="tag">↑ research · overnight</span></div>
 
-            <div class="g1-block you-mgmt"  style="left:0%;  width:5%;">Spawn</div>
-            <div class="g1-block you-chore" style="left:5%;  width:5%;">Email</div>
-            <div class="g1-block you-meet"  style="left:10%; width:5%;">Standup</div>
-            <div class="g1-block you-mgmt"  style="left:15%; width:10%;">Review A1</div>
-            <div class="g1-block you-mgmt"  style="left:25%; width:10%;">Iter A1 + merge</div>
-            <div class="g1-block you-mgmt"  style="left:35%; width:5%;">Spawn A4</div>
-            <div class="g1-block you-mgmt"  style="left:40%; width:5%;">Rev A2</div>
-            <div class="g1-block you-mgmt"  style="left:45%; width:5%;">Spawn A5</div>
-            <div class="g1-block you-mgmt"  style="left:50%; width:10%;">Iter A2 + merge</div>
+            <div class="g1-block you-mgmt"  style="left:0%;  width:7%;">Spawn</div>
+            <div class="g1-block you-chore" style="left:7%;  width:8%;">Email · standup</div>
+            <div class="g1-block you-mgmt"  style="left:15%; width:20%;">Review + iterate A1</div>
+            <div class="g1-block you-mgmt"  style="left:35%; width:10%;">Review A2</div>
+            <div class="g1-block you-mgmt"  style="left:45%; width:15%;">Iterate + merge A2</div>
             <div class="g1-block you-meet"  style="left:60%; width:5%;">1-1</div>
-            <div class="g1-block you-mgmt"  style="left:65%; width:10%;">Rev A3 + merge</div>
-            <div class="g1-block you-mgmt"  style="left:75%; width:5%;">Spawn A6</div>
-            <div class="g1-block you-mgmt"  style="left:80%; width:5%;">Rev A4</div>
-            <div class="g1-block you-mgmt"  style="left:85%; width:5%;">Rev A5</div>
-            <div class="g1-block you-mgmt"  style="left:90%; width:5%;">Rev A6</div>
-            <div class="g1-block you-merge" style="left:95%; width:5%;">Spawn research</div>
+            <div class="g1-block you-mgmt"  style="left:65%; width:10%;">Review + merge A3</div>
+            <div class="g1-block you-mgmt"  style="left:75%; width:20%;">Review A4-A6</div>
+            <div class="g1-block you-merge" style="left:95%; width:5%;">Spawn</div>
           </div>
           <div></div>
         </div>
@@ -894,8 +889,8 @@
           <div class="lane-label">Agent 1<span class="sub">parallel session</span></div>
           <div class="g1-track">
             <div class="g1-block agent"     style="left:0%;  width:15%;">Implement #42</div>
-            <div class="g1-block agent alt" style="left:25%; width:5%;">Feedback v1</div>
-            <div class="g1-block agent tn"  style="left:65%; width:5%;">Round 2</div>
+            <div class="g1-block agent alt label-out" style="left:25%; width:5%;"><span class="lbl">Feedback v1</span></div>
+            <div class="g1-block agent tn label-out"  style="left:65%; width:5%;"><span class="lbl">Round 2</span></div>
           </div>
           <div></div>
         </div>
@@ -903,8 +898,8 @@
           <div class="lane-label">Agent 2<span class="sub">parallel session</span></div>
           <div class="g1-track">
             <div class="g1-block agent alt" style="left:0%;  width:10%;">Tests PR #37</div>
-            <div class="g1-block agent"     style="left:30%; width:5%;">Helper utils</div>
-            <div class="g1-block agent tn"  style="left:50%; width:5%;">PR feedback</div>
+            <div class="g1-block agent label-out"     style="left:30%; width:5%;"><span class="lbl">Helper utils</span></div>
+            <div class="g1-block agent tn label-out"  style="left:50%; width:5%;"><span class="lbl">PR feedback</span></div>
           </div>
           <div></div>
         </div>
@@ -920,7 +915,7 @@
           <div class="lane-label">Agent 4<span class="sub">parallel session</span></div>
           <div class="g1-track">
             <div class="g1-block agent"     style="left:35%; width:10%;">Triage + labels</div>
-            <div class="g1-block agent alt" style="left:80%; width:5%;">Quick win #51</div>
+            <div class="g1-block agent alt label-out" style="left:80%; width:5%;"><span class="lbl">Quick win #51</span></div>
           </div>
           <div></div>
         </div>
@@ -928,7 +923,7 @@
           <div class="lane-label">Agent 5<span class="sub">parallel session</span></div>
           <div class="g1-track">
             <div class="g1-block agent"     style="left:45%; width:10%;">Draft API docs</div>
-            <div class="g1-block agent tn"  style="left:85%; width:5%;">Changelog</div>
+            <div class="g1-block agent tn label-out"  style="left:85%; width:5%;"><span class="lbl">Changelog</span></div>
           </div>
           <div></div>
         </div>
@@ -936,7 +931,7 @@
           <div class="lane-label">Agent 6<span class="sub">parallel session</span></div>
           <div class="g1-track">
             <div class="g1-block agent alt" style="left:75%; width:15%;">Refactor parser internals</div>
-            <div class="g1-block agent"     style="left:95%; width:5%;">Research</div>
+            <div class="g1-block agent label-out"     style="left:95%; width:5%;"><span class="lbl">Research</span></div>
           </div>
           <div></div>
         </div>
@@ -1523,7 +1518,7 @@
         </div>
         <div class="node node-3">
           <span class="num">3</span>
-          <div class="n-title">Agents become safer</div>
+          <div class="n-title">Agents become safer &amp; faster</div>
           <div class="n-sub">better PRs · fewer wrong turns</div>
         </div>
         <div class="node node-4">
@@ -2498,7 +2493,7 @@
         <div class="eyebrow">// act 05 · same failure · richer signal</div>
         <h2 class="title">A failing test should <em>explain</em> the broken behavior.</h2>
         <p class="sub">
-          // JUnit gives the agent a <span class="t-warn">behavior breadcrumb</span>
+          JUnit gives the agent a <span class="t-warn">behavior breadcrumb</span>
         </p>
       </header>
 
@@ -2636,7 +2631,7 @@
         <div class="eyebrow">// act 05 · the unit shifts</div>
         <h2 class="title">Black-box tests: the unit is <em>behavior</em>.</h2>
         <p class="sub">
-          // why these tests <span class="t-warn">survived</span> the AI era
+          why these tests <span class="t-warn">survived</span> the AI era
         </p>
       </header>
 
@@ -2882,7 +2877,7 @@
         <div class="eyebrow">// act 05 · one of many recent agent-assisted PRs</div>
         <h2 class="title">Black-box tests unlocked a <em>large change</em>.</h2>
         <p class="sub">
-          // <span class="t-warn">tedious maintenance</span> · agent territory
+          <span class="t-warn">tedious maintenance</span> · agent territory
         </p>
       </header>
 
@@ -2955,7 +2950,8 @@
             </li>
           </ul>
           <footer class="sp-foot mono">
-            <div class="foot-line">// the <span class="t-guard">compiler</span> steered the renames · the <span class="t-guard">tests</span> steered the behavior</div>
+            <div class="foot-line">// the <span class="t-guard">compiler</span> steered the renames</div>
+            <div class="foot-line">// the <span class="t-guard">tests</span> steered the behavior</div>
             <div class="foot-line">// i handed it all to <span class="t-claude">Claude</span>.</div>
           </footer>
         </article>
@@ -3076,8 +3072,8 @@
           <span class="t-1">An agent is only as fast as the <em>feedback loop</em>.</span>
         </h2>
         <p class="sub">
-          <span class="s-0">// the loop you remember from 2010 is now<br>the loop your <span class="t-warn">agent is trapped in</span></span>
-          <span class="s-1">// measured on my projects:<br><span class="t-warn">every lower tier buys confidence at a cost</span></span>
+          <span class="s-0">the loop you remember from 2010 is now<br>the loop your <span class="t-warn">agent is trapped in</span></span>
+          <span class="s-1">measured on my projects:<br><span class="t-warn">every lower tier buys confidence at a cost</span></span>
         </p>
       </header>
 
@@ -3332,7 +3328,7 @@
         <div class="eyebrow">// act 05 · the feedback loop you can't fit in a unit test</div>
         <h2 class="title">Tech debt is <em>not optional polish.</em> It <em>caps throughput.</em></h2>
         <p class="sub">
-          // case in point:<br>
+          case in point:<br>
           <em>Fabric8 CI</em>
         </p>
       </header>

@@ -7,10 +7,14 @@
 .s-fieldnotes .body {
   position: absolute;
   inset: 56px 0 56px 0;
+  /* Padding reduced symmetrically from the default 120px so both slide
+     gutters stay equal (an asymmetric L/R gutter reads as broken). The
+     reclaimed width plus the 50/50 split (was 55/45) lets the notebook
+     collage run wide enough for legible repo cards / sticky notes. */
   padding: 70px var(--pad-x);
   display: grid;
-  grid-template-columns: 55fr 45fr;
-  gap: 80px;
+  grid-template-columns: 50fr 50fr;
+  gap: 56px;
   align-items: stretch;
 }
 .s-fieldnotes .info-col {
@@ -132,9 +136,9 @@
 .s-fieldnotes .collage::before {
   content: "// evidence · from real projects";
   position: absolute;
-  top: 22px; left: 72px;
+  top: 24px; left: 72px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -146,7 +150,7 @@
   position: absolute;
   background: #FFFFFF;
   border: 1px solid var(--line-strong);
-  padding: 16px 18px;
+  padding: 18px 18px;
   box-shadow: 0 8px 22px rgba(10, 21, 84, 0.10);
   font-family: 'JetBrains Mono', monospace;
   z-index: 2;
@@ -182,22 +186,24 @@
 .s-fieldnotes .card.repo .repo-head {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
 }
+/* Owner logo — replaces the old letter tile. Real project marks (jkube,
+   containers, fabric8io, helm) read as "these are real repos" far better
+   than a generic glyph. <image-slot fit=contain> sits transparent on the
+   white card, same idiom as the About slide's .picon. */
 .s-fieldnotes .card.repo .repo-icon {
-  width: 22px; height: 22px;
-  border-radius: 4px;
-  background: var(--fg);
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 700;
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
 }
+.s-fieldnotes .card.repo .repo-icon::part(frame) { background: transparent; }
+.s-fieldnotes .card.repo .repo-icon::part(ring)  { border-color: transparent; }
+.s-fieldnotes .card.repo .repo-icon::part(empty) { display: none; }
 .s-fieldnotes .card.repo .repo-name {
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 600;
   color: var(--fg);
   letter-spacing: 0;
@@ -207,9 +213,9 @@
   white-space: nowrap;
 }
 .s-fieldnotes .card.repo .repo-org {
-  font-size: 13px;
+  font-size: 16px;
   color: var(--fg-mute);
-  margin-top: 2px;
+  margin-top: 3px;
   letter-spacing: 0.02em;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -220,11 +226,11 @@
   flex: 1;
 }
 .s-fieldnotes .card.repo .repo-meta {
-  margin-top: 14px;
+  margin-top: 16px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 13px;
+  gap: 14px;
+  font-size: 16px;
   color: var(--fg-mute);
 }
 .s-fieldnotes .card.repo .lang {
@@ -248,39 +254,39 @@
    with a console card below tying back to the "real CI pain" note.
    Slight rotations keep the "scattered notes" feel without chaos. */
 .s-fieldnotes .card.repo-1 {
-  top: 138px;
-  left: 84px;
-  width: 254px;
+  top: 132px;
+  left: 40px;
+  width: 360px;
   transform: rotate(-2deg);
 }
 .s-fieldnotes .card.repo-2 {
-  top: 124px;
+  top: 120px;
   right: 36px;
-  width: 254px;
+  width: 360px;
   transform: rotate(1.8deg);
 }
 .s-fieldnotes .card.repo-3 {
-  top: 316px;
-  left: 96px;
-  width: 254px;
+  top: 322px;
+  left: 52px;
+  width: 360px;
   transform: rotate(1.4deg);
 }
 .s-fieldnotes .card.repo-4 {
-  top: 304px;
-  right: 30px;
-  width: 254px;
+  top: 310px;
+  right: 28px;
+  width: 360px;
   transform: rotate(-1.6deg);
 }
 
 /* CI post-it (sticky note) — small yellow square, tilted, with a hint of
    "torn from a pad" feel. Pairs with the snippet card in the bottom row. */
 .s-fieldnotes .card.ci {
-  bottom: 144px;
-  right: 38px;
-  width: 184px;
+  bottom: 150px;
+  right: 40px;
+  width: 226px;
   transform: rotate(3deg);
   text-align: center;
-  padding: 14px 16px;
+  padding: 16px 18px;
   background: #FFF4C2;
   border-color: rgba(176, 114, 25, 0.45);
   box-shadow:
@@ -302,11 +308,11 @@
   z-index: 3;
 }
 .s-fieldnotes .card.ci .ci-label {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--fg-mute);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .s-fieldnotes .card.ci .ci-pills {
   display: flex;
@@ -317,10 +323,10 @@
 .s-fieldnotes .card.ci .ci-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 11px;
+  gap: 7px;
+  padding: 5px 13px;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.04em;
   font-family: 'JetBrains Mono', monospace;
@@ -336,17 +342,17 @@
   border: 1px solid rgba(225, 99, 9, 0.42);
 }
 .s-fieldnotes .card.ci .ci-pill .glyph {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 900;
 }
 
 /* Console card — light cream surface; tied to "real CI pain" annotation above */
 .s-fieldnotes .card.snippet {
-  bottom: 122px;
-  left: 84px;
-  width: 360px;
+  bottom: 126px;
+  left: 44px;
+  width: 438px;
   transform: rotate(-1deg);
-  padding: 14px 18px;
+  padding: 16px 20px;
   background: #FBF7EA;
   box-shadow: 0 10px 24px rgba(10, 21, 84, 0.12);
 }
@@ -374,21 +380,21 @@
   border-bottom: 1px dashed var(--line);
 }
 .s-fieldnotes .card.snippet .snip-label {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--fg-mute);
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 .s-fieldnotes .card.snippet .snip-tag {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--accent-ink);
   text-transform: uppercase;
 }
 .s-fieldnotes .card.snippet .snip-row {
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: 19px;
+  line-height: 1.5;
   color: var(--fg);
   white-space: nowrap;
   overflow: hidden;
