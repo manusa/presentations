@@ -180,6 +180,27 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 
 ## Resolved
 
+- **Header vertical alignment — Act 4 + Act 5 (slides 15–18, 20–25).** The
+  title/subtitle header is a 2-col grid (`title 1fr | sub auto`). It was
+  `align-items: end`, which bottom-aligns the 1-line subtitle to the title's
+  descender — so on a 2-line title + 1-line sub (e.g. slide 21, slide 24-step1)
+  the sub sagged to the bottom line and read as off-axis. Earlier passes patched
+  this per-slide with a `position: relative; top` baseline nudge (12px Act 4, 10px
+  Act 5). **Replaced that whole approach with `align-items: center`** and removed
+  every nudge + sub margin: the subtitle now centers on the title's vertical
+  midline regardless of how many lines either has. Verified with a geometry probe —
+  subtitle midpoint == title midpoint (Δ=0) on all ten slides, 1- and 2-line
+  titles, every step. `snapshot:diff`: only 15–18 + 20–25 changed. Most are
+  0.1–0.2% (pure subtitle shift), but slides 15–18 and 25 run 2–4.5% because
+  dropping the sub's bottom margin also shrank the header's first grid row (sub
+  shares it with the eyebrow), pulling the whole stage up a few px — the diff grows
+  with step count on the conveyor (18) and CI (25). Confirmed no overflow on the
+  densest stepped states (18-step3 conveyor + SKILL.md hanging indents intact;
+  25-step3 GitHub-issues panel + takeaway clear of the chrome). Dividers (14/19)
+  untouched. (This is also why slide 24's step-1 title now sits where it does — it
+  still wraps to two balanced lines at the uniform 24px sub, see below, but the
+  whole header now centers as one unit.)
+
 - **Act 5 subtitle uniformity (slides 20–25).** The Act-5 content slides shared a
   similar header but their subtitles had drifted: prefixed with a code-comment
   `// ` (21/22/23/24/25 — slide 20 was already clean), scattered sizes (20→26px,
@@ -188,15 +209,12 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
   grid-bottom-aligned sub floats high). Fixes: **removed the `// ` prefix** from
   every header subtitle (eyebrows keep their `// ` — that's the deck-wide eyebrow
   style, Act 4 too); **unified subtitle size to 24px** (kept Act-5's existing
-  `line-height: 1.3`, margin `0 0 10px 0`); **baseline-aligned** each subtitle with
-  `position: relative; top: 10px` (visual-only nudge, out of grid track sizing).
-  The nudge is 10px here vs Act 4's 12px because Act-5 subs use lh 1.3 (Act 4 uses
-  1.45 → ~1.8px more bottom-leading); measured the float per slide via a Playwright
-  probe (12.3–13.3px line-box, converging to a 10px baseline nudge across all title
-  sizes 56–64px). Verified on 1-line titles (22/23/25, 20-step0, 21-sub), 2-line
-  titles (21/24 both steps, 20-step1) — all baseline-align. Gutters/titles/stages
-  left as-is (the slides already read as a set). Slide 26 ("Did I just advertise
-  XP?") has no eyebrow/subtitle — left alone.
+  `line-height: 1.3`). The vertical alignment was first done as a per-slide
+  baseline nudge (`position: relative; top`), then **superseded deck-wide by
+  `align-items: center`** — see the "Header vertical alignment" entry below, which
+  also removed those nudges. Gutters/titles/stages left as-is (the slides already
+  read as a set). Slide 26 ("Did I just advertise XP?") has no eyebrow/subtitle —
+  left alone.
   **One consequence the wider sub caused:** on slide 24 (feedback ladder), the
   step-1 title ("An agent is only as fast as the *feedback loop*.") is the longest
   in Act 5, and beside a uniform 24px subtitle it genuinely no longer fits one line
@@ -205,14 +223,11 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
   fine and in-family (the deck already has 2-line titles: slide 21, and slide 24's
   own step-0 title). Gave it `text-wrap: balance` so it splits evenly ("An agent is
   only as fast" / "as the feedback loop.") with the accent phrase intact instead of
-  orphaning a trailing "loop." on its own line. The 2-line header sits ~30px taller,
-  shifting the 5-rung ladder down — all rungs still render with no overflow, so the
-  ~15% step-1 diff is the *intended* reflow, not breakage (chosen over the
-  alternatives of shrinking only this title below its siblings or exempting it from
-  the uniform 24px). Slide 25's per-step diffs (≤3.6%) are a benign uniform shift —
-  the 22→24 sub makes its header a few px taller, nudging the stage down (no
-  overflow; tagline well within the floor). (Slides 22/25 still carry separate
-  *content* offenders on the Critical list — code panel, etc. — own passes.)
+  orphaning a trailing "loop." on its own line. The 2-line header sits taller and
+  shifts the 5-rung ladder down — all rungs still render with no overflow. (Chosen
+  over the alternatives of shrinking only this title below its siblings or exempting
+  it from the uniform 24px.) (Slides 22/25 still carry separate *content* offenders
+  on the Critical list — code panel, etc. — own passes.)
 
 - **Act 4 header uniformity (slides 15 / 16 / 17 / 18).** The four content slides
   share a `title (1fr) | sub (auto)` header but had drifted: subtitle 20px on 17
