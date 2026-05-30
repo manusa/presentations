@@ -2,13 +2,19 @@
    .s-blackbox — Act 5 · Signature opinion.
    "Black-box tests: the unit is behavior."
 
-   Two-step reveal that proves the point instead of asserting it:
+   Three-step reveal that proves the point instead of asserting
+   it — choreographed cause → effect → contrast so a live
+   audience absorbs one beat at a time:
      step 0  two tests + the production method, all clean.
-     step 1  agent refactors the production method (rename +
-             extract helper). The white-box test ALSO gets a
-             diff — the agent had to rewrite the verify() chain
-             to keep it green. The black-box test is byte-for-
-             byte identical and still passes.
+     step 1  CAUSE. The agent refactors the production method
+             (rename + extract helper). Only CENTER moves; the
+             two tests recede so the eye stays on the code.
+     step 2  EFFECT + CONTRAST. The white-box test ALSO gets a
+             diff — the agent had to rewrite its @Mock wiring and
+             verify() chain to keep it green (amber halo). The
+             black-box test is byte-for-byte identical and still
+             passes (green halo). CENTER recedes; the two tests
+             are lit in opposite colors — the whole argument.
 
    The point isn't "white-box fails" (no one merges failing
    PRs). The point is: white-box tests force the agent to
@@ -120,7 +126,7 @@
   box-shadow:
     0 24px 60px rgba(10, 21, 84, 0.22),
     0 4px 12px rgba(10, 21, 84, 0.10);
-  transition: box-shadow 350ms ease, border-color 350ms ease;
+  transition: box-shadow 350ms ease, border-color 350ms ease, opacity 350ms ease;
 }
 
 .s-blackbox .panel-bar.term {
@@ -191,17 +197,24 @@
   letter-spacing: 0.10em;
 }
 
-/* Step toggle for status pills:
-     step 0  → .st-pass + .st-stable visible
-     step 1  → .st-edited (white), .st-refactor (SUT), .st-untouched (black) */
+/* Step toggle for status pills (3-step choreography):
+     step 0  → .st-pass (L/R) + .st-stable (C) — all calm
+     step 1  → CENTER refactors: .st-refactor; L/R stay .st-pass
+     step 2  → LEFT co-edits: .st-edited; RIGHT holds: .st-untouched;
+               CENTER keeps .st-refactor (the change already happened) */
 .s-blackbox .status-pill.st-edited,
 .s-blackbox .status-pill.st-untouched,
 .s-blackbox .status-pill.st-refactor { display: none; }
-.s-blackbox[data-step="1"] .status-pill.st-pass,
-.s-blackbox[data-step="1"] .status-pill.st-stable { display: none; }
-.s-blackbox[data-step="1"] .card-white .status-pill.st-edited,
-.s-blackbox[data-step="1"] .card-black .status-pill.st-untouched,
-.s-blackbox[data-step="1"] .card-sut .status-pill.st-refactor { display: inline; }
+/* CENTER flips at step 1 and stays refactored through step 2 */
+.s-blackbox[data-step="1"] .card-sut .status-pill.st-stable,
+.s-blackbox[data-step="2"] .card-sut .status-pill.st-stable { display: none; }
+.s-blackbox[data-step="1"] .card-sut .status-pill.st-refactor,
+.s-blackbox[data-step="2"] .card-sut .status-pill.st-refactor { display: inline; }
+/* LEFT + RIGHT flip only at step 2 */
+.s-blackbox[data-step="2"] .card-white .status-pill.st-pass,
+.s-blackbox[data-step="2"] .card-black .status-pill.st-pass { display: none; }
+.s-blackbox[data-step="2"] .card-white .status-pill.st-edited,
+.s-blackbox[data-step="2"] .card-black .status-pill.st-untouched { display: inline; }
 
 /* Micro-glossary one-liner under the panel bar */
 .s-blackbox .micro-gloss {
@@ -226,6 +239,11 @@
   color: #C8CCE4;
   display: flex;
   flex-direction: column;
+  /* Center the snippet vertically: with the lighter rework the cards
+     stretch to equal height but hold few lines, so top-aligned code
+     left a hollow gap above the footer. Centering reads as intentional
+     and keeps each footer gloss near the code it annotates. */
+  justify-content: center;
   gap: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -233,6 +251,7 @@
 .s-blackbox .ln           { min-height: 1.42em; }
 .s-blackbox .ln.indent    { padding-left: 22px; }
 .s-blackbox .ln.indent-2  { padding-left: 44px; }
+.s-blackbox .ln.indent-3  { padding-left: 66px; }
 
 /* Setup block: the field declarations above @Test.
    Visually muted (dim color, not smaller size) so the test method
@@ -249,12 +268,19 @@
 /* Visual breathing room between setup and the @Test method. */
 .s-blackbox .ln.gap { min-height: 8px; }
 
-/* Step-based body switching.
+/* Step-based body switching (3-step choreography).
    Each card with step-dependent code carries two panel-bodies:
-   .body-step-0 (default) and .body-step-1 (the diff view). */
+   .body-step-0 (default) and .body-step-1 (the diff view).
+   CENTER (SUT) reveals its diff at step 1 and keeps it through step 2.
+   LEFT (white-box) reveals its diff only at step 2 — the agent co-edit
+   lands AFTER the audience has absorbed the production refactor. */
 .s-blackbox .panel-body.body-step-1 { display: none; }
-.s-blackbox[data-step="1"] .panel-body.body-step-0 { display: none; }
-.s-blackbox[data-step="1"] .panel-body.body-step-1 { display: flex; }
+.s-blackbox[data-step="1"] .card-sut .panel-body.body-step-0,
+.s-blackbox[data-step="2"] .card-sut .panel-body.body-step-0 { display: none; }
+.s-blackbox[data-step="1"] .card-sut .panel-body.body-step-1,
+.s-blackbox[data-step="2"] .card-sut .panel-body.body-step-1 { display: flex; }
+.s-blackbox[data-step="2"] .card-white .panel-body.body-step-0 { display: none; }
+.s-blackbox[data-step="2"] .card-white .panel-body.body-step-1 { display: flex; }
 
 /* Code syntax colors — match s-specs-vs-tests.css */
 .s-blackbox .t-anno { color: var(--orange-soft); }
@@ -291,11 +317,15 @@
   color: #5F668F;
 }
 .s-blackbox .ln.rem {
-  background: rgba(240, 42, 90, 0.14);
+  background: rgba(240, 42, 90, 0.20);
+  /* Removed lines recede a touch: a brightness cue (added = solid new
+     state, removed = fading out) reads from the back of the room where
+     the red-vs-green tint alone could be mistaken at a glance. */
+  opacity: 0.72;
 }
 .s-blackbox .ln.rem .g { color: #FF8794; }
 .s-blackbox .ln.add {
-  background: rgba(40, 200, 64, 0.14);
+  background: rgba(40, 200, 64, 0.20);
 }
 .s-blackbox .ln.add .g { color: #8FD79F; }
 .s-blackbox .ln.ctx .g { color: #5F668F; }
@@ -325,39 +355,57 @@
   font-weight: 600;
 }
 .s-blackbox .card-foot .foot-msg-1 { display: none; }
-.s-blackbox[data-step="1"] .card-foot .foot-msg-0 { display: none; }
-.s-blackbox[data-step="1"] .card-foot .foot-msg-1 { display: inline; }
+/* CENTER foot flips at step 1; LEFT + RIGHT foots flip at step 2 */
+.s-blackbox[data-step="1"] .card-sut .card-foot .foot-msg-0,
+.s-blackbox[data-step="2"] .card-sut .card-foot .foot-msg-0,
+.s-blackbox[data-step="2"] .card-white .card-foot .foot-msg-0,
+.s-blackbox[data-step="2"] .card-black .card-foot .foot-msg-0 { display: none; }
+.s-blackbox[data-step="1"] .card-sut .card-foot .foot-msg-1,
+.s-blackbox[data-step="2"] .card-sut .card-foot .foot-msg-1,
+.s-blackbox[data-step="2"] .card-white .card-foot .foot-msg-1,
+.s-blackbox[data-step="2"] .card-black .card-foot .foot-msg-1 { display: inline; }
 
-/* White-box foot on step 1: amber accent (caution, not failure) */
-.s-blackbox[data-step="1"] .card-white .card-foot {
-  background: linear-gradient(to bottom, rgba(254,188,46,0.10), rgba(254,188,46,0.04));
-  border-top-color: rgba(242, 194, 102, 0.35);
-}
-.s-blackbox[data-step="1"] .card-white .card-foot .foot-glyph { color: #F2C266; }
-.s-blackbox[data-step="1"] .card-white .card-foot .foot-msg em { color: #F8D78A; }
-
-/* Center (SUT) foot on step 1: amber accent (active change) */
-.s-blackbox[data-step="1"] .card-sut .card-foot {
+/* Center (SUT) foot — amber accent from step 1 onward (active change) */
+.s-blackbox[data-step="1"] .card-sut .card-foot,
+.s-blackbox[data-step="2"] .card-sut .card-foot {
   background: linear-gradient(to bottom, rgba(254,188,46,0.08), rgba(254,188,46,0.03));
   border-top-color: rgba(242, 194, 102, 0.30);
 }
-.s-blackbox[data-step="1"] .card-sut .card-foot .foot-glyph { color: #F2C266; }
-.s-blackbox[data-step="1"] .card-sut .card-foot .foot-msg em { color: #F8D78A; }
+.s-blackbox[data-step="1"] .card-sut .card-foot .foot-glyph,
+.s-blackbox[data-step="2"] .card-sut .card-foot .foot-glyph { color: #F2C266; }
+.s-blackbox[data-step="1"] .card-sut .card-foot .foot-msg em,
+.s-blackbox[data-step="2"] .card-sut .card-foot .foot-msg em { color: #F8D78A; }
 
-/* Black-box foot on step 1: green accent (contract held) */
-.s-blackbox[data-step="1"] .card-black .card-foot {
+/* White-box foot — amber accent at step 2 (caution, not failure) */
+.s-blackbox[data-step="2"] .card-white .card-foot {
+  background: linear-gradient(to bottom, rgba(254,188,46,0.10), rgba(254,188,46,0.04));
+  border-top-color: rgba(242, 194, 102, 0.35);
+}
+.s-blackbox[data-step="2"] .card-white .card-foot .foot-glyph { color: #F2C266; }
+.s-blackbox[data-step="2"] .card-white .card-foot .foot-msg em { color: #F8D78A; }
+
+/* Black-box foot — green accent at step 2 (contract held) */
+.s-blackbox[data-step="2"] .card-black .card-foot {
   background: linear-gradient(to bottom, rgba(40,200,64,0.10), rgba(40,200,64,0.04));
   border-top-color: rgba(143, 215, 159, 0.30);
 }
-.s-blackbox[data-step="1"] .card-black .card-foot .foot-glyph { color: #8FD79F; }
-.s-blackbox[data-step="1"] .card-black .card-foot .foot-msg em { color: #B7E8C2; }
+.s-blackbox[data-step="2"] .card-black .card-foot .foot-glyph { color: #8FD79F; }
+.s-blackbox[data-step="2"] .card-black .card-foot .foot-msg em { color: #B7E8C2; }
 
 /* ============================================================
-   Step-1 card halos.
-   White-box + SUT get an amber halo (active change in flight).
-   Black-box gets a green halo (contract held).
+   Step choreography — spotlight halos + recede dimming.
+     step 1  CENTER lit (amber halo) · L+R recede
+             → "watch the agent refactor the code"
+     step 2  CENTER recedes · LEFT amber halo (co-edited) +
+             RIGHT green halo (held)
+             → "watch which test the agent had to touch"
+   The recede (opacity) is the eye-anchor: at each beat only the
+   relevant cards are full-bright, so the one comparison that
+   matters is *seen*, not hunted for.
    ============================================================ */
+/* step 1 — center is the news; the two tests recede */
 .s-blackbox[data-step="1"] .card-white,
+.s-blackbox[data-step="1"] .card-black { opacity: 0.5; }
 .s-blackbox[data-step="1"] .card-sut {
   border-color: rgba(242, 194, 102, 0.60);
   box-shadow:
@@ -365,7 +413,17 @@
     0 24px 60px rgba(225, 99, 9, 0.18),
     0 4px 12px rgba(225, 99, 9, 0.10);
 }
-.s-blackbox[data-step="1"] .card-black {
+
+/* step 2 — the contrast; center recedes, both tests lit in opposite colors */
+.s-blackbox[data-step="2"] .card-sut { opacity: 0.45; }
+.s-blackbox[data-step="2"] .card-white {
+  border-color: rgba(242, 194, 102, 0.60);
+  box-shadow:
+    0 0 0 1px rgba(242, 194, 102, 0.40),
+    0 24px 60px rgba(225, 99, 9, 0.18),
+    0 4px 12px rgba(225, 99, 9, 0.10);
+}
+.s-blackbox[data-step="2"] .card-black {
   border-color: rgba(143, 215, 159, 0.50);
   box-shadow:
     0 0 0 1px rgba(143, 215, 159, 0.40),
@@ -422,20 +480,26 @@
    ============================================================ */
 @media print {
   .s-blackbox .card { box-shadow: none; }
-  .s-blackbox[data-step="1"] .card-white,
+  /* step 1 — center lit */
   .s-blackbox[data-step="1"] .card-sut {
     border-color: rgba(242, 194, 102, 0.85);
     box-shadow: 0 0 0 2px rgba(242, 194, 102, 0.45);
   }
-  .s-blackbox[data-step="1"] .card-black {
+  /* step 2 — both tests lit in opposite colors */
+  .s-blackbox[data-step="2"] .card-white {
+    border-color: rgba(242, 194, 102, 0.85);
+    box-shadow: 0 0 0 2px rgba(242, 194, 102, 0.45);
+  }
+  .s-blackbox[data-step="2"] .card-black {
     border-color: rgba(143, 215, 159, 0.85);
     box-shadow: 0 0 0 2px rgba(143, 215, 159, 0.40);
   }
-  .s-blackbox[data-step="1"] .card-white .card-foot,
-  .s-blackbox[data-step="1"] .card-sut .card-foot {
+  .s-blackbox[data-step="1"] .card-sut .card-foot,
+  .s-blackbox[data-step="2"] .card-sut .card-foot,
+  .s-blackbox[data-step="2"] .card-white .card-foot {
     background: rgba(254, 188, 46, 0.10);
   }
-  .s-blackbox[data-step="1"] .card-black .card-foot {
+  .s-blackbox[data-step="2"] .card-black .card-foot {
     background: rgba(40, 200, 64, 0.10);
   }
 }
