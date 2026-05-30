@@ -132,10 +132,37 @@
 .s-section .mvn-reactor .rrow.building .name  { color: var(--fg); font-weight: 600; }
 .s-section .mvn-reactor .rrow.building .name .dots { opacity: 0.7; }
 .s-section .mvn-reactor .rrow.building .state {
-  color: #fff; background: var(--accent); padding: 2px 12px;
-  border-radius: 4px; font-weight: 700; letter-spacing: 0.14em;
-  display: inline-block;
+  --pill-pad: 12px;       /* horizontal breathing room on each side of the word */
+  --pill-track: 0.14em;   /* the design's letter tracking */
+  color: #fff; background: var(--accent);
+  border-radius: 4px; font-weight: 700;
+  /* .state is a grid item (its .rrow is display:contents), and grid items are
+     blockified — so `display:inline-block` is ignored and the pill stretches to
+     fill the whole status column. `max-content` makes it shrink-wrap the word so
+     the background actually hugs BUILDING instead of trailing dead space. */
+  width: max-content;
+  letter-spacing: var(--pill-track);
+  /* letter-spacing leaves one tracking unit of trailing space after the last
+     glyph, so the right gap would be fatter by that amount; trim it off the
+     right padding so the word sits centred between equal left/right bleed. */
+  padding: 2px calc(var(--pill-pad) - var(--pill-track)) 2px var(--pill-pad);
+  /* Pull the pill left by the (full) left padding so BUILDING's first glyph
+     lines up under SUCCESS while the box bleeds out evenly either side. */
+  margin-left: calc(-1 * var(--pill-pad));
   box-shadow: 0 0 24px rgba(240,42,90,0.5);
+}
+/* BUILDING is all-caps: the glyphs sit from baseline to cap-height with empty
+   descender slack below, biasing them ~3px upward in the box. Where supported
+   (Chromium — drives the live deck + PDF export), trim the line box to the
+   cap-top/baseline edges and use matching vertical padding so the caps centre
+   exactly. Height stays identical to the 2px-padding fallback above (~34px), so
+   browsers without text-box-trim (e.g. Firefox) keep the same pill, just with the
+   tiny original bias. */
+@supports (text-box: trim-both cap alphabetic) {
+  .s-section .mvn-reactor .rrow.building .state {
+    text-box: trim-both cap alphabetic;
+    padding-block: 0.42em;
+  }
 }
 .s-section .mvn-reactor .rrow.building .dur { color: var(--accent); }
 
