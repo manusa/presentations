@@ -15,12 +15,12 @@ const IMAGE_SLOT_ATTRS = ['shape', 'radius', 'mask', 'fit', 'position', 'placeho
 const DECK_STAGE_ATTRS = ['width', 'height', 'noscale', 'no-rail'];
 // `<section>` data-* attributes that deck-stage reads from consumer markup.
 // data-step is runtime state managed by deck-stage; data-step-max and
-// data-deck-skip are author-set; data-label is author-set.
-const SECTION_DATA_ATTRS = ['data-label', 'data-deck-skip', 'data-step-max', 'data-step'];
+// data-deck-present-skip are author-set; data-label is author-set.
+const SECTION_DATA_ATTRS = ['data-label', 'data-deck-present-skip', 'data-step-max', 'data-step'];
 const SLIDECHANGE_DETAIL_KEYS = ['index', 'previousIndex', 'total', 'slide', 'previousSlide', 'reason'];
 const SLIDECHANGE_REASONS = ['init', 'keyboard', 'click', 'tap', 'api', 'mutation'];
 const DECKCHANGE_DETAIL_KEYS = ['action', 'from', 'to', 'slide'];
-const DECKCHANGE_ACTIONS = ['delete', 'skip', 'unskip', 'move'];
+const DECKCHANGE_ACTIONS = ['delete', 'move'];
 const DECK_STAGE_API = ['index', 'length', 'goTo', 'next', 'prev', 'reset'];
 
 describe('deck-kit contract — append-only', () => {
@@ -124,12 +124,9 @@ describe('deck-kit contract — append-only', () => {
       const stage = document.querySelector('deck-stage');
       const events = [];
       stage.addEventListener('deckchange', (e) => events.push(e.detail));
-      // _moveSlide / _toggleSkip / _deleteSlide are the rail-UI canonical
-      // entry points. Fire all four documented actions so removing any
-      // one would be caught.
+      // _moveSlide / _deleteSlide are the rail-UI canonical entry points.
+      // Fire both documented actions so removing either would be caught.
       stage._moveSlide(0, 1);
-      stage._toggleSkip(0);
-      stage._toggleSkip(0);
       stage._deleteSlide(stage._slides.length - 1);
       return events.map((d) => ({ keys: Object.keys(d), action: d.action }));
     });
@@ -306,17 +303,35 @@ describe('deck-kit contract — append-only', () => {
     await page.close();
   });
 
-  // ── data-deck-skip ────────────────────────────────────────────────────
-  // Per the contract, a section flagged data-deck-skip is excluded from
-  // keyboard advance. Duplicate of deck-stage-rail.spec.js by design —
-  // dropping skip support must fail in the contract suite too.
-  test('data-deck-skip excludes a section from keyboard navigation', async () => {
+  // ── data-deck-present-skip ────────────────────────────────────────────
+  // Per the contract, a section flagged data-deck-present-skip is hopped
+  // over by keyboard advance ONLY while presenting; off-stage it stays a
+  // normal navigable slide. Duplicate of deck-stage-rail.spec.js by design —
+  // dropping present-skip support must fail in the contract suite too.
+  test('data-deck-present-skip is navigable off-stage, hopped while presenting', async () => {
     const page = await browser.newPage();
     await bootDeck(page, server.fixture('minimal-deck-skip.html'));
-    await page.keyboard.press('ArrowRight');
-    await page.keyboard.press('ArrowRight'); // hops over the skipped section
-    const idx = await page.evaluate(() => document.querySelector('deck-stage').index);
-    assert.notEqual(idx, 2, 'index 2 is data-deck-skip and must not be reached by keyboard nav');
+    // Off-stage: present-skip slide (index 2) is reachable by keyboard.
+    await page.keyboard.press('ArrowRight'); // 0 → 1
+    await page.keyboard.press('ArrowRight'); // 1 → 2 (lands on it)
+    assert.equal(
+      await page.evaluate(() => document.querySelector('deck-stage').index), 2,
+      'present-skip slide must be navigable when not presenting',
+    );
+    // Enter presenting via the omelette source (no real fullscreen needed),
+    // reset to 0, then advance: nav now hops over index 2.
+    await page.evaluate(() => {
+      const s = document.querySelector('deck-stage');
+      s.reset();
+      s._omelettePresenting = true;
+      s._syncPresenting();
+    });
+    await page.keyboard.press('ArrowRight'); // 0 → 1
+    await page.keyboard.press('ArrowRight'); // 1 → 3 (hops 2)
+    assert.equal(
+      await page.evaluate(() => document.querySelector('deck-stage').index), 3,
+      'present-skip slide must be hopped over while presenting',
+    );
     await page.close();
   });
 
@@ -468,7 +483,7 @@ describe('deck-kit contract — append-only', () => {
   test('SECTION_DATA_ATTRS matches the README-documented surface', () => {
     assert.deepEqual(
       [...SECTION_DATA_ATTRS].sort(),
-      ['data-deck-skip', 'data-label', 'data-step', 'data-step-max'],
+      ['data-deck-present-skip', 'data-label', 'data-step', 'data-step-max'],
     );
   });
 });

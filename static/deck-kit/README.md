@@ -73,7 +73,12 @@ implementation detail and may change without a filename bump.
 ### `<section>` attributes (read by deck-stage)
 
 - `data-label` — text shown in the rail; required for legible nav.
-- `data-deck-skip` — exclude this section from rail nav + keyboard advance.
+- `data-deck-present-skip` — hop over this section in prev/next navigation
+  **only while presenting** (standalone fullscreen, or a host posting
+  `__omelette_presenting`). Off-stage it stays a normal, navigable slide
+  carrying a "Skipped" watermark, and it still prints to PDF. Use it to drop
+  a slide from one delivery (e.g. a shorter conference slot) without removing
+  it from the deck or the handout.
 - `data-step-max="N"` — N+1 reveal states (`data-step="0".."N"`). Advance keys
   (ArrowRight / PageDown / Space / Enter) bump `data-step` until it reaches
   `N`, then resume slide advance; retreat keys (ArrowLeft / PageUp) mirror.
@@ -124,9 +129,9 @@ listeners attach either on the `<deck-stage>` element or on `document`.
 - `slidechange` — fires on every slide transition, including the initial
   mount. `event.detail = { index, previousIndex, total, slide, previousSlide, reason }`
   where `reason ∈ { 'init', 'keyboard', 'click', 'tap', 'api', 'mutation' }`.
-- `deckchange` — fires on rail-driven mutations (move / skip / unskip / delete).
+- `deckchange` — fires on rail-driven mutations (move / delete).
   `event.detail = { action, from, to?, slide }` where
-  `action ∈ { 'delete', 'skip', 'unskip', 'move' }` (`to` only present for `'move'`).
+  `action ∈ { 'delete', 'move' }` (`to` only present for `'move'`).
 
 ### `<deck-stage>` JavaScript API
 

@@ -13,18 +13,24 @@
  *      PPTX exporter sets this so its DOM capture sees unscaled geometry.
  *  (f) print — `@media print` lays every slide out as its own page at the
  *      design size, so the browser's Print → Save as PDF produces a clean
- *      one-page-per-slide PDF with no extra setup.
+ *      one-page-per-slide PDF with no extra setup. `data-deck-present-skip`
+ *      slides print normally — they're dropped from live nav, not the deck.
  *  (g) thumbnail rail — resizable left-hand column of per-slide thumbnails
  *      (static clones). Click to navigate; ↑/↓ with a thumbnail focused to
  *      step between slides; drag to reorder; right-click for
- *      Skip / Move up / Move down / Delete (opens a Cancel/Delete confirm
+ *      Move up / Move down / Delete (opens a Cancel/Delete confirm
  *      dialog). Drag the rail's right edge to resize; width persists to
- *      localStorage. Skipped slides carry `data-deck-skip`, are dimmed in
- *      the rail, omitted from prev/next navigation, and hidden at print.
- *      The rail is suppressed in presenting mode, in the host's Preview
- *      mode (ViewerMode='none'), on `noscale`, and via the `no-rail`
- *      attribute. Rail mutations dispatch a `deckchange`
+ *      localStorage. The rail is suppressed in presenting mode, in the
+ *      host's Preview mode (ViewerMode='none'), on `noscale`, and via the
+ *      `no-rail` attribute. Rail mutations dispatch a `deckchange`
  *      CustomEvent on the element: detail = {action, from, to, slide}.
+ *
+ * Present-skip — a section authored with `data-deck-present-skip` is hopped
+ * over by prev/next navigation *only while presenting* (standalone
+ * fullscreen, or a host posting __omelette_presenting). Off-stage it stays a
+ * normal, navigable slide carrying a "Skipped" watermark, and it prints to
+ * PDF like any other slide. Use it to drop a slide from one delivery (e.g. a
+ * shorter conference slot) without removing it from the deck or the handout.
  *
  * Slides are HIDDEN, not unmounted. Non-active slides stay in the DOM with
  * `visibility: hidden` + `opacity: 0`, so their state (videos, iframes,
@@ -189,6 +195,33 @@
       pointer-events: auto;
       transform: translate(-50%, 0) scale(1);
       filter: blur(0);
+    }
+
+    /* Present-skip watermark — drawn over the stage region (left offset set
+       by _fit to clear the rail) when the active slide is data-deck-present-
+       skip and we're NOT presenting. Hidden in presenting (the slide is
+       hopped over so it can't be active) and in print (@media print below),
+       so the PDF handout stays clean. */
+    .skipwm {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      user-select: none;
+      z-index: 2147482000;
+    }
+    :host([data-deck-present-skip-active]) .skipwm { display: flex; }
+    .skipwm span {
+      font: 800 150px/1 ui-sans-serif, system-ui, -apple-system, sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(217, 119, 87, 0.22);
+      border: 8px solid rgba(217, 119, 87, 0.32);
+      border-radius: 22px;
+      padding: 0.12em 0.34em;
+      transform: rotate(-16deg);
     }
 
     .btn {
@@ -532,17 +565,14 @@
         break-inside: avoid;
         overflow: hidden;
       }
-      /* :last-child alone isn't enough once data-deck-skip hides the
-         trailing slide(s) — the last *visible* slide still carries
-         break-after:page and prints a blank sheet. _markLastVisible()
-         maintains data-deck-last-visible on the last non-skipped slide. */
-      ::slotted(*:last-child),
-      ::slotted([data-deck-last-visible]) {
+      /* Last slide drops its break-after so no trailing blank sheet prints.
+         Every slide prints (present-skip included), so :last-child is the
+         genuine final page — no skip-aware bookkeeping needed. */
+      ::slotted(*:last-child) {
         break-after: auto;
         page-break-after: auto;
       }
-      ::slotted([data-deck-skip]) { display: none !important; }
-      .overlay, .tapzones, .rail, .rail-resize, .ctxmenu, .confirm-backdrop { display: none !important; }
+      .overlay, .tapzones, .rail, .rail-resize, .ctxmenu, .confirm-backdrop, .skipwm { display: none !important; }
     }
   `;
 
@@ -893,6 +923,16 @@
       overlay.querySelector('.next').addEventListener('click', () => this._advance(1, 'click'));
       overlay.querySelector('.reset').addEventListener('click', () => this._go(0, 'click'));
 
+      // Present-skip watermark (see .skipwm CSS). Toggled by _applyIndex /
+      // _syncPresenting via the host's data-deck-present-skip-active attr.
+      // NOT export-hidden: it's a live-review marker that should survive
+      // screenshots; only the PDF strips it, via the @media print rule.
+      const skipwm = document.createElement('div');
+      skipwm.className = 'skipwm';
+      skipwm.setAttribute('data-omelette-chrome', '');
+      skipwm.setAttribute('aria-hidden', 'true');
+      skipwm.innerHTML = '<span>Skipped</span>';
+
       // Thumbnail rail + context menu. Thumbnails are populated in
       // _renderRail() after _collectSlides().
       const rail = document.createElement('div');
@@ -917,7 +957,6 @@
       menu.className = 'ctxmenu export-hidden';
       menu.setAttribute('data-omelette-chrome', '');
       menu.innerHTML = `
-        <button type="button" data-act="skip">Skip slide</button>
         <button type="button" data-act="up">Move up</button>
         <button type="button" data-act="down">Move down</button>
         <hr>
@@ -928,8 +967,7 @@
         if (!act) return;
         const i = this._menuIndex;
         this._closeMenu();
-        if (act === 'skip') this._toggleSkip(i);
-        else if (act === 'up') this._moveSlide(i, i - 1);
+        if (act === 'up') this._moveSlide(i, i - 1);
         else if (act === 'down') this._moveSlide(i, i + 1);
         else if (act === 'delete') this._openConfirm(i);
       });
@@ -983,10 +1021,11 @@
         this._deleteSlide(i);
       });
 
-      this._root.append(style, rail, resize, stage, tapzones, overlay, menu, confirm);
+      this._root.append(style, rail, resize, stage, tapzones, overlay, skipwm, menu, confirm);
       this._canvas = canvas;
       this._slot = slot;
       this._overlay = overlay;
+      this._skipwm = skipwm;
       this._tapzones = tapzones;
       this._rail = rail;
       this._resize = resize;
@@ -1073,20 +1112,7 @@
 
       if (this._totalEl) this._totalEl.textContent = String(this._slides.length || 1);
       if (this._index >= this._slides.length) this._index = Math.max(0, this._slides.length - 1);
-      this._markLastVisible();
       this._renderRail();
-    }
-
-    /** Tag the last non-skipped slide so print CSS can drop its
-     *  break-after (see the @media print comment above — :last-child
-     *  alone matches a hidden skipped slide). */
-    _markLastVisible() {
-      let last = null;
-      this._slides.forEach((s) => {
-        s.removeAttribute('data-deck-last-visible');
-        if (!s.hasAttribute('data-deck-skip')) last = s;
-      });
-      if (last) last.setAttribute('data-deck-last-visible', '');
     }
 
     _loadNotes() {
@@ -1132,6 +1158,13 @@
       const currSlide = this._slides[curr];
       if (prevSlide && prevSlide.hasAttribute('data-step-max')) prevSlide.setAttribute('data-step', '0');
       if (currSlide && currSlide.hasAttribute('data-step-max')) currSlide.setAttribute('data-step', '0');
+      // Present-skip watermark: on only when the active slide is a present-
+      // skip slide and we're off-stage. While presenting it's hopped over so
+      // it can never be active; the !presenting guard just covers the
+      // enter-fullscreen-while-sitting-on-it transition (handled in
+      // _syncPresenting before this runs).
+      this.toggleAttribute('data-deck-present-skip-active',
+        !this._presenting && !!currSlide && currSlide.hasAttribute('data-deck-present-skip'));
       if (this._countEl) this._countEl.textContent = String(curr + 1);
       // Follow-scroll on every navigation (init deep-link, keyboard, click,
       // tap, external goTo) — the only time we *don't* want the rail to
@@ -1201,15 +1234,18 @@
         if (stage) stage.style.left = '0';
         if (this._overlay) this._overlay.style.marginLeft = '0';
         if (this._tapzones) this._tapzones.style.left = '0';
+        if (this._skipwm) this._skipwm.style.left = '0';
         return;
       }
       const rw = this._railWidth();
       if (stage) stage.style.left = rw + 'px';
       // Overlay is centred on the viewport via left:50% + translate(-50%);
       // marginLeft shifts the centre by rw/2 so it lands in the middle of
-      // the [rw, innerWidth] stage region. Tapzones just inset from rw.
+      // the [rw, innerWidth] stage region. Tapzones just inset from rw, and
+      // the present-skip watermark covers the same stage region.
       if (this._overlay) this._overlay.style.marginLeft = (rw / 2) + 'px';
       if (this._tapzones) this._tapzones.style.left = rw + 'px';
+      if (this._skipwm) this._skipwm.style.left = rw + 'px';
       const vw = window.innerWidth - rw;
       const vh = window.innerHeight;
       const s = Math.min(vw / this.designWidth, vh / this.designHeight);
@@ -1286,6 +1322,27 @@
         this._overlay.removeAttribute('data-visible');
         if (this._hideTimer) clearTimeout(this._hideTimer);
       }
+      // Entering presenting while sitting on a present-skip slide: hop to the
+      // nearest live slide (forward first, then back) so it never reaches the
+      // audience. _go → _applyIndex also clears the watermark attr.
+      if (presenting) {
+        const cur = this._slides[this._index];
+        if (cur && cur.hasAttribute('data-deck-present-skip')) {
+          const live = (start, dir) => {
+            let j = start;
+            while (j >= 0 && j < this._slides.length &&
+                   this._slides[j].hasAttribute('data-deck-present-skip')) j += dir;
+            return (j >= 0 && j < this._slides.length) ? j : -1;
+          };
+          let j = live(this._index + 1, 1);
+          if (j < 0) j = live(this._index - 1, -1);
+          if (j >= 0) this._go(j, 'api');
+        }
+      }
+      // Presenting flips watermark visibility for whatever slide is current.
+      const cur2 = this._slides[this._index];
+      this.toggleAttribute('data-deck-present-skip-active',
+        !this._presenting && !!cur2 && cur2.hasAttribute('data-deck-present-skip'));
       this._syncRailHidden();
       this._closeMenu();
       this._closeConfirm();
@@ -1446,13 +1503,15 @@
       }
     }
 
-    /** Step forward/back skipping any slide marked data-deck-skip. Falls
-     *  back to _go's clamp-at-ends behaviour (flash overlay) when there's
-     *  nothing further in that direction. */
+    /** Step forward/back, hopping data-deck-present-skip slides *only while
+     *  presenting* — off-stage they're normal navigable slides. Falls back to
+     *  _go's clamp-at-ends behaviour (flash overlay) when there's nothing
+     *  further in that direction. */
     _advance(dir, reason) {
       if (!this._slides.length) return;
       let i = this._index + dir;
-      while (i >= 0 && i < this._slides.length && this._slides[i].hasAttribute('data-deck-skip')) {
+      while (i >= 0 && i < this._slides.length &&
+             this._presenting && this._slides[i].hasAttribute('data-deck-present-skip')) {
         i += dir;
       }
       if (i < 0 || i >= this._slides.length) { this._flashOverlay(); return; }
@@ -1505,7 +1564,7 @@
         if (at !== want) this._rail.insertBefore(want, at || null);
         t.i = i;
         t.num.textContent = String(i + 1);
-        if (t.slide.hasAttribute('data-deck-skip')) t.thumb.setAttribute('data-skip', '');
+        if (t.slide.hasAttribute('data-deck-present-skip')) t.thumb.setAttribute('data-skip', '');
         else t.thumb.removeAttribute('data-skip');
       });
       this._thumbs = next;
@@ -1791,9 +1850,6 @@
     _openMenu(i, x, y) {
       if (!this._menu) return;
       this._menuIndex = i;
-      const slide = this._slides[i];
-      const skip = slide && slide.hasAttribute('data-deck-skip');
-      this._menu.querySelector('[data-act="skip"]').textContent = skip ? 'Unskip slide' : 'Skip slide';
       this._menu.querySelector('[data-act="up"]').disabled = i <= 0;
       this._menu.querySelector('[data-act="down"]').disabled = i >= this._slides.length - 1;
       this._menu.querySelector('[data-act="delete"]').disabled = this._slides.length <= 1;
@@ -1845,27 +1901,13 @@
       this._applyIndex({ showOverlay: true, broadcast: true, reason: 'mutation' });
     }
 
-    _toggleSkip(i) {
-      const slide = this._slides[i];
-      if (!slide) return;
-      const on = !slide.hasAttribute('data-deck-skip');
-      if (on) slide.setAttribute('data-deck-skip', '');
-      else slide.removeAttribute('data-deck-skip');
-      if (this._thumbs && this._thumbs[i]) {
-        if (on) this._thumbs[i].thumb.setAttribute('data-skip', '');
-        else this._thumbs[i].thumb.removeAttribute('data-skip');
-      }
-      this._markLastVisible();
-      this._emitDeckChange({ action: on ? 'skip' : 'unskip', from: i, slide });
-      // Re-broadcast so the presenter popup's prev/next thumbnails re-pick
-      // the nearest non-skipped slide without waiting for a nav event.
-      try { window.postMessage({ slideIndexChanged: this._index, deckTotal: this._slides.length, deckSkipped: this._skippedIndices() }, '*'); } catch (e) {}
-    }
-
+    /** Indices of present-skip slides — the ones the live talk hops over.
+     *  Broadcast as `deckSkipped` so a presenter popup can re-pick the
+     *  nearest live slide for its prev/next thumbnails. */
     _skippedIndices() {
       const out = [];
       for (let i = 0; i < this._slides.length; i++) {
-        if (this._slides[i].hasAttribute('data-deck-skip')) out.push(i);
+        if (this._slides[i].hasAttribute('data-deck-present-skip')) out.push(i);
       }
       return out;
     }
