@@ -120,7 +120,6 @@ a front-to-middle audience in a modest room can likely read — but back rows wi
 | 9 | Act 3 — Show of hands | terminal lines 26–28, command 24 | 24–28 | 12–14 |
 | 26 | Act 5 — XP reframe | practices list | ~28–32 | 14–16 |
 | 29 | Act 6 — Q&A close | contact list | 26 | 13 |
-| 20 / 21 | Act 5 — Specs / Failure-spec | code panels `.panel-body.code` | 22 | 11 |
 | 28 | Act 6 — Recap | pillar action labels | 24 | 12 |
 
 The **persistent chrome rails** (top/bottom, 24px = 12pt) and **eyebrows / pills** (20–24px) are fine to
@@ -178,6 +177,33 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 ---
 
 ## Resolved
+
+- **Slides 20 / 21 — Act 5 "Specs vs Tests" + "Failure-spec" (2 steps each).**
+  The two sibling code-panel slides: a spec.md excerpt beside its enforcing
+  JUnit `@Test` with an inline BUILD FAILED console (20), then a
+  `@Nested`/`@DisplayName` test beside the Surefire failure tree it produces
+  (21). The code the speaker walks through line-by-line sat at 22–23px (11pt),
+  with panel-bar file-paths and the advisory/enforced pills at 18 and the
+  console/caption sub-lines at 20. Lifted the must-read tiers and tightened the
+  (loose) code line-height to pay for the growth — no width reclaim or content
+  cut needed. **Slide 20:** spec body 22→24 (lh 1.5→1.4), spec inline code
+  22→24, spec comments 21→22, test code 23→**25** (lh 1.5→1.4), BUILD FAILED
+  console 22→24 (lh 1.5→1.4) with its failing-test sub-line and "what the agent
+  sees" foot 20→22; advisory/enforced pills 18→20, panel-bar paths 18→20,
+  takeaway label 18→20 and sub-line 20→22. **Slide 21:** left test-file code
+  20→22, failure-tree body 22→24, the AssertJ `.as(...)` description and
+  expected/actual rows 22→24, the "running…" stub 22→24, surefire sub /
+  tree-foot 20→22; nested/broken pills 18→20, panel-bar paths 18→20, takeaway
+  label 18→20 and sub-line 20→22. Left the already-fine display tier untouched
+  (titles, the bright failure leaf 30, scenario rows 24, the Inter spec prose
+  26, takeaway quotes 30/32) plus the decorative "vs" divider (18). Smallest
+  remaining text is the 18px "vs" badge (pure decoration) and 20px genuine
+  chrome — file-path tabs, the advisory/enforced + nested/broken pills, the
+  eyebrow and takeaway labels (the same call made for the other dense Act-5
+  mockups). Verified deterministically with the new `audit-fit` checker
+  (overflow + font-floor walker, no networkidle): **0 overflow / 0
+  out-of-bounds on both slides at both steps**, smallest must-read code now
+  22–25px. Change isolated to `s-specs-vs-tests.css` + `s-failure-spec.css`.
 
 - **Slide 17 — Act 4 "Leverage" (shape the work upstream, 2 steps).** The
   economics-of-delegation slide: a principle column (spend the expensive model

@@ -145,7 +145,7 @@
   gap: 9px;
   padding: 11px 14px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
@@ -158,7 +158,7 @@
    read as the same component. */
 .s-specs-vs-tests .enforce-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.08em;
   text-transform: lowercase;
   padding: 2px 10px;
@@ -196,8 +196,8 @@
 .s-specs-vs-tests .card-spec .panel-body {
   padding: 26px 30px 30px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
-  line-height: 1.5;
+  font-size: 24px;
+  line-height: 1.4;
   color: var(--fg-dim);
   display: flex;
   flex-direction: column;
@@ -217,7 +217,7 @@
 }
 .s-specs-vs-tests .card-spec .ln.prose code {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--accent-ink);
   background: rgba(184, 23, 66, 0.08);
   border: 1px solid rgba(184, 23, 66, 0.28);
@@ -226,7 +226,7 @@
 }
 .s-specs-vs-tests .card-spec .ln.cmt {
   color: var(--fg-dim);
-  font-size: 21px;
+  font-size: 22px;
 }
 .s-specs-vs-tests .card-spec .ln.sep { height: 10px; }
 
@@ -260,8 +260,8 @@
 .s-specs-vs-tests .card-test .panel-body.code {
   padding: 26px 30px 28px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 23px;
-  line-height: 1.5;
+  font-size: 25px;
+  line-height: 1.4;
   color: #C8CCE4;
   display: flex;
   flex-direction: column;
@@ -290,8 +290,8 @@
   background: linear-gradient(to bottom, rgba(240,42,90,0.10), rgba(240,42,90,0.04));
   padding: 22px 30px 24px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 22px;
-  line-height: 1.5;
+  font-size: 24px;
+  line-height: 1.4;
   color: #E8C8CF;
   display: flex;
   flex-direction: column;
@@ -318,7 +318,7 @@
 }
 .s-specs-vs-tests .card-test .console-fail .cf-sub {
   color: #B4BAD8;
-  font-size: 20px;
+  font-size: 22px;
 }
 .s-specs-vs-tests .card-test .console-fail .cf-detail {
   color: #C8CCE4;
@@ -335,7 +335,7 @@
   margin-top: 14px;
   color: #8A93BC;
   font-style: italic;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 /* ============================================================
@@ -350,7 +350,7 @@
 }
 .s-specs-vs-tests .tag-line .lbl {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--fg-mute);
@@ -371,7 +371,7 @@
   display: block;
   margin-top: 6px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 400;
   color: var(--fg-dim);
   letter-spacing: 0;
