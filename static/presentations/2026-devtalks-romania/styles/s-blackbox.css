@@ -45,7 +45,7 @@
   z-index: 1;
   /* Scoped pad-x override: this slide needs wider cards so every
      console line can sit at the 18px floor without horizontal clip. */
-  padding: 30px 72px 24px;
+  padding: 30px var(--pad-x) 24px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 20px;

@@ -52,7 +52,7 @@
   /* Reclaim width first (FONT-AUDIT playbook): symmetric gutters cut
      120 -> 64px, matching the chrome bar's --chrome-pad-x so the title
      aligns with it. +112px of stage width for the dense cards. */
-  padding: 30px 64px 26px;
+  padding: 30px var(--pad-x) 26px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 22px;

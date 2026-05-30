@@ -11,7 +11,7 @@
      gutters stay equal (an asymmetric L/R gutter reads as broken). The
      reclaimed width plus the 50/50 split (was 55/45) lets the notebook
      collage run wide enough for legible repo cards / sticky notes. */
-  padding: 70px 80px;
+  padding: 70px var(--pad-x);
   display: grid;
   grid-template-columns: 50fr 50fr;
   gap: 56px;

@@ -41,7 +41,7 @@
   inset: 56px 0 56px 0;
   z-index: 1;
   /* Act-4 uniform: 36px top, 64px gutter (chrome-bar width). */
-  padding: 36px 64px 28px;
+  padding: 36px var(--pad-x) 28px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 24px;

@@ -120,7 +120,7 @@
      matching the chrome bar's --chrome-pad-x. The extra width flows to
      the 1fr wheel column so the side cards clear the center label with
      room to spare and the diagram type can grow. */
-  padding: 56px 64px 60px 64px;
+  padding: 56px var(--pad-x) 60px var(--pad-x);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 540px);
   gap: 40px;

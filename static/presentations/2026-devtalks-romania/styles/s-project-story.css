@@ -49,7 +49,7 @@
   /* Gutter matches the chrome bar's --chrome-pad-x (64px) — aligns the
      title with the chrome and reclaims a little width for the two panels
      (consistent with the other dense Act-5 slides). Gutters stay equal. */
-  padding: 30px 64px 24px;
+  padding: 30px var(--pad-x) 24px;
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   row-gap: 18px;

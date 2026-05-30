@@ -38,7 +38,7 @@
   /* Gutter matches the chrome bar's --chrome-pad-x (64px), reclaiming
      ~112px of width for the dense 5-rung ladder so its tooling lines can
      grow off the 7–8pt floor. Gutters stay equal (title aligns to chrome). */
-  padding: 30px 64px 24px;
+  padding: 30px var(--pad-x) 24px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 18px;

@@ -21,8 +21,11 @@
   --type-mono-sm: 24px;
 
   /* Spacing */
-  --pad-x: 120px;
   --chrome-pad-x: 64px;
+  /* Horizontal content gutter. Tracks the chrome-bar width so slide
+     content lines up with the chrome rail (path / act counter / footer)
+     instead of sitting indented from it. One knob for the whole deck. */
+  --pad-x: var(--chrome-pad-x);
   --pad-top: 110px;
   --pad-bottom: 100px;
   --gap-title: 56px;

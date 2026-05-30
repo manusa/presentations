@@ -47,7 +47,7 @@
   /* Act-4 uniform: 36px top, 64px gutter (chrome-bar width). Extra
      bottom padding so the takeaway tagline breathes above the deck's
      chrome-bottom rail — matches the visual margin around the cards above. */
-  padding: 36px 64px 56px;
+  padding: 36px var(--pad-x) 56px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 22px;

@@ -21,7 +21,7 @@
 }
 
 .s-act2 .a2-head {
-  padding: 44px 64px 22px;
+  padding: 44px var(--pad-x) 22px;
   display: flex;
   flex-direction: column;
   gap: 16px;
