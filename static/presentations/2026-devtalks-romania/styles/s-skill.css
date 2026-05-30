@@ -44,10 +44,10 @@
   position: absolute;
   inset: 56px 0 56px 0;
   z-index: 1;
-  /* Extra bottom padding so the takeaway tagline breathes above the
-     deck's chrome-bottom rail — matches the visual margin around the
-     cards above. */
-  padding: 36px var(--pad-x) 56px;
+  /* Act-4 uniform: 36px top, 64px gutter (chrome-bar width). Extra
+     bottom padding so the takeaway tagline breathes above the deck's
+     chrome-bottom rail — matches the visual margin around the cards above. */
+  padding: 36px 64px 56px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 22px;
@@ -84,6 +84,11 @@
 }
 .s-skill .head .sub {
   grid-column: 2;
+  /* Act-4 uniform: nudge the sub down onto the title baseline (the title's
+     tight 1.06 line-height floats the grid-bottom-aligned sub ~12px high).
+     position:relative keeps it out of grid track sizing. */
+  position: relative;
+  top: 12px;
   margin: 0 0 8px 0;
   font-family: 'JetBrains Mono', monospace;
   font-size: 24px;
@@ -106,10 +111,11 @@
   position: relative;
   overflow: hidden;          /* clip off-stage cards out of the deck flow */
   height: 600px;
-  /* Pull the conveyor wider than the prose column so the half-width cards
-     (esp. the dense SKILL.md artifact) get more content width — the header
-     and tagline stay aligned to --pad-x with the rest of Act 4. */
-  margin: 0 -60px;
+  /* Conveyor sits flush in the 64px body gutter — the same width the old
+     `margin: 0 -60px` reclaim gave it when the body was at --pad-x (120px).
+     Now the whole Act-4 body shares the 64px gutter, so no negative margin
+     is needed and the conveyor lines up with the header and tagline. */
+  margin: 0;
 }
 
 /* ============================================================

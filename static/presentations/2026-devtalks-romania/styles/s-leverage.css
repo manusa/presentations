@@ -41,7 +41,8 @@
   position: absolute;
   inset: 56px 0 56px 0;
   z-index: 1;
-  padding: 34px var(--pad-x) 40px;
+  /* Act-4 uniform: 36px top, 64px gutter (chrome-bar width). */
+  padding: 36px 64px 40px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 20px;
@@ -78,10 +79,15 @@
 }
 .s-leverage .head .sub {
   grid-column: 2;
+  /* Act-4 uniform: nudge the sub down onto the title baseline (the title's
+     tight 1.06 line-height floats the grid-bottom-aligned sub ~12px high).
+     position:relative keeps it out of grid track sizing. */
+  position: relative;
+  top: 12px;
   margin: 0 0 8px 0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
-  line-height: 1.5;
+  font-size: 24px;
+  line-height: 1.45;
   color: var(--fg-dim);
   text-align: right;
 }

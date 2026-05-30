@@ -83,6 +83,13 @@
 }
 .s-boundaries .head .sub {
   grid-column: 2;
+  /* The header grid bottom-aligns the sub, but the title's tight 1.06
+     line-height lets its glyphs overflow the line box, so the sub floats
+     ~13px above the title baseline. Nudge it down to sit on the baseline.
+     position:relative keeps it out of grid track sizing (title + stage
+     stay put). Kept uniform across all four Act-4 headers. */
+  position: relative;
+  top: 12px;
   margin: 0 0 8px 0;
   font-family: 'JetBrains Mono', monospace;
   font-size: 24px;

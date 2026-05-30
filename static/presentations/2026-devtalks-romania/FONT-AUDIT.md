@@ -180,6 +180,26 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 
 ## Resolved
 
+- **Act 4 header uniformity (slides 15 / 16 / 17 / 18).** The four content slides
+  share a `title (1fr) | sub (auto)` header but had drifted: subtitle 20px on 17
+  vs 24px on 15/16/18, top padding 34 vs 36, gutters 64 (16) vs 120 (15/17/18),
+  and slide 18 reclaimed width with a `.stage { margin: 0 -60px }` hack while its
+  header stayed at 120. Unified all four to: **64px gutter** (chrome-bar width —
+  also widens each stage and aligns the title to the chrome), **36px top**,
+  **subtitle 24px / line-height 1.45**. Slide 18's negative-margin hack was
+  dropped (the 64px body gutter now gives the conveyor the same width the −60px
+  used to; cards + SKILL.md hanging-indents unchanged). Also fixed the **title↔
+  subtitle vertical alignment**: the title's tight `1.06` line-height floats the
+  grid-bottom-aligned subtitle ~12px above the title baseline, so the sub gets
+  `position: relative; top: 12px` (visual only — stays out of grid track sizing,
+  so titles and stages don't move) to drop its last line onto the title baseline.
+  Uniform across all four. The **Act-4 section divider (14)** was deliberately
+  left at the 120px gutter — it belongs to the cross-act divider family (3/4/5/6),
+  so trimming only Act 4's would break *that* consistency. Bottom paddings left
+  per-slide (tagline breathing room, content-driven). `snapshot:diff`: only
+  15–18 changed. (Slide 17's *content* offenders — issue labels, cost label,
+  inline code — are a separate pass; it stays on the Critical list until then.)
+
 - **Slide 16 — Act 4 "Boundaries" (Maven modules as boundaries, 2 steps).**
   A lighter touch than the dense Act-5 slides: the content tier was already
   ≥20px (trees 22, role notes 20, panel bodies/captions 20, PR title 21), so
