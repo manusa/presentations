@@ -43,10 +43,16 @@ describe('deck-stage thumbnail rail', () => {
     await page.close();
   });
 
-  test('data-deck-skip excludes a slide from keyboard nav', async () => {
+  test('data-deck-present-skip excludes a slide from keyboard nav while presenting', async () => {
     const page = await browser.newPage();
     await bootDeck(page, server.fixture('minimal-deck-skip.html'));
-    // Slides: 0, 1, 2(skip), 3, 4. ArrowRight from 1 should land on 3, not 2.
+    // Drive presenting via the omelette source (no real fullscreen in headless).
+    await page.evaluate(() => {
+      const s = document.querySelector('deck-stage');
+      s._omelettePresenting = true;
+      s._syncPresenting();
+    });
+    // Slides: 0, 1, 2(present-skip), 3, 4. ArrowRight from 1 lands on 3, not 2.
     await page.keyboard.press('ArrowRight'); // 0 → 1
     assert.equal(await page.evaluate(() => document.querySelector('deck-stage').index), 1);
     await page.keyboard.press('ArrowRight'); // 1 → 3 (skipping 2)
@@ -56,7 +62,7 @@ describe('deck-stage thumbnail rail', () => {
     await page.close();
   });
 
-  test('data-deck-skip thumb gets data-skip in the rail', async () => {
+  test('data-deck-present-skip thumb gets data-skip in the rail', async () => {
     const page = await browser.newPage();
     await bootDeck(page, server.fixture('minimal-deck-skip.html'));
     const skipped = await page.evaluate(() => {
@@ -64,7 +70,7 @@ describe('deck-stage thumbnail rail', () => {
       const thumbs = stage.shadowRoot.querySelectorAll('.rail .thumb');
       return Array.from(thumbs).map((t) => t.hasAttribute('data-skip'));
     });
-    // Slide indices: 0, 1, 2(skip), 3, 4 → expect [false, false, true, false, false]
+    // Slide indices: 0, 1, 2(present-skip), 3, 4 → expect [false, false, true, false, false]
     assert.deepEqual(skipped, [false, false, true, false, false]);
     await page.close();
   });
