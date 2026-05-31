@@ -53,7 +53,14 @@
      console line can sit at the 18px floor without horizontal clip. */
   padding: 30px var(--pad-x) 24px;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  /* minmax(0, 1fr) — NOT a plain 1fr — for the stage row. A plain 1fr
+     resolves its minimum to the tallest card's content, so when the
+     white-box card grows at step 2 (the diff adds its removed/added lines)
+     the row claims the height and starves the tagline's auto row down to its
+     min-height, spilling the chips toward the chrome bar. minmax(0, 1fr)
+     lets the stage row yield height back to the tagline; the cards are
+     imperceptibly shorter and the code never clips (verified all 3 steps). */
+  grid-template-rows: auto minmax(0, 1fr) auto;
   row-gap: 20px;
 }
 
@@ -65,15 +72,9 @@
   align-items: center;
   column-gap: 48px;
 }
-.s-blackbox .head .eyebrow {
-  grid-column: 1;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
-  letter-spacing: 0.18em;
-  text-transform: lowercase;
-  color: var(--accent-ink);
-  margin-bottom: 12px;
-}
+/* Eyebrow removed: it duplicated the chrome-top act label and the title
+   already carries the "unit is behavior" beat — the reclaimed vertical room
+   goes to the three code cards. */
 .s-blackbox .head .title {
   grid-column: 1;
   font-size: 60px;
@@ -105,9 +106,18 @@
 .s-blackbox .stage {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  /* The CENTER (SUT) card holds only a short production method, so it is
+     given a narrower track and the freed width goes to the two TEST cards —
+     they carry the long lines (mock/verify chains, the RestAssured + assert
+     flow) that must stay legible at the 24px floor without clipping. */
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.5fr);
   column-gap: 12px;
   align-items: stretch;
+  /* Reclaim width for the three code cards: pull the stage symmetrically
+     wider than the body gutter (slide-18 conveyor pattern) so every console
+     line clears the 24px floor without horizontal clip. Header + tagline stay
+     at the body's --pad-x, aligned with the chrome bars. */
+  margin: 0 -40px;
 }
 
 /* ============================================================
@@ -138,23 +148,19 @@
   border-bottom: 1px solid rgba(255,255,255,0.08);
   color: #8A93BC;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 24px;
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
-.s-blackbox .panel-bar.term .dot {
-  width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0;
-}
-.s-blackbox .panel-bar.term .dot.r { background: #FF5F57; }
-.s-blackbox .panel-bar.term .dot.y { background: #FEBC2E; }
-.s-blackbox .panel-bar.term .dot.g { background: #28C840; }
-.s-blackbox .panel-bar.term .path  { margin-left: 8px; color: #B4BAD8; font-weight: 500; }
+/* Traffic-light window dots removed: purely cosmetic, and the bar width is
+   better spent on the status badge (which carries the slide's punchline). */
+.s-blackbox .panel-bar.term .path  { color: #B4BAD8; font-weight: 500; }
 .s-blackbox .panel-bar.term .grow  { flex: 1 1 auto; }
 
 /* Status pills inside the panel bar — flip with step */
 .s-blackbox .status-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 24px;
   letter-spacing: 0.08em;
   text-transform: lowercase;
   padding: 2px 10px;
@@ -216,10 +222,24 @@
 .s-blackbox[data-step="2"] .card-white .status-pill.st-edited,
 .s-blackbox[data-step="2"] .card-black .status-pill.st-untouched { display: inline; }
 
+/* The CENTER card is the narrow one, so its long "refactor applied" badge
+   would clip in the panel bar. Lift it out of the bar and centre it in the
+   free band between the (vertically-centered) diff and the foot status line —
+   the bar then carries just the file path. The bottom offset clears the foot;
+   the placement holds at steps 1 and 2 (same diff + foot in both). */
+.s-blackbox .card-sut { position: relative; }
+.s-blackbox .card-sut .status-pill.st-refactor {
+  position: absolute;
+  bottom: 126px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
 /* Micro-glossary one-liner under the panel bar */
 .s-blackbox .micro-gloss {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 24px;
   letter-spacing: 0.02em;
   color: #8A93BC;
   padding: 7px 14px 5px;
@@ -234,8 +254,8 @@
   flex: 1 1 auto;
   padding: 12px 14px 14px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
-  line-height: 1.42;
+  font-size: 24px;
+  line-height: 1.35;
   color: #C8CCE4;
   display: flex;
   flex-direction: column;
@@ -248,7 +268,7 @@
   white-space: nowrap;
   overflow: hidden;
 }
-.s-blackbox .ln           { min-height: 1.42em; }
+.s-blackbox .ln           { min-height: 1.35em; }
 .s-blackbox .ln.indent    { padding-left: 22px; }
 .s-blackbox .ln.indent-2  { padding-left: 44px; }
 .s-blackbox .ln.indent-3  { padding-left: 66px; }
@@ -340,13 +360,13 @@
   align-items: center;
   gap: 10px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 24px;
   color: #B4BAD8;
   flex-shrink: 0;
-  min-height: 44px;
+  min-height: 52px;
 }
 .s-blackbox .card-foot .foot-glyph {
-  font-size: 21px;
+  font-size: 24px;
   color: #8A93BC;
 }
 .s-blackbox .card-foot .foot-msg em {
@@ -458,7 +478,7 @@
   align-items: center;
   gap: 8px 10px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 18px;
+  font-size: 24px;
 }
 .s-blackbox .tag-line .chips-lbl {
   color: var(--fg-mute);

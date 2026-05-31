@@ -2628,7 +2628,6 @@
     <div class="body">
       <i class="pillar-watermark guard-watermark fa-solid fa-shield-halved" aria-hidden="true"></i>
       <header class="head">
-        <div class="eyebrow">// act 05 · the unit shifts</div>
         <h2 class="title">Black-box tests: the unit is <em>behavior</em>.</h2>
         <p class="sub">
           why these tests <span class="t-warn">survived</span> the AI era
@@ -2648,7 +2647,6 @@
              ============================================================ -->
         <article class="card card-white">
           <header class="panel-bar term">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <span class="path">PodServiceTest.java</span>
             <span class="grow"></span>
             <span class="status-pill st-pass">✓ passing</span>
@@ -2659,16 +2657,19 @@
                fluent chain resolves; the assertion pins the delete() call,
                reached via the typed client.pods() accessor. -->
           <div class="panel-body code body-step-0">
-            <div class="ln setup"><span class="t-anno">@Mock</span>(answer = RETURNS_DEEP_STUBS)</div>
-            <div class="ln setup"><span class="t-type">KubernetesClient</span> client;</div>
-            <div class="ln setup"><span class="t-anno">@InjectMocks</span> <span class="t-type">PodService</span> service;</div>
+            <div class="ln setup"><span class="t-anno">@ExtendWith</span>(<span class="t-type">MockitoExtension</span>.<span class="t-kw">class</span>)</div>
+            <div class="ln"><span class="t-kw">class</span> <span class="t-type">PodServiceTest</span> {</div>
+            <div class="ln setup indent"><span class="t-anno">@Mock</span>(answer = RETURNS_DEEP_STUBS)</div>
+            <div class="ln setup indent"><span class="t-type">KubernetesClient</span> client;</div>
+            <div class="ln setup indent"><span class="t-anno">@InjectMocks</span> <span class="t-type">PodService</span> service;</div>
             <div class="ln gap">&nbsp;</div>
-            <div class="ln"><span class="t-anno">@Test</span></div>
-            <div class="ln"><span class="t-kw">void</span> <span class="t-fn">deletesPod</span>() {</div>
-            <div class="ln indent">service.<span class="t-fn">delete</span>(<span class="t-str">"foo"</span>);</div>
-            <div class="ln">&nbsp;</div>
-            <div class="ln indent"><span class="t-fn t-vrf">verify</span>(client.<span class="t-fn">pods</span>()</div>
-            <div class="ln indent-2">.<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>)).<span class="t-fn">delete</span>();</div>
+            <div class="ln indent"><span class="t-anno">@Test</span></div>
+            <div class="ln indent"><span class="t-kw">void</span> <span class="t-fn">deletesPod</span>() {</div>
+            <div class="ln indent-2">service.<span class="t-fn">delete</span>(<span class="t-str">"foo"</span>);</div>
+            <div class="ln gap">&nbsp;</div>
+            <div class="ln indent-2"><span class="t-fn t-vrf">verify</span>(client.<span class="t-fn">pods</span>()</div>
+            <div class="ln indent-3">.<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>)).<span class="t-fn">delete</span>();</div>
+            <div class="ln indent">}</div>
             <div class="ln">}</div>
           </div>
           <!-- step 1 body (revealed at deck step 2): the agent generified the
@@ -2676,18 +2677,21 @@
                had to change (pods() → resources(Pod.class)) — even though the
                assertion target, delete(), is identical. -->
           <div class="panel-body code body-step-1">
-            <div class="ln ctx"><span class="g">&nbsp;</span><span class="t-anno">@Mock</span>(answer = RETURNS_DEEP_STUBS)</div>
-            <div class="ln ctx"><span class="g">&nbsp;</span><span class="t-type">KubernetesClient</span> client;</div>
-            <div class="ln ctx"><span class="g">&nbsp;</span><span class="t-anno">@InjectMocks</span> <span class="t-type">PodService</span> service;</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span><span class="t-anno">@ExtendWith</span>(<span class="t-type">MockitoExtension</span>.<span class="t-kw">class</span>)</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span><span class="t-kw">class</span> <span class="t-type">PodServiceTest</span> {</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>  <span class="t-anno">@Mock</span>(answer = RETURNS_DEEP_STUBS)</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>  <span class="t-type">KubernetesClient</span> client;</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>  <span class="t-anno">@InjectMocks</span> <span class="t-type">PodService</span> service;</div>
             <div class="ln gap">&nbsp;</div>
-            <div class="ln ctx"><span class="g">&nbsp;</span><span class="t-anno">@Test</span></div>
-            <div class="ln ctx"><span class="g">&nbsp;</span><span class="t-kw">void</span> <span class="t-fn">deletesPod</span>() {</div>
-            <div class="ln rem"><span class="g">-</span>  service.<span class="t-fn">delete</span>(<span class="t-str">"foo"</span>);</div>
-            <div class="ln add"><span class="g">+</span>  service.<span class="t-fn">delete</span>(<span class="t-type">Pod</span>.<span class="t-kw">class</span>, <span class="t-str">"foo"</span>);</div>
-            <div class="ln ctx"><span class="g">&nbsp;</span></div>
-            <div class="ln rem"><span class="g">-</span>  <span class="t-fn t-vrf">verify</span>(client.<span class="t-fn">pods</span>()</div>
-            <div class="ln add"><span class="g">+</span>  <span class="t-fn t-vrf">verify</span>(client.<span class="t-fn">resources</span>(<span class="t-type">Pod</span>.<span class="t-kw">class</span>)</div>
-            <div class="ln ctx"><span class="g">&nbsp;</span>    .<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>)).<span class="t-fn">delete</span>();</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>  <span class="t-anno">@Test</span></div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>  <span class="t-kw">void</span> <span class="t-fn">deletesPod</span>() {</div>
+            <div class="ln rem"><span class="g">-</span>    service.<span class="t-fn">delete</span>(<span class="t-str">"foo"</span>);</div>
+            <div class="ln add"><span class="g">+</span>    service.<span class="t-fn">delete</span>(<span class="t-type">Pod</span>.<span class="t-kw">class</span>, <span class="t-str">"foo"</span>);</div>
+            <div class="ln gap">&nbsp;</div>
+            <div class="ln rem"><span class="g">-</span>    <span class="t-fn t-vrf">verify</span>(client.<span class="t-fn">pods</span>()</div>
+            <div class="ln add"><span class="g">+</span>    <span class="t-fn t-vrf">verify</span>(client.<span class="t-fn">resources</span>(<span class="t-type">Pod</span>.<span class="t-kw">class</span>)</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>      .<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>)).<span class="t-fn">delete</span>();</div>
+            <div class="ln ctx"><span class="g">&nbsp;</span>  }</div>
             <div class="ln ctx"><span class="g">&nbsp;</span>}</div>
           </div>
           <div class="card-foot">
@@ -2708,13 +2712,12 @@
              ============================================================ -->
         <article class="card card-sut">
           <header class="panel-bar term">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <span class="path">PodService.java</span>
             <span class="grow"></span>
             <span class="status-pill st-stable">// stable</span>
             <span class="status-pill st-refactor">△ refactor applied</span>
           </header>
-          <div class="micro-gloss">// system under test · production code</div>
+          <div class="micro-gloss">// system under test</div>
           <!-- step 0 view: pod-specific delete -->
           <div class="panel-body code body-step-0">
             <div class="ln"><span class="t-kw">void</span> <span class="t-fn">delete</span>(<span class="t-type">String</span> name) {</div>
@@ -2727,7 +2730,8 @@
           <div class="panel-body code body-step-1">
             <div class="ln rem"><span class="g">-</span><span class="t-kw">void</span> <span class="t-fn">delete</span>(<span class="t-type">String</span> name) {</div>
             <div class="ln add"><span class="g">+</span>&lt;<span class="t-type">T</span> <span class="t-kw">extends</span> <span class="t-type">HasMetadata</span>&gt;</div>
-            <div class="ln add"><span class="g">+</span><span class="t-kw">void</span> <span class="t-fn">delete</span>(<span class="t-type">Class</span>&lt;<span class="t-type">T</span>&gt; type, <span class="t-type">String</span> name) {</div>
+            <div class="ln add"><span class="g">+</span><span class="t-kw">void</span> <span class="t-fn">delete</span>(<span class="t-type">Class</span>&lt;<span class="t-type">T</span>&gt; type,</div>
+            <div class="ln add"><span class="g">+</span>            <span class="t-type">String</span> name) {</div>
             <div class="ln rem"><span class="g">-</span>  client.<span class="t-fn">pods</span>()</div>
             <div class="ln add"><span class="g">+</span>  client.<span class="t-fn">resources</span>(type)</div>
             <div class="ln ctx"><span class="g">&nbsp;</span>    .<span class="t-fn">withName</span>(name)</div>
@@ -2754,29 +2758,28 @@
              ============================================================ -->
         <article class="card card-black">
           <header class="panel-bar term">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
             <span class="path">PodBehaviorIT.java</span>
             <span class="grow"></span>
             <span class="status-pill st-pass">✓ passing</span>
             <span class="status-pill st-untouched">✓ UNTOUCHED</span>
           </header>
-          <div class="micro-gloss">// black-box · asserts the outcome, not the calls</div>
+          <div class="micro-gloss">// black-box · asserts outcomes, not calls</div>
           <div class="panel-body code">
             <div class="ln setup"><span class="t-anno">@QuarkusTest</span> <span class="t-anno">@WithKubernetesTestServer</span></div>
             <div class="ln"><span class="t-kw">class</span> <span class="t-type">PodBehaviorIT</span> {</div>
             <div class="ln setup indent"><span class="t-anno">@Inject</span> <span class="t-type">KubernetesClient</span> k8s;</div>
             <div class="ln gap">&nbsp;</div>
             <div class="ln indent"><span class="t-anno">@Test</span></div>
-            <div class="ln indent"><span class="t-anno">@DisplayName</span>(<span class="t-str">"removes the pod from the cluster"</span>)</div>
+            <div class="ln indent"><span class="t-anno">@DisplayName</span>(<span class="t-str">"DELETE removes the pod"</span>)</div>
             <div class="ln indent"><span class="t-kw">void</span> <span class="t-fn">removesPodFromCluster</span>() {</div>
             <div class="ln indent-2">k8s.<span class="t-fn">pods</span>().<span class="t-fn">resource</span>(pod).<span class="t-fn">create</span>();</div>
-            <div class="ln">&nbsp;</div>
+            <div class="ln gap">&nbsp;</div>
             <div class="ln indent-2"><span class="t-fn">given</span>().<span class="t-fn">when</span>()</div>
             <div class="ln indent-3">.<span class="t-fn">delete</span>(<span class="t-str">"/api/v1/pods/foo"</span>)</div>
             <div class="ln indent-3">.<span class="t-fn">then</span>().<span class="t-fn">statusCode</span>(<span class="t-str">204</span>);</div>
-            <div class="ln">&nbsp;</div>
-            <div class="ln indent-2"><span class="t-fn t-asr">assertThat</span>(k8s.<span class="t-fn">pods</span>().<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>).<span class="t-fn">get</span>())</div>
-            <div class="ln indent-3">.<span class="t-fn">isNull</span>();</div>
+            <div class="ln gap">&nbsp;</div>
+            <div class="ln indent-2"><span class="t-fn t-asr">assertThat</span>(k8s.<span class="t-fn">pods</span>()</div>
+            <div class="ln indent-3">.<span class="t-fn">withName</span>(<span class="t-str">"foo"</span>).<span class="t-fn">get</span>()).<span class="t-fn">isNull</span>();</div>
             <div class="ln indent">}</div>
             <div class="ln">}</div>
           </div>

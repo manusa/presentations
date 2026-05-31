@@ -88,22 +88,12 @@ Over **half** of all text declarations sit at **≤10pt-equivalent**. The single
 
 ## 🔴 Critical — will not read past the front rows
 
-Slides that put **content the audience must read to follow the argument** at **9pt-equivalent or below**.
-Listed worst-first.
-
-| # | Slide | Offending content | px | ≈pt | Note |
-|---|---|---|---|---|---|
-| 22 | **Act 5 — Black-box tests** | code panel `.panel-body.code` | **18** | **9** | Code the speaker walks through, at 9pt. Takeaway quote 30px is fine. |
-
-**Common thread:** every critical slide is **over-stuffed**. The fonts are small *because the content
-does not fit otherwise*. Enlarging tokens alone will overflow these — so the order of operations is
-**reclaim width first** (cut the slide padding / widen the inner container — see "Recommended path" step 2),
-**then triage** only what still doesn't fit (fewer rows, split into two slides, wrap long lines, or
-summarize the GitHub/IDE-UI mockups instead of reproducing them pixel-for-pixel).
-
-> Against the project's own standing rule (console/terminal text ≥ 20px): much of the code/console here
-> (13–18px) already **violates that floor** — and the 20px floor itself sits at 10pt, *below* the research
-> minimum. Meeting the guidelines means going past the current rule, not just up to it.
+**None remaining.** Slide 22 (Act 5 — Black-box tests) was the last entry on this list and is now
+resolved (see Resolved below). Every slide that landed here was **over-stuffed** — the fonts were small
+*because the content did not fit otherwise* — so the order of operations was always **reclaim width first**
+(cut the slide padding / widen or rebalance the inner container), **then triage** only what still doesn't
+fit (narrow a column, wrap long lines, drop redundant chrome, or summarize a UI mockup instead of
+reproducing it pixel-for-pixel). That playbook cleared the whole list.
 
 ---
 
@@ -177,6 +167,50 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
 ---
 
 ## Resolved
+
+- **Slide 22 — Act 5 "Black-box tests: the unit is behavior" (3 steps).** The
+  deck's last 🔴 Critical slide, and its signature opinion: three side-by-side
+  dark terminals — white-box test (mocks + verify chain) · SUT (production
+  method) · black-box test (RestAssured + outcome assert) — choreographed
+  cause→effect→contrast. The code the speaker walks through line-by-line sat at
+  **18px (9pt)**, the smallest must-read content in the deck, with the panel-bar
+  tabs / status pills / micro-gloss / card-foot all at 18px too. Three columns of
+  real Java is the hardest fit in the deck, so the lift combined every lever:
+  **(1) reclaimed width** — pulled the `.stage` symmetrically wider than the body
+  gutter (`margin: 0 -40px`, the slide-18 pattern) while the header + tagline stay
+  aligned with the chrome; **(2) rebalanced the columns** — the CENTER (SUT) card
+  carries only a short method, so it was narrowed (`minmax 1.5fr / 1fr / 1.5fr`)
+  and the freed width handed to the two test cards that hold the long lines;
+  **(3) lifted the type to the 24px floor** — code body **18→24** (lh 1.42→1.35),
+  micro-gloss / card-foot / foot-glyph 18→24, panel-bar paths + status pills
+  18→24, tagline chips 18→24; **(4) wrapped the two stubborn lines** rather than
+  truncate — the CENTER generic signature (`void delete(Class<T> type, String
+  name)`) splits its params, and the RIGHT `assertThat(...)` fluent chain wraps
+  after `k8s.pods()`; **(5) reclaimed vertical room** — removed the redundant
+  eyebrow (`// act 05 · the unit shifts`, duplicated by the chrome-top act label),
+  dropped the cosmetic traffic-light window dots from all three bars (the width
+  went to the badges), and collapsed inter-statement blank lines to compact gaps;
+  **(6) fixed the step-2 footer crowding at the root** — the body's stage row was
+  a plain `1fr`, whose minimum resolves to the tallest card's content, so when the
+  white-box card grows at step 2 (its diff adds the removed/added lines) the row
+  claimed the height and starved the tagline's `auto` row down to its min-height,
+  spilling the chips toward the chrome bar. Changed it to `minmax(0, 1fr)` so the
+  stage row yields height back to the tagline — the cards are imperceptibly
+  shorter, no code clips (verified all 3 steps), and the removed `-` lines stay at
+  the full 24px rather than being shrunk; **(7) un-clipped the CENTER badge** — the
+  narrow SUT card could not fit its long `△ refactor applied` pill beside the file
+  path, so the pill is lifted out of the bar and stamped over the free space above
+  the code (the bar keeps just the path).
+  Folded in three code-correctness fixes spotted along the way: the black-box
+  `@DisplayName` now states the action (`"DELETE removes the pod"`); the white-box
+  test gained an `@ExtendWith(MockitoExtension.class)` + `class PodServiceTest {
+  … }` wrapper so it reads as a sibling of the black-box `class PodBehaviorIT { …
+  }` (and its `@Mock`/`@InjectMocks` are actually wired); the two test cards are
+  now structurally parallel. Verified with `audit:fit`: **0 overflow / 0 below the
+  24px floor across all 3 steps** (was 18px/9pt, smallest in the deck). Whole-deck
+  `snapshot:diff` shows only slide 22 changed (all 3 steps). Change isolated to
+  `s-blackbox.css` + the slide-22 section of `index.html`. **This was the last
+  Critical slide — the 🔴 list is now clear.**
 
 - **Slides 20 / 21 — Act 5 "Specs vs Tests" + "Failure-spec" (2 steps each).**
   The two sibling code-panel slides: a spec.md excerpt beside its enforcing
