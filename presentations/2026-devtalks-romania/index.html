@@ -2826,8 +2826,8 @@
          - quarkus-resteasy-reactive → quarkus-rest (artifact rename)
          - Test imports switched from Fabric8's KubernetesServer to
            the Quarkus test wrapper
-         - −123 lines of legacy API fallback code deleted
-           (extensions/v1beta1 Ingress + batch/v1beta1 CronJob)
+         - −119 lines of legacy API fallback code deleted
+           (extensions/v1beta1 Ingress −80 + batch/v1beta1 CronJob −39)
          - 10 IT @Test methods across 3 Selenium-driven *IT.java
            files (HomeIT, PodLogsIT, PodExecIT) as the safety net
 
@@ -2837,12 +2837,22 @@
        in the speaker's voice (Marc's lived experience) — it is
        not asserted by any on-slide artifact.
 
-       Two-step reveal:
-         step 0  PR card + grunt-work panel highlighted; contract
-                 panel slightly muted so the speaker can land the
-                 "no new feature · low dopamine" beat first.
-         step 1  Contract panel lights up; takeaway tagline appears
-                 in the footer.
+       Three-step reveal (data-step-max="2") — a real tension →
+       safety-net → payoff build, not a brightness toggle:
+         step 0  TENSION. PR card + grunt-work panel only. The
+                 safety-net panel is a ghost frame (header +
+                 "// already in the repo" label show, body hidden)
+                 so the payoff is NOT spoiled. Left foot carries the
+                 "i handed all of this to Claude" attribution.
+         step 1  GUARDRAILS. The safety-net panel materialises and
+                 the compiler|tests duality goes legible — the left
+                 foot flips to "the compiler caught the renames"
+                 (accent), the right foot carries "the tests pinned
+                 the behavior" (green). The two guardrails = the two
+                 panels. The Σ payoff stamp stays hidden.
+         step 2  PAYOFF. Green halo + the "zero assertion changes"
+                 Σ stamp land; the takeaway tagline shows BOTH claims
+                 (the contract held + put the net up first).
 
        Silhouette choice: wide GitHub-style PR card across the top
        + two stacked panels below. Looks like a GitHub PR review
@@ -2852,21 +2862,26 @@
        Speaker framing (held in eyebrow + sub + foot lines):
          - "one of many recent agent-assisted PRs" → eyebrow.
            Anti-highlight-reel framing.
-         - "no new feature · low dopamine · agent territory" →
-           sub. The grunt-task framing the audience is meant to
-           recognize in themselves.
-         - "i handed this to Claude." → left-panel foot. First
-           person, no overclaim.
-         - "when these pass, the upgrade is done." → right-panel
-           foot. The IT contract is the spec.
-         - "The agent took the grunt work. The tests defined done."
-           → footer tagline (step 1 reveal).
+         - "tedious maintenance · agent territory" → sub. The
+           grunt-task framing the audience recognises in itself.
+         - compiler vs tests duality: Java's strong typing kills API
+           hallucination (the compiler refuses a rename until it is
+           real — left foot); the black-box assertions preserve
+           behavior (right foot + Σ stamp). Two guardrails, two jobs.
+         - "i handed all of this to Claude." → step-0 left foot.
+           First person, no overclaim (the PR is signed by Marc).
+         - "Zero assertion changes. The assertions didn't move." → the
+           Σ payoff. Only the import coordinates moved (compiler-
+           forced, trivially reviewable); the behavior contract held.
+         - "The contract held. Put the net up first, then delegate."
+           → footer tagline (step-2 reveal). Proof + the lesson:
+           stand up the black-box net BEFORE delegating grunt work.
 
        Clickable references (PDF-friendly):
          - PR card (overlay) → github.com/manusa/yakd/pull/172
          - inline #146, #149 → respective issues
        ============================================================ -->
-  <section class="s-project-story light" data-label="Act V · Real project story: black-box tests unlock large changes" data-step-max="1">
+  <section class="s-project-story light" data-label="Act V · Real project story: black-box tests unlock large changes" data-step-max="2">
     <div class="chrome-top">
       <span class="dot"></span>
       <span>~/dev/devtalks-2026 · devtalks-act-05-codebase-feedback/ProjectStory.md</span>
@@ -2880,7 +2895,8 @@
         <div class="eyebrow">// act 05 · one of many recent agent-assisted PRs</div>
         <h2 class="title">Black-box tests unlocked a <em>large change</em>.</h2>
         <p class="sub">
-          <span class="t-warn">tedious maintenance</span> · agent territory
+          <span class="t-warn">tedious maintenance</span><br>
+          agent territory
         </p>
       </header>
 
@@ -2947,15 +2963,17 @@
               <span class="sp-row-note mono">artifact rename</span>
             </li>
             <li class="sp-row sp-row-delta">
-              <span class="sp-row-key mono"><span class="diff-rem">−123</span></span>
+              <span class="sp-row-key mono"><span class="diff-rem">−119</span></span>
               <span class="sp-row-val mono">legacy API fallback</span>
               <span class="sp-row-note mono">v1beta1 Ingress · CronJob</span>
             </li>
           </ul>
           <footer class="sp-foot mono">
-            <div class="foot-line">// the <span class="t-guard">compiler</span> steered the renames</div>
-            <div class="foot-line">// the <span class="t-guard">tests</span> steered the behavior</div>
-            <div class="foot-line">// i handed it all to <span class="t-claude">Claude</span>.</div>
+            <div class="foot-state foot-state-0">// I handed all of this to <span class="t-claude">Claude</span></div>
+            <div class="foot-state foot-state-1">
+              <div class="foot-line foot-key">the <span class="t-guard">compiler</span> caught the renames</div>
+              <div class="foot-line foot-sub">strongly typed · no hallucinated API</div>
+            </div>
           </footer>
         </article>
 
@@ -2976,13 +2994,10 @@
         <article class="story-panel contract-panel">
           <header class="sp-head">
             <span class="sp-glyph">▣</span>
-            <span class="sp-label">The test portfolio</span>
+            <span class="sp-label">The safety net</span>
             <span class="sp-tag mono">// already in the repo</span>
           </header>
           <div class="portfolio">
-            <div class="portfolio-headline">
-              Black-box coverage <span class="port-soft">across the full stack</span>
-            </div>
             <ul class="portfolio-chips">
               <li class="port-chip">
                 <span class="chip-name mono">REST Assured</span>
@@ -2990,26 +3005,27 @@
               </li>
               <li class="port-chip">
                 <span class="chip-name mono">Selenium IT</span>
-                <span class="chip-intent mono">UI → backend → K8s</span>
+                <span class="chip-intent mono">full UI flow</span>
               </li>
               <li class="port-chip">
                 <span class="chip-name mono">Quarkus infra</span>
-                <span class="chip-intent mono">WebSocket · watchers</span>
+                <span class="chip-intent mono">live WebSocket</span>
               </li>
             </ul>
             <div class="portfolio-connector mono">
-              // all use <span class="t-conn">@QuarkusTest · @WithKubernetesTestServer</span>
+              real HTTP · <span class="t-conn">a real K8s test API server</span> · not mocks
             </div>
             <div class="portfolio-sigma">
               <span class="sigma-glyph">✓</span>
               <div class="sigma-text">
                 <span class="sigma-label">Zero assertion changes.</span>
-                <span class="sigma-soft mono">The tests didn't move.</span>
+                <span class="sigma-soft mono">Same behavior, 19 versions later.</span>
               </div>
             </div>
           </div>
           <footer class="sp-foot mono">
-            // when these pass, the upgrade is <span class="t-done">done</span>.
+            <div class="foot-line foot-key">the <span class="t-done">tests</span> pinned the behavior</div>
+            <div class="foot-line foot-sub">// when these pass, the upgrade is done</div>
           </footer>
         </article>
       </div>
@@ -3017,6 +3033,9 @@
       <footer class="tag-line">
         <div class="quote">
           The <span class="accent">contract</span> held.
+        </div>
+        <div class="lesson">
+          Put the <span class="accent">net</span> up first, then delegate.
         </div>
       </footer>
     </div>
