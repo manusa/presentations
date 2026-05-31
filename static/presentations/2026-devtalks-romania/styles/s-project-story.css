@@ -74,8 +74,8 @@
 }
 .s-project-story .head .title {
   grid-column: 1;
-  font-size: 60px;
-  line-height: 1.06;
+  font-size: 68px;
+  line-height: 1.04;
   letter-spacing: -0.02em;
   font-weight: 700;
   margin: 0;
@@ -144,7 +144,7 @@
   font-weight: 500;
 }
 .s-project-story .pr-status {
-  font-size: 19px;
+  font-size: 21px;
   letter-spacing: 0.10em;
   text-transform: uppercase;
   padding: 2px 10px;
@@ -343,7 +343,22 @@
   line-height: 1.4;
 }
 .s-project-story .sp-foot .foot-line { display: block; }
-.s-project-story .sp-foot .foot-line + .foot-line { margin-top: 2px; }
+.s-project-story .sp-foot .foot-line + .foot-line { margin-top: 3px; }
+.s-project-story .sp-foot { transition: opacity 260ms ease; }
+/* The duality lines (compiler caught the renames · tests pinned the
+   behavior) are the thesis — promote them off the old 22px floor to a
+   must-read size; the // sub-lines stay a quieter qualifier tier. */
+.s-project-story .sp-foot .foot-key {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+}
+.s-project-story .sp-foot .foot-sub {
+  font-size: 22px;
+  color: var(--fg-mute);
+}
+.s-project-story .sp-foot .foot-state-0 { font-size: 24px; }
 .s-project-story .t-claude {
   color: var(--accent-2-ink, var(--accent-2));
   font-weight: 700;
@@ -361,31 +376,18 @@
    Portfolio body — replaces the old .sp-list table on the
    contract panel. The grunt-work panel still uses .sp-list.
 
-   Hierarchy (top → bottom):
-     headline     Black-box coverage across the full stack
+   Hierarchy (top → bottom), revealed across the 3-step build:
      chips        3 intent chips (REST Assured · Selenium IT · Quarkus infra)
-     connector    // all use @QuarkusTest + @WithKubernetesTestServer
-     sigma block  big 0  ·  assertion changes across the upgrade
+     connector    // real HTTP · a real K8s test API server · not mocks
+     sigma block  ✓ zero assertion changes (gated to step 2)
    ============================================================ */
 .s-project-story .portfolio {
   display: flex;
   flex-direction: column;
-  padding: 18px 18px 12px;
+  padding: 16px 18px 12px;
   flex: 1 1 auto;
   min-height: 0;
-  gap: 14px;
-}
-.s-project-story .portfolio-headline {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 26px;
-  font-weight: 600;
-  color: var(--fg);
-  letter-spacing: -0.005em;
-  line-height: 1.22;
-}
-.s-project-story .port-soft {
-  color: var(--fg-mute);
-  font-weight: 500;
+  gap: 12px;
 }
 .s-project-story .portfolio-chips {
   list-style: none;
@@ -400,7 +402,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 14px;
-  padding: 9px 14px;
+  padding: 8px 14px;
   background: rgba(255, 255, 255, 0.55);
   border: 1px solid rgba(10, 21, 84, 0.16);
   border-radius: 8px;
@@ -419,7 +421,7 @@
   white-space: nowrap;
 }
 .s-project-story .portfolio-connector {
-  font-size: 22px;
+  font-size: 26px;
   color: var(--fg-mute);
   letter-spacing: 0.02em;
   padding-left: 2px;
@@ -438,17 +440,18 @@
    never do alone. Mnemonic shape (✓) > mnemonic count (0). */
 .s-project-story .portfolio-sigma {
   margin-top: auto;
-  padding: 16px 22px;
+  margin-bottom: 10px;
+  padding: 13px 20px;
   background: rgba(var(--ok-rgb), 0.12);
   border-radius: 10px;
   border: 1px solid rgba(var(--ok-rgb), 0.45);
   box-shadow: inset 5px 0 0 rgba(var(--ok-rgb), 0.90);
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
 }
 .s-project-story .sigma-glyph {
-  font-size: 44px;
+  font-size: 40px;
   font-weight: 700;
   color: var(--ok);
   line-height: 1;
@@ -475,32 +478,67 @@
 }
 
 /* ============================================================
-   Step-driven highlighting.
-   Step 0: contract panel is muted (the speaker holds attention
-           on the grunt-work side).
-   Step 1: contract panel takes a green halo and full color.
+   Step-driven reveal — a real 3-beat build.
+     step 0  TENSION. Only the PR card + grunt-work panel carry
+             weight. The safety-net panel is a ghost frame: its
+             header/label show ("// already in the repo") but the
+             body + foot are hidden, so the payoff is NOT spoiled.
+             Left foot shows the attribution line.
+     step 1  GUARDRAILS. The safety-net panel materialises and the
+             compiler|tests duality goes legible — the left foot
+             flips to the compiler line (accent), the right foot
+             carries the tests line (green). The Σ stamp stays hidden.
+     step 2  PAYOFF. Green halo + the "zero assertion changes" stamp
+             land, and the takeaway tagline (both claims) appears.
    ============================================================ */
-.s-project-story[data-step="0"] .contract-panel {
-  opacity: 0.55;
-  filter: saturate(0.65);
+
+/* Left foot crossfades attribution (step 0) → compiler guardrail (1+). */
+.s-project-story .work-panel .foot-state-1 { display: none; }
+.s-project-story[data-step="1"] .work-panel .foot-state-0,
+.s-project-story[data-step="2"] .work-panel .foot-state-0 { display: none; }
+.s-project-story[data-step="1"] .work-panel .foot-state-1,
+.s-project-story[data-step="2"] .work-panel .foot-state-1 { display: block; }
+
+/* Smooth fades for the revealed regions. */
+.s-project-story .contract-panel .portfolio,
+.s-project-story .contract-panel .portfolio-sigma {
+  transition: opacity 260ms ease;
 }
-.s-project-story[data-step="1"] .contract-panel {
-  opacity: 1;
-  filter: none;
+
+/* Step 0 — safety-net panel is a ghost: header only, dashed + faint. */
+.s-project-story[data-step="0"] .contract-panel {
+  background: rgba(255, 255, 255, 0.28);
+  border-style: dashed;
+  box-shadow: none;
+}
+.s-project-story[data-step="0"] .contract-panel .portfolio,
+.s-project-story[data-step="0"] .contract-panel .sp-foot {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* The Σ payoff stamp keeps its layout slot but stays hidden until step 2. */
+.s-project-story:not([data-step="2"]) .contract-panel .portfolio-sigma {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Step 2 — the green "contract held" payoff. */
+.s-project-story[data-step="2"] .contract-panel {
   border-color: rgba(var(--ok-rgb), 0.50);
   box-shadow:
     0 0 0 1px rgba(var(--ok-rgb), 0.32),
     0 16px 36px rgba(var(--ok-rgb), 0.14),
     0 2px 8px rgba(var(--ok-rgb), 0.08);
 }
-.s-project-story[data-step="1"] .contract-panel .sp-head {
+.s-project-story[data-step="2"] .contract-panel .sp-head {
   background: rgba(var(--ok-rgb), 0.08);
   border-bottom-color: rgba(var(--ok-rgb), 0.25);
 }
-.s-project-story[data-step="1"] .contract-panel .sp-glyph {
+.s-project-story[data-step="2"] .contract-panel .sp-glyph {
   color: var(--ok);
 }
-.s-project-story[data-step="1"] .contract-panel .sp-foot {
+.s-project-story[data-step="2"] .contract-panel .sp-foot {
   background: linear-gradient(
     to bottom,
     rgba(var(--ok-rgb), 0.10),
@@ -523,19 +561,33 @@
   transition: opacity 280ms ease;
   pointer-events: none;
 }
-.s-project-story[data-step="1"] .tag-line {
+.s-project-story[data-step="2"] .tag-line {
   opacity: 1;
   pointer-events: auto;
 }
 .s-project-story .tag-line .quote {
-  font-size: 30px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 700;
   line-height: 1.2;
   color: var(--fg);
   letter-spacing: -0.005em;
   text-wrap: balance;
 }
 .s-project-story .tag-line .quote .accent {
+  color: var(--accent);
+}
+/* The prescriptive lesson — the imperative that turns the slide from
+   "it worked" into "here's the rule". Mono, a quieter tier than the
+   proof line above it, so the two claims read as proof → lesson. */
+.s-project-story .tag-line .lesson {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--fg-dim);
+  letter-spacing: 0.01em;
+}
+.s-project-story .tag-line .lesson .accent {
   color: var(--accent);
 }
 
@@ -548,9 +600,21 @@
   .s-project-story .story-panel {
     box-shadow: none;
   }
+  /* Flatten the step reveal to its final (step-2) state so the PDF
+     handout shows the whole story: net materialised, Σ stamp landed,
+     compiler line and takeaway visible. */
   .s-project-story .contract-panel {
     opacity: 1 !important;
     filter: none !important;
+    border-style: solid !important;
   }
+  .s-project-story .contract-panel .portfolio,
+  .s-project-story .contract-panel .sp-foot,
+  .s-project-story .contract-panel .portfolio-sigma {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .s-project-story .work-panel .foot-state-0 { display: none !important; }
+  .s-project-story .work-panel .foot-state-1 { display: block !important; }
   .s-project-story .tag-line { opacity: 1 !important; }
 }
