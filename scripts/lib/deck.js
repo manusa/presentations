@@ -10,6 +10,67 @@
  */
 
 /**
+ * Navigate to a deck (or any) URL and wait until it is render-ready, WITHOUT
+ * relying on the network going idle.
+ *
+ * Why not `waitUntil: 'networkidle'` — the dev hosts hold a socket open for the
+ * lifetime of the page (live-server's hot-reload WebSocket, Gatsby's HMR
+ * channel), so the network never goes idle and the navigation hangs until the
+ * 30s timeout, then throws. `waitUntil: 'load'` fires deterministically once
+ * the document's own subresources have loaded; we then explicitly wait for the
+ * things that actually affect a slide's pixels (fonts + images), which is what
+ * networkidle was being used as a rough proxy for anyway.
+ *
+ * This is the single seam every capture script funnels through, so all of them
+ * can point straight at `serve:static` with no throwaway plain-HTTP host.
+ */
+async function gotoDeck(page, url, {timeout = 30_000} = {}) {
+  await page.goto(url, {waitUntil: 'load', timeout});
+  await waitForDeckReady(page, {timeout: Math.min(timeout, 15_000)});
+}
+
+/**
+ * Block until the render-affecting async work has settled. All three signals
+ * are checked in ONE `page.waitForFunction` so the wait is bounded by `timeout`
+ * end-to-end — there is no bare `page.evaluate` awaiting an unbounded in-page
+ * promise (e.g. `customElements.whenDefined('deck-stage')`, which never resolves
+ * if the deck-kit script 404s and the `<deck-stage>` tag is present but never
+ * upgraded). On timeout it falls through so the caller still captures a frame.
+ *
+ *   1. <deck-stage> upgraded (deferred script ran) — or no deck on the page.
+ *   2. Web fonts settled (`document.fonts.status === 'loaded'`, a terminal
+ *      state reached on success OR error) — no metric shift / FOUT in the shot.
+ *   3. Every <img> (light DOM) + every <image-slot> shadow <img> with a source
+ *      reports `complete` — loaded or errored, never blocking on a 404.
+ *
+ * Pairs with `settleAnimations`, which handles CSS animations separately.
+ */
+async function waitForDeckReady(page, {timeout = 15_000} = {}) {
+  try {
+    await page.waitForFunction(
+      () => {
+        // 1. deck-stage defined/upgraded (or absent — nothing to wait for).
+        const stage = document.querySelector('deck-stage');
+        if (stage && !(window.customElements && customElements.get('deck-stage'))) return false;
+        // 2. fonts settled.
+        if (document.fonts && document.fonts.status !== 'loaded') return false;
+        // 3. images complete.
+        const imgs = [];
+        document.querySelectorAll('img').forEach((i) => imgs.push(i));
+        document.querySelectorAll('image-slot').forEach((slot) => {
+          if (slot.shadowRoot) slot.shadowRoot.querySelectorAll('img').forEach((i) => imgs.push(i));
+        });
+        return imgs.every((i) => {
+          const src = i.currentSrc || i.getAttribute('src');
+          return !src || i.complete; // no source -> nothing to await
+        });
+      },
+      {timeout, polling: 100}
+    );
+  } catch (e) { /* timed out — proceed; the caller still captures a frame */ }
+}
+
+/**
  * Wait for the page's currently-running, non-looping CSS animations to finish.
  * Looping (infinite) animations are treated as already-settled — they would
  * never finish and would block capture forever.
@@ -234,4 +295,4 @@ async function goToStep(page, sectionIdx, step) {
   await settleAnimations(page);
 }
 
-module.exports = {settleAnimations, applyExportHidden, disableRail, expandStepClones, walkDeck, slideFilename, goToStep};
+module.exports = {gotoDeck, waitForDeckReady, settleAnimations, applyExportHidden, disableRail, expandStepClones, walkDeck, slideFilename, goToStep};

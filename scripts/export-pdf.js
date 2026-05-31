@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 const path = require('path');
 const fs = require('fs');
-const {settleAnimations, applyExportHidden, expandStepClones} = require('./lib/deck');
+const {gotoDeck, settleAnimations, applyExportHidden, expandStepClones} = require('./lib/deck');
 
 const USAGE = `Usage: npm run export:pdf -- <deck-url> <output.pdf>
 
@@ -150,7 +150,7 @@ async function transcodePhotosToJpeg(page, {quality = 85} = {}) {
   try {
     const context = await browser.newContext({viewport: {width: 1920, height: 1080}});
     const page = await context.newPage();
-    await page.goto(url, {waitUntil: 'networkidle', timeout: 30_000});
+    await gotoDeck(page, url);
 
     const originalCount = await page.evaluate(() => {
       const stage = document.querySelector('deck-stage');

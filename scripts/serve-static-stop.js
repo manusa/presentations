@@ -1,49 +1,32 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 /*
- * serve-static-stop.js — stop the worktree's `serve:static` process.
+ * serve-static-stop.js — stop this worktree's `serve:static` server.
  *
- * Reads .live-server.pid (written by serve-static.js) from the current
- * worktree root, verifies the PID still belongs to a `live-server` process
- * (so a recycled PID can't be killed accidentally), terminates it, and
- * removes both .live-server.pid and .live-server.port.
+ * Reads .live-server.pid (written by serve-static.js), verifies the PID still
+ * belongs to a `live-server` process (recycled-PID guard), terminates it, and
+ * removes the sidecar files. Unconditional: whoever started the server, this
+ * stops it — the caller has decided it should go. Two callers:
+ *   • manual `npm run serve:static:stop`
+ *   • the SessionEnd hook in .claude/settings.json, which fires when the Claude
+ *     session CLOSES (not per turn, and excludes /clear — see the hook matcher).
  *
- * Always exits 0 — invoked by both `npm run serve:static:stop` (user) and
- * the Stop hook in .claude/settings.json (automatic at Claude session end).
- * Best-effort cleanup; missing files are fine.
+ * Always exits 0. Best-effort; missing files are fine.
  */
 const fs = require('fs');
-const { execSync } = require('child_process');
+const { PORT_FILE, PID_FILE, processIsLiveServer } = require('./lib/live-server');
 
-const PORT_FILE = '.live-server.port';
-const PID_FILE = '.live-server.pid';
+function unlinkQuiet(p) { try { fs.unlinkSync(p); } catch {} }
+function readQuiet(p) { try { return fs.readFileSync(p, 'utf8').trim(); } catch { return ''; } }
 
-function processIsLiveServer(pid) {
-  try {
-    const cmd = execSync(`ps -p ${pid} -o command=`, {
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    });
-    return /live-server/.test(cmd);
-  } catch {
-    return false;
-  }
-}
-
-function unlinkQuiet(path) {
-  try { fs.unlinkSync(path); } catch {}
-}
-
-if (fs.existsSync(PID_FILE)) {
-  const raw = fs.readFileSync(PID_FILE, 'utf8').trim();
-  if (/^\d+$/.test(raw)) {
-    const pid = parseInt(raw, 10);
-    if (processIsLiveServer(pid)) {
-      try {
-        process.kill(pid, 'SIGTERM');
-        console.log(`Stopped live-server (PID ${pid}).`);
-      } catch {}
-    }
+const raw = readQuiet(PID_FILE);
+if (/^\d+$/.test(raw)) {
+  const pid = parseInt(raw, 10);
+  if (processIsLiveServer(pid)) {
+    try {
+      process.kill(pid, 'SIGTERM');
+      console.log(`Stopped live-server (PID ${pid}).`);
+    } catch {}
   }
 }
 

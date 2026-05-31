@@ -2,13 +2,13 @@
 /* eslint-disable no-console */
 const path = require('path');
 const fs = require('fs');
-const {settleAnimations, goToStep, disableRail, applyExportHidden} = require('./lib/deck');
+const {gotoDeck, settleAnimations, goToStep, disableRail, applyExportHidden} = require('./lib/deck');
 
 const USAGE = `Usage: npm run screenshot -- <url> [name] [--delay <ms>] [--slide N [--step K]]
 
   <url>           URL to capture (e.g. http://localhost:8000/presentations/2026-devtalks-romania)
   [name]          Output basename (default: screenshot-<timestamp>). The .png suffix is added automatically.
-  [--delay <ms>]  Fixed wait after networkidle, instead of waiting for animations to settle.
+  [--delay <ms>]  Fixed wait after the page is render-ready, instead of waiting for animations to settle.
                   Use this to capture a slide mid-animation (e.g. --delay 200 for an early frame).
   [--slide N]     1-indexed section to jump to inside the deck before capturing. Uses the
                   deck-stage public API; equivalent to loading the deck with hash #N.
@@ -111,7 +111,7 @@ try {
   }
   const context = await browser.newContext({viewport: {width: 1920, height: 1080}});
   const page = await context.newPage();
-  await page.goto(url, {waitUntil: 'networkidle', timeout: 30_000});
+  await gotoDeck(page, url);
 
   // Drop the thumbnail rail so the capture is the slide alone (no black
   // rail strip / letterbox), and hide the deck-stage chrome (nav overlay,

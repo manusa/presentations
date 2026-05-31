@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 const path = require('path');
 const fs = require('fs');
-const {walkDeck, slideFilename} = require('./lib/deck');
+const {gotoDeck, walkDeck, slideFilename} = require('./lib/deck');
 
 const USAGE = `Usage: npm run snapshot:baseline -- <deck-url> <deck-name>
 
@@ -63,7 +63,7 @@ try {
   try {
     const context = await browser.newContext({viewport: {width: 1920, height: 1080}});
     const page = await context.newPage();
-    await page.goto(url, {waitUntil: 'networkidle', timeout: 30_000});
+    await gotoDeck(page, url);
 
     console.log(`Capturing baseline for "${deckName}"`);
     const total = await walkDeck(page, async (slide, totalPairs, captureIndex) => {

@@ -29,9 +29,11 @@ Static decks under `static/presentations/*` need no build step — they appear i
 
 Visiting `/` shows a dev-only index of every deck under `static/presentations/`, rendered on the fly by `scripts/serve-static-middleware.js` (no file written to `static/`, so it never lands in `public/` or collides with the Gatsby landing). Labels come from each deck's `README.md` first H1, falling back to the slug.
 
-**Port is random**, not fixed. Each invocation binds a free port (so multiple worktrees on the same machine can run their own `serve:static` in parallel without colliding). On startup the wrapper prints `→ http://localhost:NNNNN/` and writes the port to `.live-server.port` (gitignored) in the worktree root. Read either source to get the URL — e.g. `cat .live-server.port`, then pass `http://localhost:$(cat .live-server.port)/presentations/<slug>/` to `screenshot:deck`, `snapshot:diff`, etc.
+**Idempotent**, so it is safe to call even while a server is already up. If a `live-server` is already serving this worktree (matched by the absolute `--middleware` path, so it never reuses another worktree's server), `serve:static` adopts it — prints its URL, points `.live-server.port` at it, and exits without spawning a duplicate or killing anything. Only when nothing is serving does it spawn a fresh one. This means an agent can run `serve:static` while you have your own server running and it will reuse yours, not replace it.
 
-**Cleanup is automatic** for Claude Code sessions. The wrapper also writes `.live-server.pid`; the Stop hook in `.claude/settings.json` runs `npm run --silent serve:static:stop` when the session ends, which reads the PID, verifies it still belongs to a `live-server` process (scoped check so it never kills another worktree's server), terminates it, and removes both sidecar files. Outside a Claude session, run the same command manually: `npm run serve:static:stop`.
+**Port is random**, not fixed. Each fresh spawn binds a free port (so multiple worktrees on the same machine can run their own `serve:static` in parallel without colliding). On startup the wrapper prints `→ http://localhost:NNNNN/` and writes the port to `.live-server.port` (gitignored) in the worktree root. Read either source to get the URL — e.g. `cat .live-server.port`, then pass `http://localhost:$(cat .live-server.port)/presentations/<slug>/` to `screenshot:deck`, `snapshot:diff`, etc.
+
+**Cleanup runs when the Claude session closes, not per turn.** The wrapper writes `.live-server.pid` (the stop target). A **`SessionEnd`** hook in `.claude/settings.json` runs `npm run --silent serve:static:stop` when the session actually ends — `/exit`, `logout`, or other real termination (the matcher excludes `/clear` and `resume`, so clearing context mid-work leaves the server up). It is deliberately **not** a `Stop` hook: `Stop` fires after every turn, which would tear the server down mid-session. Stop is unconditional — it kills whatever PID is tracked, regardless of who started it (which is fine: it only fires when you're done). Run `npm run serve:static:stop` to stop it by hand at any time. Both paths verify the PID still belongs to a `live-server` process first (recycled-PID guard) and remove the sidecars. Because start is idempotent, at most one server ever exists per worktree; `SessionEnd` is best-effort (a hard terminal-close may skip it), so the next `serve:static` simply reuses a survivor — no pileup.
 
 **Deep-linking to a slide** — static decks accept a `#<N>` hash on initial load (1-indexed) to land on section N. Useful when iterating on one slide so the browser re-opens where you left off:
 
@@ -44,6 +46,15 @@ This is part of the deck-kit contract (`static/deck-kit/README.md` § URL hash).
 ## Visual Review (Screenshots + PDF)
 
 Four Playwright-backed scripts produce visual artifacts. All output goes under `./screenshots/` (gitignored). All capture at 1920×1080.
+
+**Batch-safe one-liners.** The capture/audit scripts are deliberately batch-safe: `screenshot`/`screenshot:deck`/`export:pdf`/`snapshot:baseline` exit 0 on success, `snapshot:diff` exits 1 only on a real pixel regression, and `audit:fit` exits 0 in report mode (non-zero only behind `--ci`). Point them straight at `serve:static` — the `networkidle` hang is gone (`scripts/lib/deck.js` → `gotoDeck`), so no throwaway `python3 -m http.server` host is needed. The remaining footgun is **raw `grep`/`curl` interposed in a chain**: `grep` exits **1** when it matches nothing and `curl` exits non-zero on any transport/non-2xx error, so under `&&`, a pipeline, or `set -euo pipefail` a harmless no-match aborts the rest of the batch. Guard any `grep`/`curl` whose empty result is acceptable with `|| true` (or `|| :`):
+
+```bash
+PORT=$(cat .live-server.port)                              # sidecar, written by serve:static
+grep -q 'data-step-max' static/.../index.html || true     # presence check — no-match must not abort
+HITS=$(grep -c networkidle scripts/*.js || true)          # capture a possibly-zero count
+curl -sf "http://localhost:$PORT/..." -o /dev/null || true # probe — a non-200 must not abort
+```
 
 **First-time setup** (downloads Chromium ~150MB):
 ```bash
@@ -133,6 +144,26 @@ snapshots/<deck-name>/
 Per-slide console report shows pixel-diff count + %. Exit code: 0 if all slides identical, 1 if any differ. New or removed slides count as changes.
 
 **Why session-scoped**: decks evolve — new slides, content tweaks, design refreshes. A long-lived committed baseline would drift and force constant re-promotion churn, and the value of the diff is "before-vs-after this change", not "drift from some historic snapshot". The discipline that matters is *always capturing baseline first*; the storage is throwaway.
+
+## Fit & Legibility Audit
+
+`npm run audit:fit` walks every `(section, step)` of a deck and measures the **active** section in its native 1920×1080 canvas — no screenshots, pure DOM measurement, so it is fast and deterministic. It prints one progress line per state as it walks (tagged with the section's class / `data-label`, e.g. `slide 22 step 0 [s-blackbox]: ✓ fit · 103 below 28px (min 18px)`), writes the full findings to `screenshots/<name>.fit.json` (gitignored, each state carrying `cls`/`dataLabel` plus the lists below and a `belowFloorByPx` histogram in the summary), and ends with a one-line totals summary. Each state reports two things:
+
+- **overflow** — content being cut off: a clipping container whose own content is larger than its box (`scroll > client`), or a text run whose box escapes the 1920×1080 slide. Horizontal clipping is reported only on a *text run* (a truncated label, annotated `ellipsis` when deliberate) — a pure-layout track that clips wider children (conveyor belt, marquee, terminal-log texture) is a deliberate window, not cut-off prose. Vertical clipping is reported for any container (content taller than its box is a real fit failure).
+- **belowFloor** — every visible text run rendered below the legibility floor (`--floor`, default **28px = 14pt**, the FONT-AUDIT must-read hard floor). Each carries `px`, `pt` (px/2), `pctHeight` (px/1080) and `mono`, so decorative chrome (20–24px, acceptable) is easy to tell from must-read content. Faint decorative text (effective opacity < 0.25 — ghost watermarks, un-revealed step layers) is excluded from both checks.
+
+It is **batch-safe**: report mode always exits 0, so a stalled stdout never cancels a batch — just `Read` the JSON when the drain lands. `--ci` makes it exit 1 on any overflow or sub-floor run (scope `--floor` to your gate, e.g. `--floor 20` for the absolute project minimum). Same no-`networkidle` navigation as the capture scripts, so point it straight at `serve:static`.
+
+```bash
+# whole deck, default 28px floor
+npm run audit:fit -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/
+# one slide (all steps) against the stricter 36px must-read target
+npm run audit:fit -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ s22 --slide 22 --floor 36
+# CI gate at the absolute minimum
+npm run audit:fit -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ <slug> --floor 20 --ci
+```
+
+This is the first-class replacement for hand-rolled overflow/font-size probe scripts — see the FONT-AUDIT floors (px÷2 = pt on a 1080px canvas) it encodes.
 
 ## Image Optimization
 
