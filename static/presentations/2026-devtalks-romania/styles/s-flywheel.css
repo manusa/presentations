@@ -201,6 +201,55 @@
 }
 .s-flywheel .lead .hints li .k { color: inherit; }
 
+/* ------------------------------------------------------------
+   Pillar plant — the forward promise of Acts IV-V on the bridge
+   slide. Dark-bg pillar ramp, identical to the act dividers'
+   @Delivers(...) colors (cyan / orange-soft / accent) and the
+   recap, so the same three words read as one system on first
+   sight here and on every later touchpoint.
+   ------------------------------------------------------------ */
+.s-flywheel .lead .plant {
+  display: grid;
+  row-gap: 12px;
+  justify-items: end;          /* right column is right-aligned */
+  /* Revealed on step 1 as the hand-off into Act IV, timed with the
+     bottom takeaway so the flywheel resolves into the forward promise.
+     opacity (not display:none) so the column reserves its space and the
+     title/callout above don't shift between steps. */
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+  transition-delay: 850ms;
+}
+.s-flywheel[data-step="1"] .lead .plant {
+  opacity: 1;
+  transform: translateY(0);
+}
+.s-flywheel .lead .plant-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: var(--fg-mute);
+  text-shadow: 0 1px 8px rgba(4, 8, 31, 0.85);
+}
+.s-flywheel .lead .plant-pillars {
+  font-family: 'Inter', sans-serif;
+  font-size: 40px;             /* 20pt projected — clears the must-read floor */
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  white-space: nowrap;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
+}
+.s-flywheel .lead .plant-pillars .p-map   { color: var(--cyan); }
+.s-flywheel .lead .plant-pillars .p-roads { color: var(--orange-soft); }
+.s-flywheel .lead .plant-pillars .p-guard { color: var(--accent); }
+.s-flywheel .lead .plant-pillars .p-sep {
+  color: var(--fg-mute);
+  font-weight: 400;
+  margin: 0 14px;
+}
+
 /* ============================================================
    Right column — flywheel diagram (revealed on step 1)
    ============================================================ */
