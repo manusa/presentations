@@ -285,7 +285,19 @@ async function goToStep(page, sectionIdx, step) {
     );
   }
   await page.evaluate((n) => {
-    document.querySelector('deck-stage').goTo(n - 1);
+    const stage = document.querySelector('deck-stage');
+    stage.goTo(n - 1);
+    // goTo() to the already-current section is a no-op in deck-stage: it skips
+    // _applyIndex, which is what normally snaps data-step back to 0. When
+    // goToStep is called repeatedly for the SAME section with increasing steps
+    // (audit:fit walking one slide's steps on a reused page), that leaves the
+    // section at its previous step, so the ArrowRight loop below starts from the
+    // wrong baseline and overshoots — past the max, an advance key falls through
+    // to the next slide and the intended slide goes inactive (measured as empty).
+    // deck-stage reads the step from the data-step attribute, so resetting it
+    // here gives the press loop a deterministic step-0 baseline either way.
+    const sec = stage.querySelectorAll(':scope > section')[n - 1];
+    if (sec && sec.hasAttribute('data-step-max')) sec.setAttribute('data-step', '0');
   }, sectionIdx);
   await settleAnimations(page);
   for (let s = 0; s < step; s++) {
