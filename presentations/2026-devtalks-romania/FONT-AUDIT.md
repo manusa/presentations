@@ -88,12 +88,15 @@ Over **half** of all text declarations sit at **≤10pt-equivalent**. The single
 
 ## 🔴 Critical — will not read past the front rows
 
-**None remaining.** Slide 22 (Act 5 — Black-box tests) was the last entry on this list and is now
-resolved (see Resolved below). Every slide that landed here was **over-stuffed** — the fonts were small
-*because the content did not fit otherwise* — so the order of operations was always **reclaim width first**
-(cut the slide padding / widen or rebalance the inner container), **then triage** only what still doesn't
-fit (narrow a column, wrap long lines, drop redundant chrome, or summarize a UI mockup instead of
-reproducing it pixel-for-pixel). That playbook cleared the whole list.
+**None remaining.** Slide 22 (Act 5 — Black-box tests) was the last entry on this list. Its code is now
+at **24px (12pt)** — clear of the Critical band (must-read content at ≤9pt), but still a step under the
+**28px must-read ideal** in the Recommended path, so it lands in the 🟡 band below rather than fully
+cleared (see Resolved for why 24px is the accepted floor for the deck's hardest fit). Every slide that
+landed here was **over-stuffed** — the fonts were small *because the content did not fit otherwise* — so
+the order of operations was always **reclaim width first** (cut the slide padding / widen or rebalance the
+inner container), **then triage** only what still doesn't fit (narrow a column, wrap long lines, drop
+redundant chrome, or summarize a UI mockup instead of reproducing it pixel-for-pixel). That playbook
+cleared the Critical list.
 
 ---
 
@@ -108,6 +111,7 @@ a front-to-middle audience in a modest room can likely read — but back rows wi
 | 3 | About | project names 30, role line 26 | 26–30 | 13–15 |
 | 10 / 11 | Act 3 — Amplifier (bad / good) | cards `.card .txt` | 26 | 13 |
 | 9 | Act 3 — Show of hands | terminal lines 26–28, command 24 | 24–28 | 12–14 |
+| 22 | Act 5 — Black-box tests | three code panels `.panel-body.code` | **24** | **12** *(deck's hardest fit: 3 Java columns; 24px is the accepted floor — 28px would force cutting a column, see Resolved)* |
 | 26 | Act 5 — XP reframe | practices list | ~28–32 | 14–16 |
 | 29 | Act 6 — Q&A close | contact list | 26 | 13 |
 | 28 | Act 6 — Recap | pillar action labels | 24 | 12 |
@@ -209,8 +213,14 @@ The heading / display hierarchy is well-judged. The fix is entirely in the body 
   now structurally parallel. Verified with `audit:fit`: **0 overflow / 0 below the
   24px floor across all 3 steps** (was 18px/9pt, smallest in the deck). Whole-deck
   `snapshot:diff` shows only slide 22 changed (all 3 steps). Change isolated to
-  `s-blackbox.css` + the slide-22 section of `index.html`. **This was the last
-  Critical slide — the 🔴 list is now clear.**
+  `s-blackbox.css` + the slide-22 section of `index.html`. **One caveat, stated
+  plainly:** 24px is **12pt** — the *pragmatic* floor for this slide, not the 28px
+  (14pt) must-read ideal in the Recommended path above. Three columns of real Java
+  is the deck's hardest fit, and clearing 28px would mean dropping a column or the
+  side-by-side contrast that is the whole argument. So slide 22 **graduates from 🔴
+  Critical to the 🟡 band** (legible front-to-middle; back rows will strain), not to
+  fully-cleared. **The 🔴 Critical list is now clear**; the residual 24-vs-28px gap
+  is tracked in 🟡 above.
 
 - **Slides 20 / 21 — Act 5 "Specs vs Tests" + "Failure-spec" (2 steps each).**
   The two sibling code-panel slides: a spec.md excerpt beside its enforcing

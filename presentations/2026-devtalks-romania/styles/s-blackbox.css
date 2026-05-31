@@ -32,6 +32,13 @@
    as .s-specs-vs-tests and .s-skill.
    ============================================================ */
 
+/* Shared card-foot height. Single-sourced because two rules depend on it:
+   .card-foot's own min-height, and the CENTER refactor badge that floats a
+   fixed rise *above* the foot (see .card-sut .status-pill.st-refactor). Keeping
+   it one token means changing the foot height moves the badge with it instead
+   of leaving a baked-in offset to drift out of sync. */
+.s-blackbox { --foot-h: 52px; }
+
 .s-blackbox::before {
   content: "";
   position: absolute;
@@ -50,7 +57,7 @@
   inset: 56px 0 56px 0;
   z-index: 1;
   /* Scoped pad-x override: this slide needs wider cards so every
-     console line can sit at the 18px floor without horizontal clip. */
+     console line can sit at the 24px floor without horizontal clip. */
   padding: 30px var(--pad-x) 24px;
   display: grid;
   /* minmax(0, 1fr) — NOT a plain 1fr — for the stage row. A plain 1fr
@@ -225,12 +232,15 @@
 /* The CENTER card is the narrow one, so its long "refactor applied" badge
    would clip in the panel bar. Lift it out of the bar and centre it in the
    free band between the (vertically-centered) diff and the foot status line —
-   the bar then carries just the file path. The bottom offset clears the foot;
-   the placement holds at steps 1 and 2 (same diff + foot in both). */
+   the bar then carries just the file path. The offset is the foot height plus
+   a fixed rise above it: expressed as calc(var(--foot-h) + rise) — not a raw
+   px sum — so the foot height stays single-sourced and the badge cannot drift
+   off the foot if that height changes. The placement holds at steps 1 and 2
+   (same diff + foot in both). */
 .s-blackbox .card-sut { position: relative; }
 .s-blackbox .card-sut .status-pill.st-refactor {
   position: absolute;
-  bottom: 126px;
+  bottom: calc(var(--foot-h) + 74px); /* foot height + the rise above it */
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -278,7 +288,7 @@
    itself stays the focus, but the @Mock / @EnableKubeAPIServer
    annotations carry the contrast between "this test needs mocks"
    and "this test uses a real Kubernetes API server". Size matches
-   the rest of the code body — no sub-18px text on this slide. */
+   the rest of the code body — no sub-24px text on this slide. */
 .s-blackbox .ln.setup {
   color: #8A93BC;
   letter-spacing: -0.005em;
@@ -363,7 +373,7 @@
   font-size: 24px;
   color: #B4BAD8;
   flex-shrink: 0;
-  min-height: 52px;
+  min-height: var(--foot-h);
 }
 .s-blackbox .card-foot .foot-glyph {
   font-size: 24px;
