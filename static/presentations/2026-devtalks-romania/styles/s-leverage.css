@@ -231,6 +231,9 @@
   animation: lev-reveal 300ms cubic-bezier(.2, .7, .2, 1) both;
 }
 .s-leverage .flow-arrow .arr { color: var(--accent-ink); font-weight: 700; font-size: 32px; }
+/* "detailed spec" is the noun the whole slide turns on — accent it with
+   the deck's standard emphasis idiom (same as .sub em / .proof em). */
+.s-leverage .flow-arrow em { font-style: normal; color: var(--accent-ink); font-weight: 600; }
 
 /* ---------- Artifact (right): the detailed helm-java #351 issue ---------- */
 .s-leverage .issue {
