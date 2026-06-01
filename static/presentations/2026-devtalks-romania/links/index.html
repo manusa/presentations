@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Slides &amp; links · Turning Your Java Project Into an AI-Ready Codebase</title>
+<meta name="description" content="Slides, blog posts and feedback for Marc Nuri's DevTalks Romania 2026 talk: Turning Your Java Project Into an AI-Ready Codebase." />
+<meta name="robots" content="index,follow" />
+
+<!-- Open Graph (for when the page is shared) -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Turning Your Java Project Into an AI-Ready Codebase — slides &amp; links" />
+<meta property="og:description" content="Slides, the posts behind the talk, and a place to leave feedback. DevTalks Romania 2026." />
+<meta property="og:url" content="https://presentations.marcnuri.com/presentations/2026-devtalks-romania/links/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" />
+
+<style>
+  /* Brand palette mirrors the deck's styles/tokens.css :root.
+     Kept inline so this companion page stays a single self-contained
+     file and does not pull the deck's base64 display font on mobile. */
+  :root {
+    --bg: #0A1554;
+    --bg-elev: #0F1C66;
+    --bg-card: #142578;
+    --line: rgba(255, 255, 255, 0.10);
+    --line-strong: rgba(255, 255, 255, 0.20);
+    --fg: #FFFFFF;
+    --fg-dim: #A5B0E6;
+    --fg-mute: #6B78B8;
+    --pink: #F02A5A;     /* devtalks primary */
+    --orange: #E16309;   /* personal brand */
+    --orange-soft: #F08A3E;
+    --accent: var(--pink);
+    --accent-2: var(--orange);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--fg);
+    background:
+      radial-gradient(1100px 700px at 85% -5%, rgba(225, 99, 9, 0.18), transparent 60%),
+      radial-gradient(900px 600px at 0% 100%, rgba(240, 42, 90, 0.18), transparent 60%),
+      var(--bg);
+    background-attachment: fixed;
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 22px 64px;
+  }
+
+  /* ---------- header ---------- */
+  header { margin-bottom: 38px; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8125rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 16px;
+  }
+  .byline {
+    font-size: 1rem;
+    color: var(--fg-dim);
+    margin: 0 0 18px;
+  }
+  .byline .sep { color: var(--fg-mute); margin: 0 8px; }
+  .intro {
+    font-size: 1.0625rem;
+    color: var(--fg-dim);
+    margin: 0;
+  }
+
+  /* ---------- section ---------- */
+  section { margin-top: 40px; }
+  .sec-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    color: var(--fg-dim);
+    margin: 0 0 16px;
+  }
+  .sec-label::before { content: '// '; color: var(--accent); }
+
+  /* ---------- link cards ---------- */
+  .cards { display: grid; gap: 12px; }
+
+  a.card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg-elev);
+    color: var(--fg);
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+  }
+  a.card:hover,
+  a.card:focus-visible {
+    border-color: var(--accent);
+    background: var(--bg-card);
+    transform: translateY(-1px);
+    outline: none;
+  }
+  a.card .ico {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--accent-2);
+    font-size: 1.125rem;
+  }
+  a.card .txt { min-width: 0; }
+  a.card .t {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  a.card .s {
+    font-size: 0.8125rem;
+    color: var(--fg-dim);
+    margin-top: 3px;
+  }
+  a.card .chev {
+    margin-left: auto;
+    color: var(--fg-mute);
+    font-size: 0.875rem;
+    flex: 0 0 auto;
+  }
+
+  /* primary actions (slides) get the accent treatment */
+  a.card.primary {
+    background: linear-gradient(120deg, rgba(240, 42, 90, 0.16), rgba(225, 99, 9, 0.14));
+    border-color: var(--line-strong);
+  }
+  a.card.primary .ico { color: var(--fg); background: rgba(255, 255, 255, 0.12); }
+
+  /* sub-group heading inside "read more" */
+  .group-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 22px 0 10px;
+  }
+  .group-label:first-child { margin-top: 0; }
+
+  /* ---------- feedback ---------- */
+  .feedback-intro { margin: 0 0 14px; color: var(--fg-dim); font-size: 1rem; }
+
+  /* ---------- socials ---------- */
+  .socials {
+    display: grid;
+    /* Track min sized to the longest handle ("blog.marcnuri.com") so a pill
+       never overflows its border; reflows to one column on narrow phones. */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  a.social {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    color: var(--fg);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    min-width: 0;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  a.social span { min-width: 0; overflow-wrap: anywhere; }
+  a.social:hover, a.social:focus-visible { border-color: var(--accent); background: var(--bg-elev); outline: none; }
+  a.social i { color: var(--accent); width: 20px; text-align: center; font-size: 1rem; }
+  a.social .at { color: var(--accent); }
+
+  /* ---------- footer ---------- */
+  footer {
+    margin-top: 48px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--fg-dim);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 560px) {
+    .wrap { padding-top: 64px; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header>
+    <p class="eyebrow">DevTalks Romania 2026 · Java Stage · 03 June 2026</p>
+    <h1>Turning Your Java Project Into an AI-Ready Codebase</h1>
+    <p class="byline">Marc Nuri<span class="sep">·</span>Senior Principal Software Engineer, Red Hat</p>
+    <p class="intro">Thanks for coming. Tell me what worked and what didn't, then grab the slides and the posts behind the talk.</p>
+  </header>
+
+  <!-- ============================== FEEDBACK (first on purpose — this is what we most want back) ============================== -->
+  <section aria-labelledby="feedback-label">
+    <p class="sec-label" id="feedback-label">feedback</p>
+    <p class="feedback-intro">30 seconds, anonymous. Tell me what worked and what you would change. The critical notes are the useful ones.</p>
+    <div class="cards">
+      <a class="card primary" href="https://forms.gle/71D64srg6aQNw3L46" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-comment-dots"></i></span>
+        <span class="txt">
+          <span class="t">Leave feedback on the talk</span>
+          <span class="s">anonymous · ~30 seconds</span>
+        </span>
+        <i class="fa-solid fa-arrow-up-right-from-square chev"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================== SLIDES ============================== -->
+  <section aria-labelledby="slides-label">
+    <p class="sec-label" id="slides-label">slides</p>
+    <div class="cards">
+      <!--
+        Slides are published as a release artifact on the presentations repo,
+        pinned to tag v0.12.0 so this link can't drift to a later talk's
+        release. Create that release and attach the deck PDF. Once the asset
+        filename is fixed, this can point straight at the file, e.g.
+        https://github.com/manusa/presentations/releases/download/v0.12.0/devtalks-romania-2026.pdf
+      -->
+      <a class="card primary" href="https://github.com/manusa/presentations/releases/tag/v0.12.0" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-file-arrow-down"></i></span>
+        <span class="txt">
+          <span class="t">Download the slides (PDF)</span>
+          <span class="s">github.com/manusa/presentations · v0.12.0</span>
+        </span>
+        <i class="fa-solid fa-arrow-up-right-from-square chev"></i>
+      </a>
+      <a class="card" href="https://presentations.marcnuri.com/presentations/2026-devtalks-romania/" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-display"></i></span>
+        <span class="txt">
+          <span class="t">View the deck online</span>
+          <span class="s">presentations.marcnuri.com</span>
+        </span>
+        <i class="fa-solid fa-arrow-up-right-from-square chev"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================== READ MORE ============================== -->
+  <section aria-labelledby="read-label">
+    <p class="sec-label" id="read-label">read more</p>
+
+    <p class="group-label">Map · understand the codebase</p>
+    <div class="cards">
+      <a class="card" href="https://blog.marcnuri.com/the-future-of-developer-tools-machine-based-developers" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-compass-drafting"></i></span>
+        <span class="txt"><span class="t">The Future of Developer Tools: Adapting to Machine-Based Developers</span></span>
+        <i class="fa-solid fa-chevron-right chev"></i>
+      </a>
+      <a class="card" href="https://blog.marcnuri.com/missing-levels-ai-assisted-development" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-layer-group"></i></span>
+        <span class="txt"><span class="t">The Missing Levels of AI-Assisted Development</span></span>
+        <i class="fa-solid fa-chevron-right chev"></i>
+      </a>
+    </div>
+
+    <p class="group-label">Roads · paved paths &amp; skills</p>
+    <div class="cards">
+      <a class="card" href="https://blog.marcnuri.com/superpowers-claude-code-skills-framework" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-bolt"></i></span>
+        <span class="txt"><span class="t">Superpowers: The Claude Code Skills Framework Shipped as Markdown</span></span>
+        <i class="fa-solid fa-chevron-right chev"></i>
+      </a>
+      <a class="card" href="https://blog.marcnuri.com/boosting-developer-productivity-ai-2025" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-gauge-high"></i></span>
+        <span class="txt"><span class="t">Boosting My Developer Productivity with AI in 2025</span></span>
+        <i class="fa-solid fa-chevron-right chev"></i>
+      </a>
+      <a class="card" href="https://blog.marcnuri.com/ai-coding-agent-dashboard" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-diagram-project"></i></span>
+        <span class="txt"><span class="t">AI Coding Agent Dashboard: Orchestrating Claude Code Across Devices</span></span>
+        <i class="fa-solid fa-chevron-right chev"></i>
+      </a>
+    </div>
+
+    <p class="group-label">Guardrails · tests &amp; discipline</p>
+    <div class="cards">
+      <a class="card" href="https://blog.marcnuri.com/blackbox-whitebox-testing-comparison" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-vials"></i></span>
+        <span class="txt"><span class="t">Black Box vs White Box Testing: When to Use Each Approach</span></span>
+        <i class="fa-solid fa-chevron-right chev"></i>
+      </a>
+      <a class="card" href="https://blog.marcnuri.com/test-driven-development-tdd-introduction" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-flask-vial"></i></span>
+        <span class="txt"><span class="t">What is Test-Driven Development (TDD)? A Practical Introduction</span></span>
+        <i class="fa-solid fa-chevron-right chev"></i>
+      </a>
+      <a class="card" href="https://blog.marcnuri.com/extreme-programming-xp-introduction" target="_blank" rel="noopener noreferrer">
+        <span class="ico"><i class="fa-solid fa-people-group"></i></span>
+        <span class="txt"><span class="t">What is Extreme Programming (XP)? Values, Practices, and Why They Still Matter</span></span>
+        <i class="fa-solid fa-chevron-right chev"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================== KEEP IN TOUCH ============================== -->
+  <section aria-labelledby="touch-label">
+    <p class="sec-label" id="touch-label">keep in touch</p>
+    <div class="socials">
+      <a class="social" href="https://github.com/manusa" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i><span><span class="at">@</span>manusa</span></a>
+      <a class="social" href="https://bsky.app/profile/marcnuri.com" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-bluesky"></i><span><span class="at">@</span>marcnuri.com</span></a>
+      <a class="social" href="https://x.com/MarcNuri" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i><span><span class="at">@</span>MarcNuri</span></a>
+      <a class="social" href="https://www.linkedin.com/in/marcnuri" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i><span>/in/marcnuri</span></a>
+      <a class="social" href="https://blog.marcnuri.com" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-rss"></i><span>blog.marcnuri.com</span></a>
+      <a class="social" href="https://www.youtube.com/@MarcNuri" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i><span>/MarcNuri</span></a>
+      <a class="social" href="https://marcnuri.com" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-globe"></i><span>marcnuri.com</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <span>marc nuri · red hat</span>
+    <span>devtalks.ro · 2026</span>
+  </footer>
+
+</main>
+</body>
+</html>
