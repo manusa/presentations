@@ -54,10 +54,13 @@
   --pt-guard: var(--accent-ink);
 }
 
-/* default: not-yet-reached — faint so it recedes */
+/* default: not-yet-reached — quiet but still readable. Faintness comes
+   from opacity alone over plain --fg (not --fg-mute, whose own dimness
+   stacked with the low opacity dropped it below projector-perceptible
+   contrast). The eye should be able to read what's still coming. */
 .pillar-track .pt {
-  color: var(--fg-mute);
-  opacity: 0.3;
+  color: var(--fg);
+  opacity: 0.45;
   transition: color 220ms ease, opacity 220ms ease;
 }
 .pillar-track .pt-sep {
