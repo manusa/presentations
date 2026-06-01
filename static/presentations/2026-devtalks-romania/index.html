@@ -519,7 +519,8 @@
       </div>
 
       <div class="collage" aria-hidden="true">
-        <!-- Four pinned repo cards — every project named here is referenced in the talk -->
+        <!-- Five pinned repo cards — every project named here is referenced in the talk.
+             repo-1..4 form a 2×2 grid; repo-yakd is pinned on top in the centre. -->
         <div class="card repo repo-1">
           <a class="ref-link overlay" href="https://github.com/eclipse-jkube/jkube" target="_blank" rel="noopener noreferrer" aria-label="eclipse-jkube/jkube on GitHub"></a>
           <div class="repo-head">
@@ -581,6 +582,25 @@
             <span class="lang"><span class="lang-dot java"></span>Java</span>
             <span><span class="star">&#9733;</span> 67</span>
             <span><span class="issue-icon">&#9679;</span> 4 issues</span>
+          </div>
+        </div>
+
+        <!-- YAKD — the fifth project, pinned on top in the centre of the
+             notebook. Sits above the 2×2 grid (z-index) so its corners peek
+             over the inner corners of the four cards without covering text. -->
+        <div class="card repo repo-yakd">
+          <a class="ref-link overlay" href="https://github.com/manusa/yakd" target="_blank" rel="noopener noreferrer" aria-label="manusa/yakd on GitHub"></a>
+          <div class="repo-head">
+            <image-slot class="repo-icon" fit="contain" src="assets/logos/yakd-square.svg" placeholder="logo" aria-hidden="true"></image-slot>
+            <div>
+              <div class="repo-name">yakd</div>
+              <div class="repo-org">manusa/yakd</div>
+            </div>
+          </div>
+          <div class="repo-meta">
+            <span class="lang"><span class="lang-dot java"></span>Java</span>
+            <span><span class="star">&#9733;</span> 54</span>
+            <span><span class="issue-icon">&#9679;</span> 5 issues</span>
           </div>
         </div>
 

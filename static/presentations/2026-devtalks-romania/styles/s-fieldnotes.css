@@ -10,8 +10,10 @@
   /* Padding reduced symmetrically from the default 120px so both slide
      gutters stay equal (an asymmetric L/R gutter reads as broken). The
      reclaimed width plus the 50/50 split (was 55/45) lets the notebook
-     collage run wide enough for legible repo cards / sticky notes. */
-  padding: 70px var(--pad-x);
+     collage run wide enough for legible repo cards / sticky notes.
+     Top/bottom trimmed 70->44 to give the notebook page more height for
+     the five-card layout (the fifth card pins into the centre). */
+  padding: 44px var(--pad-x);
   display: grid;
   grid-template-columns: 50fr 50fr;
   gap: 56px;
@@ -203,7 +205,10 @@
 .s-fieldnotes .card.repo .repo-icon::part(ring)  { border-color: transparent; }
 .s-fieldnotes .card.repo .repo-icon::part(empty) { display: none; }
 .s-fieldnotes .card.repo .repo-name {
-  font-size: 21px;
+  /* >=24px (12pt) so the project name is legible from the back row.
+     Cards are widened to 392px so the longest name (kubernetes-mcp-server)
+     still fits on one line at this size. */
+  font-size: 24px;
   font-weight: 600;
   color: var(--fg);
   letter-spacing: 0;
@@ -250,38 +255,61 @@
 .s-fieldnotes .card.repo .pr-icon { color: #2A8E47; font-weight: 700; }
 .s-fieldnotes .card.repo .issue-icon { color: var(--accent-2-ink); font-weight: 700; }
 
-/* Positions — four real projects pinned in a 2×2 arrangement,
-   with a console card below tying back to the "real CI pain" note.
-   Slight rotations keep the "scattered notes" feel without chaos. */
+/* Positions — five real projects. repo-1..4 form a 2×2 grid pushed out
+   toward the page corners to open a central void; repo-yakd pins on top
+   in that void (see below). A console card sits below, tying back to the
+   "real CI pain" note. Slight rotations keep the "scattered notes" feel
+   without chaos. Cards are 392px wide so the longest name fits at 24px. */
 .s-fieldnotes .card.repo-1 {
-  top: 132px;
-  left: 40px;
-  width: 360px;
+  top: 152px;
+  left: 28px;
+  width: 392px;
   transform: rotate(-2deg);
 }
 .s-fieldnotes .card.repo-2 {
-  top: 120px;
-  right: 36px;
-  width: 360px;
+  top: 152px;
+  right: 24px;
+  width: 392px;
   transform: rotate(1.8deg);
 }
 .s-fieldnotes .card.repo-3 {
-  top: 322px;
-  left: 52px;
-  width: 360px;
+  top: 396px;
+  left: 36px;
+  width: 392px;
   transform: rotate(1.4deg);
 }
 .s-fieldnotes .card.repo-4 {
-  top: 310px;
-  right: 28px;
-  width: 360px;
+  top: 396px;
+  right: 20px;
+  width: 392px;
   transform: rotate(-1.6deg);
+}
+
+/* YAKD — the fifth project, pinned on top in the centre of the page.
+   Same construction as the four grid cards (no min-height / flex), so it is
+   the SAME height; only narrower. It sits above them (z-index) in the void
+   between the two rows, and because the rows are spaced so the gap is a bit
+   under one card-height, a single card-height still reaches both rows: its
+   four corners peek over the inner corners of the surrounding cards, dipping
+   only into their blank padding (below the top row's meta, into the bottom
+   row's top padding), so no card's text is covered. */
+.s-fieldnotes .card.repo-yakd {
+  top: 274px;
+  left: 278px;
+  width: 312px;
+  transform: rotate(-3deg);
+  z-index: 5;
+  box-shadow: 0 14px 34px rgba(10, 21, 84, 0.18);
+}
+/* Distinct blue pin so the centre card reads as "the fifth, on top". */
+.s-fieldnotes .card.repo-yakd::before {
+  background: radial-gradient(circle at 35% 35%, #88B6FF 0%, #1F5FD6 55%, #103a86 100%);
 }
 
 /* CI post-it (sticky note) — small yellow square, tilted, with a hint of
    "torn from a pad" feel. Pairs with the snippet card in the bottom row. */
 .s-fieldnotes .card.ci {
-  bottom: 150px;
+  bottom: 124px;
   right: 40px;
   width: 226px;
   transform: rotate(3deg);
@@ -348,7 +376,7 @@
 
 /* Console card — light cream surface; tied to "real CI pain" annotation above */
 .s-fieldnotes .card.snippet {
-  bottom: 126px;
+  bottom: 50px;
   left: 44px;
   width: 438px;
   transform: rotate(-1deg);
@@ -422,22 +450,24 @@
   line-height: 1.05;
 }
 .s-fieldnotes .annotation.a-top {
-  top: 72px;
+  top: 78px;
   left: 296px;
-  font-size: 32px;
+  font-size: 36px;
   transform: rotate(-2.5deg);
 }
 .s-fieldnotes .annotation.a-mid {
-  top: 472px;
-  left: 96px;
-  font-size: 34px;
+  /* Sits in the gap below the lower repo row, pointing down at the console
+     card. Moved down from 472 now that repo-3 occupies the old position. */
+  top: 576px;
+  left: 56px;
+  font-size: 38px;
   color: #8A2B05;            /* darker rust ink — stronger than accent-2-ink on cream */
   transform: rotate(-1.5deg);
 }
 .s-fieldnotes .annotation.a-bottom {
-  bottom: 34px;
+  bottom: 38px;
   right: 38px;
-  font-size: 36px;
+  font-size: 40px;
   color: var(--accent-ink);
   transform: rotate(2deg);
 }
