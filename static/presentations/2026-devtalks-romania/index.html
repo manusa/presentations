@@ -1895,18 +1895,34 @@
   <!-- ============================================================
        13 ACT 4 · SHAPE THE WORK UPSTREAM
 
-       The calm slide — the exhale after three dense ones. Expensive
-       reasoning once → cheap execution N times. Artifact: helm-java
-       #351 (OPEN · good first issue), short because the recipe was
-       already extracted into AGENTS.md + a named reference impl
-       (StatusCommand). Also the cost/token beat: think expensively
-       once, run cheaply N times.
+       The calm slide — the exhale after three dense ones. Its own
+       logic is a 3-node chain (expensive reasoning → the spec it
+       produces → cheap execution N times), staged as a real 3-step
+       build rather than a brightness toggle. Artifact: helm-java #351
+       (OPEN · good first issue), surfaced with its concrete fluent
+       contract so "the expensive thinking" is shown, not asserted.
 
-       Step 0 — equation + issue collapsed to title + labels.
-       Step 1 — issue body reveals (acceptance · Java-8 · ref impl);
-                the "anyone can run it" channels light up.
+       Three-step reveal (data-step-max="2"):
+         step 0  TENSION. Header + the expensive band only. The issue
+                 is a collapsed frame: GitHub bar + title + labels show,
+                 the body is not yet rendered, so the spec is not
+                 spoiled. The flow-arrow and cheap band are absent too.
+                 Sparse and calm by design.
+         step 1  REVEAL. The flow-arrow ("produces a detailed spec")
+                 and the issue body appear together — the real
+                 Helm.rollback(...) contract, the nested-k8s-test
+                 validation, the StatusCommand reference impl. The
+                 thinking on the left produced THIS spec on the right.
+         step 2  PAYOFF. The cheap × N band lands (smaller model ·
+                 contributor · future-you), the "good first issue"
+                 label halos in sync (the punchline made literal:
+                 anyone can run it), and the takeaway lands as a proof
+                 line + a prescriptive lesson.
+
+       Clickable reference (PDF-friendly):
+         - issue card #351 → github.com/manusa/helm-java/issues/351
        ============================================================ -->
-  <section class="s-leverage light" data-label="Act IV · Shape the work upstream" data-step-max="1">
+  <section class="s-leverage light" data-label="Act IV · Shape the work upstream" data-step-max="2">
     <div class="chrome-top">
       <span class="dot"></span>
       <span>~/dev/devtalks-2026 · manusa/helm-java/issues/351</span>
@@ -1917,18 +1933,20 @@
     <div class="body">
       <i class="pillar-watermark road-watermark fa-solid fa-road" aria-hidden="true"></i>
       <header class="head">
-        <div class="eyebrow">// act 04 · leverage</div>
         <h2 class="title">Shape the work <em>upstream</em>.</h2>
         <p class="sub">
-          Use your best reasoning to shape the work,<br/>
-          not just to <em>write the code</em>.
+          Reason once, where it's <em>expensive</em>.<br/>
+          Implement many times, where it's <em>cheap</em>.
         </p>
       </header>
 
       <div class="stage">
         <!-- ============================================================
              Principle (left): spend the expensive model once →
-             cheap implementation N times. Cheap half reveals on step 1.
+             cheap implementation N times.
+               step 0  expensive band only
+               step 1  flow-arrow reveals (the spec it produces)
+               step 2  cheap band reveals (who runs it, N times)
              ============================================================ -->
         <div class="principle">
           <div class="band expensive">
@@ -1939,7 +1957,7 @@
             <div class="work">understand the change · explore the codebase<br/>surface edge cases<br/>define acceptance criteria · propose the tests</div>
           </div>
 
-          <div class="flow-arrow"><span class="arr">↓</span> produces a detailed spec</div>
+          <div class="flow-arrow"><span class="arr">↓</span><span class="arr-text">produces a detailed spec</span></div>
 
           <div class="band cheap">
             <div class="brow">
@@ -1952,14 +1970,15 @@
               <li><i class="fa-solid fa-clock-rotate-left"></i>future-you</li>
             </ul>
           </div>
-
-          <div class="spec-hint">↳ a <b>spec-driven workflow</b>: formalize it with a framework, or keep it free-form.</div>
         </div>
 
         <!-- ============================================================
-             Artifact (right): the real, DETAILED helm-java #351.
-             Compatibility + Validation = where the expensive thinking
-             went, so a cheap executor can run it safely.
+             Artifact (right): the real helm-java #351. The body (the
+             concrete spec) is the step-1 reveal; the header (it exists,
+             it's open, it's a good first issue) anchors step 0.
+               Contract     the real fluent API the issue proposes
+               Validation   nested k8s tests + the module test command
+               meta         Java-8 constraint + the reference impl
              ============================================================ -->
         <article class="issue">
           <header class="panel-bar gh">
@@ -1979,29 +1998,28 @@
             </div>
           </div>
           <div class="issue-body">
-            <div class="block">
-              <div class="bh">Compatibility</div>
-              <div class="ln"><span class="hot">Java 8 baseline</span> · no var, no records</div>
-              <div class="ln">additive public API only</div>
-              <div class="ln">preserve existing behavior</div>
+            <div class="block contract">
+              <div class="bh">Contract</div>
+              <pre class="api"><code><span class="k">Helm</span>.<span class="m">rollback</span>(<span class="s">"r"</span>)
+    .<span class="m">toRevision</span>(n).<span class="m">call</span>() <span class="ret">→ Release</span></code></pre>
             </div>
             <div class="block">
               <div class="bh">Validation</div>
-              <div class="ln">add a JUnit regression test</div>
-              <div class="ln">run <code>./mvnw test -pl helm-java</code></div>
-              <div class="ln">don't hand-edit generated native code</div>
+              <div class="ln">nested k8s tests in <code>HelmKubernetesTest</code></div>
+              <div class="ln"><code>./mvnw test -pl helm-java</code></div>
             </div>
-            <div class="ref">reference impl → <code>StatusCommand.java</code></div>
+            <div class="meta">
+              <span class="m-java">Java 8 · no var, no records</span>
+              <span class="m-ref">reference impl → <code>StatusCommand.java</code></span>
+            </div>
           </div>
         </article>
       </div>
 
       <div class="tag-line">
         <span class="lbl">// takeaway</span>
-        <div class="quotes">
-          <span class="quote q-0">Spend the expensive model on the <em>problem</em>, not the typing.</span>
-          <span class="quote q-1">Cheap implementation is possible when the problem was <em>expensive to think through</em>.</span>
-        </div>
+        <div class="proof"><em>Anyone</em> can pick this up now.</div>
+        <div class="lesson">Do the expensive thinking <b>once</b>, so the rest stays cheap.</div>
       </div>
     </div>
 
