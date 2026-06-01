@@ -523,6 +523,21 @@ future dense slide.
   ★67) so all four read consistently. (Org sub-lines on the two longest paths still ellipsize —
   acceptable, the full repo name above carries identity. The `containers.png` mark has a baked-in
   wordmark that reads slightly busy at 38px; swap for a glyph-only asset if it bothers.)
+  **Update (five cards):** added **YAKD** (`manusa/yakd`) as a fifth card pinned on top in the
+  centre of the page — same construction (and therefore the same height) as the four grid cards,
+  just narrower (312px). Its four corners peek over the inner corners of the 2×2 grid, dipping only
+  into each card's blank padding so no text is covered. To make room, trimmed the body padding
+  (70→44px) to give the notebook more height, and widened the grid cards 360→392px so repo names
+  could come up **21→24px** (12pt) while the longest name still fits on one line. The two rows are
+  spaced so the central gap is a touch under one card-height, which lets a single card-height YAKD
+  reach both rows for the corner overlaps. Then **distributed the seven groups evenly down the
+  page** (title → annotation → cards → annotation → post-it/console → annotation) — the cluster had
+  been squashed to the top with the handwritten notes jammed against the cards (a-top↔cards was
+  7px, a-mid↔console 1px). Translated the card block down as a unit (preserving the overlaps) and
+  re-spaced the bottom so each column reads in an even ~40–45px rhythm, and bumped the Caveat
+  annotations 32/34/36 → **36/38/40px** for more presence. Verified heights are consistent, the
+  per-column gaps are even, and overlaps land off every name/meta box (DOM measurement);
+  `snapshot:diff` shows only this slide changed.
 
 - **Slide 18 — Act 4 "From prompt to skill" (SKILL.md conveyor).** Lifted the
   card content off the 6.5–10pt floor: RAMP prompt runs 24→30px; FAIL-card PR
