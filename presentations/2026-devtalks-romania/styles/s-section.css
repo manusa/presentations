@@ -65,7 +65,11 @@
 }
 .s-section .mvn-anno {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 24px;
+  /* 30px = 15pt projected — just over the mono must-read floor (28px/14pt).
+     This line carries the act's @Delivers(...) pillar names, so it is
+     content, not chrome; 24px (12pt) sat in the decorative-chrome tier.
+     Uniform across all six dividers; nowrap, so verified non-clipping. */
+  font-size: 30px;
   color: var(--fg-mute);
   display: flex;
   align-items: center;
