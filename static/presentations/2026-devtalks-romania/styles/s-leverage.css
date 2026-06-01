@@ -162,11 +162,31 @@
 }
 .s-leverage .band.expensive .bhead i { color: var(--accent-2-ink); margin-right: 6px; }
 
+/* The expensive-work list: one task per line with a consistent accent
+   marker, so the items read as a uniform set (no mixed `·` / line-break
+   grouping). Mono, kept at the 28px must-read size. */
 .s-leverage .band .work {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   font-family: 'JetBrains Mono', monospace;
   font-size: 28px;
-  line-height: 1.5;
+  line-height: 1.32;
   color: var(--fg-dim);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.s-leverage .band .work li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.s-leverage .band .work li::before {
+  content: "·";
+  color: var(--accent-2-ink);
+  font-weight: 700;
+  flex-shrink: 0;
 }
 .s-leverage .band .implementers {
   list-style: none;
@@ -195,7 +215,7 @@
 /* connector between the two bands — the step-1 reveal that links the
    expensive thinking to the spec it produces (the issue, on the right). */
 .s-leverage .flow-arrow {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 14px;
   padding-left: 8px;
@@ -203,17 +223,14 @@
   color: var(--fg-dim);
   font-size: 28px;
 }
-.s-leverage .flow-arrow .arr { color: var(--accent-ink); font-weight: 700; font-size: 32px; }
-/* Step 0: a faint downward stub under the expensive band, no label — it
-   promises the chain continues, so the calm lower half reads as "to be
-   continued", not "unfinished". */
-.s-leverage[data-step="0"] .flow-arrow { opacity: 0.32; }
-.s-leverage[data-step="0"] .flow-arrow .arr-text { display: none; }
-/* Step 1: the connector completes (the label appears) as the spec lands. */
+/* The flow-arrow is the step-1 reveal that links the expensive thinking
+   to the spec it produces — it is absent at step 0, not a faint stub. */
 .s-leverage[data-step="1"] .flow-arrow,
 .s-leverage[data-step="2"] .flow-arrow {
+  display: flex;
   animation: lev-reveal 300ms cubic-bezier(.2, .7, .2, 1) both;
 }
+.s-leverage .flow-arrow .arr { color: var(--accent-ink); font-weight: 700; font-size: 32px; }
 
 /* ---------- Artifact (right): the detailed helm-java #351 issue ---------- */
 .s-leverage .issue {
@@ -458,7 +475,6 @@
     animation: none !important;
     opacity: 1 !important;
   }
-  .s-leverage .flow-arrow .arr-text { display: inline !important; }
   .s-leverage .issue .issue-body {
     display: flex !important;
     animation: none !important;
