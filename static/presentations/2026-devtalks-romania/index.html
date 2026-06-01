@@ -1690,17 +1690,24 @@
 
   <!-- ============================================================
        11 ACT 4 · GIVE THE AGENT A PROJECT MAP
-       Single-step (the Map pillar). A real AGENTS.md excerpt +
-       3 annotated gems; the mock-mode TLS gotcha is the landing
-       beat. The chrome-path filename cycles AGENTS.md ↔ CLAUDE.md
-       ↔ GEMINI.md ↔ .cursorrules to show the convention is tool-
-       agnostic (frozen to AGENTS.md in every capture — see the
+       4-step reveal (the Map pillar): concept -> file -> legend ->
+       landing. Each beat earns a narration pause.
+         step 0  concept hero: README (use) vs AGENTS (change), with
+                 the tool-agnostic filename cycler (AGENTS.md / CLAUDE.md
+                 / GEMINI.md / .cursorrules) in the dim "whatever your
+                 agent calls it" line. No file content yet, so the
+                 audience learns WHAT the file is before seeing one.
+         step 1  the real fabric8 AGENTS.md panel lands (the artifact).
+         step 2  the 3-gem map legend reveals beside it (the mock-mode
+                 TLS gotcha is the laugh beat).
+         step 3  the "Not generated. Project-specific." takeaway lands.
+       The cycler is frozen to AGENTS.md in every capture (see the
        deck-stage[no-rail] / @media print guards in s-agents-md.css).
        ============================================================ -->
-  <section class="s-agents-md light" data-label="Act IV · Give the agent a project map">
+  <section class="s-agents-md light" data-label="Act IV · Give the agent a project map" data-step-max="3">
     <div class="chrome-top">
       <span class="dot"></span>
-      <span>~/dev/devtalks-2026 · devtalks-act-04-teach-agents/<span class="fname-cycle" aria-label="AGENTS.md"><span class="fname-track" aria-hidden="true"><span>AGENTS.md</span><span>CLAUDE.md</span><span>GEMINI.md</span><span>.cursorrules</span><span>AGENTS.md</span></span></span></span>
+      <span>~/dev/devtalks-2026 · devtalks-act-04-teach-agents/AGENTS.md</span>
       <span class="spacer"></span>
       <span class="pill">act 04 · agent map · 11</span>
     </div>
@@ -1709,6 +1716,9 @@
       <header class="head">
         <div class="eyebrow">// act 04 · agent map</div>
         <h2 class="title">Give the agent a project <em>map</em>.</h2>
+        <!-- Kept top-right on every step (redundant with the step-0 hero by
+             design): a persistent reminder of what AGENTS.md is while the
+             file + legend are on screen. -->
         <p class="sub">
           <span class="t-readme">README.md</span> tells a person how to use it.<br/>
           <span class="t-agents">AGENTS.md</span> tells an agent how to change it.
@@ -1717,9 +1727,21 @@
 
       <div class="stage">
         <!-- ============================================================
+             Step-0 concept hero — overlays the stage before any file
+             content. Answers "what IS an AGENTS.md" via the README/AGENTS
+             use-vs-change contrast, and houses the tool-agnostic filename
+             cycler (relocated here from the chrome path). Fades out as the
+             real file panel lands on step 1.
+             ============================================================ -->
+        <div class="map-intro">
+          <div class="mi-line"><span class="t-readme">README.md</span> tells a person how to <em>use</em> it.</div>
+          <div class="mi-line"><span class="t-agents">AGENTS.md</span> tells an agent how to <em>change</em> it.</div>
+          <div class="mi-files">one file at the repo root, whatever your agent calls it: <span class="fname-cycle" aria-label="AGENTS.md"><span class="fname-track" aria-hidden="true"><span>AGENTS.md</span><span>CLAUDE.md</span><span>GEMINI.md</span><span>.cursorrules</span><span>AGENTS.md</span></span></span></div>
+        </div>
+
+        <!-- ============================================================
              AGENTS.md panel — real excerpt from fabric8 K8s client.
-             Three gems highlighted; the lines below the first section
-             fade on step 1 so the panel reads as "summary card".
+             Reveals on step 1; the three gems are the step-2 map legend.
              ============================================================ -->
         <article class="agents-panel">
           <header class="panel-bar">

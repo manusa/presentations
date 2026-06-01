@@ -2,16 +2,22 @@
    .s-agents-md — Act 4 opener (the Map pillar).
    "Give the agent a project map."
 
-   Single-step. A real AGENTS.md excerpt (fabric8 K8s client)
-   read through a map legend of three gems:
-     Golden path      — what should I run?      (canonical command)
-     Known trap       — what will waste time?   (~7-8s TLS gotcha, the landing beat)
-     Local checkpoint — how do I know before opening a PR? (CI repro)
+   4-step reveal — concept -> file -> legend -> landing:
+     step 0  concept hero (.map-intro): README (use) vs AGENTS
+             (change), so the audience learns WHAT the file is
+             before seeing one. Houses the tool-agnostic filename
+             cycler. No file content yet.
+     step 1  the real AGENTS.md excerpt (fabric8 K8s client) lands.
+     step 2  the map legend of three gems reveals beside it:
+               Golden path      — what should I run?      (canonical command)
+               Known trap       — what will waste time?   (~7-8s TLS gotcha, the laugh)
+               Local checkpoint — how do I know before opening a PR? (CI repro)
+     step 3  the "Not generated. Project-specific." takeaway lands.
    The audience reads the artifact, not bullets.
 
-   The chrome-path filename cycles AGENTS.md / CLAUDE.md /
-   GEMINI.md / .cursorrules to show the convention is tool-
-   agnostic (frozen to AGENTS.md in every capture — see the
+   The filename cycler (in the step-0 hero) rolls AGENTS.md /
+   CLAUDE.md / GEMINI.md / .cursorrules to show the convention is
+   tool-agnostic (frozen to AGENTS.md in every capture — see the
    determinism guards at the bottom of this file). A large faint
    fa-map watermark sits bottom-right, echoing the recap card.
 
@@ -77,6 +83,8 @@
   font-style: normal;
   color: var(--accent);
 }
+/* Persistent subtitle (top-right) — the quiet, always-on version of the
+   README/AGENTS contrast; the step-0 hero is the loud version. */
 .s-agents-md .head .sub {
   grid-column: 2;
   margin: 0;
@@ -88,7 +96,85 @@
 }
 .s-agents-md .head .sub .t-readme { color: var(--fg-mute); }
 .s-agents-md .head .sub .t-agents { color: var(--accent-ink); font-weight: 600; }
-.s-agents-md .head .sub .arrow { color: var(--fg-mute); margin: 0 6px; }
+
+/* ============================================================
+   Step-0 concept hero (.map-intro) — overlays the stage before
+   any file content. Absolutely positioned so the cross-fade with
+   the file panel on step 1 never reflows (the stage keeps its
+   grid height from the still-laid-out, opacity:0 panel + callouts).
+   ============================================================ */
+.s-agents-md .map-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  transition: opacity .35s cubic-bezier(.2, .7, .2, 1);
+}
+.s-agents-md .map-intro .mi-line {
+  font-size: 46px;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  color: var(--fg-dim);
+}
+.s-agents-md .map-intro .mi-line .t-readme { color: var(--fg-mute); }
+.s-agents-md .map-intro .mi-line .t-agents { color: var(--accent-ink); font-weight: 600; }
+.s-agents-md .map-intro .mi-line em { font-style: normal; font-weight: 700; color: var(--fg); }
+.s-agents-md .map-intro .mi-files {
+  margin-top: 14px;
+  font-size: 28px;
+  /* line-height matches the cycler's 1em roll window so the rolling
+     filename shares this line's baseline (overflow:hidden makes the
+     window's baseline its bottom edge — equal box heights align them). */
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--fg-mute);
+}
+.s-agents-md .map-intro .mi-files .fname-cycle { color: var(--accent-ink); }
+
+/* ============================================================
+   Step reveals — concept (0) -> file (1) -> legend (2) -> landing (3).
+   Reserve space (opacity/visibility, never display) so nothing
+   reflows; the panel + callouts are laid out from step 0 even
+   while invisible, keeping the callout leader-ticks aligned.
+   ============================================================ */
+.s-agents-md .agents-panel,
+.s-agents-md .callouts {
+  opacity: 0;
+  visibility: hidden;
+}
+/* step 1+ : the real file panel */
+.s-agents-md[data-step="1"] .agents-panel,
+.s-agents-md[data-step="2"] .agents-panel,
+.s-agents-md[data-step="3"] .agents-panel {
+  opacity: 1;
+  visibility: visible;
+  animation: agm-reveal 360ms cubic-bezier(.2, .7, .2, 1) both;
+}
+/* step 2+ : the map legend */
+.s-agents-md[data-step="2"] .callouts,
+.s-agents-md[data-step="3"] .callouts {
+  opacity: 1;
+  visibility: visible;
+  animation: agm-reveal 360ms cubic-bezier(.2, .7, .2, 1) both;
+}
+/* the concept hero fades out once the file lands */
+.s-agents-md[data-step="1"] .map-intro,
+.s-agents-md[data-step="2"] .map-intro,
+.s-agents-md[data-step="3"] .map-intro {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s cubic-bezier(.2, .7, .2, 1), visibility 0s linear .35s;
+}
+@keyframes agm-reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ============================================================
    Stage — single-row 2-col grid:
@@ -243,7 +329,9 @@
 .s-agents-md .callouts .co.co-2 .num { color: var(--accent-2-ink); }
 
 /* ============================================================
-   Tag line — single takeaway (written, not generated)
+   Tag line — single takeaway (written, not generated).
+   Lands alone on step 3, once the full artifact + legend are up.
+   Space is reserved (min-height) so the reveal never reflows.
    ============================================================ */
 .s-agents-md .tag-line {
   position: relative;
@@ -251,6 +339,13 @@
   flex-direction: column;
   gap: 6px;
   min-height: 56px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s cubic-bezier(.2, .7, .2, 1);
+}
+.s-agents-md[data-step="3"] .tag-line {
+  opacity: 1;
+  visibility: visible;
 }
 .s-agents-md .tag-line .lbl {
   font-family: 'JetBrains Mono', monospace;
@@ -277,24 +372,41 @@
 }
 
 /* ============================================================
-   Print — drop heavy shadows / backdrop-filters so Chromium's
-   page.pdf() doesn't rasterise them as opaque rectangles.
+   Print — flatten the step reveal to its final (step-3) composite
+   so the PDF handout shows the whole slide: file + legend + takeaway,
+   with the step-0 concept hero hidden. Also drop heavy shadows so
+   Chromium's page.pdf() doesn't rasterise them as opaque rectangles.
    ============================================================ */
 @media print {
   .s-agents-md .agents-panel,
   .s-agents-md .callouts .co { box-shadow: none; }
+  .s-agents-md .agents-panel,
+  .s-agents-md .callouts {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: none !important;
+  }
+  .s-agents-md .tag-line {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .s-agents-md .map-intro {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
 }
 
 /* The Map pillar watermark (.pillar-watermark.map-watermark) is
    defined in shared.css — same glyph treatment as the Roads slides. */
 
 /* ============================================================
-   Chrome-path filename cycler — THIS SLIDE ONLY.
+   Filename cycler — THIS SLIDE ONLY.
    Departure-board vertical roll through equivalent agent-
    instruction filenames. Signals "whatever your agent reads,"
-   not a Claude-specific convention. Lives in the low-salience
-   chrome path so it never competes with the artifact or the
-   speaker.
+   not a Claude-specific convention. Lives in the step-0 concept
+   hero (.map-intro .mi-files), where the "what is this file" beat
+   is made — so it reinforces the point instead of competing with
+   the artifact or the speaker.
 
    DETERMINISM: scripts/lib/deck.js settleAnimations() treats an
    infinite loop as already-settled and captures an ARBITRARY
@@ -315,7 +427,7 @@
 .s-agents-md .fname-track {
   display: flex;
   flex-direction: column;
-  animation: fname-roll 16s cubic-bezier(.6, 0, .2, 1) infinite;
+  animation: fname-roll 12s cubic-bezier(.6, 0, .2, 1) infinite;
 }
 .s-agents-md .fname-track > span {
   display: block;
