@@ -1,0 +1,94 @@
+/* ============================================================
+   S-PILLAR-TRACK — persistent spine wayfinder (Map · Roads · Guardrails)
+
+   A centered, outlined pill in the footer rail, present only on
+   §14-§27 (Act IV divider -> Act VI close). The pill carries the SAME
+   border treatment as the chrome-top .pill (1px var(--line-strong),
+   transparent fill) so it reads as part of the chrome, not a callout.
+
+   Accumulating model:
+     · not-yet-reached pillars are faint (they recede)
+     · covered pillars are lit in their color, only slightly dimmer
+       than the active one
+     · the current pillar is full-strength + bold — attention lands here
+   The current pillar is declared per slide via
+   data-active="map|roads|guard|all" on the .pillar-track.
+
+   Theme-aware: dark act dividers use the bright pillar ramp; .light
+   content slides use the AA-on-cream -ink variants — the same colors
+   the recap uses, so the spine reads as one system everywhere.
+
+   Centered absolutely inside the position:absolute .chrome-bottom
+   rail, so it never disturbs the left brand mark or right venue line.
+   ============================================================ */
+.pillar-track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 6px 18px;
+  border: 1px solid var(--line-strong);   /* same outline as the chrome-top .pill */
+  border-radius: 999px;
+  background: none;                        /* transparent fill — quiet, not a callout */
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;                         /* 14pt projected — over the must-read floor */
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  z-index: 3;
+
+  /* pillar ramp — dark act-divider defaults */
+  --pt-map: var(--cyan);
+  --pt-roads: var(--orange-soft);
+  --pt-guard: var(--accent);
+}
+/* .light content slides: AA-on-cream inks (identical to the recap) */
+.light .pillar-track {
+  --pt-map: var(--cyan-ink);
+  --pt-roads: var(--accent-2-ink);
+  --pt-guard: var(--accent-ink);
+}
+
+/* default: not-yet-reached — faint so it recedes */
+.pillar-track .pt {
+  color: var(--fg-mute);
+  opacity: 0.3;
+  transition: color 220ms ease, opacity 220ms ease;
+}
+.pillar-track .pt-sep {
+  color: var(--fg-mute);
+  opacity: 0.28;
+  font-weight: 400;
+}
+
+/* covered = lit in its color, only a little dimmer than active */
+.pillar-track[data-active="roads"] .pt-map,
+.pillar-track[data-active="guard"] .pt-map,
+.pillar-track[data-active="guard"] .pt-roads {
+  opacity: 0.65;          /* lit-but-settled — kept clearly below the active one */
+  font-weight: 600;
+}
+.pillar-track[data-active="roads"] .pt-map   { color: var(--pt-map); }
+.pillar-track[data-active="guard"] .pt-map   { color: var(--pt-map); }
+.pillar-track[data-active="guard"] .pt-roads { color: var(--pt-roads); }
+
+/* current = full strength + bold; attention lands here */
+.pillar-track[data-active="map"]   .pt-map,
+.pillar-track[data-active="roads"] .pt-roads,
+.pillar-track[data-active="guard"] .pt-guard {
+  opacity: 1;
+  font-weight: 800;
+}
+.pillar-track[data-active="map"]   .pt-map   { color: var(--pt-map); }
+.pillar-track[data-active="roads"] .pt-roads { color: var(--pt-roads); }
+.pillar-track[data-active="guard"] .pt-guard { color: var(--pt-guard); }
+
+/* all — Act VI close divider: every pillar lit (the completed spine) */
+.pillar-track[data-active="all"] .pt-map   { color: var(--pt-map);   opacity: 0.92; font-weight: 700; }
+.pillar-track[data-active="all"] .pt-roads { color: var(--pt-roads); opacity: 0.92; font-weight: 700; }
+.pillar-track[data-active="all"] .pt-guard { color: var(--pt-guard); opacity: 0.92; font-weight: 700; }
