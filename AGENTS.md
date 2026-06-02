@@ -222,7 +222,9 @@ Same pattern whether the change is supposed to be invisible (refactor) or very v
 
 1. `npm run snapshot:baseline` then load the deck and click through it visually as a sanity pass.
 2. `npm run export:pdf -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ /tmp/<talk-name>.pdf` for the conference PDF handover.
-3. Optionally bump `package.json` version → next push releases a fresh `@marcnuri/presentations` tag with the final deck baked into `public/`.
+3. Cut the release. Bump `package.json` version and push — that publishes `@marcnuri/presentations@<v>` with the final deck baked into `public/`. Then create the GitHub release carrying the deck PDF: `gh release create v<v> /tmp/<talk-name>.pdf --target $(git rev-parse HEAD) --latest` (tags use a `v` prefix). When a companion links page links straight to the PDF, the **asset filename is load-bearing** — name it exactly what the page hardcodes (the 2026 Romania links page expects `devtalks-romania-2026.pdf`). Re-cut after later deck edits with `gh release upload v<v> <pdf> --clobber`, keeping the same filename.
+
+**Gotcha — smoke-testing the published package**: `npx -y @marcnuri/presentations@<v>` run **from inside this repo** fails with `sh: mn-presentations: command not found` whenever `<v>` equals the local `package.json` version. npx satisfies the spec from the local project instead of the registry, then tries to exec the bin from the project's own `node_modules/.bin/` — where a package never symlinks its own bin. It is **not** a packaging bug. Verify from a neutral directory (`cd ~ && npx -y @marcnuri/presentations@<v>`) or with the heuristic-proof explicit-bin form `npx -y -p @marcnuri/presentations@<v> mn-presentations`. The bin (`mn-presentations` → `index.js`) serves `public/` via Express on `:8000`.
 
 ## Deploy
 
