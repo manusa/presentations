@@ -250,13 +250,12 @@
     <p class="sec-label" id="slides-label">slides</p>
     <div class="cards">
       <!--
-        Slides are published as a release artifact on the presentations repo,
-        pinned to tag v0.12.0 so this link can't drift to a later talk's
-        release. Create that release and attach the deck PDF. Once the asset
-        filename is fixed, this can point straight at the file, e.g.
-        https://github.com/manusa/presentations/releases/download/v0.12.0/devtalks-romania-2026.pdf
+        Slides ship as a release asset pinned to tag v0.12.0 (so this link
+        can't drift to a later talk's release) and link straight to the PDF,
+        so the QR lands on the download itself rather than the releases page.
+        The asset must be named devtalks-romania-2026.pdf for this to resolve.
       -->
-      <a class="card primary" href="https://github.com/manusa/presentations/releases/tag/v0.12.0" target="_blank" rel="noopener noreferrer">
+      <a class="card primary" href="https://github.com/manusa/presentations/releases/download/v0.12.0/devtalks-romania-2026.pdf" target="_blank" rel="noopener noreferrer">
         <span class="ico"><i class="fa-solid fa-file-arrow-down"></i></span>
         <span class="txt">
           <span class="t">Download the slides (PDF)</span>
