@@ -3,6 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const {gotoDeck, settleAnimations, applyExportHidden, expandStepClones} = require('./lib/deck');
+const {extractPdfUris, diffLinks} = require('./lib/pdf-links');
 
 const USAGE = `Usage: npm run export:pdf -- <deck-url> <output.pdf>
 
@@ -196,6 +197,45 @@ async function transcodePhotosToJpeg(page, {quality = 85} = {}) {
 
     const stat = fs.statSync(absOut);
     console.log(`✓ ${absOut} — ${totalAfterExpand} pages, ${(stat.size / 1024).toFixed(1)}KB`);
+
+    // Last step: assert every clickable reference in the deck survived into the
+    // PDF as a link annotation. The expected set is the deck's own <a href>
+    // anchors (read live from the DOM, excluding hidden export chrome), so this
+    // self-validates without a separate source of truth. A regression in the
+    // export pipeline, an @media print rule, or an <a> wrapper that drops links
+    // fails the export loudly instead of shipping a silently-broken PDF.
+    const expectedLinks = await page.evaluate(() => {
+      const urls = new Set();
+      document.querySelectorAll('a[href]').forEach((a) => {
+        const href = a.getAttribute('href');
+        if (href && /^https?:/i.test(href) && !a.closest('.export-hidden')) {
+          urls.add(href);
+        }
+      });
+      return [...urls];
+    });
+    if (expectedLinks.length > 0) {
+      const foundLinks = await extractPdfUris(fs.readFileSync(absOut));
+      const {missing, extra} = diffLinks(foundLinks, expectedLinks);
+      if (extra.length) {
+        console.warn(
+          `⚠ Link check: ${extra.length} URL${extra.length === 1 ? '' : 's'} in the PDF not present as a deck anchor:`
+        );
+        extra.forEach((u) => console.warn(`    extra: ${u}`));
+      }
+      if (missing.length) {
+        console.error(
+          `✗ Link check: ${missing.length}/${expectedLinks.length} anchor link${
+            missing.length === 1 ? '' : 's'
+          } missing from the PDF:`
+        );
+        missing.forEach((u) => console.error(`    missing: ${u}`));
+        console.error('The PDF was written but does not preserve every clickable reference.');
+        process.exitCode = 1;
+      } else {
+        console.log(`✓ Link check: all ${expectedLinks.length} anchor links preserved in the PDF.`);
+      }
+    }
   } finally {
     await browser.close();
   }
