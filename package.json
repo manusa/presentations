@@ -24,7 +24,8 @@
     "snapshot:baseline": "node scripts/snapshot-baseline.js",
     "snapshot:diff": "node scripts/snapshot-diff.js",
     "audit:fit": "node scripts/audit-fit.js",
-    "test:deck-kit": "node --test tests/deck-kit/*.spec.js"
+    "test:deck-kit": "node --test tests/deck-kit/*.spec.js",
+    "test:pdf-links": "node scripts/test-pdf-links.js"
   },
   "publishConfig": {
     "access": "public"
@@ -67,7 +68,8 @@
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/tests/deck-kit/"
+      "/tests/deck-kit/",
+      "/tests/pdf-links/"
     ]
   },
   "devDependencies": {
@@ -76,6 +78,7 @@
     "eslint-plugin-react": "7.37.5",
     "jest": "30.0.2",
     "live-server": "1.2.2",
+    "pdf-lib": "1.17.1",
     "pixelmatch": "7.2.0",
     "playwright": "1.60.0",
     "pngjs": "7.0.0",

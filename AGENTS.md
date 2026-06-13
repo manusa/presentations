@@ -47,7 +47,7 @@ This is part of the deck-kit contract (`static/deck-kit/README.md` § URL hash).
 
 Four Playwright-backed scripts produce visual artifacts. All output goes under `./screenshots/` (gitignored). All capture at 1920×1080.
 
-**Batch-safe one-liners.** The capture/audit scripts are deliberately batch-safe: `screenshot`/`screenshot:deck`/`export:pdf`/`snapshot:baseline` exit 0 on success, `snapshot:diff` exits 1 only on a real pixel regression, and `audit:fit` exits 0 in report mode (non-zero only behind `--ci`). Point them straight at `serve:static` — the `networkidle` hang is gone (`scripts/lib/deck.js` → `gotoDeck`), so no throwaway `python3 -m http.server` host is needed. The remaining footgun is **raw `grep`/`curl` interposed in a chain**: `grep` exits **1** when it matches nothing and `curl` exits non-zero on any transport/non-2xx error, so under `&&`, a pipeline, or `set -euo pipefail` a harmless no-match aborts the rest of the batch. Guard any `grep`/`curl` whose empty result is acceptable with `|| true` (or `|| :`):
+**Batch-safe one-liners.** The capture/audit scripts are deliberately batch-safe: `screenshot`/`screenshot:deck`/`snapshot:baseline` exit 0 on success, `export:pdf` exits 0 on success but **1 if the exported PDF dropped a clickable link** (its built-in link-survival check), `snapshot:diff` exits 1 only on a real pixel regression, and `audit:fit` exits 0 in report mode (non-zero only behind `--ci`). Point them straight at `serve:static` — the `networkidle` hang is gone (`scripts/lib/deck.js` → `gotoDeck`), so no throwaway `python3 -m http.server` host is needed. The remaining footgun is **raw `grep`/`curl` interposed in a chain**: `grep` exits **1** when it matches nothing and `curl` exits non-zero on any transport/non-2xx error, so under `&&`, a pipeline, or `set -euo pipefail` a harmless no-match aborts the rest of the batch. Guard any `grep`/`curl` whose empty result is acceptable with `|| true` (or `|| :`):
 
 ```bash
 PORT=$(cat .live-server.port)                              # sidecar, written by serve:static
@@ -77,10 +77,24 @@ npm run screenshot:deck -- http://localhost:$(cat .live-server.port)/presentatio
 npm run screenshot -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ s19-step1 --slide 19 --step 1
 ```
 
-**Whole deck → multi-page PDF** — `export:pdf`. Renders straight to a 1920×1080 vector PDF via Chromium's `page.pdf()` against the deck's `@media print` rule — text remains selectable, file size stays small (no rasterised slides). Photographic WebP `<image-slot>` sources are transcoded to JPEG just-in-time before render, because PDF doesn't support WebP and would otherwise embed each one as a multi-megabyte FlateDecode bitmap. Hand the output to conference organizers who require PDF.
+**Whole deck → multi-page PDF** — `export:pdf`. Renders straight to a 1920×1080 vector PDF via Chromium's `page.pdf()` against the deck's `@media print` rule — text remains selectable, file size stays small (no rasterised slides). Photographic WebP `<image-slot>` sources are transcoded to JPEG just-in-time before render, because PDF doesn't support WebP and would otherwise embed each one as a multi-megabyte FlateDecode bitmap. Hand the output to conference organizers who require PDF. As its **last step it runs the PDF link-survival check** (below) against the deck's own anchors and **exits non-zero if any clickable reference was dropped** — a broken PDF fails the export instead of shipping silently.
 ```bash
 npm run export:pdf -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ /tmp/devtalks-2026.pdf
 ```
+
+**PDF link-survival check** — `test:pdf-links`. Asserts the deck's clickable references (`<a href>` anchors) survive into the exported PDF as link annotations. This guards against a future change to `export-pdf.js`, an `@media print` rule, or an `<a>` wrapper silently breaking link survival — which otherwise only surfaces when a viewer of the post-talk PDF reports a dead link. `export:pdf` invokes it automatically (reading the deck's anchors live from the DOM); run it standalone to inspect a PDF or re-check one:
+```bash
+# inspect: print every URL embedded in the PDF, exit 0
+npm run test:pdf-links -- /tmp/devtalks-2026.pdf
+
+# guard: derive the expected set live from the deck's index.html <a> anchors,
+# fail (exit 1, "missing: …") if any is absent from the PDF
+npm run test:pdf-links -- /tmp/devtalks-2026.pdf static/presentations/2026-devtalks-romania/
+
+# guard against an explicit JSON list of URLs instead of the deck markup
+npm run test:pdf-links -- /tmp/devtalks-2026.pdf path/to/expected-pdf-links.json
+```
+Only `<a href>` anchors count — stylesheet/font/preconnect `<link>`s and `og:`/`<meta>` URLs are not anchors and never become PDF link annotations, so they are excluded from the expected set. URLs are normalized for comparison, so a bare origin and its trailing-slash form (`https://blog.marcnuri.com` vs `…/`, as Chromium stores it) match. Backed by `pdf-lib` (pure JS, no native deps); the shared extraction/diff logic lives in `scripts/lib/pdf-links.js`, unit-tested under `tests/pdf-links/` (`node --test tests/pdf-links/*.spec.js`). This is a repo-level PDF-output concern, **not** a deck-kit one.
 
 **Step-aware capture**: a `<section>` that publishes `data-step-max="N"` becomes N+1 PDF pages (in `export:pdf`) and N+1 PNGs (in `screenshot:deck` / snapshot scripts), rendered at `data-step="0..N"`. This is the contract `.s-amplifier` uses (3 states per slide); any future stepping slide should follow it and all four scripts will pick it up with no code changes.
 
