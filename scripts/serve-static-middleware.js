@@ -55,12 +55,24 @@ function deckLabel(slug) {
   return slug;
 }
 
+function deckDate(slug) {
+  try {
+    const json = JSON.parse(fs.readFileSync(
+      path.join(PRESENTATIONS_ROOT, slug, 'meta.json'), 'utf8'
+    ));
+    if (json && typeof json.date === 'string') return json.date.trim();
+  } catch {}
+  return '';
+}
+
 function listDecks() {
   try {
     return fs.readdirSync(PRESENTATIONS_ROOT, { withFileTypes: true })
       .filter((e) => e.isDirectory())
       .map((e) => e.name)
-      .sort();
+      // Newest first (matches generate-landing.js): meta.json `date` descending,
+      // undated decks last, slug tiebreak.
+      .sort((a, b) => deckDate(b).localeCompare(deckDate(a)) || a.localeCompare(b));
   } catch {
     return [];
   }
