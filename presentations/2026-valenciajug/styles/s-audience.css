@@ -1,0 +1,262 @@
+/* ============================================================
+   .s-audience — Act 3 opener · audience-interaction prompt
+   "Who tried AI on a real Java project… and got slop?"
+   Light cream slide, with a dark terminal/CI card on the right
+   (same pattern as the .light .terminal code slide). Pink ink
+   accent for failure states.
+   ============================================================ */
+.s-audience {
+  background:
+    radial-gradient(ellipse at 22% 30%, rgba(229, 72, 77, 0.08) 0%, rgba(229, 72, 77, 0) 58%),
+    var(--bg);
+}
+.s-audience::before {
+  /* Faint dotted grid on the cream for atmosphere */
+  content: "";
+  position: absolute;
+  inset: 56px 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.s-audience .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  padding: 70px var(--pad-x) 50px;
+  display: grid;
+  grid-template-columns: minmax(560px, 1fr) minmax(820px, 1.18fr);
+  gap: 72px;
+  align-items: start;
+  z-index: 1;
+}
+
+/* — Left column — */
+.s-audience .body > .left { display: flex; flex-direction: column; gap: 36px; }
+
+.s-audience .eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: var(--fg-mute);
+}
+.s-audience .eyebrow .hash { color: var(--accent-ink); margin-right: 8px; }
+
+.s-audience h1.h-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 104px;
+  line-height: 1.02;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin: 0;
+  text-wrap: pretty;
+}
+.s-audience h1.h-title .slop {
+  color: var(--accent);
+  position: relative;
+  white-space: nowrap;
+}
+.s-audience h1.h-title .slop::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 4px;
+  background: var(--accent);
+  opacity: 0.55;
+  border-radius: 2px;
+}
+.s-audience h1.h-title .ell { color: var(--fg-mute); font-weight: 500; }
+
+.s-audience .subline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 34px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--fg);
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  max-width: 720px;
+  margin-top: 4px;
+}
+.s-audience .subline .caret {
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 38px;
+  line-height: 1;
+}
+
+/* Chips row beneath the subline */
+.s-audience .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 14px;
+  margin-top: 8px;
+  max-width: 700px;
+}
+.s-audience .chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(229, 72, 77, 0.45);
+  background: rgba(229, 72, 77, 0.08);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.s-audience .chip::before {
+  content: "✗";
+  color: var(--accent-ink);
+  font-weight: 700;
+}
+
+/* — Right column · terminal/CI card —
+   Stays dark on the cream slide so the code/CI output keeps its
+   terminal feel. Mirrors the pattern used by .light .terminal
+   on the existing code slide. */
+.s-audience .terminal {
+  margin-top: 56px;
+  background: #0C0A12;
+  border: 1px solid rgba(24, 20, 16, 0.18);
+  border-radius: 14px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 24px 60px rgba(24, 20, 16, 0.22),
+    0 6px 18px rgba(24, 20, 16, 0.10),
+    0 0 0 1px rgba(229, 72, 77, 0.18),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+  align-self: start;
+  color: #E7E9F5;
+}
+.s-audience .terminal .t-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+}
+.s-audience .terminal .t-head .dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+}
+.s-audience .terminal .t-head .dot.r { background: #FF5F57; }
+.s-audience .terminal .t-head .dot.y { background: #FEBC2E; }
+.s-audience .terminal .t-head .dot.g { background: #28C840; }
+.s-audience .terminal .t-head .title {
+  margin-left: 12px;
+  font-size: 18px;
+  color: #8B8278;
+  letter-spacing: 0.02em;
+}
+.s-audience .terminal .t-head .badge {
+  margin-left: auto;
+  font-size: 14px;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  color: #E5484D;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(229, 72, 77, 0.14);
+  border: 1px solid rgba(229, 72, 77, 0.45);
+}
+
+.s-audience .terminal .t-body {
+  padding: 28px 30px 28px;
+  font-size: 26px;
+  line-height: 1.55;
+  color: #BDB4AB;
+}
+.s-audience .terminal .t-cmd {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 24px;
+  white-space: nowrap;
+}
+.s-audience .terminal .t-cmd .prompt { color: #8B8278; }
+.s-audience .terminal .t-cmd .bin    { color: #FFFFFF; font-weight: 600; }
+.s-audience .terminal .t-cmd .verb   { color: #FFFFFF; }
+.s-audience .terminal .t-cmd .arg    { color: #5BE9F0; }
+.s-audience .terminal .t-cmd .flag   { color: #E5484D; }
+.s-audience .terminal .t-cmd .val    { color: var(--orange-soft); }
+
+.s-audience .terminal .t-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 6px 0 16px;
+}
+
+.s-audience .terminal .t-line {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 6px 0;
+  font-size: 28px;
+  font-weight: 500;
+}
+.s-audience .terminal .t-line .g  { color: #6CCB85; font-weight: 700; }
+.s-audience .terminal .t-line .x  { color: #E5484D; font-weight: 700; }
+.s-audience .terminal .t-line.ok  .msg { color: #BDB4AB; }
+.s-audience .terminal .t-line.bad .msg { color: #FFFFFF; }
+.s-audience .terminal .t-line.bad .msg em {
+  font-style: normal;
+  color: #E5484D;
+  font-weight: 600;
+}
+
+.s-audience .terminal .t-foot {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed rgba(229, 72, 77, 0.32);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #BDB4AB;
+}
+.s-audience .terminal .t-foot .prompt-line {
+  color: #8B8278;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.s-audience .terminal .t-foot .exit { color: #E5484D; font-weight: 700; }
+.s-audience .terminal .t-foot .cursor {
+  display: inline-block;
+  width: 10px; height: 18px;
+  background: #FFFFFF;
+  margin-left: 8px;
+  vertical-align: -2px;
+  animation: s-audience-blink 1s step-end infinite;
+}
+@keyframes s-audience-blink {
+  50% { opacity: 0; }
+}
+
+/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
+   rectangles. Drop the 60px/18px navy lift on .terminal in PDF; keep
+   the 1px accent ring + inset highlight, both of which render fine. */
+@media print {
+  .s-audience .terminal {
+    box-shadow:
+      0 0 0 1px rgba(229, 72, 77, 0.18),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+}

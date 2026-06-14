@@ -1,0 +1,313 @@
+/* ============================================================
+   SLIDE — LEGACY FRAMING (Act 3 closer · two-column contrast)
+   Reframes "legacy" as cost-of-safe-change, not age. Left side
+   is a long-lived Java project that's calm and structured.
+   Right side is a fast new AI-assisted codebase that risks
+   becoming legacy fast. Stable / risky, no terminal, no
+   "old technology" tropes.
+   ============================================================ */
+.s-legacy .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  padding: 44px var(--pad-x) 32px var(--pad-x);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 22px;
+}
+
+/* Header */
+.s-legacy .lg-header { display: flex; flex-direction: column; gap: 10px; }
+.s-legacy .lg-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: var(--accent-ink);
+  letter-spacing: 0.08em;
+}
+.s-legacy h2.lg-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 56px;
+  line-height: 1.04;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 0;
+  color: var(--fg);
+  text-wrap: balance;
+  max-width: 1640px;
+}
+.s-legacy .lg-title em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+/* Two-column contrast. The risky column shares grid cell (col 2,
+   row 1) with a ghost placeholder so step 0 has an anchor on the
+   right half without forcing a layout shift on reveal. */
+.s-legacy .lg-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 40px;
+  min-height: 0;
+}
+.s-legacy .col-stable { grid-column: 1; grid-row: 1; }
+.s-legacy .col-risky-ghost,
+.s-legacy .col-risky { grid-column: 2; grid-row: 1; }
+
+/* Ghost outline for the risky column. Dashed box only — no text,
+   no label — so it anchors the right half without telegraphing
+   what's coming. */
+.s-legacy .col-risky-ghost {
+  border: 1px dashed rgba(24, 20, 16, 0.18);
+  background: transparent;
+}
+
+.s-legacy .lg-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 40px 28px 40px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line-strong);
+  min-height: 0;
+}
+
+/* Calm side */
+.s-legacy .col-stable {
+  border: 1px solid rgba(24, 20, 16, 0.18);
+}
+.s-legacy .col-stable .col-eyebrow { color: var(--cyan-ink); }
+.s-legacy .col-stable .ex-meta { color: var(--cyan-ink); border-color: rgba(8, 105, 120, 0.35); }
+.s-legacy .col-stable .signals li::before { color: var(--cyan-ink); }
+.s-legacy .col-stable .conc { color: var(--cyan-ink); }
+.s-legacy .col-stable .conc .arrow { color: var(--cyan-ink); }
+
+/* Risky side */
+.s-legacy .col-risky {
+  border: 2px solid var(--accent);
+  background:
+    linear-gradient(135deg,
+      rgba(244, 84, 31, 0.07) 0%,
+      rgba(244, 84, 31, 0.05) 100%),
+    var(--bg-elev);
+  box-shadow: 0 22px 60px rgba(244, 84, 31, 0.16);
+}
+.s-legacy .col-risky .col-eyebrow { color: var(--accent-ink); }
+.s-legacy .col-risky .signals li::before { color: var(--accent); }
+.s-legacy .col-risky .conc { color: var(--accent); }
+.s-legacy .col-risky .conc .arrow { color: var(--accent); }
+.s-legacy .col-risky .conc .hl { color: var(--accent); }
+
+/* Column header */
+.s-legacy .col-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.s-legacy .col-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 56px;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+  margin: 12px 0 0 0;
+  text-wrap: balance;
+}
+.s-legacy .col-risky .col-title { color: var(--accent); }
+
+/* Concrete examples (left side) */
+.s-legacy .examples {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 18px 0 14px 0;
+}
+.s-legacy .ex {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 11px 16px;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  font-family: 'JetBrains Mono', monospace;
+}
+.s-legacy .ex-name {
+  color: var(--fg);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 0.01em;
+}
+.s-legacy .ex-meta {
+  margin-left: auto;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 2px 10px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Signal lists */
+.s-legacy .signals {
+  list-style: none;
+  margin: 18px 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.s-legacy .col-stable .signals { margin-top: 4px; }
+.s-legacy .signals li {
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--fg);
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  letter-spacing: -0.005em;
+  line-height: 1.1;
+}
+.s-legacy .signals li::before {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 28px;
+  width: 28px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.s-legacy .col-stable .signals li::before { content: "✓"; }
+.s-legacy .col-risky .signals li::before { content: "↯"; }
+
+/* Risk acceleration cue — fading vertical line + arrowhead that fills
+   the empty space between the "Rapid throughput" signal at the top
+   and the "Slop becomes legacy fast." conclusion at the bottom. The
+   gradient ramps from near-transparent to solid pink so the trail
+   reads as motion building up speed. */
+.s-legacy .risk-accel {
+  flex: 1 1 auto;
+  min-height: 28px;
+  margin: 12px 0 18px 13px;
+  width: 3px;
+  position: relative;
+  background: linear-gradient(to bottom,
+    rgba(244, 84, 31, 0.00) 0%,
+    rgba(244, 84, 31, 0.30) 55%,
+    rgba(244, 84, 31, 0.90) 100%);
+  border-radius: 2px;
+}
+.s-legacy .risk-accel::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-top: 11px solid var(--accent);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+}
+
+/* Conclusion line — pinned at column bottom */
+.s-legacy .conc {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 36px;
+  letter-spacing: -0.018em;
+  line-height: 1.1;
+}
+.s-legacy .conc .arrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400;
+  font-size: 36px;
+}
+
+/* Punchline */
+.s-legacy .lg-punch {
+  display: flex;
+  align-items: baseline;
+  gap: 32px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.s-legacy .lg-punch .main {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  letter-spacing: -0.018em;
+  color: var(--fg);
+  margin: 0;
+  line-height: 1.1;
+}
+.s-legacy .lg-punch .main .hl { color: var(--accent); }
+.s-legacy .lg-punch .sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  color: var(--fg-mute);
+  letter-spacing: 0.04em;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
+   rectangles, which turned the risky column's pink lift into a hard
+   pink rectangle in the PDF. Drop the shadow in print; the 2px pink
+   border + pink-tinted gradient still sell "risky". */
+@media print {
+  .s-legacy .col-risky { box-shadow: none; }
+}
+
+/* ============================================================
+   Manual reveal — controlled by data-step on the active slide.
+   Step 0 = "Legacy is not age." + STABLE column + ghost outline.
+   Step 1 = title-2, RISKY column, and punchline all cross-fade
+   together in a single synchronised beat. The ghost fades out
+   on the same curve so the right half hands off cleanly.
+
+   Hidden elements use opacity + visibility, not display, so the
+   grid keeps its full geometry from step 0 — nothing shifts when
+   the risky column lands.
+   ============================================================ */
+.s-legacy .lg-title .title-2,
+.s-legacy .col-risky,
+.s-legacy .lg-punch {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 520ms ease-out, visibility 0s 520ms;
+}
+
+.s-legacy[data-step="1"] .lg-title .title-2,
+.s-legacy[data-step="1"] .col-risky,
+.s-legacy[data-step="1"] .lg-punch {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 520ms ease-out, visibility 0s 0s;
+}
+
+/* Ghost fades out on the same curve as the risky column fades in. */
+.s-legacy .col-risky-ghost {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 520ms ease-out, visibility 0s 0s;
+}
+.s-legacy[data-step="1"] .col-risky-ghost {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 520ms ease-out, visibility 0s 520ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s-legacy .lg-title .title-2,
+  .s-legacy .col-risky,
+  .s-legacy .col-risky-ghost,
+  .s-legacy .lg-punch { transition: none; }
+}

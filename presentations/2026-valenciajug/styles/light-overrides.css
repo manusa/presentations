@@ -1,0 +1,60 @@
+/* ============================================================
+   LIGHT-THEME OVERRIDES — applied to any section with .light.
+   Dark stays for: boot (title), s-section dividers, amplifier, flywheel, closing.
+   Light is opt-in per-section via the .light class on the <section>.
+   Accents (orange #F4541F brand, red #E5484D alert) carry over for continuity.
+   ============================================================ */
+.light {
+  --bg: #F4F1E8;                         /* warm cream paper */
+  --bg-elev: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --line: rgba(24, 20, 16, 0.10);
+  --line-strong: rgba(24, 20, 16, 0.22);
+  --fg: #181410;                         /* warm-dark ink */
+  --fg-dim: #6E6456;
+  --fg-mute: #766D63;                    /* warm gray, AA on cream */
+  --grid: rgba(24, 20, 16, 0.06);
+  --grid-strong: rgba(244, 84, 31, 0.12);
+
+  /* Ink variants of brand accents for small text on cream.
+     Brand orange/gold stay for headlines, pills, big numerals (≥3:1 large). */
+  --accent-ink:   #A8470C;               /* orange darkened, AA on cream */
+  --accent-2-ink: #7E5E12;               /* gold darkened, AA on cream */
+  --cyan-ink:     #086978;               /* cyan → deep teal for cream */
+}
+deck-stage section.light {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Slight warmth on the dotted grid for the cream slides */
+.light.grid-bg::before {
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+}
+
+/* Chrome rails — soften the dot glow on cream */
+.light .chrome-top .dot,
+.light .chrome-bottom .dot {
+  box-shadow: 0 0 10px rgba(244, 84, 31, 0.35);
+}
+
+/* Small accent text on cream — brand pink/orange fail AA at body size,
+   so reroute eyebrows, @ accents, indices, and other <24px mono uses to
+   the darker ink variants. Big numerals, pills, headlines keep brand pink. */
+.light .eyebrow,
+.light .sub-eyebrow,
+.light .clabel,
+.light .prompt,
+.light .marker,
+.light .terminal .prompt { color: var(--accent-ink); }
+
+.light .s-about2 .role-line .at,
+.light .s-section .section-sub .accent2 { color: var(--accent-2-ink); }
+
+.light .s-about2 .handles-row .h .v .at,
+.light .s-closing .contact-list .row .v .at,
+.light .s-about2 .handles-row .h .k i,
+.light .s-closing .contact-list .row .k,
+.light .s-closing .contact-list .row .k i { color: var(--accent-ink); }
+
+/* Chrome rail dot keeps brand pink (decorative shape, not text). */
