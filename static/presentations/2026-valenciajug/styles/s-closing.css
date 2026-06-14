@@ -15,7 +15,25 @@
   flex-direction: column;
   justify-content: space-between;
 }
-.s-closing .top { display: flex; flex-direction: column; gap: 32px; }
+/* Headline on the left, Valencia JUG brand sign-off in the open upper-right —
+   its right edge lines up with the QR card below (both sit at the content edge). */
+.s-closing .top {
+  display: flex; flex-direction: row;
+  justify-content: space-between; align-items: flex-start; gap: 64px;
+}
+.s-closing .top-main { display: flex; flex-direction: column; gap: 32px; }
+.s-closing .brand-signoff {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+  flex-shrink: 0;
+}
+.s-closing .vj-logo-signoff { height: 96px; width: auto; display: block; }
+.s-closing .signoff-cap {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono-sm);
+  color: var(--fg-mute);
+  letter-spacing: 0.06em;
+  text-align: right;
+}
 .s-closing .prompt {
   font-family: 'JetBrains Mono', monospace;
   font-size: var(--type-mono-lg);
@@ -88,12 +106,6 @@
   color: var(--fg-dim);
   letter-spacing: 0.06em;
   text-align: center;
-}
-
-.chrome-bottom .right .vj-logo-foot {
-  height: 34px;
-  width: auto;
-  display: block;
 }
 
 /* Print refinements */
