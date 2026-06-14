@@ -29,22 +29,30 @@ const TARGETS = [
     // DevTalks Romania 2026 — Thank-you/Q&A slide → companion links page.
     url: 'https://presentations.marcnuri.com/presentations/2026-devtalks-romania/links/',
     out: 'static/presentations/2026-devtalks-romania/assets/qr-links.svg',
+    // Dark-blue modules matching the deck's --bg (#0A1554).
+    color: { dark: '#0A1554', light: '#FFFFFF' },
+  },
+  {
+    // Valencia JUG 2026 — Thank-you/Q&A slide → companion links page.
+    url: 'https://presentations.marcnuri.com/presentations/2026-valenciajug/links/',
+    out: 'static/presentations/2026-valenciajug/assets/qr-links.svg',
+    // Near-black modules matching the deck's --bg (#0E0D13).
+    color: { dark: '#0E0D13', light: '#FFFFFF' },
   },
 ];
 
-// Dark-blue modules on a white field: matches the deck's --bg (#0A1554)
-// while keeping the high contrast a scanner needs. The white field is the
-// QR's quiet zone; the slide adds more padding around it on top of this.
+// Each target sets its own `color` (the deck's --bg on a white field) so the
+// modules sit in-theme; the white field is the QR's quiet zone and keeps the
+// high contrast a scanner needs (the slide adds more padding on top).
 const OPTS = {
   type: 'svg',
   errorCorrectionLevel: 'M',
   margin: 2,
-  color: { dark: '#0A1554', light: '#FFFFFF' },
 };
 
 (async () => {
-  for (const { url, out } of TARGETS) {
-    const svg = await QRCode.toString(url, OPTS);
+  for (const { url, out, color } of TARGETS) {
+    const svg = await QRCode.toString(url, { ...OPTS, color });
     const outPath = path.join(REPO_ROOT, out);
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, svg);

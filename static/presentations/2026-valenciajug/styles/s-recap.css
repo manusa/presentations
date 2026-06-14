@@ -1,0 +1,158 @@
+/* ============================================================
+   S-RECAP — Act VI recap (Map · Roads · Guardrails).
+   Single static state. Three pillars · one action each ·
+   bookend quote. Uses deck type tokens; minimum body 24px.
+   ============================================================ */
+.s-recap .body {
+  padding: 84px var(--pad-x) 64px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 56px;
+}
+
+/* ---------- Header ---------- */
+.s-recap .head {
+  display: grid;
+  row-gap: 14px;
+}
+.s-recap .head .eyebrow {
+  font-size: var(--type-eyebrow);
+}
+.s-recap .head .title {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-title);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin: 0;
+  color: var(--fg);
+}
+.s-recap .head .title .sep {
+  color: var(--line-strong);
+  margin: 0 18px;
+  font-weight: 400;
+}
+.s-recap .head .title .w-map   { color: var(--cyan-ink); }
+.s-recap .head .title .w-roads { color: var(--accent-2-ink); }
+.s-recap .head .title .w-guard { color: var(--accent-ink); }
+
+/* ---------- Pillars (three columns) ---------- */
+.s-recap .pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 32px;
+  align-content: start;
+}
+.s-recap .pillar {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px 36px 36px;
+  display: grid;
+  grid-template-rows: 60px 32px auto;
+  box-shadow: 0 2px 14px rgba(24, 20, 16, 0.05);
+  min-height: 320px;
+}
+.s-recap .pillar-map        { --pillar-color: var(--cyan-ink); }
+.s-recap .pillar-roads      { --pillar-color: var(--accent-2-ink); }
+.s-recap .pillar-guardrails { --pillar-color: var(--accent-ink); }
+
+.s-recap .pillar-name {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-h2);
+  font-weight: 800;
+  letter-spacing: -0.022em;
+  color: var(--pillar-color);
+  line-height: 1;
+  margin: 0;
+  grid-row: 1;
+  align-self: start;
+  display: block;
+  white-space: nowrap;
+}
+
+.s-recap .pillar-action {
+  display: grid;
+  row-gap: 10px;
+  align-self: start;
+  grid-row: 3;
+  position: relative;
+  z-index: 1;
+}
+.s-recap .pillar-action-lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-small);
+  letter-spacing: 0.04em;
+  color: var(--pillar-color);
+  opacity: 0.85;
+}
+.s-recap .pillar-action-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  row-gap: 12px;
+}
+.s-recap .pillar-action-list li {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono);
+  line-height: 1.32;
+  color: var(--fg);
+  position: relative;
+  padding-left: 26px;
+}
+.s-recap .pillar-action-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--pillar-color);
+  font-weight: 700;
+}
+.s-recap .pillar-action-list li code {
+  background: rgba(24, 20, 16, 0.06);
+  color: var(--fg);
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* Icon watermark — large, low opacity, bottom-right of card. */
+.s-recap .pillar-icon {
+  position: absolute;
+  right: -12px;
+  bottom: -18px;
+  font-size: 168px;
+  line-height: 1;
+  color: var(--pillar-color);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- Closing line ---------- */
+.s-recap .closer {
+  display: grid;
+  row-gap: 4px;
+  align-self: end;
+}
+.s-recap .closer-quote {
+  font-family: 'Inter', sans-serif;
+  font-size: var(--type-h2);
+  font-weight: 800;
+  letter-spacing: -0.018em;
+  line-height: 1.12;
+  margin: 0;
+  color: var(--fg);
+}
+.s-recap .closer-quote em {
+  font-style: normal;
+  color: var(--accent-ink);
+}
+
+/* ---------- Print ---------- */
+@media print {
+  .s-recap .pillar { box-shadow: none; }
+}

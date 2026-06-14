@@ -1,0 +1,456 @@
+/* ============================================================
+   .s-agents-md — Act 4 opener (the Map pillar).
+   "Give the agent a project map."
+
+   4-step reveal — concept -> file -> legend -> landing:
+     step 0  concept hero (.map-intro): README (use) vs AGENTS
+             (change), so the audience learns WHAT the file is
+             before seeing one. Houses the tool-agnostic filename
+             cycler. No file content yet.
+     step 1  the real AGENTS.md excerpt (fabric8 K8s client) lands.
+     step 2  the map legend of three gems reveals beside it:
+               Golden path      — what should I run?      (canonical command)
+               Known trap       — what will waste time?   (~7-8s TLS gotcha, the laugh)
+               Local checkpoint — how do I know before opening a PR? (CI repro)
+     step 3  the "Not generated. Project-specific." takeaway lands.
+   The audience reads the artifact, not bullets.
+
+   The filename cycler (in the step-0 hero) rolls AGENTS.md /
+   CLAUDE.md / GEMINI.md / .cursorrules to show the convention is
+   tool-agnostic (frozen to AGENTS.md in every capture — see the
+   determinism guards at the bottom of this file). A large faint
+   fa-map watermark sits bottom-right, echoing the recap card.
+
+   Theme: light slide. The AGENTS.md panel stays a dark terminal
+   so it reads as a file, not a text block.
+   ============================================================ */
+
+/* The .light class on the section pulls in cream bg + navy ink
+   via light-overrides.css; chrome rails inherit shared.css. */
+
+/* Faint dotted grid — atmosphere only */
+.s-agents-md::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Body grid — header / stage / tagline
+   ============================================================ */
+.s-agents-md .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 1;
+  /* Act-4 uniform: 36px top, 64px gutter (chrome-bar width). */
+  padding: 36px var(--pad-x) 28px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 24px;
+}
+
+/* === Header === */
+.s-agents-md .head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  /* Center the subtitle against the title's vertical midline (uniform Act 4 + 5). */
+  align-items: center;
+  column-gap: 48px;
+}
+.s-agents-md .head .eyebrow {
+  grid-column: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: var(--accent-ink);
+  margin-bottom: 14px;
+}
+.s-agents-md .head .title {
+  grid-column: 1;
+  font-size: 64px;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+}
+.s-agents-md .head .title em {
+  font-style: normal;
+  color: var(--accent);
+}
+/* Persistent subtitle (top-right) — the quiet, always-on version of the
+   README/AGENTS contrast; the step-0 hero is the loud version. */
+.s-agents-md .head .sub {
+  grid-column: 2;
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  line-height: 1.45;
+  color: var(--fg-dim);
+  text-align: right;
+}
+.s-agents-md .head .sub .t-readme { color: var(--fg-mute); }
+.s-agents-md .head .sub .t-agents { color: var(--accent-ink); font-weight: 600; }
+
+/* ============================================================
+   Step-0 concept hero (.map-intro) — overlays the stage before
+   any file content. Absolutely positioned so the cross-fade with
+   the file panel on step 1 never reflows (the stage keeps its
+   grid height from the still-laid-out, opacity:0 panel + callouts).
+   ============================================================ */
+.s-agents-md .map-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  transition: opacity .35s cubic-bezier(.2, .7, .2, 1);
+}
+.s-agents-md .map-intro .mi-line {
+  font-size: 46px;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  color: var(--fg-dim);
+}
+.s-agents-md .map-intro .mi-line .t-readme { color: var(--fg-mute); }
+.s-agents-md .map-intro .mi-line .t-agents { color: var(--accent-ink); font-weight: 600; }
+.s-agents-md .map-intro .mi-line em { font-style: normal; font-weight: 700; color: var(--fg); }
+.s-agents-md .map-intro .mi-files {
+  margin-top: 14px;
+  font-size: 28px;
+  /* line-height matches the cycler's 1em roll window so the rolling
+     filename shares this line's baseline (overflow:hidden makes the
+     window's baseline its bottom edge — equal box heights align them). */
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--fg-mute);
+}
+.s-agents-md .map-intro .mi-files .fname-cycle { color: var(--accent-ink); }
+
+/* ============================================================
+   Step reveals — concept (0) -> file (1) -> legend (2) -> landing (3).
+   Reserve space (opacity/visibility, never display) so nothing
+   reflows; the panel + callouts are laid out from step 0 even
+   while invisible, keeping the callout leader-ticks aligned.
+   ============================================================ */
+.s-agents-md .agents-panel,
+.s-agents-md .callouts {
+  opacity: 0;
+  visibility: hidden;
+}
+/* step 1+ : the real file panel */
+.s-agents-md[data-step="1"] .agents-panel,
+.s-agents-md[data-step="2"] .agents-panel,
+.s-agents-md[data-step="3"] .agents-panel {
+  opacity: 1;
+  visibility: visible;
+  animation: agm-reveal 360ms cubic-bezier(.2, .7, .2, 1) both;
+}
+/* step 2+ : the map legend */
+.s-agents-md[data-step="2"] .callouts,
+.s-agents-md[data-step="3"] .callouts {
+  opacity: 1;
+  visibility: visible;
+  animation: agm-reveal 360ms cubic-bezier(.2, .7, .2, 1) both;
+}
+/* the concept hero fades out once the file lands */
+.s-agents-md[data-step="1"] .map-intro,
+.s-agents-md[data-step="2"] .map-intro,
+.s-agents-md[data-step="3"] .map-intro {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s cubic-bezier(.2, .7, .2, 1), visibility 0s linear .35s;
+}
+@keyframes agm-reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Stage — single-row 2-col grid:
+     col1 = AGENTS.md panel (left)
+     col2 = annotation callouts / map legend (right)
+   ============================================================ */
+.s-agents-md .stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  grid-template-areas: "agents callouts";
+  column-gap: 48px;
+  align-items: stretch;
+}
+
+/* ---------- AGENTS.md panel ----------
+   Dark terminal-style panel on the cream slide. All in-panel
+   colors are pinned explicitly so they don't pick up the light
+   theme's navy ink overrides. */
+.s-agents-md .agents-panel {
+  grid-area: agents;
+  background: #0C0A12;
+  border: 1px solid rgba(24, 20, 16, 0.22);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 24px 60px rgba(24, 20, 16, 0.20),
+    0 4px 12px rgba(24, 20, 16, 0.10);
+  display: flex;
+  flex-direction: column;
+}
+
+.s-agents-md .agents-panel .panel-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  color: #8E857A;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.s-agents-md .agents-panel .panel-bar .dot {
+  width: 11px; height: 11px; border-radius: 50%;
+}
+.s-agents-md .agents-panel .panel-bar .dot.r { background: #FF5F57; }
+.s-agents-md .agents-panel .panel-bar .dot.y { background: #FEBC2E; }
+.s-agents-md .agents-panel .panel-bar .dot.g { background: #28C840; }
+.s-agents-md .agents-panel .panel-bar .path { margin-left: 14px; color: #BFB7AC; }
+
+.s-agents-md .agents-panel .panel-body {
+  padding: 28px 34px 30px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  line-height: 1.5;
+  color: #D3CCC2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  flex: 1;
+  overflow: hidden;
+}
+.s-agents-md .ln { display: block; }
+.s-agents-md .ln.md-h {
+  color: var(--cyan);
+  font-weight: 600;
+  margin-top: 6px;
+}
+.s-agents-md .ln.md-h:first-child { margin-top: 0; }
+.s-agents-md .ln.dim { color: rgba(200, 194, 184, 0.55); }
+.s-agents-md .ln.sep { height: 12px; }
+.s-agents-md .ln.gem { color: #FFFFFF; }
+.s-agents-md .ln .lit {
+  color: var(--orange-soft);
+  background: rgba(244, 84, 31, 0.14);
+  border: 1px solid rgba(244, 84, 31, 0.32);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.s-agents-md .ln .hot { color: var(--pink); font-weight: 600; }
+
+/* ---------- Annotation callouts (right rail) ---------- */
+.s-agents-md .callouts {
+  grid-area: callouts;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+}
+.s-agents-md .callouts .co {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 14px;
+  row-gap: 4px;
+  padding: 16px 20px;
+  background: #FFFFFF;                         /* lift card off the cream paper */
+  border: 1px solid rgba(24, 20, 16, 0.16);
+  border-left: 3px solid var(--accent-ink);    /* the colored gem stripe */
+  border-radius: 8px;
+  position: relative;
+  box-shadow:
+    0 8px 18px rgba(24, 20, 16, 0.10),
+    0 2px 4px rgba(24, 20, 16, 0.06);
+}
+.s-agents-md .callouts .co::before {
+  /* leader tick toward the AGENTS.md panel */
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  width: 20px;
+  height: 1px;
+  background: rgba(24, 20, 16, 0.30);
+}
+.s-agents-md .callouts .co .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: var(--accent-ink);
+  align-self: baseline;
+  padding-top: 2px;
+}
+.s-agents-md .callouts .co .lbl {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  line-height: 1.1;
+}
+.s-agents-md .callouts .co .d {
+  grid-column: 2;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: var(--fg-dim);
+  line-height: 1.34;
+  letter-spacing: 0.01em;
+}
+.s-agents-md .callouts .co.co-2 {
+  /* the laugh-line callout gets the orange accent stripe so it
+     visually pops out of the cyan family. */
+  border-left-color: var(--accent-2-ink);
+}
+.s-agents-md .callouts .co.co-2::before { background: rgba(126, 94, 18, 0.45); }
+.s-agents-md .callouts .co.co-2 .num { color: var(--accent-2-ink); }
+
+/* ============================================================
+   Tag line — single takeaway (written, not generated).
+   Lands alone on step 3, once the full artifact + legend are up.
+   Space is reserved (min-height) so the reveal never reflows.
+   ============================================================ */
+.s-agents-md .tag-line {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 56px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s cubic-bezier(.2, .7, .2, 1);
+}
+.s-agents-md[data-step="3"] .tag-line {
+  opacity: 1;
+  visibility: visible;
+}
+.s-agents-md .tag-line .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+.s-agents-md .tag-line .quotes {
+  position: relative;
+  min-height: 40px;
+}
+.s-agents-md .tag-line .quote {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.s-agents-md .tag-line .quote em {
+  font-style: normal;
+  color: var(--accent-ink);
+}
+
+/* ============================================================
+   Print — flatten the step reveal to its final (step-3) composite
+   so the PDF handout shows the whole slide: file + legend + takeaway,
+   with the step-0 concept hero hidden. Also drop heavy shadows so
+   Chromium's page.pdf() doesn't rasterise them as opaque rectangles.
+   ============================================================ */
+@media print {
+  .s-agents-md .agents-panel,
+  .s-agents-md .callouts .co { box-shadow: none; }
+  .s-agents-md .agents-panel,
+  .s-agents-md .callouts {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: none !important;
+  }
+  .s-agents-md .tag-line {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .s-agents-md .map-intro {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+
+/* The Map pillar watermark (.pillar-watermark.map-watermark) is
+   defined in shared.css — same glyph treatment as the Roads slides. */
+
+/* ============================================================
+   Filename cycler — THIS SLIDE ONLY.
+   Departure-board vertical roll through equivalent agent-
+   instruction filenames. Signals "whatever your agent reads,"
+   not a Claude-specific convention. Lives in the step-0 concept
+   hero (.map-intro .mi-files), where the "what is this file" beat
+   is made — so it reinforces the point instead of competing with
+   the artifact or the speaker.
+
+   DETERMINISM: scripts/lib/deck.js settleAnimations() treats an
+   infinite loop as already-settled and captures an ARBITRARY
+   frame. So the track is PINNED to frame 0 (AGENTS.md) in every
+   capture context — deck-stage[no-rail] covers the PNG screenshot
+   + snapshot:diff paths, @media print covers export:pdf — and it
+   animates only in a live browser.
+   ============================================================ */
+.s-agents-md .fname-cycle {
+  display: inline-block;
+  position: relative;
+  height: 1em;
+  overflow: hidden;
+  vertical-align: bottom;
+  min-width: 12.5ch;          /* widest token: ".cursorrules" */
+  text-align: left;
+}
+.s-agents-md .fname-track {
+  display: flex;
+  flex-direction: column;
+  animation: fname-roll 12s cubic-bezier(.6, 0, .2, 1) infinite;
+}
+.s-agents-md .fname-track > span {
+  display: block;
+  height: 1em;
+  line-height: 1em;
+  white-space: nowrap;
+}
+@keyframes fname-roll {
+  0%,   22%  { transform: translateY(0); }
+  25%,  47%  { transform: translateY(-1em); }
+  50%,  72%  { transform: translateY(-2em); }
+  75%,  97%  { transform: translateY(-3em); }
+  100%       { transform: translateY(-4em); }  /* lands on repeated AGENTS.md */
+}
+
+/* Freeze to AGENTS.md: reduced-motion users + all capture tools. */
+@media (prefers-reduced-motion: reduce) {
+  .s-agents-md .fname-track { animation: none; transform: translateY(0); }
+}
+@media print {
+  .s-agents-md .fname-track { animation: none; transform: translateY(0); }
+}
+deck-stage[no-rail] .s-agents-md .fname-track {
+  animation: none !important;
+  transform: translateY(0) !important;
+}
