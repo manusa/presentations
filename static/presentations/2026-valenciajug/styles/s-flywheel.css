@@ -242,7 +242,7 @@
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
 }
 .s-flywheel .lead .plant-pillars .p-map   { color: var(--cyan); }
-.s-flywheel .lead .plant-pillars .p-roads { color: var(--orange-soft); }
+.s-flywheel .lead .plant-pillars .p-roads { color: var(--accent-2); }
 .s-flywheel .lead .plant-pillars .p-guard { color: var(--accent); }
 .s-flywheel .lead .plant-pillars .p-sep {
   color: var(--fg-mute);

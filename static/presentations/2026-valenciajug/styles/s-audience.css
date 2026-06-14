@@ -192,7 +192,7 @@
 .s-audience .terminal .t-cmd .verb   { color: #FFFFFF; }
 .s-audience .terminal .t-cmd .arg    { color: #5BE9F0; }
 .s-audience .terminal .t-cmd .flag   { color: #E5484D; }
-.s-audience .terminal .t-cmd .val    { color: #F08A3E; }
+.s-audience .terminal .t-cmd .val    { color: var(--orange-soft); }
 
 .s-audience .terminal .t-divider {
   height: 1px;

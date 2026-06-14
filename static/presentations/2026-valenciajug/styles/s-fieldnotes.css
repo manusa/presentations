@@ -167,7 +167,7 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #FF5C7A 0%, #D11440 55%, #8A0E2B 100%);
+  background: radial-gradient(circle at 35% 35%, #F8D78A 0%, #C9962E 55%, #7E5E12 100%);
   box-shadow:
     0 2px 4px rgba(24, 20, 16, 0.35),
     inset -1px -1px 1px rgba(0, 0, 0, 0.18);
@@ -181,7 +181,7 @@
   background: radial-gradient(circle at 35% 35%, #88D9E5 0%, #1B98A8 55%, #0C5965 100%);
 }
 .s-fieldnotes .card.repo-4::before {
-  background: radial-gradient(circle at 35% 35%, #FF5C7A 0%, #D11440 55%, #8A0E2B 100%);
+  background: radial-gradient(circle at 35% 35%, #F8D78A 0%, #C9962E 55%, #7E5E12 100%);
 }
 
 /* Repo card — header row + meta row */
