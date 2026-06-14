@@ -1,0 +1,105 @@
+/* ============================================================
+   SLIDE 1 — TITLE (JVM boot / SLF4J startup flavour)
+   ============================================================ */
+.s-boot { --green: #8FD79F; } /* inherits the warm-glow section bg from shared.css */
+.s-boot .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  padding: 56px var(--pad-x) 36px var(--pad-x);
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--fg-dim);
+  font-size: 24px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+}
+.s-boot .preamble { color: var(--fg-mute); line-height: 1.5; }
+.s-boot .preamble .green { color: var(--green); }
+.s-boot .preamble .dim   { opacity: 0.75; }
+.s-boot .log-rows {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.s-boot .row {
+  display: grid;
+  grid-template-columns: 360px 70px 320px 1fr;
+  column-gap: 20px;
+  align-items: baseline;
+  white-space: nowrap;
+}
+.s-boot .row .ts    { color: var(--fg-mute); }
+.s-boot .row .lvl   { color: var(--green); font-weight: 700; letter-spacing: 0.08em; }
+.s-boot .row .lvl.info { color: var(--cyan); }
+.s-boot .row .lvl.warn { color: var(--orange); }
+.s-boot .row .src   { color: var(--fg-mute); overflow: hidden; text-overflow: ellipsis; }
+.s-boot .row .src::after { content: " :"; opacity: 0.6; }
+.s-boot .row .msg   { color: var(--fg-dim); overflow: hidden; text-overflow: ellipsis; }
+.s-boot .row .msg .strong  { color: var(--fg); font-weight: 600; }
+.s-boot .row .msg .accent  { color: var(--pink); }
+.s-boot .row .msg .accent2 { color: var(--orange); }
+.s-boot .row .msg .mute    { color: var(--fg-mute); }
+
+.s-boot .splash {
+  margin: 24px 0 22px 0;
+  padding: 32px 52px 36px 52px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  position: relative;
+}
+.s-boot .splash::before, .s-boot .splash::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 1px;
+  background: repeating-linear-gradient(to right,
+    var(--line-strong) 0, var(--line-strong) 8px,
+    transparent 8px, transparent 14px);
+}
+.s-boot .splash::before { top: -1px; }
+.s-boot .splash::after  { bottom: -1px; }
+.s-boot .splash .head {
+  display: flex; align-items: center; gap: 22px;
+  padding-bottom: 20px; margin-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.s-boot .splash .vj-mark {
+  height: 60px; width: auto; display: block;
+}
+.s-boot .splash .badge {
+  border: 1px solid var(--accent); color: var(--accent);
+  padding: 4px 14px; border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace; font-size: 24px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+/* "hosted at <Xplore mark>" — mirrors the meetup flyer's top-right credit */
+.s-boot .splash .hosted {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'JetBrains Mono', monospace; font-size: 20px;
+  color: var(--fg-mute); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.s-boot .splash .hosted img { height: 24px; width: auto; display: block; }
+.s-boot .splash .stamp {
+  margin-left: 32px;
+  font-family: 'JetBrains Mono', monospace; font-size: 24px;
+  color: var(--fg-mute); letter-spacing: 0.06em;
+}
+.s-boot .splash h1 {
+  font-family: 'Inter', sans-serif; font-weight: 800;
+  font-size: 88px; line-height: 0.96; letter-spacing: -0.035em;
+  margin: 0; color: var(--fg); text-wrap: balance;
+}
+.s-boot .splash h1 .frag  { color: var(--pink); }
+.s-boot .splash h1 .frag2 { color: var(--orange); }
+
+.s-boot .tail { color: var(--fg-mute); margin-top: 8px; }
+.s-boot .tail .blink {
+  display: inline-block; width: 0.55em; height: 1.05em; vertical-align: -0.18em;
+  background: var(--fg); margin-left: 6px;
+  animation: sBootBlink 1s steps(1) infinite;
+}
+@keyframes sBootBlink { 50% { opacity: 0; } }
+
+/* Print: ensure light slides print cream, not white-on-white */
+@media print {
+  .light { background: var(--bg); }
+}

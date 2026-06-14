@@ -1,0 +1,464 @@
+/* ============================================================
+   .s-boundaries — Act 4, slide 12.
+   "Make Java boundaries obvious."
+
+   Two distinct beats, two different repositories:
+
+   Step 0 — THE PROBLEM (a HYPOTHETICAL structure).
+     "Imagine a project like this": one module, one package, ~600
+     files all mixed. No boundaries → the agent reasons about the
+     whole repo and changes too much (and pays for the whole repo
+     in context). The structure tells the agent nothing.
+
+   Step 1 — THE FABRIC8 ANSWER (the real repo).
+     Real fabric8/kubernetes-client module tree — the structure
+     tells the agent exactly where a Vert.x change belongs. The
+     Vert.x pair goes green, role annotations are visible, and the
+     real merged PR #7812 proves it: 4 files, 2 modules, 0 public
+     API, 0 generated.
+
+   Content type sizes are held at >=20px (trees, notes, panel
+   bodies, captions). Only chrome shared with the rest of the deck
+   (panel-bar paths, status pills, the // labels) stays smaller.
+
+   Theme: .light slide (cream paper); trees stay dark terminals so
+   they read as files, same idiom as s-agents-md.
+   ============================================================ */
+
+/* Faint dotted grid — atmosphere only, same as s-agents-md */
+.s-boundaries::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Body grid — header / stage / tagline
+   ============================================================ */
+.s-boundaries .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 1;
+  /* Gutter trimmed to the chrome bar's --chrome-pad-x (64px) so the
+     24px subtitle's auto column no longer squeezes the title onto a
+     second line. Gutters stay equal (title aligns to the chrome). */
+  padding: 36px var(--pad-x) 40px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 22px;
+}
+
+/* === Header — same construction as s-agents-md === */
+.s-boundaries .head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  /* Center the subtitle against the title's vertical midline (uniform Act 4 + 5). */
+  align-items: center;
+  column-gap: 48px;
+}
+.s-boundaries .head .eyebrow {
+  grid-column: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: var(--accent-ink);
+  margin-bottom: 14px;
+}
+.s-boundaries .head .title {
+  grid-column: 1;
+  font-size: 64px;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+}
+.s-boundaries .head .title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-boundaries .head .sub {
+  grid-column: 2;
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  line-height: 1.45;
+  color: var(--fg-dim);
+  text-align: right;
+}
+.s-boundaries .head .sub em {
+  font-style: normal;
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+/* ============================================================
+   Stage — two full-width layers cross-fade: the hypothetical
+   problem (step 0) and the real Fabric8 answer (step 1).
+   ============================================================ */
+.s-boundaries .stage {
+  position: relative;
+  min-height: 460px;
+}
+.s-boundaries .layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
+  column-gap: 44px;
+  align-items: center;
+  align-content: center;
+  transition:
+    opacity 400ms cubic-bezier(.2, .7, .2, 1),
+    transform 400ms cubic-bezier(.2, .7, .2, 1);
+}
+.s-boundaries .layer-problem  { opacity: 1; }
+.s-boundaries .layer-solution { opacity: 0; transform: translateY(12px); pointer-events: none; }
+.s-boundaries[data-step="1"] .layer-problem  { opacity: 0; transform: translateY(-12px); pointer-events: none; }
+.s-boundaries[data-step="1"] .layer-solution { opacity: 1; transform: none; pointer-events: auto; }
+
+/* ============================================================
+   Tree panel (dark terminal) — shared by the synthetic monolith
+   and the real Fabric8 tree.
+   ============================================================ */
+.s-boundaries .tree-panel {
+  align-self: stretch;
+  background: #0C0A12;
+  border: 1px solid rgba(24, 20, 16, 0.22);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 24px 60px rgba(24, 20, 16, 0.20),
+    0 4px 12px rgba(24, 20, 16, 0.10);
+  display: flex;
+  flex-direction: column;
+}
+.s-boundaries .tree-panel .panel-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  color: #8E857A;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+.s-boundaries .tree-panel .panel-bar .dot { width: 11px; height: 11px; border-radius: 50%; }
+.s-boundaries .tree-panel .panel-bar .dot.r { background: #FF5F57; }
+.s-boundaries .tree-panel .panel-bar .dot.y { background: #FEBC2E; }
+.s-boundaries .tree-panel .panel-bar .dot.g { background: #28C840; }
+.s-boundaries .tree-panel .panel-bar .path { margin-left: 14px; color: #BFB7AC; }
+.s-boundaries .tree-panel .panel-bar .grow { flex: 1; }
+
+/* reasoning-surface badge — red on the monolith, green on Fabric8.
+   This is the per-step punchline ("no module boundaries" → "the change
+   has a home"), not decorative chrome — sized as content. */
+.s-boundaries .tree-panel .scope {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  padding: 5px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.s-boundaries .tree-panel .scope.bad {
+  color: #FF8E8E;
+  background: rgba(229, 72, 77, 0.16);
+  border: 1px solid rgba(229, 72, 77, 0.45);
+}
+.s-boundaries .tree-panel .scope.good {
+  color: #5CE08A;
+  background: rgba(40, 200, 64, 0.14);
+  border: 1px solid rgba(40, 200, 64, 0.45);
+}
+
+.s-boundaries .tree-panel .tree {
+  padding: 20px 28px 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  line-height: 1.5;
+  color: #D3CCC2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+  flex: 1;
+}
+
+/* structural (non-module) lines in the synthetic tree: root + src */
+.s-boundaries .tree-panel .tline { color: #8E857A; }
+.s-boundaries .tree-panel .tline.sub { color: #847B71; padding-left: 20px; }
+
+/* a module / file row = scope dot + name + (optional) role note */
+.s-boundaries .t {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-left: 7px;
+  border-left: 3px solid transparent;
+  margin-left: -10px;
+}
+.s-boundaries .t .dot {
+  width: 11px; height: 11px; border-radius: 50%;
+  flex-shrink: 0;
+  background: #5A5249;
+}
+.s-boundaries .t .mod { color: #D3CCC2; }
+.s-boundaries .t .note {
+  margin-left: 6px;
+  font-size: 22px;
+  color: #8E857A;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.s-boundaries .t .note .seed { color: #8E857A; }   /* compiler forward-ref, understated */
+
+/* ---------- Synthetic monolith (step 0) — everything red, in scope ---------- */
+.s-boundaries .synth .t { padding-left: 40px; }     /* nested deep under one src root */
+.s-boundaries .synth .t .dot { background: #E5484D; }
+.s-boundaries .synth .t .mod { color: #EDEFFB; }
+.s-boundaries .synth .t.more .mod { color: #A39A8E; font-style: italic; }
+.s-boundaries .synth .t.more .dot { background: rgba(229, 72, 77, 0.55); }
+
+/* ---------- Real Fabric8 tree (step 1) — modules are siblings ---------- */
+.s-boundaries .fab .t.hit .dot { background: #28C840; }
+.s-boundaries .fab .t.hit { border-left-color: #28C840; }
+.s-boundaries .fab .t.hit .mod { color: #FFFFFF; font-weight: 600; }
+.s-boundaries .fab .t.api .note { color: var(--cyan); }
+.s-boundaries .fab .t.gen .mod { color: var(--orange-soft); }
+.s-boundaries .fab .t.gen .note { color: var(--orange-soft); }
+.s-boundaries .fab .t.hit .note { color: #5CE08A; }
+
+/* ============================================================
+   Problem panel (step 0, right column)
+   ============================================================ */
+.s-boundaries .problem-panel {
+  align-self: stretch;
+  background: #FFFFFF;
+  border: 1px solid #D1D9E0;
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  box-shadow:
+    0 18px 40px rgba(24, 20, 16, 0.14),
+    0 4px 10px rgba(24, 20, 16, 0.06);
+  padding: 30px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+.s-boundaries .problem-panel .pp-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+.s-boundaries .problem-panel .pp-statement {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 31px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.s-boundaries .problem-panel .pp-statement em {
+  font-style: normal;
+  color: var(--accent-ink);
+}
+.s-boundaries .problem-panel .pp-econ {
+  border-top: 1px solid #E4E7EC;
+  padding-top: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--fg-dim);
+}
+.s-boundaries .problem-panel .pp-econ .k {
+  display: block;
+  font-size: 18px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+  margin-bottom: 6px;
+}
+
+/* ============================================================
+   PR card (step 1, right column) — reuses the slide-14 idiom
+   ============================================================ */
+.s-boundaries .pr-card {
+  align-self: stretch;
+  background: #FFFFFF;
+  border: 1px solid #D1D9E0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 18px 40px rgba(24, 20, 16, 0.16),
+    0 4px 10px rgba(24, 20, 16, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+.s-boundaries .pr-card .panel-bar.gh {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: #F6F8FA;
+  border-bottom: 1px solid #D1D9E0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  color: #59636E;
+}
+.s-boundaries .pr-card .panel-bar.gh .gh-icon { color: #1F2328; font-size: 20px; }
+.s-boundaries .pr-card .panel-bar.gh .repo { color: #1F2328; font-weight: 600; }
+.s-boundaries .pr-card .panel-bar.gh .sep { color: #59636E; }
+.s-boundaries .pr-card .panel-bar.gh .prnum { color: #59636E; text-decoration: none; }
+.s-boundaries .pr-card .panel-bar.gh .prnum:hover { color: #0969DA; text-decoration: underline; }
+.s-boundaries .pr-card .panel-bar.gh .grow { flex: 1; }
+.s-boundaries .pr-card .panel-bar.gh .status.merged {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  color: #FFFFFF;
+  background: #8250DF;
+  border: 1px solid #6F42C1;
+}
+
+.s-boundaries .pr-card .pr-body {
+  padding: 22px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  justify-content: center;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1F2328;
+}
+.s-boundaries .pr-card .pr-title {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: #1F2328;
+}
+.s-boundaries .pr-card .pr-title .scope-tag { color: #0550AE; font-weight: 600; }
+.s-boundaries .pr-card .pr-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  color: #59636E;
+}
+.s-boundaries .pr-card .pr-author .avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: #A8470C;
+  color: #FFFFFF;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.s-boundaries .pr-card .pr-author .who { color: #1F2328; font-weight: 600; }
+.s-boundaries .pr-card .pr-author .dim { color: #59636E; }
+
+.s-boundaries .pr-card .diff {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 16px 18px;
+  background: #DAFBE1;
+  border: 1px solid #A2E5A2;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+}
+.s-boundaries .pr-card .diff .row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  color: #1F2328;
+}
+.s-boundaries .pr-card .diff .row .g { color: #1A7F37; font-weight: 700; min-width: 18px; }
+.s-boundaries .pr-card .diff .row .k { color: #1F2328; font-weight: 600; min-width: 132px; }
+.s-boundaries .pr-card .diff .row .v { color: #59636E; }
+.s-boundaries .pr-card .diff .row.good .k,
+.s-boundaries .pr-card .diff .row.good .v { color: #1A7F37; font-weight: 600; }
+.s-boundaries .pr-card .diff .row code {
+  color: #6F42C1;
+  background: rgba(201, 150, 46, 0.08);
+  border: 1px solid rgba(201, 150, 46, 0.20);
+  border-radius: 4px;
+  padding: 0 7px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+}
+.s-boundaries .pr-card .pr-cap {
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+/* ============================================================
+   Tag line — morphs between step 0 (problem) and step 1 (payoff)
+   ============================================================ */
+.s-boundaries .tag-line {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 56px;
+}
+.s-boundaries .tag-line .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+.s-boundaries .tag-line .quotes {
+  position: relative;
+  min-height: 40px;
+}
+.s-boundaries .tag-line .quote {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+  transition: opacity 350ms cubic-bezier(.2, .7, .2, 1);
+}
+.s-boundaries .tag-line .quote em {
+  font-style: normal;
+  color: var(--accent-ink);
+}
+.s-boundaries .tag-line .quote.q-1 {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.s-boundaries[data-step="1"] .tag-line .quote.q-0 { opacity: 0; }
+.s-boundaries[data-step="1"] .tag-line .quote.q-1 { opacity: 1; }
+
+/* ============================================================
+   Print — drop heavy shadows so Chromium's page.pdf() doesn't
+   rasterise them as opaque rectangles. export:pdf renders both
+   steps; the cross-fade leaves the right layer on top per page.
+   ============================================================ */
+@media print {
+  .s-boundaries .tree-panel,
+  .s-boundaries .problem-panel,
+  .s-boundaries .pr-card { box-shadow: none; }
+}

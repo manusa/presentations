@@ -1,0 +1,235 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #000; color: var(--fg); font-family: 'Inter', sans-serif; }
+body { -webkit-font-smoothing: antialiased; }
+
+deck-stage section {
+  /* Near-black base + warm radial glow echoing the meetup flyer: a vermilion
+     ember anchored top-right fading out by ~60%, plus a whisper of rust
+     bottom-left. Kept low-alpha so body text contrast holds. Light slides
+     override this with their cream bg (see light-overrides.css). */
+  background:
+    radial-gradient(125% 120% at 100% 0%,
+      rgba(244, 84, 31, 0.14) 0%,
+      rgba(124, 43, 24, 0.08) 32%,
+      transparent 60%),
+    radial-gradient(85% 90% at 0% 100%,
+      rgba(150, 60, 30, 0.05) 0%,
+      transparent 55%),
+    var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.mono { font-family: 'JetBrains Mono', monospace; }
+.brand-mark {
+  font-family: 'Techover', 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.02em;
+  /* Techover ships with a generous default word space; pull "marc" and "nuri"
+     closer together so the lockup reads as one mark, but not kerned-tight. */
+  word-spacing: -0.32em;
+}
+
+/* Marc's personal blog logo lockup — mimics blog.marcnuri.com brand:
+   muted "blog." / ink "marc" / orange "nuri" / muted ".com" in Techover. */
+.logo-wordmark {
+  font-family: 'Techover', 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: 0;
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1;
+}
+.logo-wordmark .seg-blog,
+.logo-wordmark .seg-com  { color: var(--fg-mute); }
+.logo-wordmark .seg-marc { color: var(--fg); }
+.logo-wordmark .seg-nuri { color: var(--orange); }
+.s-about2 .handles-row .h.logo-blog { gap: 0; }
+
+/* Blog card on the after-hours grid — same chrome as a project card,
+   but content is the blog logo lockup with a short tagline. */
+.proj-card.blog-card {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 22px;
+}
+.proj-card.blog-card .blog-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+.proj-card.blog-card .logo-wordmark { font-size: 40px; line-height: 1; }
+.proj-card.blog-card .blog-cap {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  color: var(--fg-mute);
+  letter-spacing: 0.02em;
+}
+.accent { color: var(--accent); }
+.accent2 { color: var(--accent-2); }
+.dim { color: var(--fg-dim); }
+
+/* Reusable: dotted grid background */
+.grid-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* Reusable: corner brackets */
+.brackets::after {
+  content: "";
+  position: absolute;
+  inset: 56px;
+  border: 1px solid var(--line);
+  pointer-events: none;
+  --b: 28px;
+  clip-path: polygon(
+    0 0, var(--b) 0, var(--b) 1px, 1px 1px, 1px var(--b), 0 var(--b),
+    0 calc(100% - var(--b)), 1px calc(100% - var(--b)), 1px calc(100% - 1px), var(--b) calc(100% - 1px), var(--b) 100%, 0 100%,
+    calc(100% - var(--b)) 100%, calc(100% - var(--b)) calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) calc(100% - var(--b)), 100% calc(100% - var(--b)), 100% 100%,
+    100% var(--b), calc(100% - 1px) var(--b), calc(100% - 1px) 1px, calc(100% - var(--b)) 1px, calc(100% - var(--b)) 0, 100% 0
+  );
+}
+
+/* Persistent chrome (top + bottom rails) */
+.chrome-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--chrome-pad-x);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono-sm);
+  color: var(--fg-mute);
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid var(--line);
+  z-index: 2;
+}
+.chrome-top .dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  margin-right: 16px;
+}
+.chrome-top .spacer { flex: 1; }
+.chrome-top .pill {
+  border: 1px solid var(--line-strong);
+  padding: 4px 14px;
+  border-radius: 999px;
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+.chrome-top, .chrome-bottom { white-space: nowrap; }
+.chrome-top > *, .chrome-bottom > * { white-space: nowrap; }
+
+.chrome-bottom {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--chrome-pad-x);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-mono-sm);
+  color: var(--fg-mute);
+  border-top: 1px solid var(--line);
+  z-index: 2;
+  letter-spacing: 0.04em;
+}
+.chrome-bottom .left, .chrome-bottom .right { display: flex; align-items: center; gap: 14px; }
+.chrome-bottom .spacer { flex: 1; }
+.chrome-bottom .sep { color: var(--fg-mute); opacity: 0.5; }
+
+/* Invisible reference link: native pointer on hover, nothing else.
+   Two usage patterns:
+   (1) Inline text wrap — <span><a class="ref-link">…</a></span> for PR/issue
+       numbers, panel-bar paths, etc. The anchor inherits inline flow.
+   (2) Overlay click target — <div class="card"><a class="ref-link"></a>…</div>
+       on cards / rows / handles. The anchor is positioned absolutely over the
+       container so it has a finite rect (required for Chromium page.pdf() to
+       emit a PDF link annotation) without disturbing layout. The container
+       gets position:relative locally next to where the overlay is declared. */
+.ref-link,
+.ref-link:link,
+.ref-link:visited,
+.ref-link:hover,
+.ref-link:active {
+  color: inherit;
+  text-decoration: none;
+  background: transparent;
+}
+/* Suppress the mouse-focus halo (which would otherwise persist after clicking
+   a link and bleed into snapshot captures) without removing keyboard focus
+   visibility — :focus-visible only fires for keyboard-initiated focus. */
+.ref-link:focus { outline: none; }
+.ref-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.ref-link.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+/* Scoped to the host containers that actually need a positioning context
+   added — keeps the rule from accidentally re-positioning unrelated DOM.
+   Not listed because they already have their own:
+     .proj-card                — already position:relative
+     .s-fieldnotes .card.repo  — position:absolute (also a positioning ctx) */
+.s-about2 .handles-row .h:has(> .ref-link.overlay),
+.s-closing .contact-list .row:has(> .ref-link.overlay) {
+  position: relative;
+}
+
+/* Common slide body */
+.slide-body {
+  position: absolute;
+  inset: 56px var(--pad-x) 56px var(--pad-x);
+  padding: calc(var(--pad-top) - 56px) 0 calc(var(--pad-bottom) - 56px) 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+/* ============================================================
+   Pillar watermark — large, faint Map · Roads · Guardrails glyph
+   (fa-map / fa-road / fa-shield-halved) echoing the recap pillar
+   cards, anchored bottom-right of a slide body. Used on the Act 4
+   (Map, Roads) and Act 5 (Guardrails) content slides, whose act
+   dividers declare @Delivers(...).
+
+   Stacking: every host .body is position:absolute; z-index:1 and
+   transparent, so a z-index:-1 child paints below all body content
+   but above the section's dotted-grid ::before — cards/panels
+   occlude it and it shows only through the gaps, reading as a glyph
+   behind the content rather than a floating sticker.
+
+   Anchored at bottom:0 (= .body's padding-box bottom = footer top)
+   so it never spills into the chrome-bottom rail. Per-pillar rules
+   below set only the cream-safe color.
+   ============================================================ */
+.pillar-watermark {
+  position: absolute;
+  right: -10px;
+  bottom: 0;
+  font-size: 300px;
+  line-height: 1;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: -1;
+}
+.map-watermark   { color: var(--cyan-ink); }      /* Map        — cream-safe teal */
+.road-watermark  { color: var(--accent-2-ink); }  /* Roads      — cream-safe orange */
+.guard-watermark { color: var(--accent-ink); }    /* Guardrails — cream-safe pink */

@@ -1,0 +1,501 @@
+/* ============================================================
+   .s-leverage — Act 4, slide 13.
+   "Shape the work upstream."
+
+   The economics of delegation, staged as a real 3-step build
+   (data-step-max="2") instead of a brightness toggle. The slide's
+   own logic is a 3-node chain and each beat is one keypress:
+
+     step 0  TENSION. Header + the EXPENSIVE band only (spend your
+       strongest model once, upstream: understand, explore, edge
+       cases, acceptance criteria, tests). The issue is a collapsed
+       frame: GitHub bar + title + labels show; the body is not yet
+       rendered, so the spec is not spoiled. The flow-arrow and the
+       cheap band are absent too. Calm, sparse, lots of room.
+
+     step 1  REVEAL. The flow-arrow ("produces a detailed spec") and
+       the issue BODY appear together — the real Helm.rollback(...)
+       contract, the nested-k8s-test validation, the StatusCommand
+       reference impl. The thinking on the left produced THIS spec.
+
+     step 2  PAYOFF. The CHEAP × N band lands (smaller model ·
+       contributor · future-you), the "good first issue" label halos
+       in sync (the punchline made literal: anyone can run it), and
+       the takeaway lands as a proof line + a prescriptive lesson.
+
+   Legibility: staging the content across steps is what buys the room
+   to clear the projection floors (px ÷ 2 = pt on a 1080px canvas;
+   must-read ≥ 28px, mono the speaker reads ≥ 28px). Only one or two
+   regions compete per step, so the must-read tier sits at 28-36px;
+   the decorative chrome (eyebrow, pill, breadcrumb, // labels) stays
+   at the 20-24px deck-wide convention.
+   ============================================================ */
+
+/* Faint dotted grid — atmosphere only, same idiom as siblings */
+.s-leverage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Shared reveal: content fades up into place as each step lands. */
+@keyframes lev-reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Body grid — header / stage / tagline
+   ============================================================ */
+.s-leverage .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 1;
+  /* Act-4 uniform: 36px top, 64px gutter (chrome-bar width). */
+  padding: 36px var(--pad-x) 40px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 20px;
+}
+
+/* === Header — same construction as s-agents-md / s-skill === */
+.s-leverage .head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  /* Center the subtitle against the title's vertical midline (uniform Act 4 + 5). */
+  align-items: center;
+  column-gap: 48px;
+}
+.s-leverage .head .title {
+  grid-column: 1;
+  font-size: 72px;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+}
+.s-leverage .head .title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-leverage .head .sub {
+  grid-column: 2;
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  line-height: 1.45;
+  color: var(--fg-dim);
+  text-align: right;
+}
+.s-leverage .head .sub em { font-style: normal; color: var(--accent-ink); font-weight: 600; }
+
+/* ============================================================
+   Stage — principle (left) + artifact (right).
+   Top-aligned so revealed regions grow DOWN into the slack at the
+   bottom of the band; existing content never reflows or jumps.
+   ============================================================ */
+.s-leverage .stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
+  column-gap: 52px;
+  align-items: start;       /* both columns share a top edge */
+  align-content: start;     /* the pair hugs the top; reveals fill below */
+}
+
+/* ---------- Principle (left): expensive → cheap ---------- */
+.s-leverage .principle {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.s-leverage .band {
+  background: #FFFFFF;
+  border: 1px solid #D1D9E0;
+  border-radius: 10px;
+  padding: 20px 24px;
+  box-shadow: 0 8px 20px rgba(24, 20, 16, 0.08);
+}
+.s-leverage .band.expensive { border-left: 4px solid var(--accent-2); }
+
+/* The cheap band is the payoff: absent until step 2, then it fades in. */
+.s-leverage .band.cheap {
+  display: none;
+  border-left: 4px solid var(--cyan-ink);
+  background: linear-gradient(90deg, rgba(8, 105, 120, 0.06), #FFFFFF 60%);
+}
+.s-leverage[data-step="2"] .band.cheap {
+  display: block;
+  animation: lev-reveal 340ms cubic-bezier(.2, .7, .2, 1) both;
+}
+
+.s-leverage .band .brow {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.s-leverage .band .cost {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  flex-shrink: 0;
+}
+.s-leverage .band .cost .amt { font-size: 30px; font-weight: 700; letter-spacing: -0.01em; }
+.s-leverage .band .cost .lbl { font-size: 26px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.s-leverage .band.expensive .cost .amt { color: var(--accent-2-ink); font-size: 32px; }
+.s-leverage .band.expensive .cost .lbl { color: var(--accent-2-ink); }
+.s-leverage .band.cheap .cost .amt { color: var(--cyan-ink); }
+.s-leverage .band.cheap .cost .lbl { color: var(--cyan-ink); }
+.s-leverage .band .bhead {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.s-leverage .band.expensive .bhead i { color: var(--accent-2-ink); margin-right: 6px; }
+
+/* The expensive-work list: one task per line with a consistent accent
+   marker, so the items read as a uniform set (no mixed `·` / line-break
+   grouping). Mono, kept at the 28px must-read size. */
+.s-leverage .band .work {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  line-height: 1.32;
+  color: var(--fg-dim);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.s-leverage .band .work li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.s-leverage .band .work li::before {
+  content: "·";
+  color: var(--accent-2-ink);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.s-leverage .band .implementers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.s-leverage .band .implementers li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 28px;
+  color: var(--fg);
+}
+.s-leverage .band .implementers li i {
+  color: var(--cyan-ink);
+  width: 30px;
+  text-align: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+/* connector between the two bands — the step-1 reveal that links the
+   expensive thinking to the spec it produces (the issue, on the right). */
+.s-leverage .flow-arrow {
+  display: none;
+  align-items: center;
+  gap: 14px;
+  padding-left: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--fg-dim);
+  font-size: 28px;
+}
+/* The flow-arrow is the step-1 reveal that links the expensive thinking
+   to the spec it produces — it is absent at step 0, not a faint stub. */
+.s-leverage[data-step="1"] .flow-arrow,
+.s-leverage[data-step="2"] .flow-arrow {
+  display: flex;
+  animation: lev-reveal 300ms cubic-bezier(.2, .7, .2, 1) both;
+}
+.s-leverage .flow-arrow .arr { color: var(--accent-ink); font-weight: 700; font-size: 32px; }
+/* "detailed spec" is the noun the whole slide turns on — accent it with
+   the deck's standard emphasis idiom (same as .sub em / .proof em). */
+.s-leverage .flow-arrow em { font-style: normal; color: var(--accent-ink); font-weight: 600; }
+
+/* ---------- Artifact (right): the detailed helm-java #351 issue ---------- */
+.s-leverage .issue {
+  align-self: start;
+  background: #FFFFFF;
+  border: 1px solid #D1D9E0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 18px 40px rgba(24, 20, 16, 0.16),
+    0 4px 10px rgba(24, 20, 16, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+.s-leverage .issue .panel-bar.gh {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  background: #F6F8FA;
+  border-bottom: 1px solid #D1D9E0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  letter-spacing: 0.01em;
+  color: #59636E;
+}
+.s-leverage .issue .panel-bar.gh .gh-icon { color: #1F2328; font-size: 26px; }
+.s-leverage .issue .panel-bar.gh .repo { color: #1F2328; font-weight: 600; }
+.s-leverage .issue .panel-bar.gh .sep { color: #59636E; }
+.s-leverage .issue .panel-bar.gh .num { color: #59636E; text-decoration: none; }
+.s-leverage .issue .panel-bar.gh .num:hover { color: #0969DA; text-decoration: underline; }
+.s-leverage .issue .panel-bar.gh .grow { flex: 1; }
+.s-leverage .issue .panel-bar.gh .status.open {
+  font-size: 24px;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 999px;
+  color: #FFFFFF;
+  background: #1F883D;
+  border: 1px solid #1A7F37;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.s-leverage .issue .panel-bar.gh .status.open::before {
+  content: "";
+  width: 9px; height: 9px; border-radius: 50%;
+  background: #FFFFFF;
+}
+
+.s-leverage .issue .issue-head {
+  padding: 18px 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1F2328;
+  border-bottom: 1px solid #E4E7EC;
+}
+.s-leverage .issue .issue-title {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #1F2328;
+}
+.s-leverage .issue .labels { display: flex; flex-wrap: wrap; gap: 10px; }
+.s-leverage .issue .labels .lab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 999px;
+  line-height: 1.35;
+}
+.s-leverage .issue .labels .lab.enhancement { background: #A2EEEF; color: #044E54; }
+.s-leverage .issue .labels .lab.help        { background: #008672; color: #FFFFFF; }
+.s-leverage .issue .labels .lab.gfi         { background: #7057FF; color: #FFFFFF; }
+/* PAYOFF: "help wanted" + "good first issue" are the punchline made
+   literal. They do not appear until step 2, landing in sync with the
+   cheap-execution band: the spec is complete enough that this work is
+   now anyone's to pick up. (One row of pills either way, so revealing
+   them never reflows the head or the body below it.) */
+.s-leverage .issue .labels .lab.help,
+.s-leverage .issue .labels .lab.gfi { display: none; }
+.s-leverage[data-step="2"] .issue .labels .lab.help,
+.s-leverage[data-step="2"] .issue .labels .lab.gfi {
+  display: inline-block;
+  animation: lev-reveal 320ms cubic-bezier(.2, .7, .2, 1) both;
+}
+
+/* The issue BODY is the step-1 reveal: the concrete spec. Absent at
+   step 0 (the collapsed issue), it appears with the flow-arrow. */
+.s-leverage .issue .issue-body {
+  display: none;
+  padding: 20px 24px 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  line-height: 1.45;
+  color: #1F2328;
+  flex-direction: column;
+  gap: 16px;
+}
+.s-leverage[data-step="1"] .issue .issue-body,
+.s-leverage[data-step="2"] .issue .issue-body {
+  display: flex;
+  animation: lev-reveal 320ms cubic-bezier(.2, .7, .2, 1) both;
+}
+.s-leverage .issue .block .bh {
+  font-weight: 700;
+  color: #0550AE;
+  margin-bottom: 6px;
+}
+
+/* Contract block — the real fluent API. This is the single line that
+   turns "trust me, I thought about it" into a verifiable spec. */
+.s-leverage .issue .block.contract .api {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  line-height: 1.45;
+  color: #1F2328;
+  background: #F6F8FA;
+  border: 1px solid #E4E7EC;
+  border-radius: 8px;
+  padding: 12px 16px;
+  white-space: pre;
+}
+.s-leverage .issue .api .k { color: #1F2328; font-weight: 700; }
+.s-leverage .issue .api .m { color: #6F42C1; }
+.s-leverage .issue .api .s { color: #0A3069; }
+.s-leverage .issue .api .ret { color: #59636E; }
+
+.s-leverage .issue .block .ln {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  color: #1F2328;
+}
+.s-leverage .issue .block .ln + .ln { margin-top: 6px; }
+.s-leverage .issue .block .ln::before {
+  content: "−";
+  color: #6E7781;
+  font-weight: 700;
+}
+.s-leverage .issue .block .ln code {
+  color: #6F42C1;
+  background: rgba(201, 150, 46, 0.08);
+  border: 1px solid rgba(201, 150, 46, 0.20);
+  border-radius: 4px;
+  padding: 0 7px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+}
+
+/* meta footer — the constraint + the reference impl, the two facts
+   that make the spec runnable by a cheap executor. */
+.s-leverage .issue .meta {
+  border-top: 1px dashed #D1D9E0;
+  padding-top: 14px;
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 24px;
+  color: #59636E;
+}
+.s-leverage .issue .meta .m-java { color: #7E5E12; font-weight: 600; }
+.s-leverage .issue .meta code {
+  color: #6F42C1;
+  background: rgba(201, 150, 46, 0.08);
+  border: 1px solid rgba(201, 150, 46, 0.20);
+  border-radius: 4px;
+  padding: 0 7px;
+  font-size: 24px;
+}
+
+/* ============================================================
+   Tag line — the payoff (proof + lesson), revealed only at step 2.
+   Slot is reserved (visibility, not display) so the stage band height
+   never changes between steps.
+   ============================================================ */
+.s-leverage .tag-line {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 118px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 340ms cubic-bezier(.2, .7, .2, 1);
+}
+.s-leverage[data-step="2"] .tag-line {
+  opacity: 1;
+  visibility: visible;
+}
+.s-leverage .tag-line .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+/* Proof — what just happened, on screen (the artifact backs it up). */
+.s-leverage .tag-line .proof {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.s-leverage .tag-line .proof em {
+  font-style: normal;
+  color: var(--accent-ink);
+}
+/* Lesson — the prescriptive imperative, a quieter mono tier. */
+.s-leverage .tag-line .lesson {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--fg-dim);
+  letter-spacing: 0.005em;
+}
+.s-leverage .tag-line .lesson b {
+  color: var(--accent-ink);
+  font-weight: 700;
+}
+
+/* ============================================================
+   Print — flatten the step reveal to its final (step-2) state so the
+   PDF handout shows the whole story: arrow + issue body + cheap band
+   + takeaway all visible, the good-first-issue payoff landed.
+   ============================================================ */
+@media print {
+  .s-leverage .issue,
+  .s-leverage .band { box-shadow: none; border-color: #B8C2CC; }
+  .s-leverage .flow-arrow {
+    display: flex !important;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .s-leverage .issue .issue-body {
+    display: flex !important;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .s-leverage .band.cheap {
+    display: block !important;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .s-leverage .tag-line {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .s-leverage .issue .labels .lab.help,
+  .s-leverage .issue .labels .lab.gfi {
+    display: inline-block !important;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}

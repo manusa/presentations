@@ -1,0 +1,495 @@
+/* ============================================================
+   SLIDE — FIELD NOTES (Act I calibration: humility / not doctrine)
+   Two-column light slide. Left: title + body + tags + footer phrase.
+   Right: a tasteful maintainer-desk collage (repo cards, CI sticker,
+   terminal snippet) on a faint dotted-grid notebook surface.
+   ============================================================ */
+.s-fieldnotes .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  /* Padding reduced symmetrically from the default 120px so both slide
+     gutters stay equal (an asymmetric L/R gutter reads as broken). The
+     reclaimed width plus the 50/50 split (was 55/45) lets the notebook
+     collage run wide enough for legible repo cards / sticky notes.
+     Top/bottom trimmed 70->44 to give the notebook page more height for
+     the five-card layout (the fifth card pins into the centre). */
+  padding: 44px var(--pad-x);
+  display: grid;
+  grid-template-columns: 50fr 50fr;
+  gap: 56px;
+  align-items: stretch;
+}
+.s-fieldnotes .info-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.s-fieldnotes .eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--type-eyebrow);
+  color: var(--accent-ink);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+.s-fieldnotes .display {
+  font-size: 92px;
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  margin: 0 0 36px 0;
+  text-wrap: balance;
+}
+.s-fieldnotes .display .accent { color: var(--accent); }
+.s-fieldnotes .body-copy {
+  font-size: 28px;
+  line-height: 1.45;
+  color: var(--fg-dim);
+  margin: 0 0 18px 0;
+  max-width: 820px;
+}
+.s-fieldnotes .body-copy strong { color: var(--fg); font-weight: 600; }
+.s-fieldnotes .body-copy + .body-copy { margin-top: 0; }
+
+.s-fieldnotes .tags-row {
+  margin-top: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.s-fieldnotes .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  border: 1px solid var(--line-strong);
+  background: #FBF9F2;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--fg);
+  letter-spacing: 0.03em;
+}
+.s-fieldnotes .tag .tag-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.s-fieldnotes .tag:nth-child(2) .tag-dot { background: var(--accent-2); }
+.s-fieldnotes .tag:nth-child(3) .tag-dot { background: var(--cyan-ink); }
+
+.s-fieldnotes .footer-phrase {
+  margin-top: auto;
+  padding-top: 56px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  color: var(--fg);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.s-fieldnotes .footer-phrase .step { color: var(--fg); font-weight: 700; }
+.s-fieldnotes .footer-phrase .arrow {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 24px;
+  margin: 0 2px;
+}
+.s-fieldnotes .footer-phrase .marker {
+  color: var(--accent-ink);
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  margin-right: 6px;
+}
+
+/* ---- Collage = a notebook page ----
+   Ruled-paper background (warm cream + horizontal lines + faint dot grid)
+   with a classic red margin rule down the left edge. The cards sit on this
+   page as pinned notes; handwritten annotations connect them. */
+.s-fieldnotes .collage {
+  position: relative;
+  min-width: 0;
+  background-color: #FBF7EA;
+  background-image:
+    /* horizontal ruled lines */
+    linear-gradient(rgba(24, 20, 16, 0.07) 1px, transparent 1px),
+    /* faint dot grid as a subtle texture */
+    radial-gradient(circle, rgba(24, 20, 16, 0.05) 1px, transparent 1.2px);
+  background-size: 100% 36px, 28px 28px;
+  background-position: 0 28px, 14px 14px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+/* Classic notebook red margin rule */
+.s-fieldnotes .collage::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 56px;
+  width: 1px;
+  background: rgba(244, 84, 31, 0.32);
+  pointer-events: none;
+}
+/* Heading inked at the top, JetBrains Mono — matches left-column eyebrow */
+.s-fieldnotes .collage::before {
+  content: "// evidence · from real projects";
+  position: absolute;
+  top: 24px; left: 72px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  z-index: 4;
+}
+
+.s-fieldnotes .card {
+  position: absolute;
+  background: #FFFFFF;
+  border: 1px solid var(--line-strong);
+  padding: 18px 18px;
+  box-shadow: 0 8px 22px rgba(24, 20, 16, 0.10);
+  font-family: 'JetBrains Mono', monospace;
+  z-index: 2;
+}
+/* Push-pin on each repo card — sells the "pinned to a notebook" idea */
+.s-fieldnotes .card.repo::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #FF5C7A 0%, #D11440 55%, #8A0E2B 100%);
+  box-shadow:
+    0 2px 4px rgba(24, 20, 16, 0.35),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.18);
+  z-index: 3;
+}
+/* Vary pin colors slightly across cards for a "different days, different notes" feel */
+.s-fieldnotes .card.repo-2::before {
+  background: radial-gradient(circle at 35% 35%, #FFA15C 0%, #D26309 55%, #843E04 100%);
+}
+.s-fieldnotes .card.repo-3::before {
+  background: radial-gradient(circle at 35% 35%, #88D9E5 0%, #1B98A8 55%, #0C5965 100%);
+}
+.s-fieldnotes .card.repo-4::before {
+  background: radial-gradient(circle at 35% 35%, #FF5C7A 0%, #D11440 55%, #8A0E2B 100%);
+}
+
+/* Repo card — header row + meta row */
+.s-fieldnotes .card.repo .repo-head {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+/* Owner logo — replaces the old letter tile. Real project marks (jkube,
+   containers, fabric8io, helm) read as "these are real repos" far better
+   than a generic glyph. <image-slot fit=contain> sits transparent on the
+   white card, same idiom as the About slide's .picon. */
+.s-fieldnotes .card.repo .repo-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.s-fieldnotes .card.repo .repo-icon::part(frame) { background: transparent; }
+.s-fieldnotes .card.repo .repo-icon::part(ring)  { border-color: transparent; }
+.s-fieldnotes .card.repo .repo-icon::part(empty) { display: none; }
+.s-fieldnotes .card.repo .repo-name {
+  /* >=24px (12pt) so the project name is legible from the back row.
+     Cards are widened to 392px so the longest name (kubernetes-mcp-server)
+     still fits on one line at this size. */
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: 0;
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.s-fieldnotes .card.repo .repo-org {
+  font-size: 16px;
+  color: var(--fg-mute);
+  margin-top: 3px;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.s-fieldnotes .card.repo .repo-head > div {
+  min-width: 0;
+  flex: 1;
+}
+.s-fieldnotes .card.repo .repo-meta {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 16px;
+  color: var(--fg-mute);
+}
+.s-fieldnotes .card.repo .lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.s-fieldnotes .card.repo .lang-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.s-fieldnotes .card.repo .lang-dot.java { background: #B07219; }
+.s-fieldnotes .card.repo .lang-dot.go   { background: #00ADD8; }
+.s-fieldnotes .card.repo .lang-dot.js   { background: #D9B81E; border: 1px solid rgba(0,0,0,0.1); }
+.s-fieldnotes .card.repo .star { color: var(--accent); }
+.s-fieldnotes .card.repo .pr-icon { color: #2A8E47; font-weight: 700; }
+.s-fieldnotes .card.repo .issue-icon { color: var(--accent-2-ink); font-weight: 700; }
+
+/* Positions — five real projects. repo-1..4 form a 2×2 grid pushed out
+   toward the page corners to open a central void; repo-yakd pins on top
+   in that void (see below). A console card sits below, tying back to the
+   "real CI pain" note. Slight rotations keep the "scattered notes" feel
+   without chaos. Cards are 392px wide so the longest name fits at 24px. */
+.s-fieldnotes .card.repo-1 {
+  top: 152px;
+  left: 28px;
+  width: 392px;
+  transform: rotate(-2deg);
+}
+.s-fieldnotes .card.repo-2 {
+  top: 152px;
+  right: 24px;
+  width: 392px;
+  transform: rotate(1.8deg);
+}
+.s-fieldnotes .card.repo-3 {
+  top: 396px;
+  left: 36px;
+  width: 392px;
+  transform: rotate(1.4deg);
+}
+.s-fieldnotes .card.repo-4 {
+  top: 396px;
+  right: 20px;
+  width: 392px;
+  transform: rotate(-1.6deg);
+}
+
+/* YAKD — the fifth project, pinned on top in the centre of the page.
+   Same construction as the four grid cards (no min-height / flex), so it is
+   the SAME height; only narrower. It sits above them (z-index) in the void
+   between the two rows, and because the rows are spaced so the gap is a bit
+   under one card-height, a single card-height still reaches both rows: its
+   four corners peek over the inner corners of the surrounding cards, dipping
+   only into their blank padding (below the top row's meta, into the bottom
+   row's top padding), so no card's text is covered. */
+.s-fieldnotes .card.repo-yakd {
+  top: 274px;
+  left: 278px;
+  width: 312px;
+  transform: rotate(-3deg);
+  z-index: 5;
+  box-shadow: 0 14px 34px rgba(24, 20, 16, 0.18);
+}
+/* Distinct blue pin so the centre card reads as "the fifth, on top". */
+.s-fieldnotes .card.repo-yakd::before {
+  background: radial-gradient(circle at 35% 35%, #88B6FF 0%, #1F5FD6 55%, #103a86 100%);
+}
+
+/* CI post-it (sticky note) — small yellow square, tilted, with a hint of
+   "torn from a pad" feel. Pairs with the snippet card in the bottom row. */
+.s-fieldnotes .card.ci {
+  bottom: 124px;
+  right: 40px;
+  width: 226px;
+  transform: rotate(3deg);
+  text-align: center;
+  padding: 16px 18px;
+  background: #FFF4C2;
+  border-color: rgba(176, 114, 25, 0.45);
+  box-shadow:
+    0 8px 18px rgba(24, 20, 16, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+/* Tape strip across the top of the post-it */
+.s-fieldnotes .card.ci::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 70px;
+  height: 18px;
+  background: rgba(255, 235, 130, 0.7);
+  border: 1px solid rgba(176, 114, 25, 0.30);
+  box-shadow: 0 1px 2px rgba(24, 20, 16, 0.10);
+  z-index: 3;
+}
+.s-fieldnotes .card.ci .ci-label {
+  font-size: 15px;
+  color: var(--fg-mute);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.s-fieldnotes .card.ci .ci-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+.s-fieldnotes .card.ci .ci-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-family: 'JetBrains Mono', monospace;
+}
+.s-fieldnotes .card.ci .ci-pill.pass {
+  background: rgba(34, 134, 58, 0.18);
+  color: #1E6427;
+  border: 1px solid rgba(34, 134, 58, 0.40);
+}
+.s-fieldnotes .card.ci .ci-pill.warn {
+  background: rgba(244, 84, 31, 0.16);
+  color: var(--accent-2-ink);
+  border: 1px solid rgba(244, 84, 31, 0.42);
+}
+.s-fieldnotes .card.ci .ci-pill .glyph {
+  font-size: 13px;
+  font-weight: 900;
+}
+
+/* Console card — light cream surface; tied to "real CI pain" annotation above */
+.s-fieldnotes .card.snippet {
+  bottom: 50px;
+  left: 44px;
+  width: 438px;
+  transform: rotate(-1deg);
+  padding: 16px 20px;
+  background: #FBF7EA;
+  box-shadow: 0 10px 24px rgba(24, 20, 16, 0.12);
+}
+.s-fieldnotes .card.snippet::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #FFA15C 0%, #D26309 55%, #843E04 100%);
+  box-shadow:
+    0 2px 4px rgba(24, 20, 16, 0.35),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.18);
+  z-index: 3;
+}
+.s-fieldnotes .card.snippet .snip-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--line);
+}
+.s-fieldnotes .card.snippet .snip-label {
+  font-size: 15px;
+  color: var(--fg-mute);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.s-fieldnotes .card.snippet .snip-tag {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent-ink);
+  text-transform: uppercase;
+}
+.s-fieldnotes .card.snippet .snip-row {
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.s-fieldnotes .card.snippet .prompt { color: var(--accent); margin-right: 4px; }
+.s-fieldnotes .card.snippet .cmd { color: var(--fg); }
+.s-fieldnotes .card.snippet .flag { color: var(--cyan-ink); }
+.s-fieldnotes .card.snippet .arg { color: var(--accent-2-ink); }
+.s-fieldnotes .card.snippet .out { color: var(--fg-dim); padding-left: 16px; }
+.s-fieldnotes .card.snippet .out .fail { color: #A8470C; font-weight: 700; }
+.s-fieldnotes .card.snippet .out .ok { color: #1E6427; font-weight: 700; }
+.s-fieldnotes .card.snippet .out .warn { color: var(--accent-2-ink); font-weight: 700; }
+
+/* Handwritten field-notebook annotations — Caveat is a casual script that
+   stays legible at 28+ px on a conference-room screen. */
+.s-fieldnotes .annotation {
+  position: absolute;
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  color: var(--accent-ink);
+  letter-spacing: 0.005em;
+  z-index: 3;
+  white-space: nowrap;
+  line-height: 1.05;
+}
+.s-fieldnotes .annotation.a-top {
+  top: 78px;
+  left: 296px;
+  font-size: 36px;
+  transform: rotate(-2.5deg);
+}
+.s-fieldnotes .annotation.a-mid {
+  /* Sits in the gap below the lower repo row, pointing down at the console
+     card. Moved down from 472 now that repo-3 occupies the old position. */
+  top: 576px;
+  left: 56px;
+  font-size: 38px;
+  color: #8A2B05;            /* darker rust ink — stronger than accent-2-ink on cream */
+  transform: rotate(-1.5deg);
+}
+.s-fieldnotes .annotation.a-bottom {
+  bottom: 38px;
+  right: 38px;
+  font-size: 40px;
+  color: var(--accent-ink);
+  transform: rotate(2deg);
+}
+/* Subtle pencil arrow drawn off the handwritten note, for that "see this →" feel */
+.s-fieldnotes .annotation .ink {
+  display: inline-block;
+}
+.s-fieldnotes .annotation .arr {
+  display: inline-block;
+  font-size: 0.9em;
+  color: var(--accent);
+  margin-left: 6px;
+  transform: translateY(2px);
+}
+
+/* Chromium's page.pdf() rasterises large-blur box-shadows as opaque
+   rectangles, which made the cards look like they had hard pink
+   backplates in the PDF. Drop the lift shadows in print; the card
+   border + push-pin still sell the "pinned note" effect. */
+@media print {
+  .s-fieldnotes .card,
+  .s-fieldnotes .card.snippet { box-shadow: none; }
+  .s-fieldnotes .card.ci { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5); }
+}
+

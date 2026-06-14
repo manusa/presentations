@@ -1,0 +1,535 @@
+/* ============================================================
+   .s-blackbox — Act 5 · Signature opinion.
+   "Black-box tests: the unit is behavior."
+
+   Three-step reveal that proves the point instead of asserting
+   it — choreographed cause → effect → contrast so a live
+   audience absorbs one beat at a time:
+     step 0  two tests + the production method, all clean.
+     step 1  CAUSE. The agent refactors the production method
+             (rename + extract helper). Only CENTER moves; the
+             two tests recede so the eye stays on the code.
+     step 2  EFFECT + CONTRAST. The white-box test ALSO gets a
+             diff — the agent had to rewrite its @Mock wiring and
+             verify() chain to keep it green (amber halo). The
+             black-box test is byte-for-byte identical and still
+             passes (green halo). CENTER recedes; the two tests
+             are lit in opposite colors — the whole argument.
+
+   The point isn't "white-box fails" (no one merges failing
+   PRs). The point is: white-box tests force the agent to
+   co-edit the test alongside the code, so the test stops
+   pinning the contract. The black-box test pins the contract
+   regardless of how the internals are reshaped.
+
+   Three-column stage (equal widths so each code card breathes):
+     LEFT   — white-box test card  (terminal · mocks/verify)
+     CENTER — SUT card             (terminal · production code)
+     RIGHT  — black-box test card  (terminal · behavior)
+
+   Theme: light slide (cream paper). All three cards are dark
+   navy terminals so they read as sibling files — same idiom
+   as .s-specs-vs-tests and .s-skill.
+   ============================================================ */
+
+/* Shared card-foot height. Single-sourced because two rules depend on it:
+   .card-foot's own min-height, and the CENTER refactor badge that floats a
+   fixed rise *above* the foot (see .card-sut .status-pill.st-refactor). Keeping
+   it one token means changing the foot height moves the badge with it instead
+   of leaving a baked-in offset to drift out of sync. */
+.s-blackbox { --foot-h: 52px; }
+
+.s-blackbox::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Body grid — header / stage / tagline
+   ============================================================ */
+.s-blackbox .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 1;
+  /* Scoped pad-x override: this slide needs wider cards so every
+     console line can sit at the 24px floor without horizontal clip. */
+  padding: 30px var(--pad-x) 24px;
+  display: grid;
+  /* minmax(0, 1fr) — NOT a plain 1fr — for the stage row. A plain 1fr
+     resolves its minimum to the tallest card's content, so when the
+     white-box card grows at step 2 (the diff adds its removed/added lines)
+     the row claims the height and starves the tagline's auto row down to its
+     min-height, spilling the chips toward the chrome bar. minmax(0, 1fr)
+     lets the stage row yield height back to the tagline; the cards are
+     imperceptibly shorter and the code never clips (verified all 3 steps). */
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  row-gap: 20px;
+}
+
+/* === Header === */
+.s-blackbox .head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  /* Center the subtitle against the title's vertical midline (uniform Act 4 + 5). */
+  align-items: center;
+  column-gap: 48px;
+}
+/* Eyebrow removed: it duplicated the chrome-top act label and the title
+   already carries the "unit is behavior" beat — the reclaimed vertical room
+   goes to the three code cards. */
+.s-blackbox .head .title {
+  grid-column: 1;
+  font-size: 60px;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+}
+.s-blackbox .head .title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-blackbox .head .sub {
+  grid-column: 2;
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  line-height: 1.3;
+  color: var(--fg-dim);
+  text-align: right;
+}
+.s-blackbox .head .sub .t-warn { color: var(--accent-2-ink); font-weight: 600; }
+
+/* ============================================================
+   Stage — three equal columns. Each card needs to hold a code
+   panel plus optional diff, so they share width budget evenly.
+   ============================================================ */
+.s-blackbox .stage {
+  position: relative;
+  display: grid;
+  /* The CENTER (SUT) card holds only a short production method, so it is
+     given a narrower track and the freed width goes to the two TEST cards —
+     they carry the long lines (mock/verify chains, the RestAssured + assert
+     flow) that must stay legible at the 24px floor without clipping. */
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.5fr);
+  column-gap: 12px;
+  align-items: stretch;
+  /* Reclaim width for the three code cards: pull the stage symmetrically
+     wider than the body gutter (slide-18 conveyor pattern) so every console
+     line clears the 24px floor without horizontal clip. Header + tagline stay
+     at the body's --pad-x, aligned with the chrome bars. */
+  margin: 0 -40px;
+}
+
+/* ============================================================
+   Cards — shared dark-terminal envelope.
+   All three cards (white-box test, SUT, black-box test) use
+   the same panel-bar.term + code body idiom so they read as
+   sibling files in the project.
+   ============================================================ */
+.s-blackbox .card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0C0A12;
+  border: 1px solid rgba(24, 20, 16, 0.30);
+  box-shadow:
+    0 24px 60px rgba(24, 20, 16, 0.22),
+    0 4px 12px rgba(24, 20, 16, 0.10);
+  transition: box-shadow 350ms ease, border-color 350ms ease, opacity 350ms ease;
+}
+
+.s-blackbox .panel-bar.term {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 14px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: #8E857A;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+/* Traffic-light window dots removed: purely cosmetic, and the bar width is
+   better spent on the status badge (which carries the slide's punchline). */
+.s-blackbox .panel-bar.term .path  { color: #BFB7AC; font-weight: 500; }
+.s-blackbox .panel-bar.term .grow  { flex: 1 1 auto; }
+
+/* Status pills inside the panel bar — flip with step */
+.s-blackbox .status-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.s-blackbox .status-pill.st-pass {
+  color: #8FD79F;
+  background: rgba(40, 200, 64, 0.10);
+  border-color: rgba(143, 215, 159, 0.55);
+}
+/* Amber "agent-edited" — caution, not failure. */
+.s-blackbox .status-pill.st-edited {
+  color: #F2C266;
+  background: rgba(254, 188, 46, 0.14);
+  border-color: rgba(242, 194, 102, 0.70);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.s-blackbox .status-pill.st-untouched {
+  color: #8FD79F;
+  background: rgba(40, 200, 64, 0.18);
+  border-color: rgba(143, 215, 159, 0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+/* Center card status tags — code-state, not test-state. */
+.s-blackbox .status-pill.st-stable {
+  color: #8E857A;
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(142, 133, 122, 0.45);
+  text-transform: lowercase;
+}
+.s-blackbox .status-pill.st-refactor {
+  color: #F2C266;
+  background: rgba(254, 188, 46, 0.12);
+  border-color: rgba(242, 194, 102, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+}
+
+/* Step toggle for status pills (3-step choreography):
+     step 0  → .st-pass (L/R) + .st-stable (C) — all calm
+     step 1  → CENTER refactors: .st-refactor; L/R stay .st-pass
+     step 2  → LEFT co-edits: .st-edited; RIGHT holds: .st-untouched;
+               CENTER keeps .st-refactor (the change already happened) */
+.s-blackbox .status-pill.st-edited,
+.s-blackbox .status-pill.st-untouched,
+.s-blackbox .status-pill.st-refactor { display: none; }
+/* CENTER flips at step 1 and stays refactored through step 2 */
+.s-blackbox[data-step="1"] .card-sut .status-pill.st-stable,
+.s-blackbox[data-step="2"] .card-sut .status-pill.st-stable { display: none; }
+.s-blackbox[data-step="1"] .card-sut .status-pill.st-refactor,
+.s-blackbox[data-step="2"] .card-sut .status-pill.st-refactor { display: inline; }
+/* LEFT + RIGHT flip only at step 2 */
+.s-blackbox[data-step="2"] .card-white .status-pill.st-pass,
+.s-blackbox[data-step="2"] .card-black .status-pill.st-pass { display: none; }
+.s-blackbox[data-step="2"] .card-white .status-pill.st-edited,
+.s-blackbox[data-step="2"] .card-black .status-pill.st-untouched { display: inline; }
+
+/* The CENTER card is the narrow one, so its long "refactor applied" badge
+   would clip in the panel bar. Lift it out of the bar and centre it in the
+   free band between the (vertically-centered) diff and the foot status line —
+   the bar then carries just the file path. The offset is the foot height plus
+   a fixed rise above it: expressed as calc(var(--foot-h) + rise) — not a raw
+   px sum — so the foot height stays single-sourced and the badge cannot drift
+   off the foot if that height changes. The placement holds at steps 1 and 2
+   (same diff + foot in both). */
+.s-blackbox .card-sut { position: relative; }
+.s-blackbox .card-sut .status-pill.st-refactor {
+  position: absolute;
+  bottom: calc(var(--foot-h) + 74px); /* foot height + the rise above it */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+/* Micro-glossary one-liner under the panel bar */
+.s-blackbox .micro-gloss {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  letter-spacing: 0.02em;
+  color: #8E857A;
+  padding: 7px 14px 5px;
+  background: rgba(255,255,255,0.015);
+  border-bottom: 1px dashed rgba(255,255,255,0.07);
+}
+
+/* ============================================================
+   Code panels — shared body styles
+   ============================================================ */
+.s-blackbox .panel-body.code {
+  flex: 1 1 auto;
+  padding: 12px 14px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  line-height: 1.35;
+  color: #D3CCC2;
+  display: flex;
+  flex-direction: column;
+  /* Center the snippet vertically: with the lighter rework the cards
+     stretch to equal height but hold few lines, so top-aligned code
+     left a hollow gap above the footer. Centering reads as intentional
+     and keeps each footer gloss near the code it annotates. */
+  justify-content: center;
+  gap: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.s-blackbox .ln           { min-height: 1.35em; }
+.s-blackbox .ln.indent    { padding-left: 22px; }
+.s-blackbox .ln.indent-2  { padding-left: 44px; }
+.s-blackbox .ln.indent-3  { padding-left: 66px; }
+
+/* Setup block: the field declarations above @Test.
+   Visually muted (dim color, not smaller size) so the test method
+   itself stays the focus, but the @Mock / @EnableKubeAPIServer
+   annotations carry the contrast between "this test needs mocks"
+   and "this test uses a real Kubernetes API server". Size matches
+   the rest of the code body — no sub-24px text on this slide. */
+.s-blackbox .ln.setup {
+  color: #8E857A;
+  letter-spacing: -0.005em;
+}
+.s-blackbox .ln.setup .t-anno { color: var(--orange-soft); opacity: 0.95; }
+.s-blackbox .ln.setup .t-type { color: var(--cyan); opacity: 0.85; }
+/* Visual breathing room between setup and the @Test method. */
+.s-blackbox .ln.gap { min-height: 8px; }
+
+/* Step-based body switching (3-step choreography).
+   Each card with step-dependent code carries two panel-bodies:
+   .body-step-0 (default) and .body-step-1 (the diff view).
+   CENTER (SUT) reveals its diff at step 1 and keeps it through step 2.
+   LEFT (white-box) reveals its diff only at step 2 — the agent co-edit
+   lands AFTER the audience has absorbed the production refactor. */
+.s-blackbox .panel-body.body-step-1 { display: none; }
+.s-blackbox[data-step="1"] .card-sut .panel-body.body-step-0,
+.s-blackbox[data-step="2"] .card-sut .panel-body.body-step-0 { display: none; }
+.s-blackbox[data-step="1"] .card-sut .panel-body.body-step-1,
+.s-blackbox[data-step="2"] .card-sut .panel-body.body-step-1 { display: flex; }
+.s-blackbox[data-step="2"] .card-white .panel-body.body-step-0 { display: none; }
+.s-blackbox[data-step="2"] .card-white .panel-body.body-step-1 { display: flex; }
+
+/* Code syntax colors — match s-specs-vs-tests.css */
+.s-blackbox .t-anno { color: var(--orange-soft); }
+.s-blackbox .t-kw   { color: #B89AE8; }
+.s-blackbox .t-type { color: var(--cyan); }
+.s-blackbox .t-fn   { color: var(--cyan); }
+.s-blackbox .t-str  { color: #B6E3A8; }
+/* Highlight verify(…) chain in white-box; assertThat in black-box */
+.s-blackbox .t-fn.t-vrf { color: var(--orange-soft); font-weight: 600; }
+.s-blackbox .t-fn.t-asr { color: #8FD79F; font-weight: 600; }
+
+/* ============================================================
+   Diff lines (inside .body-step-1).
+   .rem  = removed (red gutter, soft red bg)
+   .add  = added   (green gutter, soft green bg)
+   .ctx  = context (no bg, neutral gutter)
+
+   The leading <span class="g"> is a 14px gutter holding the +/-/space
+   glyph. It sits flush-left and gives the diff its column alignment.
+   ============================================================ */
+.s-blackbox .ln.rem,
+.s-blackbox .ln.add,
+.s-blackbox .ln.ctx {
+  padding: 1px 6px;
+  margin: 0 -8px;
+  border-radius: 3px;
+}
+.s-blackbox .ln .g {
+  display: inline-block;
+  width: 14px;
+  margin-right: 4px;
+  font-weight: 700;
+  text-align: center;
+  color: #766D63;
+}
+.s-blackbox .ln.rem {
+  background: rgba(229, 72, 77, 0.20);
+  /* Removed lines recede a touch: a brightness cue (added = solid new
+     state, removed = fading out) reads from the back of the room where
+     the red-vs-green tint alone could be mistaken at a glance. */
+  opacity: 0.72;
+}
+.s-blackbox .ln.rem .g { color: #FF9D97; }
+.s-blackbox .ln.add {
+  background: rgba(40, 200, 64, 0.20);
+}
+.s-blackbox .ln.add .g { color: #8FD79F; }
+.s-blackbox .ln.ctx .g { color: #766D63; }
+
+/* ============================================================
+   Card foot — short message that swaps on step.
+   ============================================================ */
+.s-blackbox .card-foot {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 11px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: #BFB7AC;
+  flex-shrink: 0;
+  min-height: var(--foot-h);
+}
+.s-blackbox .card-foot .foot-glyph {
+  font-size: 24px;
+  color: #8E857A;
+}
+.s-blackbox .card-foot .foot-msg em {
+  font-style: normal;
+  color: #FFF;
+  font-weight: 600;
+}
+.s-blackbox .card-foot .foot-msg-1 { display: none; }
+/* CENTER foot flips at step 1; LEFT + RIGHT foots flip at step 2 */
+.s-blackbox[data-step="1"] .card-sut .card-foot .foot-msg-0,
+.s-blackbox[data-step="2"] .card-sut .card-foot .foot-msg-0,
+.s-blackbox[data-step="2"] .card-white .card-foot .foot-msg-0,
+.s-blackbox[data-step="2"] .card-black .card-foot .foot-msg-0 { display: none; }
+.s-blackbox[data-step="1"] .card-sut .card-foot .foot-msg-1,
+.s-blackbox[data-step="2"] .card-sut .card-foot .foot-msg-1,
+.s-blackbox[data-step="2"] .card-white .card-foot .foot-msg-1,
+.s-blackbox[data-step="2"] .card-black .card-foot .foot-msg-1 { display: inline; }
+
+/* Center (SUT) foot — amber accent from step 1 onward (active change) */
+.s-blackbox[data-step="1"] .card-sut .card-foot,
+.s-blackbox[data-step="2"] .card-sut .card-foot {
+  background: linear-gradient(to bottom, rgba(254,188,46,0.08), rgba(254,188,46,0.03));
+  border-top-color: rgba(242, 194, 102, 0.30);
+}
+.s-blackbox[data-step="1"] .card-sut .card-foot .foot-glyph,
+.s-blackbox[data-step="2"] .card-sut .card-foot .foot-glyph { color: #F2C266; }
+.s-blackbox[data-step="1"] .card-sut .card-foot .foot-msg em,
+.s-blackbox[data-step="2"] .card-sut .card-foot .foot-msg em { color: #F8D78A; }
+
+/* White-box foot — amber accent at step 2 (caution, not failure) */
+.s-blackbox[data-step="2"] .card-white .card-foot {
+  background: linear-gradient(to bottom, rgba(254,188,46,0.10), rgba(254,188,46,0.04));
+  border-top-color: rgba(242, 194, 102, 0.35);
+}
+.s-blackbox[data-step="2"] .card-white .card-foot .foot-glyph { color: #F2C266; }
+.s-blackbox[data-step="2"] .card-white .card-foot .foot-msg em { color: #F8D78A; }
+
+/* Black-box foot — green accent at step 2 (contract held) */
+.s-blackbox[data-step="2"] .card-black .card-foot {
+  background: linear-gradient(to bottom, rgba(40,200,64,0.10), rgba(40,200,64,0.04));
+  border-top-color: rgba(143, 215, 159, 0.30);
+}
+.s-blackbox[data-step="2"] .card-black .card-foot .foot-glyph { color: #8FD79F; }
+.s-blackbox[data-step="2"] .card-black .card-foot .foot-msg em { color: #B7E8C2; }
+
+/* ============================================================
+   Step choreography — spotlight halos + recede dimming.
+     step 1  CENTER lit (amber halo) · L+R recede
+             → "watch the agent refactor the code"
+     step 2  CENTER recedes · LEFT amber halo (co-edited) +
+             RIGHT green halo (held)
+             → "watch which test the agent had to touch"
+   The recede (opacity) is the eye-anchor: at each beat only the
+   relevant cards are full-bright, so the one comparison that
+   matters is *seen*, not hunted for.
+   ============================================================ */
+/* step 1 — center is the news; the two tests recede */
+.s-blackbox[data-step="1"] .card-white,
+.s-blackbox[data-step="1"] .card-black { opacity: 0.5; }
+.s-blackbox[data-step="1"] .card-sut {
+  border-color: rgba(242, 194, 102, 0.60);
+  box-shadow:
+    0 0 0 1px rgba(242, 194, 102, 0.40),
+    0 24px 60px rgba(244, 84, 31, 0.18),
+    0 4px 12px rgba(244, 84, 31, 0.10);
+}
+
+/* step 2 — the contrast; center recedes, both tests lit in opposite colors */
+.s-blackbox[data-step="2"] .card-sut { opacity: 0.45; }
+.s-blackbox[data-step="2"] .card-white {
+  border-color: rgba(242, 194, 102, 0.60);
+  box-shadow:
+    0 0 0 1px rgba(242, 194, 102, 0.40),
+    0 24px 60px rgba(244, 84, 31, 0.18),
+    0 4px 12px rgba(244, 84, 31, 0.10);
+}
+.s-blackbox[data-step="2"] .card-black {
+  border-color: rgba(143, 215, 159, 0.50);
+  box-shadow:
+    0 0 0 1px rgba(143, 215, 159, 0.40),
+    0 24px 60px rgba(40, 200, 64, 0.18),
+    0 4px 12px rgba(40, 200, 64, 0.10);
+}
+
+/* ============================================================
+   Tagline — strong opinion + chip strip
+   ============================================================ */
+.s-blackbox .tag-line {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 56px;
+}
+.s-blackbox .tag-line .quote {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.s-blackbox .tag-line .quote .accent {
+  color: var(--accent);
+}
+.s-blackbox .tag-line .chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+}
+.s-blackbox .tag-line .chips-lbl {
+  color: var(--fg-mute);
+  letter-spacing: 0.08em;
+  margin-right: 4px;
+}
+.s-blackbox .tag-line .chip {
+  color: var(--fg-dim);
+  padding: 3px 10px;
+  border: 1px solid rgba(24, 20, 16, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Print — flatten step rules so export:pdf produces both pages
+   without Chromium rasterising the halos as opaque rectangles.
+   ============================================================ */
+@media print {
+  .s-blackbox .card { box-shadow: none; }
+  /* step 1 — center lit */
+  .s-blackbox[data-step="1"] .card-sut {
+    border-color: rgba(242, 194, 102, 0.85);
+    box-shadow: 0 0 0 2px rgba(242, 194, 102, 0.45);
+  }
+  /* step 2 — both tests lit in opposite colors */
+  .s-blackbox[data-step="2"] .card-white {
+    border-color: rgba(242, 194, 102, 0.85);
+    box-shadow: 0 0 0 2px rgba(242, 194, 102, 0.45);
+  }
+  .s-blackbox[data-step="2"] .card-black {
+    border-color: rgba(143, 215, 159, 0.85);
+    box-shadow: 0 0 0 2px rgba(143, 215, 159, 0.40);
+  }
+  .s-blackbox[data-step="1"] .card-sut .card-foot,
+  .s-blackbox[data-step="2"] .card-sut .card-foot,
+  .s-blackbox[data-step="2"] .card-white .card-foot {
+    background: rgba(254, 188, 46, 0.10);
+  }
+  .s-blackbox[data-step="2"] .card-black .card-foot {
+    background: rgba(40, 200, 64, 0.10);
+  }
+}

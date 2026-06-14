@@ -1,0 +1,620 @@
+/* ============================================================
+   .s-project-story — Act 5 · Real project story.
+   "Black-box tests unlocked a large change." (YAKD PR #172)
+
+   Two-step reveal:
+     step 0  PR card + grunt-work panel highlighted; contract
+             panel slightly muted so the speaker lands the
+             "no new feature · low dopamine" beat first.
+     step 1  Contract panel lights up (green halo, full color)
+             and the takeaway tagline appears.
+
+   Silhouette differentiation from neighboring Act-5 slides:
+     slide 14  three-column horizontal conveyor
+     slide 19  three-column horizontal terminal cards
+     slide 21  horizontal ladder of feedback tiers
+     slide 20  wide PR-card header strip across the top + two
+               side-by-side story panels below. Reads like a
+               GitHub PR review page — recognizable shape the
+               audience parses instantly, no Act-5 collision.
+   ============================================================ */
+
+/* Scoped semantic palette — "ok" = passed / green / contract-held.
+   Used by the contract panel's halo, the Σ stamp block, the
+   step-1 foot wash, and the .t-done token. One source of truth
+   so the green can be retuned in one place rather than ~17. */
+.s-project-story {
+  --ok: #2E7F46;         /* core green — text emphasis, glyphs, accents */
+  --ok-deep: #1B5A30;    /* darker green for body text on green washes */
+  --ok-rgb: 46, 127, 70; /* rgb triple for rgba() washes / halos */
+}
+
+.s-project-story::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--grid) 1.2px, transparent 1.4px);
+  background-size: 44px 44px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Body grid — header / pr-card / stage / tagline
+   ============================================================ */
+.s-project-story .body {
+  position: absolute;
+  inset: 56px 0 56px 0;
+  z-index: 1;
+  /* Gutter matches the chrome bar's --chrome-pad-x (64px) — aligns the
+     title with the chrome and reclaims a little width for the two panels
+     (consistent with the other dense Act-5 slides). Gutters stay equal. */
+  padding: 30px var(--pad-x) 24px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  row-gap: 18px;
+}
+
+/* === Header === */
+.s-project-story .head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  /* Center the subtitle against the title's vertical midline (uniform Act 4 + 5). */
+  align-items: center;
+  column-gap: 48px;
+}
+.s-project-story .head .eyebrow {
+  grid-column: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: var(--accent-ink);
+  margin-bottom: 12px;
+}
+.s-project-story .head .title {
+  grid-column: 1;
+  font-size: 68px;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+}
+.s-project-story .head .title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.s-project-story .head .sub {
+  grid-column: 2;
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  line-height: 1.3;
+  color: var(--fg-dim);
+  text-align: right;
+}
+.s-project-story .head .sub .t-warn {
+  color: var(--accent-2-ink);
+  font-weight: 600;
+}
+
+/* ============================================================
+   PR CARD — wide GitHub-style header strip.
+   Whole card has position:relative so the overlay .ref-link
+   has a positioning context; the anchor itself is the
+   audience's deep-link to the actual PR.
+   ============================================================ */
+.s-project-story .pr-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(24, 20, 16, 0.20);
+  box-shadow:
+    0 10px 28px rgba(24, 20, 16, 0.08),
+    0 2px 6px rgba(24, 20, 16, 0.05);
+  overflow: hidden;
+}
+
+.s-project-story .pr-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 18px;
+  background: rgba(24, 20, 16, 0.04);
+  border-bottom: 1px solid rgba(24, 20, 16, 0.10);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+}
+.s-project-story .pr-logo {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+.s-project-story .pr-repo {
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.s-project-story .pr-num {
+  color: var(--fg-dim);
+  font-weight: 500;
+}
+.s-project-story .pr-status {
+  font-size: 21px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.s-project-story .pr-status.st-merged {
+  color: #5B2DA0;
+  background: rgba(123, 63, 191, 0.10);
+  border-color: rgba(91, 45, 160, 0.55);
+}
+.s-project-story .diff-rem { color: #B83454; font-weight: 700; }
+
+.s-project-story .pr-body {
+  padding: 12px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.s-project-story .pr-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.01em;
+  line-height: 1.18;
+}
+.s-project-story .pr-title .t-bump {
+  color: var(--accent);
+  font-weight: 700;
+}
+.s-project-story .pr-meta {
+  font-size: 22px;
+  color: var(--fg-mute);
+  letter-spacing: 0.02em;
+}
+.s-project-story .pr-issue {
+  color: var(--accent);
+  font-weight: 600;
+}
+/* The PR card carries an overlay anchor (.ref-link.overlay) at
+   z-index: 5 covering the whole card. Inline issue refs would
+   sit underneath it and route every click to the PR. Lift the
+   inline anchor's stacking context so its rect wins both for
+   hit-testing (cursor) and Chromium's page.pdf() link
+   annotations. */
+.s-project-story .pr-card .pr-issue .ref-link {
+  position: relative;
+  z-index: 6;
+}
+
+/* ============================================================
+   Stage — two side-by-side story panels.
+   Left:  THE GRUNT WORK (what shipped)
+   Right: ALREADY IN THE REPO (the IT contract)
+   ============================================================ */
+.s-project-story .stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 22px;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.s-project-story .story-panel {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(24, 20, 16, 0.18);
+  box-shadow:
+    0 12px 32px rgba(24, 20, 16, 0.10),
+    0 2px 8px rgba(24, 20, 16, 0.05);
+  overflow: hidden;
+  min-height: 0;
+  transition: box-shadow 300ms ease, border-color 300ms ease,
+              opacity 280ms ease, filter 280ms ease;
+}
+
+.s-project-story .sp-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 18px;
+  background: rgba(24, 20, 16, 0.04);
+  border-bottom: 1px solid rgba(24, 20, 16, 0.10);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: var(--fg);
+}
+.s-project-story .sp-glyph {
+  font-size: 24px;
+  width: 26px;
+  text-align: center;
+  color: var(--fg-mute);
+  flex-shrink: 0;
+}
+/* image-slot variant — used for the grunt-work head where the
+   glyph is the Claude mark (the agent that handled the change),
+   not a text symbol. Same footprint as the text glyph so the
+   head rhythm reads the same. */
+.s-project-story image-slot.sp-glyph {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+}
+.s-project-story .sp-label {
+  flex: 1 1 auto;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+.s-project-story .sp-tag {
+  font-size: 22px;
+  color: var(--fg-mute);
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   Panel list rows — shared idiom across both panels.
+   Three cells: key (left, mono accent) · value (middle, the
+   actual fact) · note (right, small dim qualifier).
+   ============================================================ */
+.s-project-story .sp-list {
+  list-style: none;
+  margin: 0;
+  padding: 14px 18px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.s-project-story .sp-row {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 14px;
+  padding: 5px 0;
+  font-family: 'JetBrains Mono', monospace;
+  border-bottom: 1px dashed rgba(24, 20, 16, 0.10);
+}
+.s-project-story .sp-row:last-child { border-bottom: none; }
+.s-project-story .sp-row-key {
+  font-size: 26px;
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+.s-project-story .sp-row-val {
+  font-size: 26px;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.s-project-story .sp-row-note {
+  font-size: 22px;
+  color: var(--fg-mute);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.s-project-story .t-arrow {
+  color: var(--fg-mute);
+  margin: 0 6px;
+}
+
+/* Bold the delta row — visually anchors the "-123 lines" line as the
+   most surprising line in the grunt-work panel. */
+.s-project-story .sp-row-delta .sp-row-key,
+.s-project-story .sp-row-delta .sp-row-val {
+  font-weight: 700;
+}
+
+/* ============================================================
+   Panel foot — mono one-liner(s) per panel. Multi-line variant
+   uses .foot-line children so the grunt-work panel can carry
+   the dual-guidance attribution (compiler + tests) plus the
+   "i handed it to Claude" line without breaking layout.
+   ============================================================ */
+.s-project-story .sp-foot {
+  border-top: 1px solid rgba(24, 20, 16, 0.10);
+  padding: 11px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  color: var(--fg-dim);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  background: rgba(24, 20, 16, 0.025);
+  line-height: 1.4;
+}
+.s-project-story .sp-foot .foot-line { display: block; }
+.s-project-story .sp-foot .foot-line + .foot-line { margin-top: 3px; }
+.s-project-story .sp-foot { transition: opacity 260ms ease; }
+/* The duality lines (compiler caught the renames · tests pinned the
+   behavior) are the thesis — promote them off the old 22px floor to a
+   must-read size; the // sub-lines stay a quieter qualifier tier. */
+.s-project-story .sp-foot .foot-key {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+}
+.s-project-story .sp-foot .foot-sub {
+  font-size: 22px;
+  color: var(--fg-mute);
+}
+.s-project-story .sp-foot .foot-state-0 { font-size: 24px; }
+.s-project-story .t-claude {
+  color: var(--accent-2-ink, var(--accent-2));
+  font-weight: 700;
+}
+.s-project-story .t-guard {
+  color: var(--accent);
+  font-weight: 700;
+}
+.s-project-story .t-done {
+  color: var(--ok);
+  font-weight: 700;
+}
+
+/* ============================================================
+   Portfolio body — replaces the old .sp-list table on the
+   contract panel. The grunt-work panel still uses .sp-list.
+
+   Hierarchy (top → bottom), revealed across the 3-step build:
+     chips        3 intent chips (REST Assured · Selenium IT · Quarkus infra)
+     connector    // real HTTP · a real K8s test API server · not mocks
+     sigma block  ✓ zero assertion changes (gated to step 2)
+   ============================================================ */
+.s-project-story .portfolio {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px 12px;
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 12px;
+}
+.s-project-story .portfolio-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.s-project-story .port-chip {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(24, 20, 16, 0.16);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.s-project-story .chip-name {
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.005em;
+}
+.s-project-story .chip-intent {
+  color: var(--fg-mute);
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.s-project-story .portfolio-connector {
+  font-size: 26px;
+  color: var(--fg-mute);
+  letter-spacing: 0.02em;
+  padding-left: 2px;
+}
+.s-project-story .t-conn {
+  color: var(--accent);
+  font-weight: 600;
+}
+/* The Σ punchline block — green wash + thick left accent stripe.
+   Stamp-style: a check glyph + declarative sentence.
+
+   Why a check, not a giant "0": a 64px lonely numeral reads as
+   detached chrome until the eye crosses the gap to the label.
+   "Zero" as a *word* reads as one beat with the sentence; the
+   "✓" carries the safe/green/passed semantic the digit could
+   never do alone. Mnemonic shape (✓) > mnemonic count (0). */
+.s-project-story .portfolio-sigma {
+  margin-top: auto;
+  margin-bottom: 10px;
+  padding: 13px 20px;
+  background: rgba(var(--ok-rgb), 0.12);
+  border-radius: 10px;
+  border: 1px solid rgba(var(--ok-rgb), 0.45);
+  box-shadow: inset 5px 0 0 rgba(var(--ok-rgb), 0.90);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.s-project-story .sigma-glyph {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--ok);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.s-project-story .sigma-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.s-project-story .sigma-label {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--ok-deep);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+}
+.s-project-story .sigma-soft {
+  color: var(--ok);
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   Step-driven reveal — a real 3-beat build.
+     step 0  TENSION. Only the PR card + grunt-work panel carry
+             weight. The safety-net panel is a ghost frame: its
+             header/label show ("// already in the repo") but the
+             body + foot are hidden, so the payoff is NOT spoiled.
+             Left foot shows the attribution line.
+     step 1  GUARDRAILS. The safety-net panel materialises and the
+             compiler|tests duality goes legible — the left foot
+             flips to the compiler line (accent), the right foot
+             carries the tests line (green). The Σ stamp stays hidden.
+     step 2  PAYOFF. Green halo + the "zero assertion changes" stamp
+             land, and the takeaway tagline (both claims) appears.
+   ============================================================ */
+
+/* Left foot crossfades attribution (step 0) → compiler guardrail (1+). */
+.s-project-story .work-panel .foot-state-1 { display: none; }
+.s-project-story[data-step="1"] .work-panel .foot-state-0,
+.s-project-story[data-step="2"] .work-panel .foot-state-0 { display: none; }
+.s-project-story[data-step="1"] .work-panel .foot-state-1,
+.s-project-story[data-step="2"] .work-panel .foot-state-1 { display: block; }
+
+/* Smooth fades for the revealed regions. */
+.s-project-story .contract-panel .portfolio,
+.s-project-story .contract-panel .portfolio-sigma {
+  transition: opacity 260ms ease;
+}
+
+/* Step 0 — safety-net panel is a ghost: header only, dashed + faint. */
+.s-project-story[data-step="0"] .contract-panel {
+  background: rgba(255, 255, 255, 0.28);
+  border-style: dashed;
+  box-shadow: none;
+}
+.s-project-story[data-step="0"] .contract-panel .portfolio,
+.s-project-story[data-step="0"] .contract-panel .sp-foot {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* The Σ payoff stamp keeps its layout slot but stays hidden until step 2. */
+.s-project-story:not([data-step="2"]) .contract-panel .portfolio-sigma {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Step 2 — the green "contract held" payoff. */
+.s-project-story[data-step="2"] .contract-panel {
+  border-color: rgba(var(--ok-rgb), 0.50);
+  box-shadow:
+    0 0 0 1px rgba(var(--ok-rgb), 0.32),
+    0 16px 36px rgba(var(--ok-rgb), 0.14),
+    0 2px 8px rgba(var(--ok-rgb), 0.08);
+}
+.s-project-story[data-step="2"] .contract-panel .sp-head {
+  background: rgba(var(--ok-rgb), 0.08);
+  border-bottom-color: rgba(var(--ok-rgb), 0.25);
+}
+.s-project-story[data-step="2"] .contract-panel .sp-glyph {
+  color: var(--ok);
+}
+.s-project-story[data-step="2"] .contract-panel .sp-foot {
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--ok-rgb), 0.10),
+    rgba(var(--ok-rgb), 0.04)
+  );
+  border-top-color: rgba(var(--ok-rgb), 0.30);
+}
+
+/* ============================================================
+   Tagline — punchline + caption.
+   Hidden in flow (opacity-only fade) so layout doesn't jump.
+   ============================================================ */
+.s-project-story .tag-line {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 60px;
+  opacity: 0;
+  transition: opacity 280ms ease;
+  pointer-events: none;
+}
+.s-project-story[data-step="2"] .tag-line {
+  opacity: 1;
+  pointer-events: auto;
+}
+.s-project-story .tag-line .quote {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.s-project-story .tag-line .quote .accent {
+  color: var(--accent);
+}
+/* The prescriptive lesson — the imperative that turns the slide from
+   "it worked" into "here's the rule". Mono, a quieter tier than the
+   proof line above it, so the two claims read as proof → lesson. */
+.s-project-story .tag-line .lesson {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--fg-dim);
+  letter-spacing: 0.01em;
+}
+.s-project-story .tag-line .lesson .accent {
+  color: var(--accent);
+}
+
+/* ============================================================
+   Print — flatten step-driven hides so the PDF export keeps
+   both pages legible.
+   ============================================================ */
+@media print {
+  .s-project-story .pr-card,
+  .s-project-story .story-panel {
+    box-shadow: none;
+  }
+  /* Flatten the step reveal to its final (step-2) state so the PDF
+     handout shows the whole story: net materialised, Σ stamp landed,
+     compiler line and takeaway visible. */
+  .s-project-story .contract-panel {
+    opacity: 1 !important;
+    filter: none !important;
+    border-style: solid !important;
+  }
+  .s-project-story .contract-panel .portfolio,
+  .s-project-story .contract-panel .sp-foot,
+  .s-project-story .contract-panel .portfolio-sigma {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .s-project-story .work-panel .foot-state-0 { display: none !important; }
+  .s-project-story .work-panel .foot-state-1 { display: block !important; }
+  .s-project-story .tag-line { opacity: 1 !important; }
+}
