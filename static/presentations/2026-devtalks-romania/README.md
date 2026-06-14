@@ -96,6 +96,38 @@ Adding text to a slide = editing HTML inside the corresponding `<section>`. Addi
 
 ---
 
+## Palette
+
+Color lives in two tiers: **theme tokens** in `styles/tokens.css` `:root` (semantic, reused everywhere) and a set of **hardcoded UI-mimicry palettes** in the per-slide CSS that deliberately do *not* follow the theme. When forking this deck to re-theme it (as the Valencia JUG deck did), convert the first tier and leave the second alone — re-coloring a slide that quotes a real UI breaks the recognition.
+
+### Theme tokens (`tokens.css`)
+
+Deep navy base + DevTalks pink, with a purple portrait accent and the personal-brand orange as the warm secondary.
+
+| Token | Value | Role |
+|---|---|---|
+| `--bg` / `--bg-elev` / `--bg-card` | `#0A1554` / `#0F1C66` / `#142578` | navy surfaces |
+| `--fg` / `--fg-dim` / `--fg-mute` | `#FFFFFF` / `#A5B0E6` / `#6B78B8` | text; dim/mute are blue-grays |
+| `--pink` (= `--accent`, `--amp-bad`) | `#F02A5A` | DevTalks primary — doubles as brand accent **and** the "bad"/alert color |
+| `--purple` | `#7B3FBF` | portrait gradient |
+| `--orange` (= `--accent-2`) / `--orange-soft` | `#E16309` / `#F08A3E` | personal-brand warm secondary |
+| `--cyan` | `#5BE9F0` | cool / positive contrast |
+
+**Light slides** (`light-overrides.css`) render on cream and use darker, AA-safe `-ink` variants: `--accent-ink #B81742` (pink), `--accent-2-ink #A04707` (orange), `--cyan-ink #086978` (deep teal). The Map · Roads · Guardrails spine uses the bright tokens on dark slides and the `-ink` trio on cream.
+
+> Note — unlike the Valencia fork, this deck's **pink does double duty** (brand *and* alert). The fork split them (orange = brand, red = alert), which is its single biggest theme change. See `../2026-valenciajug/README.md` → Palette.
+
+### Preserved UI-mimicry palettes — **do not "convert" these**
+
+Several slides reproduce a recognizable third-party UI; those colors are quotations, not theme choices. They are hardcoded in the per-slide CSS and annotated in-line (e.g. `/* GitHub danger-fg */`). A re-theme must skip them — this list is **identical in the Valencia fork**:
+
+- **GitHub Primer** (PR / issues / diff / billing mockups): fg `#1F2328`, muted `#59636E`, subtle `#656D76`, border `#D1D9E0`, canvas `#F6F8FA`; danger `#CF222E` on `#FFEBE9` (dark `#82071E`); success `#1A7F37` / `#1F883D` on `#DAFBE1`; attention `#9A6700` on `#FFF8C5`; link blue `#0969DA` / `#0550AE`; merged-PR purple `#6F42C1` / `#8250DF`.
+- **macOS traffic lights** (terminal / window chrome): `#FF5F57` / `#FEBC2E` / `#28C840`.
+- **Go brand** (language dot): `#00ADD8`.
+- **Console / syntax highlight** (terminal slides): the JetBrains-ish token colors.
+
+---
+
 ## Image slots
 
 Logos and large scene images are not hard-coded as `<img src="…">`. Each slot is an `<image-slot id="…" src="assets/…">` element provided by `static/deck-kit/image-slot.js`. The component handles fit / crop / placeholder text per its own attributes. `src` is set directly as an attribute on the element — there is no JS registry hydrating sources on DOMContentLoaded.
