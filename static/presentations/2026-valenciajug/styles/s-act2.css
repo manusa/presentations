@@ -66,9 +66,11 @@
 
 /* Light-mode contrast overrides for the Gantt slides.
    The cyan accent (#5BE9F0) is a pale pastel that disappears on the
-   cream paper bg, so we re-route spawn arrows + the you-merge block
-   to a darker teal that still reads as "cyan" but actually sits on
-   the cream. Ghost lanes also need more ink to stay legible. */
+   cream paper bg, so the spawn arrows are re-routed to a darker teal
+   (#0E7C8A) that still reads as "cyan" but sits on the cream. The
+   you-merge block stays warm gold (see README → Palette): teal is the
+   agents' lane only, so the You row reads fully warm. Ghost lanes also
+   need more ink to stay legible. */
 .s-act2.light .g1-spawn {
   background: #0E7C8A;
 }
@@ -77,10 +79,6 @@
 }
 .s-act2.light .g1-spawn .tag {
   color: #0E7C8A;
-}
-.s-act2.light .g1-block.you-merge {
-  background: #0E7C8A;
-  color: #EAFBFD;
 }
 .s-act2.light .g1-lane.ghost {
   opacity: 0.55;
@@ -217,15 +215,21 @@
   hyphens: none;
 }
 .s-act2 .g1-lane.you .g1-block { font-weight: 700; font-size: 22px; }
-.s-act2 .g1-block.you-chore { background: #7A6E5A; color: #F2EDE3; }
+/* Gantt block colors. The "you vs agents" read is carried by a warm/cool
+   axis: every YOUR-lane block is warm (orange impl hero + gold/tan/brown
+   overhead, stepped by hue AND value so they separate at projection
+   distance); the AGENT lanes are the deck's cool teal. Bug stays red per the
+   brand/alert split; orange stays the sole hero on the implementation work.
+   Text colors target WCAG AA on each fill. */
+.s-act2 .g1-block.you-chore { background: #8A7C66; color: #FFFFFF; }
 .s-act2 .g1-block.you-impl  { background: var(--orange); color: #1A0B00; }
 .s-act2 .g1-block.you-bug   { background: #C8463F; }
-.s-act2 .g1-block.you-meet  { background: #6E7A55; }
-.s-act2 .g1-block.you-mgmt  { background: #9E5E72; }
-.s-act2 .g1-block.you-merge { background: var(--cyan); color: #062a30; }
-.s-act2 .g1-block.agent     { background: var(--accent-2); color: #241A04; }
-.s-act2 .g1-block.agent.alt { background: #8A6A1E; }
-.s-act2 .g1-block.agent.tn  { background: #E6C25C; color: #241A04; }
+.s-act2 .g1-block.you-meet  { background: #A98A4A; color: #1A1206; }
+.s-act2 .g1-block.you-mgmt  { background: #6B5D4C; }
+.s-act2 .g1-block.you-merge { background: var(--accent-2); color: #241A04; }
+.s-act2 .g1-block.agent     { background: #0E7C8A; color: #EAFBFD; }
+.s-act2 .g1-block.agent.alt { background: #0A6573; color: #EAFBFD; }
+.s-act2 .g1-block.agent.tn  { background: #2AA5B3; color: #042024; }
 
 /* Narrow bars: when a block is too short to hold its label at a readable
    size, drop the label OUT to the right of the bar into the lane's idle gap
