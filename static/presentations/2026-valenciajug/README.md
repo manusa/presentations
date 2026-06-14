@@ -101,6 +101,56 @@ Adding text to a slide = editing HTML inside the corresponding `<section>`. Addi
 
 ---
 
+## Palette
+
+Color lives in two tiers: **theme tokens** in `styles/tokens.css` `:root` (semantic, reused everywhere) and a set of **hardcoded UI-mimicry palettes** in the per-slide CSS that deliberately do *not* follow the theme. When re-theming, convert the first tier and leave the second alone — that single rule is what keeps a re-skin from breaking the slides that quote a real UI.
+
+### Theme tokens (`tokens.css`)
+
+Near-black base + warm radial glow + vermilion-orange, sampled from the meetup flyer. The load-bearing decision is a **brand/alert split: orange = brand / positive / "the work that matters", red = bad / error.** (Romania's single pink did both jobs; Valencia separates them.)
+
+| Token | Value | Role |
+|---|---|---|
+| `--bg` / `--bg-elev` / `--bg-card` | `#0E0D13` / `#17151D` / `#201C26` | near-black surfaces |
+| `--fg` / `--fg-dim` / `--fg-mute` | `#FFFFFF` / `#BDB4AB` / `#837A70` | text; dim/mute are warm grays (de-blued) |
+| `--orange` (= `--accent`) | `#F4541F` | primary brand accent (vermilion) — the hero |
+| `--orange-soft` | `#FF7A45` | softer orange (e.g. terminal `.val` tokens) |
+| `--accent-2` | `#C9962E` | warm gold — secondary category tone |
+| `--cyan` | `#5BE9F0` | cool / positive contrast |
+| `--amp-bad` (red) | `#E5484D` | bad / error / alert — **only** |
+| `--pink` → `--orange`, `--purple` → `--accent-2` | aliases | retired Romania hues; alias the new accents so legacy highlight usages re-theme automatically |
+
+**Light slides** (`light-overrides.css`) render on cream and need darker, AA-safe **`-ink` variants**: `--accent-ink #A8470C` (orange), `--accent-2-ink #7E5E12` (gold), `--cyan-ink #086978` (deep teal). Rule of thumb: **dark sections use the bright tokens, cream sections use the `-ink` tokens.** The Map · Roads · Guardrails spine relies on this — the flywheel (dark) uses `--cyan` / `--accent-2` / `--accent`; the recap (cream) uses the matching `-ink` trio. Same hue identity (cyan / gold / orange), per-background tone.
+
+### Gantt category palette (`s-act2.css`, Old World / New World)
+
+The two Gantt slides encode "you orchestrate, agents execute" as a **warm-vs-cool axis**: every *your-lane* block is warm; the *agent* lanes are teal. Categories within the warm set separate by hue **and** value so they hold up at projection distance. Bug stays red (the alert split); orange stays the sole hero on the implementation work. Text colors target WCAG AA on each fill (block labels are ~20–22px bold = "large text").
+
+| Category | Fill | Text |
+|---|---|---|
+| implement (hero) | `var(--orange)` `#F4541F` | `#1A0B00` (dark ink — white fails AA on orange) |
+| chore (email, expenses) | `#8A7C66` (warm brown) | `#FFFFFF` |
+| meeting (standup, 1-1) | `#A98A4A` (tan-gold) | `#1A1206` |
+| management (review) | `#6B5D4C` (dark brown) | `#FFFFFF` |
+| bug (fix bug) | `#C8463F` (red) | `#FFFFFF` |
+| you-merge (the "Spawn" marker block) | `var(--accent-2)` `#C9962E` | `#241A04` — kept warm so teal stays exclusively the agents |
+| agent work | `#0E7C8A` (teal) | `#EAFBFD` |
+| agent alt / tn | `#0A6573` / `#2AA5B3` (deeper / brighter teal) | `#EAFBFD` / `#042024` |
+
+The teal `#0E7C8A` is reused for the **spawn-arrow connectors** (`.g1-spawn`, light-mode override in `s-act2.css`) — those point *at* the agents, so teal is correct there; only the solid you-merge block had to leave the teal family. `--cyan` (`#5BE9F0`) itself is too pale to sit on cream, which is why the light-mode connectors use the deeper `#0E7C8A`.
+
+### Preserved UI-mimicry palettes — **do not "convert" these**
+
+Several slides reproduce a recognizable third-party UI; those colors are quotations, not theme choices, so re-coloring them to match the deck destroys the recognition. They are hardcoded in the per-slide CSS and annotated in-line (e.g. `/* GitHub danger-fg */`). A re-theme must skip them.
+
+- **GitHub Primer** (s-project-story, s-skill, s-ci, s-leverage — PR / issues / diff / billing mockups): fg `#1F2328`, muted `#59636E`, subtle `#656D76`, border `#D1D9E0`, canvas `#F6F8FA`; danger `#CF222E` on `#FFEBE9` (dark `#82071E`); success `#1A7F37` / `#1F883D` on `#DAFBE1`; attention `#9A6700` on `#FFF8C5`; link blue `#0969DA` / `#0550AE`; **merged-PR purple** `#6F42C1` / `#8250DF` / `#5B2DA0`. (The one diff element the re-theme *did* touch — `.diff-rem` — was aligned **to** this GitHub danger-red, not away from it.)
+- **macOS traffic lights** (terminal / window chrome): `#FF5F57` / `#FEBC2E` / `#28C840`.
+- **Go brand** (language dot, s-fieldnotes): `#00ADD8`.
+- **Console / syntax highlight** (terminal slides s-audience / s-specs-vs-tests / s-blackbox / s-failure-spec): the JetBrains-ish token colors.
+- **Decorative repo-tile pins** (s-fieldnotes): intentionally varied — orange / gold / cyan pushpins. (The original pink pins were the one decorative case retired into the warm system → gold.)
+
+---
+
 ## Image slots
 
 Logos and large scene images are not hard-coded as `<img src="…">`. Each slot is an `<image-slot id="…" src="assets/…">` element provided by `static/deck-kit/image-slot.js`. The component handles fit / crop / placeholder text per its own attributes. `src` is set directly as an attribute on the element — there is no JS registry hydrating sources on DOMContentLoaded.
@@ -171,7 +221,7 @@ Caveat: `README.md` is publicly served at `…/2026-valenciajug/README.md` becau
 This deck was created by copying `static/presentations/2026-devtalks-romania/` wholesale and re-theming it. Everything structural (slide markup, deck-kit usage, image-slot wiring, the Romania-era upstream-bundle cleanup) carries over unchanged. What changed for Valencia:
 
 - **Theme.** `styles/tokens.css` `:root` swapped to a near-black base (`--bg #0E0D13`), warm radial glow (added in `shared.css` `deck-stage section`), and vermilion-orange primary accent (`--orange #F4541F`), all sampled from the meetup flyer. `--fg-dim`/`--fg-mute` de-blued to warm grays; `--pink` retired to alias the orange (legacy highlight usages re-theme); `--purple` aliases a warm gold `--accent-2`; `--amp-bad` decoupled to a literal red. The light-slide palette (`light-overrides.css`) moved from navy ink to warm-dark ink + orange/gold accent inks.
-- **Per-slide literals.** ~320 hardcoded navy / pink / purple / cool-blue-gray literals across the per-slide CSS were converted to warm-dark / red (alert) / orange (brand) / gold / warm-gray equivalents, file by file. **Intentional UI mimicry was left untouched**: GitHub PR/issue/diff palette, macOS traffic lights, console/syntax-highlight colors, the Go-brand blue, the GitHub-merged purple, and decorative repo-tile gradients. The s-act2 Gantt category palette was re-designed to a warm-cohesive set (and a you-impl/you-mgmt collision fixed).
+- **Per-slide literals.** ~320 hardcoded navy / pink / purple / cool-blue-gray literals across the per-slide CSS were converted to warm-dark / red (alert) / orange (brand) / gold / warm-gray equivalents, file by file. A later cleanup pass caught the stragglers the first pass missed — a retired-pink terminal token, two error-pill text colors, a pale-pink fail console, and the decorative repo-tile pins (→ gold) — and re-aligned the `.diff-rem` count to GitHub's own danger-red. The s-act2 Gantt category palette was redesigned to a **warm-you / teal-agents** axis (see [Palette](#palette)). **Intentional UI mimicry is deliberately preserved** (GitHub Primer, macOS traffic lights, console/syntax colors, Go-brand blue, GitHub-merged purple) — the [Palette](#palette) section lists every value and the don't-convert rule.
 - **Chrome & identity.** `~/dev/devtalks-2026` → `~/dev/valenciajug-2026`, the six act-divider Maven paths `devtalks-act-*` → `valenciajug-act-*`, boot-log class names `c.m.devtalks`/`c.m.d.boot` → `c.m.valenciajug`/`c.m.v.boot`, every footer `devtalks.ro · 2026` → `Valencia JUG · 2026`, and the closing-slide footer date.
 - **Title slide.** Date/time/venue/event/badge updated to 18 June 2026 · 18:30–19:20 · Valencia · Meetup · `PT50M`; DevTalks logo replaced with the Valencia JUG mark + an Xplore Group "hosted at" mark.
 - **Brand assets.** `valenciajug-logo.svg` (traced from the official logo, dark-mode recolor, transparent bg), `favicon.svg`, `social-card.png` (from the flyer), `assets/logos/xplore-group.svg`, and a regenerated `qr-links.svg` pointing at the Valencia links page. `devtalks-logo.png` dropped.
