@@ -52,7 +52,8 @@ function readMeta(slug) {
     if (json && typeof json.title === 'string') {
       return {
         title: json.title.trim(),
-        subtitle: typeof json.subtitle === 'string' ? json.subtitle.trim() : null
+        subtitle: typeof json.subtitle === 'string' ? json.subtitle.trim() : null,
+        date: typeof json.date === 'string' ? json.date.trim() : null
       };
     }
   } catch {}
@@ -79,8 +80,11 @@ function listDecks() {
   if (!fs.existsSync(PRESENTATIONS_ROOT)) return [];
   return fs.readdirSync(PRESENTATIONS_ROOT, { withFileTypes: true })
     .filter((e) => e.isDirectory())
-    .map((e) => e.name)
-    .sort();
+    .map((e) => ({ slug: e.name, date: readMeta(e.name)?.date || '' }))
+    // Newest first: sort by meta.json `date` (ISO yyyy-mm-dd) descending. Decks
+    // without a date fall to the end, then slug-ordered for a stable tiebreak.
+    .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug))
+    .map((d) => d.slug);
 }
 
 function renderItem(slug) {

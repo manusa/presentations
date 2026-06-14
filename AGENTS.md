@@ -266,13 +266,13 @@ All `*.presentations-a7o.pages.dev` URLs (the production mirror and every per-PR
 
 ### Preview landing page
 
-Cloudflare Pages comments on PRs with the deployment's **root URL** (e.g. `https://<commit>.presentations-a7o.pages.dev/`). The root serves `static/index.html`, a generated listing of every deck under `static/presentations/`. Generate or refresh it with `npm run gen:landing` (idempotent; chained into `npm run serve:static` for local dev). Per-deck metadata comes from a `meta.json` next to the deck's `README.md`; see "Adding a New Deck" below.
+Cloudflare Pages comments on PRs with the deployment's **root URL** (e.g. `https://<commit>.presentations-a7o.pages.dev/`). The root serves `static/index.html`, a generated listing of every deck under `static/presentations/`, **newest first**. Generate or refresh it with `npm run gen:landing` (idempotent; chained into `npm run serve:static` for local dev). Per-deck metadata comes from a `meta.json` next to the deck's `README.md`; see "Adding a New Deck" below.
 
 ## Adding a New Deck
 
 - **Gatsby deck**: follow the pattern of `src/pages/presentations/2025-devbcn-model-context-protocol-servers/` and its sibling `src/components/2025-devbcn-model-context-protocol-servers/`.
 - **Static deck**: drop a self-contained directory at `static/presentations/<deck-slug>/`, include a directory-local `README.md` capturing decisions, and link it from `src/components/landing-page/index.jsx` if you want it listed on the front page. Load `<deck-stage>` and `<image-slot>` from `static/deck-kit/` (`<script src="../../deck-kit/deck-stage.js" defer>` from the deck's `index.html`) — do **not** copy them inline. The deck-kit append-only contract is described in `static/deck-kit/README.md` and pinned by `npm run test:deck-kit`. Reference: `static/presentations/2026-devtalks-romania/`.
-  - Add a `meta.json` next to the deck's `README.md` with `{ "title": "...", "subtitle": "..." }` — this populates the Cloudflare-Pages preview landing (`static/index.html`). Title fallback chain is `meta.json` → first H1 of `README.md` → slug.
+  - Add a `meta.json` next to the deck's `README.md` with `{ "title": "...", "subtitle": "...", "date": "YYYY-MM-DD" }` — this populates the Cloudflare-Pages preview landing (`static/index.html`). `date` (the talk date, ISO) is the landing's sort key: decks are listed **newest first**, and any deck missing a `date` falls to the end. Title fallback chain is `meta.json` → first H1 of `README.md` → slug.
   - After adding (or renaming, or removing) a deck, run `npm run gen:landing` to regenerate `static/index.html` and commit the regenerated file alongside the deck change. The script is idempotent — re-runs only touch the file if its content would change, so it's safe to run anytime. The dev middleware (`scripts/serve-static-middleware.js`) auto-discovers decks at request time during `npm run serve:static`, so the regen step is only required for production (Cloudflare Pages serves the file directly).
 
 ## Repo Conventions
