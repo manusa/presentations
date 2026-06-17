@@ -51,6 +51,7 @@
 <link rel="stylesheet" href="styles/s-xp-reframe.css" />
 <link rel="stylesheet" href="styles/s-recap.css" />
 <link rel="stylesheet" href="styles/pillar-track.css" />
+<link rel="stylesheet" href="styles/s-joinus.css" />
 </head>
 <body>
 
@@ -4008,6 +4009,88 @@
           <div class="qr-label">→ <a class="ref-link" href="https://presentations.marcnuri.com/presentations/2026-valenciajug/links/" target="_blank" rel="noopener noreferrer">slides · posts · feedback</a></div>
         </div>
       </div>
+    </div>
+
+    <div class="chrome-bottom">
+      <div class="left"><span class="brand-mark">marc nuri</span><span class="sep">|</span><span>red hat</span></div>
+      <span class="spacer"></span>
+      <div class="right"><span>Valencia JUG · 2026</span></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       24 JOIN THE JUG (Act VI · post-close community CTA)
+       Two-step slide so only one QR is scannable at a time:
+       step 0 = propose a talk + join the VLCTechHub #valenciajug
+       Slack; step 1 = the live Kahoot (scan to play). Join-first so
+       the community ask lands while attention is highest and the
+       talk closes on the interactive Kahoot. Order is set by the
+       data-step-show attrs — swap them to flip. Background/chrome/
+       QR-card reuse the s-closing language (see styles/s-joinus.css).
+       ============================================================ -->
+  <section class="s-joinus" data-label="Act VI · Join the JUG" data-step-max="1">
+    <div class="chrome-top">
+      <span class="dot"></span>
+      <span>~/dev/valenciajug-2026 · close/JoinUs.java</span>
+      <span class="spacer"></span>
+      <span class="pill">act 06 · join-the-jug · 24</span>
+    </div>
+
+    <div class="body">
+
+      <!-- ── STEP 0 · Join the JUG: propose a talk + Slack QR ────── -->
+      <div class="frame frame-join" data-step-show="0">
+        <div class="top">
+          <div class="top-main">
+            <div class="prompt">jshell&gt; jug.join()</div>
+            <h2 class="cta-head">Your turn<br/><span class="accent">at the front.</span></h2>
+          </div>
+          <div class="brand-signoff">
+            <img src="assets/valenciajug-logo.svg" alt="Valencia JUG" class="vj-logo-signoff" />
+            <span class="signoff-cap">all levels welcome</span>
+          </div>
+        </div>
+        <div class="bottom-grid">
+          <div class="cta-block">
+            <div class="cta-speak">
+              <span class="clabel">// propose a talk</span>
+              <div class="cta-line">Pitch us in <span class="chan">#valenciajug</span>, on <a href="https://www.meetup.com/valenciajug/" target="_blank" rel="noopener noreferrer">meetup.com/valenciajug</a>, or grab any organizer.</div>
+              <div class="cta-sub">First talk, lightning talk, half-formed idea. Bring it. We help you get it ready.</div>
+            </div>
+            <div class="cta-join">
+              <span class="clabel gold">// join the community</span>
+              <div class="cta-line">Valencia's tech Slack: <span class="chan gold">#valenciajug</span> in VLCTechHub.</div>
+            </div>
+          </div>
+          <div class="qr-wrap">
+            <div class="qr-brand"><i class="fa-brands fa-slack" aria-hidden="true"></i> Slack</div>
+            <div class="qr"><a href="https://join.slack.com/t/vlctechhub/shared_invite/zt-4172f7kg6-1UGh48d9AGUam69ukd_dvw" target="_blank" rel="noopener noreferrer"><img src="assets/qr-slack.svg" alt="QR code to join the VLCTechHub Slack workspace and the valenciajug channel" /></a></div>
+            <div class="qr-label">→ scan to join</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STEP 1 · Kahoot: a single scannable code, the closing beat ── -->
+      <div class="frame frame-kahoot" data-step-show="1">
+        <div class="top">
+          <div class="top-main">
+            <div class="prompt">jshell&gt; jug.play()</div>
+            <h2 class="cta-head">One more thing.<br/><span class="accent">Let's play.</span></h2>
+          </div>
+          <div class="brand-signoff">
+            <img src="assets/valenciajug-logo.svg" alt="Valencia JUG" class="vj-logo-signoff" />
+            <span class="signoff-cap">all levels welcome</span>
+          </div>
+        </div>
+        <div class="kahoot-stage">
+          <div class="kahoot-cue">Scan to join the Kahoot.</div>
+          <div class="qr qr-kahoot">
+            <a href="https://kahoot.it" target="_blank" rel="noopener noreferrer"><img src="assets/qr-kahoot.svg" alt="QR code to join the live Kahoot game at kahoot.it" /></a>
+          </div>
+          <div class="kahoot-pin">→ <a href="https://kahoot.it" target="_blank" rel="noopener noreferrer">kahoot.it</a> · enter the game PIN</div>
+        </div>
+      </div>
+
     </div>
 
     <div class="chrome-bottom">
