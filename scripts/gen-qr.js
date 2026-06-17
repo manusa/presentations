@@ -39,6 +39,21 @@ const TARGETS = [
     // Near-black modules matching the deck's --bg (#0E0D13).
     color: { dark: '#0E0D13', light: '#FFFFFF' },
   },
+  {
+    // Valencia JUG 2026 — community CTA slide (step 0) → VLCTechHub #valenciajug Slack invite.
+    url: 'https://join.slack.com/t/vlctechhub/shared_invite/zt-4172f7kg6-1UGh48d9AGUam69ukd_dvw',
+    out: 'static/presentations/2026-valenciajug/assets/qr-slack.svg',
+    color: { dark: '#0E0D13', light: '#FFFFFF' },
+  },
+  {
+    // Valencia JUG 2026 — community CTA slide (step 1) → live Kahoot.
+    // PLACEHOLDER: points at the kahoot.it join page. Swap `url` for the real
+    // game / challenge / self-paced link once the Kahoot is ready, then re-run
+    // `npm run gen:qr` to regenerate this asset in place.
+    url: 'https://kahoot.it/',
+    out: 'static/presentations/2026-valenciajug/assets/qr-kahoot.svg',
+    color: { dark: '#0E0D13', light: '#FFFFFF' },
+  },
 ];
 
 // Each target sets its own `color` (the deck's --bg on a white field) so the
