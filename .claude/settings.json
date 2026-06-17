@@ -1,4 +1,26 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(npm run serve:static:*)",
+      "Bash(npm run screenshot:*)",
+      "Bash(npm run audit:fit:*)",
+      "Bash(npm run snapshot:*)",
+      "Bash(npm run export:pdf:*)"
+    ]
+  },
+  "sandbox": {
+    "excludedCommands": [
+      "npm run serve:static",
+      "npm run serve:static:stop",
+      "npm run screenshot *",
+      "npm run screenshot:deck *",
+      "npm run screenshot:setup",
+      "npm run audit:fit *",
+      "npm run snapshot:baseline *",
+      "npm run snapshot:diff *",
+      "npm run export:pdf *"
+    ]
+  },
   "hooks": {
     "SessionEnd": [
       {
