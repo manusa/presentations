@@ -49,7 +49,8 @@ deck-stage section.light {
 .light .terminal .prompt { color: var(--accent-ink); }
 
 .light .s-about2 .role-line .at,
-.light .s-section .section-sub .accent2 { color: var(--accent-2-ink); }
+.light .s-section .section-sub .accent2,
+.light .s-about2 .photo-credit { color: var(--accent-2-ink); }   /* small gold text on cream → AA ink variant; currentColor cascades to the link + camera + focus ring */
 
 .light .s-about2 .handles-row .h .v .at,
 .light .s-closing .contact-list .row .v .at,
