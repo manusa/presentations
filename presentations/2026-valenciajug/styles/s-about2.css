@@ -59,6 +59,36 @@
   color: var(--accent);
   font-weight: 600;
 }
+/* Photo credit — attribution to the portrait photographer. A quiet gold
+   sub-caption paired tight under the mood word (decorative-chrome 20px tier,
+   sized below the 24px mood so it never competes with that emotional beat).
+   A real <a> so the link survives PDF export; currentColor drives both the
+   camera glyph and the focus ring, so the .light ink override is one line. */
+.s-about2 .photo-credit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: -10px;            /* pull up against the 22px photo-col gap → reads as a pair with the mood */
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  color: var(--accent-2);
+}
+.s-about2 .photo-credit .fa-camera {
+  font-size: 18px;
+}
+.s-about2 .photo-credit a {
+  color: inherit;
+  text-decoration: none;
+}
+.s-about2 .photo-credit a:hover,
+.s-about2 .photo-credit a:focus-visible {
+  text-decoration: underline;
+}
+.s-about2 .photo-credit a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
 
 .s-about2 .info-col {
   display: flex;
