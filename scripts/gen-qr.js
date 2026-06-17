@@ -45,15 +45,8 @@ const TARGETS = [
     out: 'static/presentations/2026-valenciajug/assets/qr-slack.svg',
     color: { dark: '#0E0D13', light: '#FFFFFF' },
   },
-  {
-    // Valencia JUG 2026 — community CTA slide (step 1) → live Kahoot.
-    // PLACEHOLDER: points at the kahoot.it join page. Swap `url` for the real
-    // game / challenge / self-paced link once the Kahoot is ready, then re-run
-    // `npm run gen:qr` to regenerate this asset in place.
-    url: 'https://kahoot.it/',
-    out: 'static/presentations/2026-valenciajug/assets/qr-kahoot.svg',
-    color: { dark: '#0E0D13', light: '#FFFFFF' },
-  },
+  // (No Kahoot QR: a live game's PIN is per-session and the host lobby projects
+  // its own auto-join QR + PIN, so the deck doesn't carry a kahoot.it QR.)
 ];
 
 // Each target sets its own `color` (the deck's --bg on a white field) so the
