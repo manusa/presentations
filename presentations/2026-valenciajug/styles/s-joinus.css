@@ -80,34 +80,89 @@
   text-align: right;
 }
 
-/* ---- KAHOOT frame (step 0): centered scan-to-play moment ----- */
-/* Left-anchored, not centered: the cue → QR → pin column hangs off the same
-   left edge as the headline so the headline reads as its caption (a centered
-   QR marooned the top-left headline). The empty right half is filled by the
-   80%/80% orange radial glow by design. */
+/* ---- KAHOOT frame (step 1): a "get ready" staging beat -------- */
+/* No QR (a live game's PIN is per-session; the host lobby projects its own
+   auto-join QR + PIN next). Diptych like the join frame: a left ready-check
+   column hanging off the headline's left edge, the four Kahoot answer-shapes
+   filling the right half. */
 .s-joinus .kahoot-stage {
   flex: 1;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+}
+.s-joinus .ready {
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-  gap: 26px;
+  gap: 28px;
 }
-.s-joinus .kahoot-cue {
+/* Lift the eyebrow above the 24px decorative-chrome tier — it carries the slide's
+   one motivational hook ("winners take swag"), so it's content, not chrome. The
+   prize segment is gold (reward) to set it apart from the orange scope text. */
+.s-joinus .frame-kahoot .clabel { font-size: 30px; }
+.s-joinus .frame-kahoot .clabel .prize { color: var(--accent-2); }
+.s-joinus .steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.s-joinus .steps li {            /* must-read action steps — ideal body floor (48px) */
+  font-size: 48px;
+  line-height: 1.15;
+  color: var(--fg);
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+}
+.s-joinus .steps .n {
   font-family: 'JetBrains Mono', monospace;
   font-size: 40px;
-  color: var(--fg);
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
 }
-.s-joinus .kahoot-pin {
+.s-joinus .steps .url { font-family: 'JetBrains Mono', monospace; color: var(--accent-2); }
+.s-joinus .ready-foot {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 40px;                 /* must-read: the scan-failure fallback URL — match .kahoot-cue */
-  color: var(--accent-2);
-  letter-spacing: 0.04em;
+  font-size: 28px;                 /* reassurance microcopy — at the mono floor */
+  color: var(--fg-dim);
+  letter-spacing: 0.03em;
+  margin-top: 8px;
 }
-.s-joinus .kahoot-pin a { color: var(--accent-2); text-decoration: none; }
-.s-joinus .kahoot-pin a:hover,
-.s-joinus .kahoot-pin a:focus-visible { text-decoration: underline; }
+/* The four Kahoot answer-shapes, outlined in the deck's warm/cool set
+   (orange / gold / cyan / red) — quoting the game on-palette rather than
+   pasting its saturated brand colors. Purely decorative (aria-hidden). */
+.s-joinus .kahoot-shapes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  width: 380px;
+  flex-shrink: 0;
+  justify-self: end;
+}
+.s-joinus .kahoot-shapes .shape {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  display: block;
+  fill: none;
+  stroke-width: 5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  opacity: 0.9;
+}
+/* Triangle = red to match Kahoot's strongest canonical anchor (triangle=red);
+   the other three stay on-palette (gold / cyan / orange) for a warm/cool spread. */
+.s-joinus .kahoot-shapes .tri { stroke: var(--amp-bad); }
+.s-joinus .kahoot-shapes .dia { stroke: var(--accent-2); }
+.s-joinus .kahoot-shapes .cir { stroke: var(--cyan); }
+.s-joinus .kahoot-shapes .squ { stroke: var(--accent); }
 
 /* ---- JOIN frame (step 1): the diptych CTA + Slack QR --------- */
 .s-joinus .frame-join { justify-content: space-between; }
@@ -153,7 +208,6 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
 }
 .s-joinus .qr a, .s-joinus .qr img { display: block; width: 100%; height: 100%; }
-.s-joinus .qr-kahoot { width: 380px; height: 380px; }   /* promoted: sole focus of the Kahoot step */
 .s-joinus .qr-wrap {
   display: flex; flex-direction: column; align-items: center; gap: 18px;
   justify-self: end;

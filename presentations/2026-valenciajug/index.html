@@ -4070,7 +4070,11 @@
         </div>
       </div>
 
-      <!-- ── STEP 1 · Kahoot: a single scannable code, the closing beat ── -->
+      <!-- ── STEP 1 · Kahoot: a "get ready" staging beat. No QR here on
+           purpose — a live game's PIN is generated per session and the
+           Kahoot host lobby projects its own auto-join QR (PIN baked in)
+           next. So this slide just gets phones out, sets expectations, and
+           hands off to that screen ("the PIN appears on screen"). ── -->
       <div class="frame frame-kahoot" data-step-show="1">
         <div class="top">
           <div class="top-main">
@@ -4083,11 +4087,21 @@
           </div>
         </div>
         <div class="kahoot-stage">
-          <div class="kahoot-cue">Scan to join the Kahoot.</div>
-          <div class="qr qr-kahoot">
-            <a href="https://kahoot.it" target="_blank" rel="noopener noreferrer"><img src="assets/qr-kahoot.svg" alt="QR code to join the live Kahoot game at kahoot.it" /></a>
+          <div class="ready">
+            <span class="clabel">// quick quiz · 5 questions · <span class="prize">winners take swag</span></span>
+            <ol class="steps">
+              <li><span class="n">1</span> Grab your phone</li>
+              <li><span class="n">2</span> Open <span class="url">kahoot.it</span></li>
+              <li><span class="n">3</span> The PIN appears on screen — type it in</li>
+            </ol>
+            <div class="ready-foot">→ no app needed · just your browser</div>
           </div>
-          <div class="kahoot-pin">→ <a href="https://kahoot.it" target="_blank" rel="noopener noreferrer">kahoot.it</a> · enter the game PIN</div>
+          <div class="kahoot-shapes" aria-hidden="true">
+            <svg class="shape tri" viewBox="0 0 100 100"><polygon points="50,14 88,84 12,84" fill="none"/></svg>
+            <svg class="shape dia" viewBox="0 0 100 100"><polygon points="50,10 90,50 50,90 10,50" fill="none"/></svg>
+            <svg class="shape cir" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none"/></svg>
+            <svg class="shape squ" viewBox="0 0 100 100"><rect x="12" y="12" width="76" height="76" rx="8" fill="none"/></svg>
+          </div>
         </div>
       </div>
 
