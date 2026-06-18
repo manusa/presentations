@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 const path = require('path');
 const fs = require('fs');
-const {gotoDeck, settleAnimations, applyExportHidden, expandStepClones} = require('./lib/deck');
+const {gotoDeck, settleAnimations, applyExportHidden, disableRail, paginateForScreenExport, expandStepClones} = require('./lib/deck');
 const {extractPdfUris, diffLinks} = require('./lib/pdf-links');
 
 const USAGE = `Usage: npm run export:pdf -- <deck-url> <output.pdf>
@@ -163,6 +163,7 @@ async function transcodePhotosToJpeg(page, {quality = 85} = {}) {
     }
 
     await applyExportHidden(page);
+    await disableRail(page);
 
     const {transcoded, webpCount} = await transcodePhotosToJpeg(page);
     if (transcoded > 0) {
@@ -182,8 +183,16 @@ async function transcodePhotosToJpeg(page, {quality = 85} = {}) {
       })`
     );
 
+    // Export in SCREEN media, not print: page.pdf() in print media fit-scales a
+    // multi-section deck to ~0.943 (a frame on the right + bottom of every page)
+    // and the per-slide @media print rules collapse every build step into its
+    // final state. Screen media renders each section at its true 1920×1080 and
+    // lets [data-step] drive the per-step reveal. paginateForScreenExport lays
+    // the slides out one-per-page and re-activates the data-step-aware print
+    // fixes (e.g. the s-about2 flip flatten).
+    await page.emulateMedia({media: 'screen'});
+    await paginateForScreenExport(page);
     await settleAnimations(page, {timeout: 8000, extraDelayMs: 250});
-    await page.emulateMedia({media: 'print'});
 
     const absOut = path.resolve(outputPath);
     fs.mkdirSync(path.dirname(absOut), {recursive: true});

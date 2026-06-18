@@ -119,6 +119,75 @@ async function applyExportHidden(page) {
   });
 }
 
+// Lay every slotted <section> out as its own full-bleed flow page (instead of
+// the deck-stage screen default: all slides stacked at inset:0 inside a scaled
+// canvas). Injected into deck-stage's shadow root.
+const SCREEN_PAGINATE_SHADOW = `
+  :host{position:static!important;inset:auto!important;height:auto!important;overflow:visible!important;background:none!important;}
+  .stage{position:static!important;display:block!important;height:auto!important;width:auto!important;}
+  .canvas{transform:none!important;position:static!important;width:auto!important;height:auto!important;will-change:auto!important;}
+  ::slotted(*){position:relative!important;inset:auto!important;left:auto!important;top:auto!important;width:var(--deck-design-w)!important;height:var(--deck-design-h)!important;box-sizing:border-box!important;display:block!important;opacity:1!important;visibility:visible!important;break-after:page;page-break-after:always;break-inside:avoid;overflow:hidden;}
+  ::slotted(*:last-child){break-after:auto;page-break-after:auto;}
+  .overlay,.tapzones,.rail,.rail-resize,.ctxmenu,.confirm-backdrop,.skipwm{display:none!important;}
+`;
+// Light-DOM reset: zero body margins/clipping, strip box-shadows (a box-shadow
+// forces Chromium to rasterise the slide, bloating the PDF and losing vector
+// text), and freeze animations so reveals capture at their settled frame.
+const SCREEN_PAGINATE_LIGHT =
+  'html,body{margin:0!important;padding:0!important;background:none!important;overflow:visible!important;height:auto!important;}' +
+  '*{box-shadow:none!important;animation:none!important;}';
+
+/**
+ * Lay every (section, step) clone out as its own full-bleed page for a
+ * SCREEN-media page.pdf() export. Call AFTER expandStepClones AND
+ * emulateMedia('screen'), BEFORE page.pdf().
+ *
+ * Why screen media, not print: Chromium's page.pdf() in PRINT media fit-scales
+ * a multi-section deck to ~0.943, anchored top-left — a white/black frame on the
+ * right + bottom of EVERY page (the deck-stage canvas pagination triggers it and
+ * no page.pdf / @page option defeats it; it only surfaces on the full deck, not
+ * a single page, which made it brutal to diagnose). In SCREEN media each section
+ * renders at its true 1920×1080 with no scale. Screen media also means the deck's
+ * top-level `[data-step]` rules drive the reveal (correct per-step build state)
+ * instead of the per-slide `@media print` force-reveal that collapses every step
+ * into the final state.
+ *
+ * Two steps:
+ *  1. Re-activate the deck's data-step-AWARE `@media print` blocks in screen
+ *     media (set their media to 'all'). These are genuine static-capture fixes —
+ *     most importantly the s-about2 3D-flip flatten: a 3D flip captured live
+ *     renders a face upside-down, so it MUST be flattened (transform:none +
+ *     display:none on the off-step face). The non-aware force-reveal blocks are
+ *     left print-only, so in screen they stay inactive and `[data-step]` governs.
+ *  2. Inject the pagination layout into the shadow root + a light-DOM reset.
+ */
+async function paginateForScreenExport(page) {
+  await page.evaluate(({shadowCss, lightCss}) => {
+    for (const sheet of document.styleSheets) {
+      let rules;
+      try { rules = sheet.cssRules; } catch (e) { continue; } // cross-origin: skip
+      for (const rule of rules) {
+        const isPrint =
+          (rule.type === 4 || (rule.constructor && rule.constructor.name === 'CSSMediaRule')) &&
+          rule.media &&
+          /\bprint\b/i.test(rule.media.mediaText) && !/\bscreen\b/i.test(rule.media.mediaText);
+        if (isPrint && /data-step/i.test(rule.cssText)) rule.media.mediaText = 'all';
+      }
+    }
+    const stage = document.querySelector('deck-stage');
+    if (stage && stage.shadowRoot) {
+      const s = document.createElement('style');
+      s.setAttribute('data-export-paginate', '');
+      s.textContent = shadowCss;
+      stage.shadowRoot.appendChild(s);
+    }
+    const l = document.createElement('style');
+    l.setAttribute('data-export-paginate', '');
+    l.textContent = lightCss;
+    document.head.appendChild(l);
+  }, {shadowCss: SCREEN_PAGINATE_SHADOW, lightCss: SCREEN_PAGINATE_LIGHT});
+}
+
 /**
  * Disable the thumbnail rail so the capture is the slide and nothing else.
  *
@@ -307,4 +376,4 @@ async function goToStep(page, sectionIdx, step) {
   await settleAnimations(page);
 }
 
-module.exports = {gotoDeck, waitForDeckReady, settleAnimations, applyExportHidden, disableRail, expandStepClones, walkDeck, slideFilename, goToStep};
+module.exports = {gotoDeck, waitForDeckReady, settleAnimations, applyExportHidden, paginateForScreenExport, disableRail, expandStepClones, walkDeck, slideFilename, goToStep};
