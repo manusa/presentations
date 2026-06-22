@@ -23,6 +23,11 @@ npm run build              # gatsby clean & gatsby build → public/
 
 Static decks under `static/presentations/*` need no build step — they appear in `public/` as-is.
 
+### Dependency upgrades (Gatsby/React stack)
+
+- **Run npm via the `node22` shell function** for any dependency work (`node22 && npm ci`, `node22 && npm install …`). CI runs Node 22 / npm 10; the machine-default Node 26 / npm 11 writes a lockfile that npm 10's strict `npm ci` rejects (it prunes nested deps), silently red-failing the `deck-kit tests` check while the `npm install`-based publish jobs stay green. Verify "latest" with `npm view <pkg> version`, not `npm outdated` (a stale npm cache here under-reports — it once hid that gatsby 5.16 had shipped).
+- **React 19 is blocked on this stack (as of Gatsby 5.16.1, 2026-06).** Gatsby 5.16+ officially supports React 19, but head management doesn't: the Gatsby decks set `<title>`/meta/`<body>` class through react-helmet (`gatsby-plugin-react-helmet`), and under React 19 + Gatsby's `renderToString` SSG neither react-helmet (drops head non-deterministically — the landing page lost its title + SEO meta) nor `react-helmet-async@3` (switches to React-19 "passthrough", which relies on streaming SSR Gatsby doesn't use → `<title>`/meta strand in `<body>`, `body.devbcn-*` class dropped) produces a correct SSR head. The only robust fix is migrating to Gatsby's **Head API** (`export const Head`) — a page-level refactor, since titles/body-class live in shared slide templates (`src/components/<deck>/slide-template.jsx`). Stay on React 18 until then.
+
 ## Local Preview (Static Decks)
 
 `npm run serve:static` runs live-server on `static/` with WebSocket-based hot reload — connected browsers refresh automatically whenever any file under `static/` changes. Use this when iterating on a static deck under `static/presentations/<slug>/`; for Gatsby decks, use `npm run develop` instead (port 8000, React HMR).
