@@ -31,6 +31,7 @@ export const LandingPage = () => {
           <h1>{TITLE}</h1>
         </header>
         <div className={'content'}>
+          <Card onClick={() => {window.location.href = '/presentations/2026-valenciajug/';}} >Turning Your Java Project Into an AI-Ready Codebase (Valencia JUG 2026)</Card>
           <Card onClick={() => {window.location.href = '/presentations/2026-devtalks-romania/';}} >Turning Your Java Project Into an AI-Ready Codebase (DevTalks Romania 2026)</Card>
           <Card onClick={() => navigate('/presentations/2025-devbcn-model-context-protocol-servers')} >Model Context Protocol Servers 101: Unlocking the Power of AI (DevBcn 2025)</Card>
           <Card onClick={() => navigate('/presentations/2024-devbcn-full-stack-reactive-application')} >Developing a full stack reactive application using Kubernetes as an event producer (DevBcn 2024)</Card>
