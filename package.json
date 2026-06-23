@@ -25,7 +25,8 @@
     "snapshot:diff": "node scripts/snapshot-diff.js",
     "audit:fit": "node scripts/audit-fit.js",
     "test:deck-kit": "node --test tests/deck-kit/*.spec.js",
-    "test:pdf-links": "node scripts/test-pdf-links.js"
+    "test:pdf-links": "node scripts/test-pdf-links.js",
+    "test:pdf-frame": "node scripts/test-pdf-frame.js"
   },
   "publishConfig": {
     "access": "public"
@@ -69,7 +70,8 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/tests/deck-kit/",
-      "/tests/pdf-links/"
+      "/tests/pdf-links/",
+      "/tests/pdf-frame/"
     ]
   },
   "devDependencies": {

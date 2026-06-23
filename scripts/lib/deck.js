@@ -122,11 +122,22 @@ async function applyExportHidden(page) {
 // Lay every slotted <section> out as its own full-bleed flow page (instead of
 // the deck-stage screen default: all slides stacked at inset:0 inside a scaled
 // canvas). Injected into deck-stage's shadow root.
+//
+// `contain: size` on each section is what defeats the right/bottom white frame.
+// Decks stage elements off-screen for slide-in animations (e.g. a card parked at
+// `left` so its box reaches x≈3827, ~2× the 1920px slide). `overflow:hidden`
+// hides them visually, but Chromium's page.pdf() still measures that un-clipped
+// descendant extent for its shrink-to-fit and scales the WHOLE multi-page
+// document to ~0.943, anchored top-left — the frame. `contain: size` makes a
+// section's layout size depend only on its own width/height (the design box), so
+// page.pdf() ignores descendant overflow and each section fills its page 1:1.
+// The section already has an explicit width/height, so size containment has no
+// visual effect on its contents — they still paint, clipped by overflow:hidden.
 const SCREEN_PAGINATE_SHADOW = `
   :host{position:static!important;inset:auto!important;height:auto!important;overflow:visible!important;background:none!important;}
   .stage{position:static!important;display:block!important;height:auto!important;width:auto!important;}
   .canvas{transform:none!important;position:static!important;width:auto!important;height:auto!important;will-change:auto!important;}
-  ::slotted(*){position:relative!important;inset:auto!important;left:auto!important;top:auto!important;width:var(--deck-design-w)!important;height:var(--deck-design-h)!important;box-sizing:border-box!important;display:block!important;opacity:1!important;visibility:visible!important;break-after:page;page-break-after:always;break-inside:avoid;overflow:hidden;}
+  ::slotted(*){position:relative!important;inset:auto!important;left:auto!important;top:auto!important;width:var(--deck-design-w)!important;height:var(--deck-design-h)!important;box-sizing:border-box!important;display:block!important;opacity:1!important;visibility:visible!important;break-after:page;page-break-after:always;break-inside:avoid;overflow:hidden;contain:size!important;}
   ::slotted(*:last-child){break-after:auto;page-break-after:auto;}
   .overlay,.tapzones,.rail,.rail-resize,.ctxmenu,.confirm-backdrop,.skipwm{display:none!important;}
 `;
@@ -142,27 +153,38 @@ const SCREEN_PAGINATE_LIGHT =
  * SCREEN-media page.pdf() export. Call AFTER expandStepClones AND
  * emulateMedia('screen'), BEFORE page.pdf().
  *
- * Why screen media, not print: Chromium's page.pdf() in PRINT media fit-scales
- * a multi-section deck to ~0.943, anchored top-left — a white/black frame on the
- * right + bottom of EVERY page (the deck-stage canvas pagination triggers it and
- * no page.pdf / @page option defeats it; it only surfaces on the full deck, not
- * a single page, which made it brutal to diagnose). In SCREEN media each section
- * renders at its true 1920×1080 with no scale. Screen media also means the deck's
- * top-level `[data-step]` rules drive the reveal (correct per-step build state)
- * instead of the per-slide `@media print` force-reveal that collapses every step
- * into the final state.
+ * Why screen media, not print: in SCREEN media each section renders at its true
+ * 1920×1080 and the deck's top-level `[data-step]` rules drive the reveal (the
+ * correct per-step build state) instead of the per-slide `@media print`
+ * force-reveal that collapses every step into the final state. (The right/bottom
+ * white frame is a separate page.pdf() shrink-to-fit triggered by off-screen
+ * content — see SCREEN_PAGINATE_SHADOW's `contain: size`.)
  *
  * Two steps:
- *  1. Re-activate the deck's data-step-AWARE `@media print` blocks in screen
- *     media (set their media to 'all'). These are genuine static-capture fixes —
- *     most importantly the s-about2 3D-flip flatten: a 3D flip captured live
- *     renders a face upside-down, so it MUST be flattened (transform:none +
- *     display:none on the off-step face). The non-aware force-reveal blocks are
- *     left print-only, so in screen they stay inactive and `[data-step]` governs.
+ *  1. Re-activate the deck's genuine static-capture `@media print` fixes in
+ *     screen media (set their media to 'all') — EXCEPT the per-slide
+ *     force-reveal blocks. A force-reveal un-hides every step at once
+ *     (opacity/visibility/animation with no `data-step` qualifier); promoting it
+ *     would collapse the per-step build, so those stay print-only and inactive
+ *     in screen, leaving `[data-step]` to govern. Everything else promotes: the
+ *     data-step-AWARE fixes (most importantly the s-about2 3D-flip flatten — a
+ *     live 3D flip captures a face upside-down, so it MUST be flattened) AND the
+ *     non-stepped visual fixes the old "promote iff cssText contains data-step"
+ *     heuristic wrongly dropped (e.g. the flywheel `.wheel-svg { filter: none }`,
+ *     whose drop-shadow otherwise forces that SVG to rasterise). The classifier
+ *     keys off the reveal-signalling properties, not a brittle `data-step`
+ *     substring, so a future data-step-aware fix that doesn't mention `data-step`
+ *     is no longer silently dropped.
  *  2. Inject the pagination layout into the shadow root + a light-DOM reset.
  */
 async function paginateForScreenExport(page) {
   await page.evaluate(({shadowCss, lightCss}) => {
+    // The promote loop walks `document.styleSheets` — every same-origin sheet in
+    // the light DOM: the deck's author CSS AND deck-stage's own head-injected
+    // `<style id="deck-stage-print-page">` (its `@media print` html/body reset
+    // promotes harmlessly, duplicating SCREEN_PAGINATE_LIGHT). It does NOT reach
+    // deck-stage's shadow-root sheet — that sheet's `@media print` pagination is
+    // reimplemented from scratch by SCREEN_PAGINATE_SHADOW below.
     for (const sheet of document.styleSheets) {
       let rules;
       try { rules = sheet.cssRules; } catch (e) { continue; } // cross-origin: skip
@@ -171,11 +193,30 @@ async function paginateForScreenExport(page) {
           (rule.type === 4 || (rule.constructor && rule.constructor.name === 'CSSMediaRule')) &&
           rule.media &&
           /\bprint\b/i.test(rule.media.mediaText) && !/\bscreen\b/i.test(rule.media.mediaText);
-        if (isPrint && /data-step/i.test(rule.cssText)) rule.media.mediaText = 'all';
+        if (!isPrint) continue;
+        // Promote every print fix to screen EXCEPT a force-reveal — a block that
+        // un-hides all build steps at once via opacity/visibility/animation and
+        // is NOT scoped to a `data-step` (the data-step-scoped blocks reveal the
+        // right step themselves, so they always promote). The match is on the
+        // whole serialized rule text, so the words also match in value position
+        // (`transition: opacity …`, `will-change: opacity`, a `@keyframes` body):
+        // today no print block trips that (they all use `transition: none`), but
+        // a future @media-print VISUAL fix written with `transition: opacity`
+        // would be misread as a force-reveal and dropped. Keep a genuine
+        // step-reveal and a visual fix in SEPARATE @media print blocks.
+        const txt = rule.cssText;
+        const isForceReveal =
+          !/data-step/i.test(txt) && /\b(opacity|visibility|animation)\b/i.test(txt);
+        if (!isForceReveal) rule.media.mediaText = 'all';
       }
     }
     const stage = document.querySelector('deck-stage');
     if (stage && stage.shadowRoot) {
+      // Appended LAST into the shadow root so it wins the cascade over
+      // deck-stage's own base `::slotted` rules: both sides are `!important`
+      // with equal specificity, so later-in-tree-order wins. This implicit
+      // dependency on append order is why pagination must be injected here, not
+      // prepended.
       const s = document.createElement('style');
       s.setAttribute('data-export-paginate', '');
       s.textContent = shadowCss;

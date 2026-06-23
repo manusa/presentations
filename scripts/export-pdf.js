@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const {gotoDeck, settleAnimations, applyExportHidden, disableRail, paginateForScreenExport, expandStepClones} = require('./lib/deck');
 const {extractPdfUris, diffLinks} = require('./lib/pdf-links');
+const {pageContentScales, PX_TO_PT, FRAME_TOLERANCE} = require('./lib/pdf-frame');
 
 const USAGE = `Usage: npm run export:pdf -- <deck-url> <output.pdf>
 
@@ -207,6 +208,48 @@ async function transcodePhotosToJpeg(page, {quality = 85} = {}) {
     const stat = fs.statSync(absOut);
     console.log(`✓ ${absOut} — ${totalAfterExpand} pages, ${(stat.size / 1024).toFixed(1)}KB`);
 
+    const pdfBytes = fs.readFileSync(absOut);
+
+    // Frame-survival guard: assert page.pdf() did not shrink-to-fit the deck. A
+    // slide that stages content off-screen (its un-clipped box escapes the
+    // slide) can make Chromium scale every page to ~0.943 and anchor it
+    // top-left, leaving a white right/bottom frame (issue #1908). `contain:size`
+    // in the pagination CSS prevents it; this fails the export loudly if a
+    // regression lets it back in — caught here, not by a viewer of the PDF.
+    const scales = await pageContentScales(pdfBytes);
+    const framed = scales.filter(
+      (s) => s.scaleX != null && Math.abs(s.scaleX - PX_TO_PT) > FRAME_TOLERANCE
+    );
+    // Pages with no measurable background fill (e.g. a full-bleed image over a
+    // transparent section) read as null — we can't vouch for them, so surface
+    // them instead of silently counting them as full-bleed.
+    const unverifiable = scales.filter((s) => s.scaleX == null);
+    if (framed.length > 0) {
+      const {page: firstPage, scaleX} = framed[0];
+      console.error(
+        `✗ Frame check: ${framed.length}/${totalAfterExpand} page${
+          framed.length === 1 ? '' : 's'
+        } shrink-to-fit scaled to ${((scaleX / PX_TO_PT) * 100).toFixed(1)}% ` +
+          `(white right/bottom frame), e.g. page ${firstPage}.`
+      );
+      console.error(
+        '    A slide is likely staging content off-screen; see contain:size in scripts/lib/deck.js.'
+      );
+      process.exitCode = 1;
+    } else if (unverifiable.length === 0) {
+      console.log(`✓ Frame check: all ${totalAfterExpand} pages full-bleed (no shrink-to-fit frame).`);
+    } else {
+      console.log(
+        `✓ Frame check: ${totalAfterExpand - unverifiable.length}/${totalAfterExpand} pages full-bleed (no shrink-to-fit frame).`
+      );
+    }
+    if (unverifiable.length > 0) {
+      console.warn(
+        `⚠ Frame check: ${unverifiable.length} page${unverifiable.length === 1 ? '' : 's'} unmeasurable ` +
+          '(no background fill — e.g. a full-bleed image on a transparent section); not confirmed full-bleed.'
+      );
+    }
+
     // Last step: assert every clickable reference in the deck survived into the
     // PDF as a link annotation. The expected set is the deck's own <a href>
     // anchors (read live from the DOM, excluding hidden export chrome), so this
@@ -224,7 +267,7 @@ async function transcodePhotosToJpeg(page, {quality = 85} = {}) {
       return [...urls];
     });
     if (expectedLinks.length > 0) {
-      const foundLinks = await extractPdfUris(fs.readFileSync(absOut));
+      const foundLinks = await extractPdfUris(pdfBytes);
       const {missing, extra} = diffLinks(foundLinks, expectedLinks);
       if (extra.length) {
         console.warn(
