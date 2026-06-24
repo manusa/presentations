@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>reveal-edge-deck fixture</title>
+<style>deck-stage:not(:defined){visibility:hidden}</style>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+  <section data-label="Plain"><h1>plain</h1></section>
+  <!-- Validation edge cases. Greatest valid k = 1 (#multi honors
+       data-reveal="1"; #zero contributes k=0), so data-step-max="1".
+       Invalid values (#bad, #neg) are ignored and never contribute. -->
+  <section data-label="Edge">
+    <h1>edge</h1>
+    <!-- Multiple reveal attrs: honors the first in order (data-reveal). -->
+    <div id="multi" data-reveal="1" data-reveal-only="2">multi</div>
+    <!-- k=0 is valid: visible only in the base state. -->
+    <div id="zero" data-reveal-only="0">zero-only</div>
+    <!-- Non-integer → ignored → always visible. -->
+    <div id="bad" data-reveal="abc">bad</div>
+    <!-- Negative → ignored → always visible. -->
+    <div id="neg" data-reveal="-1">neg</div>
+    <!-- k=0 on data-reveal: step >= 0 is always true → always shown, but the
+         data-revealed hook IS set (distinct from the invalid "always" cases). -->
+    <div id="rzero" data-reveal="0">reveal-zero</div>
+    <!-- Empty value → invalid → ignored → always visible. -->
+    <div id="empty" data-reveal="">empty</div>
+  </section>
+  <section data-label="Tail"><h1>tail</h1></section>
+</deck-stage>
+<script src="/static/deck-kit/image-slot.js" defer></script>
+<script src="/static/deck-kit/deck-stage.js" defer></script>
+</body>
+</html>

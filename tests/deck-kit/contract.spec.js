@@ -16,7 +16,13 @@ const DECK_STAGE_ATTRS = ['width', 'height', 'noscale', 'no-rail'];
 // `<section>` data-* attributes that deck-stage reads from consumer markup.
 // data-step is runtime state managed by deck-stage; data-step-max and
 // data-deck-present-skip are author-set; data-label is author-set.
-const SECTION_DATA_ATTRS = ['data-label', 'data-deck-present-skip', 'data-step-max', 'data-step'];
+// data-reveal / -only / -until are the declarative step-reveal attributes
+// (read off section descendants); deck-stage reflects their visibility via
+// the data-revealed CSS hook (written, not read — documented in README).
+const SECTION_DATA_ATTRS = [
+  'data-label', 'data-deck-present-skip', 'data-step-max', 'data-step',
+  'data-reveal', 'data-reveal-only', 'data-reveal-until',
+];
 const SLIDECHANGE_DETAIL_KEYS = ['index', 'previousIndex', 'total', 'slide', 'previousSlide', 'reason'];
 const SLIDECHANGE_REASONS = ['init', 'keyboard', 'click', 'tap', 'api', 'mutation'];
 const DECKCHANGE_DETAIL_KEYS = ['action', 'from', 'to', 'slide'];
@@ -477,13 +483,59 @@ describe('deck-kit contract — append-only', () => {
     await page.close();
   });
 
+  // ── Declarative step reveals (data-reveal / -only / -until) ────────────
+  // Append-only surface. The three reveal attributes auto-derive the
+  // section's data-step-max and toggle the boolean data-revealed hook from
+  // the current data-step. Duplicates deck-stage.spec.js coverage by design —
+  // dropping the feature must fail the contract suite too.
+  test('reveal attributes auto-derive data-step-max and toggle data-revealed', async () => {
+    const page = await browser.newPage();
+    await bootDeck(page, server.fixture('reveal-deck.html'));
+    // No explicit data-step-max in markup — greatest k (data-reveal="2") wins.
+    const max = await page.evaluate(() =>
+      document.querySelectorAll('section')[1].getAttribute('data-step-max'));
+    assert.equal(max, '2', 'data-step-max auto-derived from reveal attrs');
+
+    await page.evaluate(() => document.querySelector('deck-stage').goTo(1));
+    // Lock all THREE attribute names behaviorally (not just in the allowlist
+    // literal): r1=data-reveal, o1=data-reveal-only, u1=data-reveal-until.
+    // Dropping support for any one must fail here.
+    const base = await page.evaluate(() => ({
+      r1: document.getElementById('r1').hasAttribute('data-revealed'),
+      o1: document.getElementById('o1').hasAttribute('data-revealed'),
+      u1: document.getElementById('u1').hasAttribute('data-revealed'),
+    }));
+    assert.equal(base.r1, false, 'data-reveal="1" hidden at step 0');
+    assert.equal(base.o1, false, 'data-reveal-only="1" hidden at step 0');
+    assert.equal(base.u1, true, 'data-reveal-until="1" shown at step 0');
+
+    await page.keyboard.press('ArrowRight');
+    const stepped = await page.evaluate(() => ({
+      r1: document.getElementById('r1').hasAttribute('data-revealed'),
+      o1: document.getElementById('o1').hasAttribute('data-revealed'),
+      u1: document.getElementById('u1').hasAttribute('data-revealed'),
+    }));
+    assert.equal(stepped.r1, true, 'data-reveal="1" shown after one advance');
+    assert.equal(stepped.o1, true, 'data-reveal-only="1" shown at its step');
+    assert.equal(stepped.u1, true, 'data-reveal-until="1" still shown at step 1');
+
+    // The default-hide stylesheet is injected exactly once into the document.
+    const tags = await page.evaluate(() =>
+      document.querySelectorAll('style#deck-stage-reveal').length);
+    assert.equal(tags, 1, 'reveal stylesheet injected once');
+    await page.close();
+  });
+
   // SECTION_DATA_ATTRS is the canonical README list — read it into the
   // suite so a future refactor that drops an entry shows up here.
   // The behavior tests above cover each name in turn.
   test('SECTION_DATA_ATTRS matches the README-documented surface', () => {
     assert.deepEqual(
       [...SECTION_DATA_ATTRS].sort(),
-      ['data-deck-present-skip', 'data-label', 'data-step', 'data-step-max'],
+      [
+        'data-deck-present-skip', 'data-label', 'data-reveal', 'data-reveal-only',
+        'data-reveal-until', 'data-step', 'data-step-max',
+      ],
     );
   });
 });

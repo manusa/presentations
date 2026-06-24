@@ -85,6 +85,38 @@ implementation detail and may change without a filename bump.
 - `data-step` — runtime state, managed by deck-stage. Snaps to `0` whenever
   the slide is entered or left. Do not set manually past markup-default `0`.
 
+#### Declarative step reveals
+
+Set on **any descendant** of a `<section>` to reveal it progressively without
+hand-writing per-step CSS or counting steps. `k` is a non-negative integer (the
+0-based `data-step` at which the transition occurs); an element with **no**
+reveal attribute is always visible. An element should carry **at most one**.
+
+- `data-reveal="k"` — shown once `data-step >= k`.
+- `data-reveal-only="k"` — shown only while `data-step === k`.
+- `data-reveal-until="k"` — shown while `data-step <= k`.
+
+deck-stage **auto-derives `data-step-max`** for the section as the greatest `k`
+across all three attributes, so the author never counts steps. An **explicit**
+author-set `data-step-max` always wins and is never overwritten — use it to take
+manual control. `k=0` is valid (e.g. `data-reveal-only="0"` = base-state-only).
+A non-integer / negative value is ignored (element stays visible) with a
+`console.warn`; multiple reveal attributes on one element honor the first in the
+order above, also with a `console.warn`. A non-active stepped slide rests at
+`data-step="0"`, so its thumbnail in the rail shows the **base state** (later
+reveals hidden) — the same way existing `[data-step]`-gated content already
+thumbnails, not a bug.
+
+### `<section>` CSS hooks
+
+- `[data-revealed]` — reflects current reveal visibility, toggled by deck-stage
+  on every element carrying a `data-reveal` / `-only` / `-until` attribute as
+  `data-step` changes (present when shown, absent when hidden). deck-stage
+  injects one global default so un-styled reveal elements hide by default
+  (`opacity: 0; pointer-events: none`); decks animate the transition by styling
+  the hook, e.g. `.thing { transition: opacity .3s } .thing[data-revealed] {
+  opacity: 1; transform: none }`. `opacity` (not `display`) keeps layout stable.
+
 ### Keyboard bindings
 
 - `ArrowRight` / `PageDown` / `Space` / `Enter` — advance step (when
