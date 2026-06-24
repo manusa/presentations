@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>reveal-deck fixture</title>
+<style>deck-stage:not(:defined){visibility:hidden}</style>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+  <section data-label="Plain"><h1>plain</h1></section>
+  <!-- No explicit data-step-max: deck-stage auto-derives it from the
+       reveal attributes below. Greatest k = 2 (data-reveal="2"), so the
+       section becomes data-step-max="2" (steps 0..2). -->
+  <section data-label="Reveals">
+    <h1>reveals</h1>
+    <div id="r1" data-reveal="1">reveal-1</div>
+    <div id="r2" data-reveal="2">reveal-2</div>
+    <div id="o1" data-reveal-only="1">only-1</div>
+    <div id="u1" data-reveal-until="1">until-1</div>
+    <!-- until="0": shown at step 0 only — used to observe an until element
+         re-appearing when the deck retreats back below k. -->
+    <div id="u0" data-reveal-until="0">until-0</div>
+  </section>
+  <section data-label="Tail"><h1>tail</h1></section>
+</deck-stage>
+<script src="/static/deck-kit/image-slot.js" defer></script>
+<script src="/static/deck-kit/deck-stage.js" defer></script>
+</body>
+</html>
