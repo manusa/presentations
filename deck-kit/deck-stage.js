@@ -79,6 +79,27 @@
 
   const pad2 = (n) => String(n).padStart(2, '0');
 
+  // Declarative step reveals. Three opt-in attributes on any <section>
+  // descendant declare reveal behavior inline; deck-stage auto-derives the
+  // section's data-step-max from them and toggles the boolean [data-revealed]
+  // hook per the current 0-based data-step:
+  //   data-reveal="k"        shown when step >= k   (Gatsby's "from")
+  //   data-reveal-only="k"   shown when step === k  (Gatsby's "in")
+  //   data-reveal-until="k"  shown when step <= k   (Gatsby's "until")
+  // Listed in precedence order — an element should carry at most one; if it
+  // carries several, the first present here wins.
+  const REVEAL_ATTRS = ['data-reveal', 'data-reveal-only', 'data-reveal-until'];
+
+  // A reveal index is a non-negative integer (0 is valid; "always visible" is
+  // expressed by omitting the attribute, not by data-reveal="0"). Anything
+  // else (non-integer, negative, empty) → null so the caller ignores the
+  // attribute and warns.
+  const parseRevealK = (raw) => {
+    const s = (raw == null ? '' : String(raw)).trim();
+    if (!/^\d+$/.test(s)) return null;
+    return parseInt(s, 10);
+  };
+
   // Label precedence: data-label → data-screen-label (number stripped) → first heading → "Slide".
   const getSlideLabel = (el) => {
     const explicit = el.getAttribute('data-label');
@@ -595,6 +616,11 @@
       this._omelettePresenting = false;
       this._fullscreenPresenting = false;
       this._presenting = false;
+      // Sections whose data-step-max we auto-derived from reveal attributes
+      // (so re-derivation may update them) and reveal elements we've already
+      // warned about (so a malformed attribute warns once, not on every nav).
+      this._autoStepSections = new WeakSet();
+      this._revealWarned = new WeakSet();
 
       this._onKey = this._onKey.bind(this);
       this._onResize = this._onResize.bind(this);
@@ -629,6 +655,7 @@
       this._render();
       this._loadNotes();
       this._syncPrintPageRule();
+      this._injectRevealStyle();
       window.addEventListener('keydown', this._onKey);
       window.addEventListener('resize', this._onResize);
       window.addEventListener('mousemove', this._onMouseMove, { passive: true });
@@ -1078,6 +1105,97 @@
         '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }';
     }
 
+    /** Default-hide reveal elements that aren't currently revealed. Injected
+     *  once into <head> like the @page rule: reveal elements are light-DOM
+     *  descendants of a slotted <section>, beyond ::slotted's reach, so a
+     *  shadow rule can't touch them. opacity (not display:none) keeps layout
+     *  stable; decks animate the transition by styling the [data-revealed]
+     *  hook (e.g. `.thing[data-revealed]{opacity:1;transform:none}`). */
+    _injectRevealStyle() {
+      const id = 'deck-stage-reveal';
+      if (document.getElementById(id)) return;
+      const tag = document.createElement('style');
+      tag.id = id;
+      tag.textContent =
+        '[data-reveal]:not([data-revealed]),' +
+        '[data-reveal-only]:not([data-revealed]),' +
+        '[data-reveal-until]:not([data-revealed]){opacity:0;pointer-events:none;}';
+      document.head.appendChild(tag);
+    }
+
+    /** Which reveal rule (if any) governs an element. null = no reveal
+     *  attribute. { kind: 'always' } = the value was invalid, so the
+     *  attribute is ignored and the element stays visible. Otherwise
+     *  { kind: <attr>, k }. Warns once per element on a multiple-attribute
+     *  or invalid-value mistake — at authoring time, not on every nav. */
+    _resolveReveal(el) {
+      let chosen = null;
+      let count = 0;
+      for (const attr of REVEAL_ATTRS) {
+        if (el.hasAttribute(attr)) { count += 1; if (!chosen) chosen = attr; }
+      }
+      if (!chosen) return null;
+      const raw = el.getAttribute(chosen);
+      const k = parseRevealK(raw);
+      if (!this._revealWarned.has(el) && (count > 1 || k === null)) {
+        if (count > 1) {
+          console.warn(`[deck-stage] element carries multiple reveal attributes; honoring "${chosen}". Use only one of ${REVEAL_ATTRS.join(', ')}.`, el);
+        }
+        if (k === null) {
+          console.warn(`[deck-stage] invalid ${chosen}="${raw}" — expected a non-negative integer; treating element as always visible.`, el);
+        }
+        this._revealWarned.add(el);
+      }
+      if (k === null) return { kind: 'always', k: 0 };
+      return { kind: chosen, k };
+    }
+
+    /** Whether a resolved reveal rule is shown at a given 0-based step. */
+    _isRevealedAt(r, step) {
+      switch (r.kind) {
+        case 'data-reveal': return step >= r.k;
+        case 'data-reveal-only': return step === r.k;
+        case 'data-reveal-until': return step <= r.k;
+        default: return true; // 'always' (invalid value, ignored)
+      }
+    }
+
+    /** Toggle the data-revealed hook on every reveal descendant of a slide
+     *  from its current data-step. No-op for slides with no reveal elements. */
+    _applyReveals(slide) {
+      if (!slide) return;
+      const els = slide.querySelectorAll('[data-reveal],[data-reveal-only],[data-reveal-until]');
+      if (!els.length) return;
+      const step = parseInt(slide.getAttribute('data-step') || '0', 10) || 0;
+      els.forEach((el) => {
+        const r = this._resolveReveal(el);
+        if (r) el.toggleAttribute('data-revealed', this._isRevealedAt(r, step));
+      });
+    }
+
+    /** Auto-derive data-step-max from a section's reveal attributes so authors
+     *  never count steps. An explicit author-set data-step-max wins and is
+     *  never touched (rule 1); only sections we set are tracked in
+     *  _autoStepSections and recomputed on re-derivation. A section with no
+     *  valid reveal attrs and no explicit max stays non-stepped. */
+    _deriveStepMax(slide) {
+      const managed = this._autoStepSections.has(slide);
+      if (slide.hasAttribute('data-step-max') && !managed) return;
+      let max = -1;
+      slide.querySelectorAll('[data-reveal],[data-reveal-only],[data-reveal-until]').forEach((el) => {
+        const r = this._resolveReveal(el);
+        if (r && r.kind !== 'always' && r.k > max) max = r.k;
+      });
+      if (max >= 0) {
+        slide.setAttribute('data-step-max', String(max));
+        this._autoStepSections.add(slide);
+      } else if (managed) {
+        // Reveal attrs were removed since we last derived — relinquish control.
+        slide.removeAttribute('data-step-max');
+        this._autoStepSections.delete(slide);
+      }
+    }
+
     _onSlotChange() {
       // Rail mutations (delete/move) already reconcile synchronously and
       // emit slidechange with reason 'api'; skip the async slotchange that
@@ -1108,6 +1226,13 @@
         }
 
         slide.setAttribute('data-deck-slide', String(i));
+
+        // Declarative reveals: auto-derive data-step-max (unless author-set)
+        // and reflect the base-state visibility, BEFORE the first _applyIndex
+        // so its data-step-max reset logic sees the derived value and every
+        // slide — active or not — starts in its correct step-0 reveal state.
+        this._deriveStepMax(slide);
+        this._applyReveals(slide);
       });
 
       if (this._totalEl) this._totalEl.textContent = String(this._slides.length || 1);
@@ -1158,6 +1283,11 @@
       const currSlide = this._slides[curr];
       if (prevSlide && prevSlide.hasAttribute('data-step-max')) prevSlide.setAttribute('data-step', '0');
       if (currSlide && currSlide.hasAttribute('data-step-max')) currSlide.setAttribute('data-step', '0');
+      // Reflect the (reset) step into the [data-revealed] hooks so a freshly
+      // entered stepped slide shows its base state with later reveals hidden,
+      // and the slide we left is clean for its next entry.
+      this._applyReveals(prevSlide);
+      this._applyReveals(currSlide);
       // Present-skip watermark: on only when the active slide is a present-
       // skip slide and we're off-stage. While presenting it's hopped over so
       // it can never be active; the !presenting guard just covers the
@@ -1418,12 +1548,14 @@
           const cur = parseInt(slide.getAttribute('data-step') || '0', 10);
           if (isAdvance && cur < max) {
             slide.setAttribute('data-step', String(cur + 1));
+            this._applyReveals(slide);
             e.preventDefault();
             this._flashOverlay();
             return;
           }
           if (isRetreat && cur > 0) {
             slide.setAttribute('data-step', String(cur - 1));
+            this._applyReveals(slide);
             e.preventDefault();
             this._flashOverlay();
             return;
@@ -1445,7 +1577,10 @@
         // current value for an opening stepped slide. Reset here before
         // dispatching so R always lands on "slide 1, step 0" per README.
         const cur = this._slides[this._index];
-        if (cur && cur.hasAttribute('data-step-max')) cur.setAttribute('data-step', '0');
+        if (cur && cur.hasAttribute('data-step-max')) {
+          cur.setAttribute('data-step', '0');
+          this._applyReveals(cur);
+        }
         this._go(0, 'keyboard');
       } else if (key === 'f' || key === 'F') {
         // Plain 'f' as the single cross-platform toggle. Not F11: Chromium
