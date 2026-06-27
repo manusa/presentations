@@ -182,6 +182,10 @@ does not scale to real source listings.
   <!-- + one <script src> per non-common grammar (dockerfile, groovy, http, properties) -->
   <script>
     addEventListener('DOMContentLoaded', () => {
+      if (!window.hljs) {  // engine failed to load — fail clearly, don't throw a cryptic ReferenceError
+        console.warn('highlight.js failed to load — code blocks will not be highlighted');
+        return;
+      }
       document.querySelectorAll('pre code[class*="language-"]').forEach((el) => {
         const lang = (el.className.match(/(?:^|\s)language-([\w-]+)/) || [])[1];
         if (lang && hljs.getLanguage(lang)) hljs.highlightElement(el);  // registered only — never auto-detect
@@ -190,9 +194,12 @@ does not scale to real source listings.
   </script>
   ```
 
-  The `getLanguage` guard matters: a bare `highlightElement` on an empty or
-  typo'd `language-` class falls back to `hljs.highlightAuto`, which would make
-  output non-deterministic — the guard skips those, leaving the block plain.
+  Two guards, both deliberate: the `!window.hljs` check turns a missing-engine
+  failure into a legible warning instead of an uncaught `ReferenceError` (this
+  snippet is the template decks copy); and the `getLanguage` check means a bare
+  `highlightElement` on an empty or typo'd `language-` class never falls back to
+  `hljs.highlightAuto` (which would make output non-deterministic) — the block
+  stays plain.
   Ordering vs deck-stage is a non-issue: rail thumbnails materialize lazily,
   deck-stage's `MutationObserver` re-clones a thumb when highlighting rewrites
   its text, and `hljs.highlightElement` is idempotent (sets `data-highlighted`).

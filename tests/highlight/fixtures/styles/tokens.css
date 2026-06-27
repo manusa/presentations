@@ -71,6 +71,10 @@ pre code {
   border: 1px solid var(--hl-border);
   border-radius: 14px;
   tab-size: 4;
+  /* Card chrome on the `pre code` arm too (not just `.hljs`) so an untagged or
+   * unregistered-language block — which never gets the .hljs class — still reads
+   * as the same code card. The .hljs override below re-applies these from the
+   * same tokens for highlighted blocks. */
   background: var(--hl-bg);
   color: var(--hl-fg);
 }
