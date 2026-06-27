@@ -80,6 +80,13 @@ ENTRYPOINT ["java", "-jar", "app.jar"]</code></pre>
      deep-clones the (now highlighted) slide into the thumb when its text changes. -->
 <script>
   addEventListener('DOMContentLoaded', () => {
+    // If the engine <script> failed to load (404 / blocked), say so clearly
+    // instead of throwing a cryptic "hljs is not defined" — this snippet is the
+    // template decks copy, so it fails legibly and leaves code blocks plain.
+    if (!window.hljs) {
+      console.warn('highlight.js failed to load — code blocks will not be highlighted');
+      return;
+    }
     document.querySelectorAll('pre code[class*="language-"]').forEach((el) => {
       const lang = (el.className.match(/(?:^|\s)language-([\w-]+)/) || [])[1];
       if (lang && hljs.getLanguage(lang)) hljs.highlightElement(el);

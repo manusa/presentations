@@ -49,7 +49,7 @@ const FILES = [
 
 function fetch(url, redirects = 0) {
   return new Promise((resolve, reject) => {
-    https
+    const req = https
       .get(url, (res) => {
         const { statusCode, headers } = res;
         if ([301, 302, 303, 307, 308].includes(statusCode) && headers.location && redirects < 5) {
@@ -67,6 +67,9 @@ function fetch(url, redirects = 0) {
         res.on('end', () => resolve(Buffer.concat(chunks)));
       })
       .on('error', reject);
+    // Don't hang forever on a stalled socket — a deliberate version bump should
+    // fail fast and loud rather than block. (--verify never reaches here.)
+    req.setTimeout(15_000, () => req.destroy(new Error(`timed out after 15s: ${url}`)));
   });
 }
 
