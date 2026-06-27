@@ -149,7 +149,7 @@ which this does not).
 
 ---
 
-## 3. Build-less syntax highlighting (REQUIRED for code decks — Phase 0)
+## 3. Build-less syntax highlighting (DONE — Phase 0, issue #59)
 
 ### Problem
 
@@ -159,29 +159,71 @@ component that highlights at runtime and strips indentation. deck-kit has no
 equivalent; the Romania deck fakes "code" with hand-marked-up `<span>`s, which
 does not scale to real source listings.
 
-### Proposal
+### What shipped (#59)
 
-Adopt **highlight.js** — a single static script, no build, runs in the browser.
-Author plain `<pre><code class="language-java">…</code></pre>`; a deck-kit (or
-initially per-deck) glue script calls `hljs.highlightAll()` on
-`DOMContentLoaded`. Honor the deck-kit font floor: mono content ≥ 28px
-(`AGENTS.md` → Font Sizing), wired through a token, not per-block overrides.
+**highlight.js**, vendored — a static script, no build, runs in the browser.
 
-Start as per-deck glue on the pilot (rule 4), promote to a deck-kit file once the
-second code-bearing deck ports.
+- **Vendored** at an exact pin (11.11.1, non-minified engine), no CDN, with a
+  provenance README + sha256 manifest. Source of truth + refresher:
+  `scripts/vendor-highlight.js` (`npm run vendor:highlight`,
+  `… -- --verify`). Lives next to its first consumer, not in `deck-kit/`
+  (rule #4 — see promotion trigger below). Reference copy:
+  `tests/highlight/fixtures/vendor/highlight/`.
+- **Authoring contract:** `<pre><code class="language-X">…</code></pre>` —
+  `class="language-<lang>"` on the inner `<code>`, nothing else. Indentation is
+  preserved (`<pre>` + `white-space: pre`).
+- **Init (per-deck glue):** an inline snippet after the vendored lib calls
+  `hljs.highlightElement` on **only** the tagged blocks (not `highlightAll`) —
+  **no auto-detection**, so output is deterministic. It is wrapped in
+  `DOMContentLoaded` because `defer` is ignored on an *inline* script:
+
+  ```html
+  <script src="vendor/highlight/highlight.js" defer></script>
+  <!-- + one <script src> per non-common grammar (dockerfile, groovy, http, properties) -->
+  <script>
+    addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('pre code[class*="language-"]').forEach((el) => {
+        const lang = (el.className.match(/(?:^|\s)language-([\w-]+)/) || [])[1];
+        if (lang && hljs.getLanguage(lang)) hljs.highlightElement(el);  // registered only — never auto-detect
+      });
+    });
+  </script>
+  ```
+
+  The `getLanguage` guard matters: a bare `highlightElement` on an empty or
+  typo'd `language-` class falls back to `hljs.highlightAuto`, which would make
+  output non-deterministic — the guard skips those, leaving the block plain.
+  Ordering vs deck-stage is a non-issue: rail thumbnails materialize lazily,
+  deck-stage's `MutationObserver` re-clones a thumb when highlighting rewrites
+  its text, and `hljs.highlightElement` is idempotent (sets `data-highlighted`).
+- **Theme & legibility:** a vendored **dark** theme (`github-dark`) loaded in
+  `<head>`; a thin `--hl-*` custom-property override layer (loaded *after* the
+  theme so it wins at equal specificity) lets a deck recolor any token without
+  editing the vendored file. Code size is driven once by a **mono token**
+  (`--type-mono`, ≥ 28px), never per-block (`feedback-css-principled-not-magic-numbers`).
 
 ### Contract check
 
-✅ No build step (static `<script>`). ✅ No change to existing contract; purely
-additive. Theme via a CSS file chosen per deck (highlight.js themes are plain
-CSS), tokenized.
+✅ No build step (static `<script>`). ✅ **No** change to `deck-stage.js` or the
+deck-kit append-only contract (`tests/deck-kit/contract.spec.js`) — purely
+additive, per-deck glue. Verified by `tests/highlight/highlight.spec.js`
+(`npm run test:highlight`).
 
-### Acceptance criteria
+### Promotion trigger (document, do not build yet — rule #4)
 
-- `<pre><code class="language-*">` renders highlighted, indentation preserved.
-- Mono renders ≥ 28px; `audit:fit` reports no sub-floor code runs.
-- Works offline / file://-served (script vendored under the deck or `deck-kit/`,
-  not a CDN — consistent with the no-external-dependency posture).
+Highlighting ships as **per-deck glue now, NOT a deck-kit core module.** Once a
+**second** code-bearing deck adopts the same snippet, promote the init to a
+shared `static/deck-kit/code-highlight.js` (opt-in via attribute / `<script>`,
+per rules #1 and #4) and move the vendored lib under `deck-kit/`. The pilot
+(`pilot-mock-mvc-in-action.md`) is the first consumer; the second triggers the
+promotion.
+
+### Acceptance criteria — met by #59
+
+- `<pre><code class="language-*">` renders highlighted, indentation preserved. ✅
+- Mono renders ≥ 28px; `audit:fit --floor 28` reports no sub-floor code runs. ✅
+- Works offline / `file://`-served (vendored, no CDN). ✅
+- Composes with #1 reveals (`<pre data-reveal="1">` reveals *and* stays highlighted). ✅
 
 ---
 
