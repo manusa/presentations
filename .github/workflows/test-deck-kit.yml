@@ -6,7 +6,9 @@ on:
       - 'static/deck-kit/**'
       - 'static/presentations/**'
       - 'tests/deck-kit/**'
+      - 'tests/highlight/**'
       - 'scripts/lib/deck.js'
+      - 'scripts/vendor-highlight.js'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/test-deck-kit.yml'
@@ -45,3 +47,10 @@ jobs:
       - run: npx playwright install --with-deps chromium
 
       - run: npm run test:deck-kit
+
+      # Build-less syntax highlighting (issue #59) — per-deck glue, not part of
+      # the frozen deck-kit contract, but gated in this same required job so a
+      # highlight/vendoring regression can't merge green.
+      - name: Verify vendored highlight.js integrity (offline, no network)
+        run: npm run vendor:highlight -- --verify
+      - run: npm run test:highlight

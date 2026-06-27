@@ -1,0 +1,91 @@
+/* Highlight fixture — design tokens + the highlight.js wiring (issue #59).
+ *
+ * Standalone deck: no CDN, no web fonts — system stacks only — so the fixture
+ * runs from file:// with the network blocked (proving the "works offline"
+ * acceptance criterion). Sizes are deck-px on the 1920×1080 canvas (pt = px/2).
+ *
+ * Loaded AFTER the vendored github-dark theme, so the --hl-* override layer at
+ * the bottom wins at equal specificity.
+ */
+:root {
+  --type-display: 96px;   /* slide title  (48pt) */
+  --type-note: 36px;      /* sub-line     (18pt) — above the 28px must-read floor */
+  --type-mono: 32px;      /* code         (16pt) — clear of the 28px mono floor.
+                             Short / hero snippets should scope a larger value
+                             (the --hl-* / token layer makes that a one-liner). */
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --bg: #0d1117;
+  --fg: #e6edf3;
+  --muted: #8b949e;
+
+  /* highlight.js palette. The token COLORS default to the vendored github-dark
+   * values; --hl-bg / --hl-border deliberately differ (a code card distinct from
+   * the slide --bg, with a visible edge). A deck recolors any token by setting
+   * these custom properties on :root (or a deeper scope) — no edit to the
+   * vendored theme file needed. Only the tokens that appear in code listings are
+   * hooked; the theme's markdown/diff tokens (subst, section, addition, …) stay
+   * hardcoded in github-dark.css. */
+  --hl-bg: #161b22;       /* code card — distinct from slide --bg #0d1117 */
+  --hl-border: #30363d;   /* visible card edge vs the near-black slide bg */
+  --hl-fg: #c9d1d9;
+  --hl-keyword: #ff7b72;
+  --hl-title: #d2a8ff;
+  --hl-constant: #79c0ff;
+  --hl-string: #a5d6ff;
+  --hl-built-in: #ffa657;
+  --hl-comment: #8b949e;
+  --hl-tag: #7ee787;
+}
+
+* { box-sizing: border-box; }
+
+section {
+  display: grid;
+  place-content: center;
+  justify-items: start;
+  gap: 32px;
+  padding: 120px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+}
+
+h1 { margin: 0; font-size: var(--type-display); font-weight: 800; letter-spacing: -0.02em; }
+.note { margin: 0; font-size: var(--type-note); color: var(--muted); }
+
+/* ── Authoring contract: <pre><code class="language-X"> ───────────────────── */
+/* Font size is driven ONCE by the mono token — never per-block overrides. */
+pre { margin: 0; max-width: 1600px; }
+pre code.hljs,
+pre code {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);   /* ≥ 28px mono legibility floor */
+  line-height: 1.55;
+  /* preserve indentation/whitespace. Note: lines do NOT wrap and the theme's
+   * `overflow-x:auto` can't scroll on a projected slide — keep code lines within
+   * the card (~1600px); `audit:fit` flags any that overflow. */
+  white-space: pre;
+  border: 1px solid var(--hl-border);
+  border-radius: 14px;
+  tab-size: 4;
+  background: var(--hl-bg);
+  color: var(--hl-fg);
+}
+
+/* ── Palette override layer (wins over the vendored theme at equal specificity,
+ *    because tokens.css is loaded after github-dark.css). Each rule reads a
+ *    deck-overridable --hl-* token. ───────────────────────────────────────── */
+.hljs { background: var(--hl-bg); color: var(--hl-fg); }
+.hljs-doctag, .hljs-keyword, .hljs-meta .hljs-keyword, .hljs-template-tag,
+.hljs-template-variable, .hljs-type, .hljs-variable.language_ { color: var(--hl-keyword); }
+.hljs-title, .hljs-title.class_, .hljs-title.class_.inherited__,
+.hljs-title.function_ { color: var(--hl-title); }
+.hljs-attr, .hljs-attribute, .hljs-literal, .hljs-meta, .hljs-number, .hljs-operator,
+.hljs-variable, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-id { color: var(--hl-constant); }
+.hljs-regexp, .hljs-string, .hljs-meta .hljs-string { color: var(--hl-string); }
+.hljs-built_in, .hljs-symbol { color: var(--hl-built-in); }
+.hljs-comment, .hljs-code, .hljs-formula { color: var(--hl-comment); }
+.hljs-name, .hljs-quote, .hljs-selector-tag, .hljs-selector-pseudo { color: var(--hl-tag); }

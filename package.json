@@ -25,8 +25,10 @@
     "snapshot:diff": "node scripts/snapshot-diff.js",
     "audit:fit": "node scripts/audit-fit.js",
     "test:deck-kit": "node --test tests/deck-kit/*.spec.js",
+    "test:highlight": "node --test tests/highlight/*.spec.js",
     "test:pdf-links": "node scripts/test-pdf-links.js",
-    "test:pdf-frame": "node scripts/test-pdf-frame.js"
+    "test:pdf-frame": "node scripts/test-pdf-frame.js",
+    "vendor:highlight": "node scripts/vendor-highlight.js"
   },
   "publishConfig": {
     "access": "public"

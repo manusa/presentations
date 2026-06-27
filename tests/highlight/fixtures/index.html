@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>highlight.js fixture — deck-kit build-less highlighting</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Vendored dark theme (issue #59). Local copy — no CDN, works offline / file://. -->
+<link rel="stylesheet" href="vendor/highlight/styles/github-dark.css" />
+<!-- Fixture tokens + the --hl-* override layer; loaded AFTER the theme so overrides win. -->
+<link rel="stylesheet" href="styles/tokens.css" />
+<style>deck-stage:not(:defined){visibility:hidden}</style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <section data-label="Title">
+    <h1>Build-less highlighting</h1>
+    <p class="note">Vendored highlight.js · deck-kit fixture · issue #59</p>
+  </section>
+
+  <!-- Plain language-java block: proves highlighting + indentation preserved. -->
+  <section data-label="Plain Java">
+<pre><code class="language-java" id="plain-code">@WebMvcTest(GreetController.class)
+class GreetControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    void returnsGreeting() throws Exception {
+        mockMvc.perform(get("/greet").param("name", "Marc"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.message").value("Hello, Marc"));
+    }
+}</code></pre>
+  </section>
+
+  <!-- Untagged block: proves NO auto-detect — left as plain text. The second
+       block has a typo'd/unregistered language and must ALSO stay plain (the
+       init guard skips it rather than letting hljs auto-detect). -->
+  <section data-label="Untagged">
+<pre><code id="untagged-code">plain text, no language tag</code></pre>
+<pre><code class="language-bogus" id="bogus-code">also plain — language-bogus is not registered</code></pre>
+  </section>
+
+  <!-- #56 composition: data-reveal hides the <pre> until step 1, but the inner
+       code is highlighted at load regardless of stepping. -->
+  <section data-label="Reveal">
+<pre data-reveal="1" id="reveal-pre"><code class="language-java" id="reveal-code">var greeting = "Hello, " + name + "!";</code></pre>
+  </section>
+
+  <!-- A non-common vendored grammar (dockerfile.min.js) — proves the four extra
+       grammar files actually load, self-register, and highlight, not just the
+       common bundle that java rides in on. -->
+  <section data-label="Dockerfile">
+<pre><code class="language-dockerfile" id="dockerfile-code">FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY target/app.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]</code></pre>
+  </section>
+
+</deck-stage>
+
+<!-- Vendored highlight.js engine (non-min) + the four non-common grammars
+     (self-registering .min.js). Local copies — no CDN. -->
+<script src="vendor/highlight/highlight.js" defer></script>
+<script src="vendor/highlight/languages/dockerfile.min.js" defer></script>
+<script src="vendor/highlight/languages/groovy.min.js" defer></script>
+<script src="vendor/highlight/languages/http.min.js" defer></script>
+<script src="vendor/highlight/languages/properties.min.js" defer></script>
+
+<!-- Reference per-deck init snippet. `defer` on an INLINE script is ignored, so
+     the call is wrapped in DOMContentLoaded — which fires after every deferred
+     external script (highlight.js, the grammars, deck-stage.js) has run, so
+     `hljs` and the slides both exist. Deterministic, NO auto-detect: we highlight
+     a block only when its `language-X` resolves to a *registered* language —
+     `hljs.highlightElement` falls back to `highlightAuto` for an empty/typo'd
+     `language-` class, which the guard below prevents. Order vs deck-stage is a
+     non-issue: rail thumbnails materialize lazily and deck-stage's MutationObserver
+     deep-clones the (now highlighted) slide into the thumb when its text changes. -->
+<script>
+  addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code[class*="language-"]').forEach((el) => {
+      const lang = (el.className.match(/(?:^|\s)language-([\w-]+)/) || [])[1];
+      if (lang && hljs.getLanguage(lang)) hljs.highlightElement(el);
+    });
+  });
+</script>
+
+<!-- deck-kit (relative paths so the fixture also runs from file://). -->
+<script src="../../../static/deck-kit/image-slot.js" defer></script>
+<script src="../../../static/deck-kit/deck-stage.js" defer></script>
+</body>
+</html>
