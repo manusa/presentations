@@ -4,8 +4,9 @@
 <meta charset="utf-8" />
 <title>highlight.js fixture — deck-kit build-less highlighting</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- Vendored dark theme (issue #59). Local copy — no CDN, works offline / file://. -->
-<link rel="stylesheet" href="vendor/highlight/styles/github-dark.css" />
+<!-- Vendored dark theme (issue #59). Single shared copy under static/deck-kit/
+     (consolidated in #61) — no CDN, works offline / file://. -->
+<link rel="stylesheet" href="../../../static/deck-kit/vendor/highlight/styles/github-dark.css" />
 <!-- Fixture tokens + the --hl-* override layer; loaded AFTER the theme so overrides win. -->
 <link rel="stylesheet" href="styles/tokens.css" />
 <style>deck-stage:not(:defined){visibility:hidden}</style>
@@ -62,12 +63,12 @@ ENTRYPOINT ["java", "-jar", "app.jar"]</code></pre>
 </deck-stage>
 
 <!-- Vendored highlight.js engine (non-min) + the four non-common grammars
-     (self-registering .min.js). Local copies — no CDN. -->
-<script src="vendor/highlight/highlight.js" defer></script>
-<script src="vendor/highlight/languages/dockerfile.min.js" defer></script>
-<script src="vendor/highlight/languages/groovy.min.js" defer></script>
-<script src="vendor/highlight/languages/http.min.js" defer></script>
-<script src="vendor/highlight/languages/properties.min.js" defer></script>
+     (self-registering .min.js). Single shared copy under static/deck-kit/ — no CDN. -->
+<script src="../../../static/deck-kit/vendor/highlight/highlight.js" defer></script>
+<script src="../../../static/deck-kit/vendor/highlight/languages/dockerfile.min.js" defer></script>
+<script src="../../../static/deck-kit/vendor/highlight/languages/groovy.min.js" defer></script>
+<script src="../../../static/deck-kit/vendor/highlight/languages/http.min.js" defer></script>
+<script src="../../../static/deck-kit/vendor/highlight/languages/properties.min.js" defer></script>
 
 <!-- Reference per-deck init snippet. `defer` on an INLINE script is ignored, so
      the call is wrapped in DOMContentLoaded — which fires after every deferred
