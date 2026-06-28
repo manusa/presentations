@@ -1,8 +1,9 @@
 # Gatsby → deck-kit migration
 
-Status: **analysis / planning**. No code has been migrated yet. This directory is
-the design record for moving every historical Gatsby/React deck into the static
-`deck-kit` format so that **Gatsby can be removed from the project entirely**.
+Status: **in progress**. Phase 0 (deck-kit foundations) is complete; Phase 1 (the
+pilot port) is filed. This directory is the design record for moving every
+historical Gatsby/React deck into the static `deck-kit` format so that **Gatsby
+can be removed from the project entirely**.
 
 ## Why
 
@@ -112,12 +113,13 @@ how we will verify each port.
 
 ## Phased plan
 
-- **Phase 0 — deck-kit foundations (blocks everything).** Land the two
-  must-have authoring features via the pilot: declarative step reveals and
-  build-less code highlighting. See the improvements doc, items 1 & 3.
-- **Phase 1 — Tier A.** Port the 3 legacy decks. Confirm the authoring model is
-  comfortable before scaling. Promote the slide-chrome template (improvement 2)
-  if the second deck wants it (rule #4).
+- **Phase 0 — deck-kit foundations (blocks everything). ✅ DONE.** The two
+  must-have authoring features shipped: declarative step reveals (#56) and
+  build-less code highlighting (#59). See the improvements doc, items 1 & 3.
+- **Phase 1 — Tier A.** Port the 3 legacy decks. Pilot `mock-mvc-in-action`
+  filed as **#61**. Confirm the authoring model is comfortable before scaling.
+  Promote the slide-chrome template (improvement 2) if the second deck wants it
+  (rule #4).
 - **Phase 2 — Tier B.** Port the template-based decks. Most effort is volume of
   code blocks (now cheap once highlighting exists) and per-deck theming.
 - **Phase 3 — Tier C.** Port the diagram-heavy decks using the captured-SVG
@@ -127,10 +129,11 @@ how we will verify each port.
 ## How to turn this into issues
 
 Each improvement (improvements doc) and each Phase/deck above is written to be
-issue-ready (title, scope, acceptance criteria). Per repo convention, tracker
-issues live in `manusa/com.marcnuri.automated-tasks`, referenced as
-`manusa/com.marcnuri.automated-tasks#N`. File the Phase-0 improvements first;
-they unblock the rest.
+issue-ready (title, scope, acceptance criteria). **Implementation** issues for a
+coding agent are filed in this code repo (`manusa/presentations`) so a PR closes
+them with `Fixes #N` — done so far: reveals #56, highlighting #59, pilot port #61.
+(Cross-repo *tracker* issues still live in `manusa/com.marcnuri.automated-tasks`,
+referenced by full coordinate.)
 
 ## Decisions (resolved)
 

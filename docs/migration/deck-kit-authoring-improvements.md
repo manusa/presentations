@@ -15,7 +15,7 @@ tooling.
 
 ---
 
-## 1. Declarative step reveals (REQUIRED — Phase 0)
+## 1. Declarative step reveals (DONE — Phase 0, issue #56)
 
 ### Problem
 
@@ -43,25 +43,29 @@ revealed element:
 This is the #1 source of the "machine-oriented" feel: indices counted by hand,
 kept in sync by hand, expressed as verbose CSS instead of next to the content.
 
-### Proposal
+### What shipped (#56)
 
-Three new opt-in attributes on **any descendant** of a `<section>`, read by
+Three opt-in attributes on **any descendant** of a `<section>`, read by
 `deck-stage.js`:
 
-- `data-reveal="k"` — hidden until `data-step >= k` (the `from` helper).
-- `data-reveal-only="k"` — visible only when `data-step === k` (the `in` helper).
-- `data-reveal-until="k"` — visible while `data-step <= k` (the `until` helper).
+- `data-reveal="k"` — shown once `data-step >= k` (the `from` helper).
+- `data-reveal-only="k"` — shown only while `data-step === k` (the `in` helper).
+- `data-reveal-until="k"` — shown while `data-step <= k` (the `until` helper).
 
-`k` is 1-based on the *advance* count (`k=1` = appears on the first ArrowRight;
-"always visible" = simply no attribute). deck-stage:
+`k` is the 0-based step index (`k=0` is valid — e.g. `data-reveal-only="0"` =
+base-state-only; "always visible" = omit the attribute). deck-stage:
 
-1. On upgrade, scans each `<section>` for reveal attributes and **auto-derives
-   `data-step-max`** = the maximum `k` found. (Author no longer counts steps.
-   An explicit `data-step-max` still wins, for hand control.)
-2. On every step change, toggles the boolean `hidden` attribute (or a documented
-   `[data-revealed]` hook) on each element per its reveal rule. Decks style the
-   transition via CSS on that hook — content stays in the markup, indices stay
-   next to the content they reveal.
+1. **Auto-derives the section's `data-step-max`** from the maximum `k` found, so
+   the author never counts steps. An explicit `data-step-max` still wins;
+   auto-managed sections are tracked (a `WeakSet`) so re-derivation never clobbers
+   an author-set value.
+2. Toggles the boolean **`[data-revealed]`** hook on each reveal element per its
+   rule, and injects a one-time default-hide style
+   (`:not([data-revealed]){opacity:0;pointer-events:none}`) into `<head>` so
+   un-styled reveals hide with no deck CSS. Decks animate the transition by
+   styling the `[data-revealed]` hook — content stays in the markup, indices stay
+   next to the content they reveal. Multiple reveal attributes on one element →
+   warns and honors the first (`reveal` > `-only` > `-until`).
 
 ### Gatsby → deck-kit mapping
 
@@ -78,24 +82,15 @@ author stops thinking in raw indices and just numbers the reveals 1, 2, 3…
 | `classNameUntilStep(2)` | `data-reveal-until="1"` |
 | `slideControls(C, …, totalSteps=4)` | auto-derived (was `data-step-max="3"`) |
 
-### Contract check
+### Contract check & acceptance — met by #56
 
-✅ Attribute-based opt-in (rule 1): no attribute = current behavior, existing
-decks unaffected. ✅ Append-only (rule 3): adds `data-reveal*` names; the
-existing `data-step` / `data-step-max` contract is unchanged (explicit
-`data-step-max` still honored). ✅ No build step.
-
-### Acceptance criteria
-
-- A `<section>` with `data-reveal="1"`/`"2"` and no `data-step-max` reports
-  `data-step-max` of 2 and reveals correctly under ArrowRight.
-- Explicit `data-step-max` overrides the auto-derived value.
-- `screenshot:deck` / `audit:fit` walk the new states (they already key off
-  `data-step-max`, so this must be set before they run — auto-derivation makes
-  that automatic).
-- New `contract.spec.js` assertions for the three attribute names.
-- The existing `.s-amplifier` / `.s-flywheel` decks still render identically
-  (they set `data-step-max` explicitly).
+✅ Attribute-based opt-in (rule 1): no attribute = current behavior. ✅
+Append-only (rule 3): adds `data-reveal*` + the `[data-revealed]` hook; existing
+`data-step` / `data-step-max` semantics unchanged. ✅ No build step. Documented in
+`static/deck-kit/README.md`; covered by `tests/deck-kit/contract.spec.js` and the
+`reveal-deck` / `reveal-edge-deck` / `reveal-explicit-deck` fixtures
+(`npm run test:deck-kit`). The existing `.s-amplifier` / `.s-flywheel` decks
+(explicit `data-step-max`) render identically.
 
 ---
 
@@ -166,9 +161,11 @@ does not scale to real source listings.
 - **Vendored** at an exact pin (11.11.1, non-minified engine), no CDN, with a
   provenance README + sha256 manifest. Source of truth + refresher:
   `scripts/vendor-highlight.js` (`npm run vendor:highlight`,
-  `… -- --verify`). Lives next to its first consumer, not in `deck-kit/`
-  (rule #4 — see promotion trigger below). Reference copy:
-  `tests/highlight/fixtures/vendor/highlight/`.
+  `… -- --verify`). Currently under `tests/highlight/fixtures/vendor/highlight/`;
+  the pilot (#61) consolidates it to a **single served copy** under
+  `static/deck-kit/vendor/highlight/` (via `git mv`, no duplication) so decks load
+  the same files the test uses. The vendored *asset* is shared infra; only the
+  init *glue* stays per-deck (rule #4 — see promotion trigger below).
 - **Authoring contract:** `<pre><code class="language-X">…</code></pre>` —
   `class="language-<lang>"` on the inner `<code>`, nothing else. Indentation is
   preserved (`<pre>` + `white-space: pre`).
@@ -218,12 +215,14 @@ additive, per-deck glue. Verified by `tests/highlight/highlight.spec.js`
 
 ### Promotion trigger (document, do not build yet — rule #4)
 
-Highlighting ships as **per-deck glue now, NOT a deck-kit core module.** Once a
-**second** code-bearing deck adopts the same snippet, promote the init to a
-shared `static/deck-kit/code-highlight.js` (opt-in via attribute / `<script>`,
-per rules #1 and #4) and move the vendored lib under `deck-kit/`. The pilot
-(`pilot-mock-mvc-in-action.md`) is the first consumer; the second triggers the
-promotion.
+The highlight **init glue** ships as **per-deck inline glue now, NOT a deck-kit
+core module.** Once a **second** code-bearing deck adopts the same snippet,
+promote the init to a shared `static/deck-kit/code-highlight.js` (opt-in via
+attribute / `<script>`, per rules #1 and #4). (The vendored *library asset* is
+already consolidated under `deck-kit/vendor/` by the pilot — see above — since it
+is a shared dependency, not deck-specific glue.) The pilot
+(`pilot-mock-mvc-in-action.md`, #61) is the first consumer; the second triggers
+the glue promotion.
 
 ### Acceptance criteria — met by #59
 

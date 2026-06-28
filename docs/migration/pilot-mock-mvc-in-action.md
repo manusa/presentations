@@ -46,7 +46,7 @@ reveal); `data-step-max` is the deck-kit equivalent (`totalSteps - 1`).
 Constructs to handle: **reveals** (sections 2, 5, 6, 7 — needs improvement 1),
 **code** (section 5 — needs improvement 3), **images** (sections 1, 3, 4, 8 —
 plain `<img>` / `<image-slot>` + `optimize:images`), **head/title** (section 1 —
-static `<title>`), **per-slide SCSS** (compile once → CSS).
+static `<title>`), **per-slide SCSS** (hand-ported to plain CSS).
 
 ## Mapping rules
 
@@ -121,9 +121,14 @@ The static-deck tooling is the safety net (all Gatsby-independent):
 
 ## Definition of done
 
-- [ ] Improvement 1 (declarative reveals) implemented in `deck-stage.js` with
-      `contract.spec.js` coverage; `npm run test:deck-kit` green.
-- [ ] Improvement 3 (highlight.js) wired and vendored.
+Phase-0 foundations are shipped (reveals #56, highlighting #59), so the pilot
+*consumes* them rather than building them. Tracked as **#61**.
+
+- [ ] Vendored highlight assets consolidated to one served copy under
+      `static/deck-kit/vendor/highlight/` (via `git mv`, no duplication);
+      `vendor-highlight.js` `DEST` updated; `npm run test:highlight` green.
+- [ ] Reveals expressed with `data-reveal*` (#56); code with
+      `<pre><code class="language-*">` + the per-deck init snippet (#59).
 - [ ] All 10 sections render; reveals on sections 2/5/6/7 match the Gatsby deck
       step-for-step.
 - [ ] `audit:fit` clean at the 28px floor.
@@ -135,10 +140,9 @@ The static-deck tooling is the safety net (all Gatsby-independent):
 
 ## Effort estimate
 
-Once Phase-0 improvements land: **~half a day** of mechanical conversion +
-verification for this deck. The improvements themselves (reveals + highlighting
-in deck-kit) are the real Phase-0 cost — estimate 1–2 days including
-`contract.spec.js` tests — and they are a one-time investment amortized across
+Phase-0 improvements have landed (#56, #59), so this is **~half a day** of
+mechanical conversion + verification (plus a small one-off to consolidate the
+vendored highlight copy). The Phase-0 cost is already spent and amortizes across
 all 14 decks.
 
 ## Open questions
