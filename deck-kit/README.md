@@ -10,6 +10,8 @@ build step. Loaded directly via `<script src=…>`.
 |---|---|
 | `deck-stage.js` | `<deck-stage>` custom element — slide host, keyboard nav, thumbnail rail, fullscreen, print pagination. |
 | `image-slot.js` | `<image-slot>` custom element — user-fillable image placeholder with shape/mask/fit/position attributes. |
+| `code-block.js` | `<code-block>` custom element — dedents an indented snippet, runs vendored highlight.js over it, and paints an optional per-line coverage stripe. The reusable home for the issue #59 highlight init glue. |
+| `vendor/highlight/` | Vendored highlight.js (issue #59) — engine, the four non-common grammars, the `github-dark` theme, LICENSE + provenance README. The single served copy decks load at runtime (`../../deck-kit/vendor/highlight/highlight.js`); re-vendor via `npm run vendor:highlight`. Loaded before `code-block.js` so the element can highlight on upgrade. |
 | `README.md` | This file. |
 
 ## What does **not** live here
@@ -56,6 +58,16 @@ Drop both scripts at the bottom of `<body>` with `defer`. Inline per-deck glue (
 </body>
 </html>
 ```
+
+### Slide layout
+
+A slotted `<section>` is the per-slide box, sized to the design viewport. You may
+put `display: flex` / `grid` (or any layout) **directly on the `<section>`** — it
+survives both on-screen and into the `export:pdf` output. (The PDF export
+paginates by giving each section its own flow page via `contain: size` +
+`break-after: page`; it deliberately does **not** override the section's `display`,
+so section-level flex/grid is preserved. Earlier it forced `display: block`, which
+silently flattened such slides in the PDF — fixed in `scripts/lib/deck.js`.)
 
 ## Supported API surface
 
@@ -152,6 +164,31 @@ thumbnails, not a bug.
 - `::part(frame)` / `::part(image)` / `::part(empty)` / `::part(ring)` —
   expose the inner crop frame, the inner `<img>`, the empty-state container,
   and the dashed drop-target ring for external styling.
+
+### `<code-block>` attributes
+
+Renders into light DOM as `<pre><code class="language-X">…</code></pre>`, so the
+deck's own `pre code` card styling and the vendored highlight theme apply. Load
+the highlight engine and `code-block.js` (both `defer`, engine first) ahead of
+`deck-stage.js`.
+
+- `language` — grammar id (e.g. `java`). Falls back to a `language-X` class on the
+  element. No / unregistered grammar → rendered un-highlighted.
+- `cov-lines` — comma-separated 1-based line numbers to flag as covered. Every
+  source line is wrapped in `<span class="hl-line">`; covered lines also get
+  `.cov`. Dedent preserves the line count, so the numbers track the authored
+  source. Style `.hl-line.cov` in the deck for the stripe colour.
+- The authored text is **dedented** (common leading indent + leading/trailing
+  blank lines stripped), so snippets can be indented to match the surrounding HTML.
+- `data-reveal` / `-only` / `-until` work as on any descendant (deck-stage drives
+  them).
+
+### `<code-block>` CSS hooks
+
+- `[data-rendered]` — set on the host once it has rendered; also the idempotency /
+  clone-safety guard (deck-stage's rail and PDF clones skip re-transform).
+- `.hl-line` / `.hl-line.cov` — the per-line wrappers emitted when `cov-lines` is
+  set (`display: block` is provided by the component; the deck styles `.cov`).
 
 ### Events
 

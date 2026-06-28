@@ -1,0 +1,236 @@
+/* mock-mvc-in-action — deck-kit port of the Gatsby deck.
+ *
+ * Hand-ported from the Gatsby SCSS (src/pages/presentations/mock-mvc-in-action/*.scss
+ * plus the framework base src/styles/partials/_slide.scss). Sizes are deck-px on the
+ * 1920×1080 canvas (pt = px/2); the Gatsby rems are converted at the framework root
+ * size (16px), so 4rem→64px, 2.5rem→40px, 6rem→96px, 10rem→160px, 8rem→128px.
+ *
+ * Loaded AFTER the vendored github-dark theme, so the --hl-* override layer at the
+ * bottom wins at equal specificity.
+ */
+:root {
+  /* Dark radial slide background (Gatsby rgb(40,44,52) → rgb(37,40,47)). */
+  --bg-from: #282c34;
+  --bg-to: #25282f;
+  --slide-bg: radial-gradient(circle, var(--bg-from) 90%, var(--bg-to) 100%);
+  --fg: #ffffff;
+
+  --font-body: 'Montserrat', sans-serif;     /* framework $base-font-family */
+  --font-roboto: 'Roboto', sans-serif;       /* cover title */
+  --font-oswald: 'Oswald', sans-serif;       /* cover subtitle */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --type-cover-title: 96px;     /* 6rem  */
+  --type-cover-subtitle: 56px;  /* 3.5rem */
+  --type-title: 64px;           /* 4rem  — slide title ($slide-title-font-size) */
+  --type-body: 40px;            /* 2.5rem — slide body ($slide-font-size) */
+  --type-qa: 160px;             /* 10rem */
+  --type-thanks: 128px;         /* 8rem  */
+  --type-mono: 40px;            /* code — matches the Gatsby deck (2.5rem, inherited
+                                   from the slide body size); well above the 28px floor */
+
+  /* highlight.js palette. Colours default to vendored github-dark; --hl-bg/-border
+   * make the code card distinct from the slide background with a visible edge. */
+  --hl-bg: #161b22;
+  --hl-border: #30363d;
+  --hl-fg: #c9d1d9;
+  --hl-keyword: #ff7b72;
+  --hl-title: #d2a8ff;
+  --hl-constant: #79c0ff;
+  --hl-string: #a5d6ff;
+  --hl-built-in: #ffa657;
+  --hl-comment: #8b949e;
+  --hl-tag: #7ee787;
+
+  /* Per-line coverage stripe — Gatsby lineProps green (rgba(30,255,0,0.36)). */
+  --cov-bg: rgba(30, 255, 0, 0.36);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #000; }
+
+deck-stage section { font-family: var(--font-body); color: var(--fg); }
+
+/* ── §1 Cover (was index.jsx / index.scss) ─────────────────────────────── */
+.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--slide-bg);
+}
+.cover-title    { margin: 0; text-align: center; font-family: var(--font-roboto); font-size: var(--type-cover-title); }
+.cover-subtitle { margin: 0; text-align: center; font-family: var(--font-oswald); font-size: var(--type-cover-subtitle); }
+
+/* ── Interior slide base (was framework _slide.scss) ───────────────────── */
+.slide {
+  padding: 60px;
+  background: var(--slide-bg);
+  color: var(--fg);
+  overflow: hidden;
+  font-size: var(--type-body);
+}
+.slide .title { font-size: var(--type-title); }
+
+/* Reveals slide in from the right, reproducing the Gatsby `_slide.scss` reveal
+ * (`.hidden{margin-left:100%}` → `.visible{margin-left:0;transition:margin-left .3s}`).
+ * Composes with deck-stage's injected default-hide
+ * ([data-reveal*]:not([data-revealed]){opacity:0;pointer-events:none}): the element
+ * snaps opaque and slides in (transform only — opacity is not transitioned, matching
+ * the original's instant visibility + margin slide). Applies to the cumulative
+ * `data-reveal` lists/code (slides 2, 5, 7). The `data-reveal-only` blocks on the
+ * "100% Code Coverage" slide intentionally get NO transition — the Gatsby slide
+ * swapped them in place instantly (slide5.scss `transition:none`). */
+.slide [data-reveal] { transition: transform .3s ease; }
+.slide [data-reveal]:not([data-revealed]) { transform: translateX(100%); }
+
+/* Entrance fade-in, reproducing the Gatsby per-slide `animation: fade-in .5s`.
+ * Keyed off deck-stage's [data-deck-active] so it replays each time the slide is
+ * entered; the PDF export strips that attribute from its clones, so the static
+ * export renders the images at rest (opacity 1, no fill-mode needed). */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.cover[data-deck-active] { animation: fade-in .5s ease; }
+.slide2[data-deck-active] .fill-image,
+.slide3[data-deck-active] .beer-bottle { animation: fade-in .5s ease; }
+
+/* ── §2 MockMVC (slide1): nested reveal list ───────────────────────────── */
+.slide1 .content { margin: 0; }
+.slide1 .content li { margin-top: 20px; }
+
+/* ── §3 Pyramid of testing (slide2): image fills below the title ───────── */
+.slide2 { display: flex; flex-direction: column; }
+.slide2 .fill-image {
+  flex: 1; min-height: 1px;
+  width: 100%;
+  margin-top: 20px;
+  object-fit: contain;
+  object-position: 50% 50%;
+}
+
+/* ── §4 Beer CRUD (slide3): centered bottle over the soft backdrop ─────── */
+.slide3 .beer-wrapper {
+  height: 100%;
+  display: flex; flex-direction: column;
+  /* Root-absolute — see the note on .slide7 (rail-thumbnail stylesheet base). */
+  background: url('/presentations/mock-mvc-in-action/assets/beer-bg.webp') no-repeat 50% 50%;
+}
+.slide3 .beer-bottle {
+  flex: 1; min-height: 1px;
+  width: 100%;
+  object-fit: contain;
+  object-position: 50% 50%;
+}
+
+/* ── §5 Configuration types (slide4): 3 cumulative code reveals ────────── */
+.slide4 .content { margin: 0; }
+.slide4 .content code-block { margin-top: 100px; }
+
+/* ── §6 100% Code Coverage (slide5): 4 code blocks swapped in place ─────── */
+/* `data-reveal-only` shows one block per step; stack them in a single grid
+ * cell so the opacity-hidden ones don't push layout (Gatsby used display:none). */
+.slide5 .content { display: grid; margin-top: 60px; }
+.slide5 .content > code-block { grid-area: 1 / 1; width: 100%; }
+/* Per-line coverage stripe — <code-block> wraps each line in .hl-line and flags
+ * the covered ones with .cov (display:block comes from code-block's base style). */
+.slide5 .hl-line.cov { background: var(--cov-bg); }
+
+/* ── §7 Advantages of MockMVC (slide6): reveal list ────────────────────── */
+.slide6 .content { margin: 0; }
+.slide6 .content li { margin-top: 35px; }
+
+/* ── §8 Let's get Reactive (slide7): full-bleed photo + pulsing logo ────── */
+.slide7 {
+  padding: 0;
+  display: flex; flex-direction: column;
+  /* Root-absolute so it resolves both as the light-DOM slide background AND inside
+   * deck-stage's constructed rail-thumbnail stylesheet (whose base URL is the
+   * document, not styles/deck.css). The deck always deploys at this path. */
+  background: url('/presentations/mock-mvc-in-action/assets/reactor.webp') no-repeat 50% 50%;
+  background-size: cover;
+}
+.slide7 .title {
+  padding: 15px;
+  color: #7ac5ef;
+  background: rgba(0, 0, 0, 0.6);
+}
+.slide7 .project-reactor {
+  margin: auto;
+  max-width: 100%;
+  animation: reactor-pulse 4s linear infinite;
+}
+.slide7[data-deck-active] .project-reactor {
+  animation: fade-in .5s ease, reactor-pulse 4s linear infinite;
+}
+@keyframes reactor-pulse {
+  0%   { transform: scale(0.98); }
+  50%  { transform: scale(1); }
+  100% { transform: scale(0.98); }
+}
+
+/* ── §9 Q&A (slide-q-and-a) ────────────────────────────────────────────── */
+.slide-q-and-a { display: flex; flex-direction: column; }
+.slide-q-and-a .content {
+  flex: 1;
+  display: flex; justify-content: center; align-items: center;
+  font-size: var(--type-qa);
+}
+
+/* ── §10 Summary (slide-summary) ──────────────────────────────────────── */
+.slide-summary { display: flex; flex-direction: column; justify-content: center; }
+.slide-summary .content { flex: 1; display: flex; }
+.slide-summary .col { flex: 1; }
+.slide-summary .col.image {
+  /* Root-absolute — see the note on .slide7 (rail-thumbnail stylesheet base). */
+  background: url('/presentations/mock-mvc-in-action/assets/mockingbird-silhouette.webp') no-repeat 50% 50%;
+  background-size: contain;
+  animation: colorize 4s linear infinite;
+}
+.slide-summary .col.links {
+  margin: 128px auto;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.slide-summary .thank-you { flex: 1; font-size: var(--type-thanks); }
+.slide-summary .col.links a {
+  display: flex; align-items: center;
+  color: var(--fg); text-decoration: none;
+}
+.slide-summary .col.links a:not(:last-child) { margin-bottom: 24px; }
+.slide-summary .col.links a img { height: 40px; margin: 6px 16px 0 0; }
+@keyframes colorize {
+  0%   { filter: invert(10%) sepia(20%); }
+  50%  { filter: invert(10%) sepia(70%); }
+  100% { filter: invert(10%) sepia(20%); }
+}
+
+/* ── Code cards: authoring contract <pre><code class="language-X"> ──────── */
+/* Font size driven once by the mono token — never per-block overrides. */
+pre { margin: 0; }
+pre code.hljs,
+pre code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);  /* ≥ 28px mono legibility floor */
+  line-height: 1.55;
+  white-space: pre;             /* preserve indentation; lines do not wrap */
+  padding: 28px 32px;
+  border: 1px solid var(--hl-border);
+  border-radius: 14px;
+  tab-size: 4;
+  background: var(--hl-bg);
+  color: var(--hl-fg);
+  overflow-x: auto;
+}
+
+/* ── highlight.js palette override layer (loaded after github-dark.css, so it
+ *    wins at equal specificity). Each rule reads a deck-overridable --hl-* token. */
+.hljs { background: var(--hl-bg); color: var(--hl-fg); }
+.hljs-doctag, .hljs-keyword, .hljs-meta .hljs-keyword, .hljs-template-tag,
+.hljs-template-variable, .hljs-type, .hljs-variable.language_ { color: var(--hl-keyword); }
+.hljs-title, .hljs-title.class_, .hljs-title.class_.inherited__,
+.hljs-title.function_ { color: var(--hl-title); }
+.hljs-attr, .hljs-attribute, .hljs-literal, .hljs-meta, .hljs-number, .hljs-operator,
+.hljs-variable, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-id { color: var(--hl-constant); }
+.hljs-regexp, .hljs-string, .hljs-meta .hljs-string { color: var(--hl-string); }
+.hljs-built_in, .hljs-symbol { color: var(--hl-built-in); }
+.hljs-comment, .hljs-code, .hljs-formula { color: var(--hl-comment); }
+.hljs-name, .hljs-quote, .hljs-selector-tag, .hljs-selector-pseudo { color: var(--hl-tag); }
