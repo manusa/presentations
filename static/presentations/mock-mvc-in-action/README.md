@@ -54,36 +54,32 @@ is faithful slide-for-slide; the mechanics changed as follows:
   `data-reveal` elements (lists/code on slides 2/5/7). The `data-reveal-only`
   blocks on slide 6 deliberately get no transition — the original swapped them in
   place instantly (`slide5.scss transition:none`).
-- **`<Code language="java">` → `<pre><code class="language-java">` + vendored
-  highlight.js (#59).** The Gatsby `Code` component stripped a common leading
-  indent; the per-deck init reproduces that with a small `dedent` step, so the
-  snippets are **authored with natural indentation in the HTML** (nested to match
-  the surrounding markup) and rendered flush-left — the source file stays readable
-  without writing code flush-left inside `<pre>`. Theme is `github-dark` + a
-  `--hl-*` override layer (the Gatsby deck used `androidstudio`), per the shipped
-  #59 contract. Code size is one token (`--type-mono`, **40px**), matching the
-  Gatsby code (which inherited the slide's 2.5rem body size) — well above the 28px
-  mono floor. (A reusable `<code-block>`-style component that folds in dedent +
-  highlight + the coverage stripe is the natural next step when a 2nd code deck
-  lands — deck-kit rule #4.)
-- **`lineProps` coverage stripe → `data-cov-lines` + post-highlight glue.** Slide 6's
-  payoff (the final code block highlighting the covered lines green) is reproduced
-  by a small inline glue step that wraps each highlighted line and flags the
-  covered ones. Line numbers are data on the `<code>` (`data-cov-lines`), not pixel
-  offsets. Swap-in-place blocks are stacked in a single CSS grid cell so the
-  opacity-hidden ones don't shift layout (the Gatsby version used `display:none`).
+- **`<Code language="java">` → `<code-block language="java">` (deck-kit, #59).**
+  The highlight init glue is promoted into the shared `static/deck-kit/code-block.js`
+  custom element (the Gatsby `Code` component's equivalent): it dedents the snippet,
+  runs vendored highlight.js, and paints the coverage stripe. So the snippets are
+  **authored with natural indentation in the HTML** (nested to match the surrounding
+  markup, `<code-block>` indented under its `<section>`) and rendered flush-left.
+  Theme is `github-dark` + a `--hl-*` override layer (the Gatsby deck used
+  `androidstudio`), per the shipped #59 contract. Code size is one token
+  (`--type-mono`, **40px**), matching the Gatsby code (which inherited the slide's
+  2.5rem body size) — well above the 28px mono floor.
+- **`lineProps` coverage stripe → `<code-block cov-lines="…">`.** Slide 6's payoff
+  (the final code block highlighting the covered lines green) is reproduced by the
+  component's `cov-lines` attribute: it wraps each highlighted line and flags the
+  covered ones. Line numbers are data (`cov-lines`), not pixel offsets. Swap-in-place
+  blocks are stacked in a single CSS grid cell so the opacity-hidden ones don't
+  shift layout (the Gatsby version used `display:none`).
 - **SCSS → plain CSS.** The thin per-slide SCSS + the framework `_slide.scss` base
   are hand-ported to one `styles/deck.css` (custom properties; rems converted to
   deck-px at the framework 16px root, e.g. 4rem→64px). SCSS is dropped, not
   machine-compiled.
-- **Flex layouts live on inner wrappers, not the `<section>`.** The cover, pyramid
-  (slide 3), reactive (slide 8), Q&A and summary slides center/fill via an inner
-  wrapper (`.cover-inner`, `.slide2-inner`, `.slide7-inner`, `.content`) rather
-  than `display:flex` on the slotted `<section>`. The PDF export forces every
-  section to `display:block` for pagination, which would otherwise flatten a
-  section-level flex (title pinned to the top; the pyramid image losing its
-  `flex:1` bound and overflowing the slide). The on-screen deck is identical either
-  way — only the exported PDF cares. See the "Slide layout" note in
+- **Section-level flex layouts (cover, pyramid, reactive, Q&A, summary).** These
+  slides center/fill with `display:flex` directly on the `<section>`, exactly as
+  authored. This previously broke the PDF export (it forced sections to
+  `display:block`, pinning the cover title to the top and overflowing the pyramid
+  image); that was fixed framework-side in `scripts/lib/deck.js` so section-level
+  flex/grid now survives into the PDF. See the "Slide layout" note in
   `static/deck-kit/README.md`.
 - **Background-image prefetch hack dropped.** `index.scss` used a `content:url(...)`
   pseudo-element to warm the image cache; deck-stage and local assets make it
@@ -92,9 +88,10 @@ is faithful slide-for-slide; the mechanics changed as follows:
   `npm run optimize:images` (lossless for logos/diagrams/silhouette, lossy for the
   beer-bottle render and the reactor photo). The huge `pyramid-of-testing.png`
   (6250px) is downscaled to 3840px.
-- **`<image-slot>` not loaded.** All images are fixed content (`<img>` / CSS
-  backgrounds); the deck uses no user-fillable placeholders, so only `deck-stage.js`
-  is loaded.
+- **`<image-slot>` not used.** All images are fixed content (`<img>` / CSS
+  backgrounds); the deck uses no user-fillable placeholders, so `image-slot.js` is
+  not loaded (the deck loads `deck-stage.js`, the highlight engine, and
+  `code-block.js`).
 - **Fonts: only weight 400 is loaded**, exactly as the Gatsby deck did
   (`?family=Oswald|Montserrat|Roboto`). The cover `<h1>`/`<h2>` request bold but get
   a synthesized (faux) bold of the 400 Roboto/Oswald face — reproducing the original
