@@ -58,6 +58,26 @@ Drop both scripts at the bottom of `<body>` with `defer`. Inline per-deck glue (
 </html>
 ```
 
+### Slide layout: keep `display` off the `<section>`
+
+A slotted `<section>` is the per-slide box. **Do not put `display: flex` / `grid`
+directly on it** — put the slide's flex/grid layout on an inner wrapper:
+
+```css
+/* ✗ breaks the PDF export */          /* ✓ PDF-safe */
+.cover { display: flex; … }            .cover .cover-inner { height: 100%; display: flex; … }
+```
+
+The PDF export (`export:pdf`) paginates by forcing every slotted section to
+`display: block` (so each becomes its own flow page). That `!important` rule
+overrides a section-level `display: flex/grid`, so a layout that relied on it is
+silently flattened in the exported PDF — content sticks to the top and `flex: 1`
+children (e.g. a `object-fit: contain` image) lose their bound and overflow the
+slide. The on-screen deck looks fine; only the PDF breaks. An inner wrapper sized
+with `height: 100%` is immune (its `display` is never touched). The `<section>`
+itself may still carry non-layout styles (background, padding, `[data-deck-active]`
+animations).
+
 ## Supported API surface
 
 The complete, frozen contract per rule #3. Every name below is asserted by

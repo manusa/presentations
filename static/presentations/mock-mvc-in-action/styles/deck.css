@@ -52,12 +52,17 @@ html, body { margin: 0; height: 100%; background: #000; }
 deck-stage section { font-family: var(--font-body); color: var(--fg); }
 
 /* ── §1 Cover (was index.jsx / index.scss) ─────────────────────────────── */
-.cover {
+/* The flex centering lives on an inner full-size wrapper, NOT on the <section>:
+ * the PDF export forces every slotted <section> to display:block (see the
+ * "Layout" note in static/deck-kit/README.md), which would flatten a section-level
+ * flex and pin the title to the top in the exported PDF. */
+.cover { background: var(--slide-bg); }
+.cover .cover-inner {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--slide-bg);
 }
 .cover-title    { margin: 0; text-align: center; font-family: var(--font-roboto); font-size: var(--type-cover-title); }
 .cover-subtitle { margin: 0; text-align: center; font-family: var(--font-oswald); font-size: var(--type-cover-subtitle); }
@@ -98,7 +103,11 @@ deck-stage section { font-family: var(--font-body); color: var(--fg); }
 .slide1 .content li { margin-top: 20px; }
 
 /* ── §3 Pyramid of testing (slide2): image fills below the title ───────── */
-.slide2 { display: flex; flex-direction: column; }
+/* Inner wrapper holds the flex column (the <section> must stay block for the PDF
+ * export — see the .cover note / deck-kit README "Layout"). Without this, the
+ * exported PDF loses flex:1 on the image, which then renders at its natural size
+ * and overflows the slide. */
+.slide2 .slide2-inner { height: 100%; display: flex; flex-direction: column; }
 .slide2 .fill-image {
   flex: 1; min-height: 1px;
   width: 100%;
@@ -141,13 +150,15 @@ deck-stage section { font-family: var(--font-body); color: var(--fg); }
 /* ── §8 Let's get Reactive (slide7): full-bleed photo + pulsing logo ────── */
 .slide7 {
   padding: 0;
-  display: flex; flex-direction: column;
   /* Root-absolute so it resolves both as the light-DOM slide background AND inside
    * deck-stage's constructed rail-thumbnail stylesheet (whose base URL is the
    * document, not styles/deck.css). The deck always deploys at this path. */
   background: url('/presentations/mock-mvc-in-action/assets/reactor.webp') no-repeat 50% 50%;
   background-size: cover;
 }
+/* Flex column on the inner wrapper, not the <section> (PDF export forces the
+ * section to display:block — see the .cover note / deck-kit README "Layout"). */
+.slide7 .slide7-inner { height: 100%; display: flex; flex-direction: column; }
 .slide7 .title {
   padding: 15px;
   color: #7ac5ef;
@@ -168,16 +179,20 @@ deck-stage section { font-family: var(--font-body); color: var(--fg); }
 }
 
 /* ── §9 Q&A (slide-q-and-a) ────────────────────────────────────────────── */
-.slide-q-and-a { display: flex; flex-direction: column; }
+/* .content fills the slide via height:100% (not flex:1 on a section-level flex
+ * column) so the PDF export — which forces the section to display:block — keeps
+ * "Q & A" centred instead of pinning it to the top. */
 .slide-q-and-a .content {
-  flex: 1;
+  height: 100%;
   display: flex; justify-content: center; align-items: center;
   font-size: var(--type-qa);
 }
 
 /* ── §10 Summary (slide-summary) ──────────────────────────────────────── */
-.slide-summary { display: flex; flex-direction: column; justify-content: center; }
-.slide-summary .content { flex: 1; display: flex; }
+/* .content fills via height:100% rather than flex:1 on a section-level flex
+ * column, so the PDF export (section forced to display:block) still fills the
+ * slide instead of collapsing to content height. */
+.slide-summary .content { height: 100%; display: flex; }
 .slide-summary .col { flex: 1; }
 .slide-summary .col.image {
   /* Root-absolute — see the note on .slide7 (rail-thumbnail stylesheet base). */

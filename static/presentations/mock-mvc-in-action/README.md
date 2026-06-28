@@ -56,11 +56,16 @@ is faithful slide-for-slide; the mechanics changed as follows:
   place instantly (`slide5.scss transition:none`).
 - **`<Code language="java">` → `<pre><code class="language-java">` + vendored
   highlight.js (#59).** The Gatsby `Code` component stripped a common leading
-  indent; that indentation is reproduced inline in the markup here. Theme is
-  `github-dark` + a `--hl-*` override layer (the Gatsby deck used `androidstudio`),
-  per the shipped #59 contract. Code size is one token (`--type-mono`, **40px**),
-  matching the Gatsby code (which inherited the slide's 2.5rem body size) — well
-  above the 28px mono floor.
+  indent; the per-deck init reproduces that with a small `dedent` step, so the
+  snippets are **authored with natural indentation in the HTML** (nested to match
+  the surrounding markup) and rendered flush-left — the source file stays readable
+  without writing code flush-left inside `<pre>`. Theme is `github-dark` + a
+  `--hl-*` override layer (the Gatsby deck used `androidstudio`), per the shipped
+  #59 contract. Code size is one token (`--type-mono`, **40px**), matching the
+  Gatsby code (which inherited the slide's 2.5rem body size) — well above the 28px
+  mono floor. (A reusable `<code-block>`-style component that folds in dedent +
+  highlight + the coverage stripe is the natural next step when a 2nd code deck
+  lands — deck-kit rule #4.)
 - **`lineProps` coverage stripe → `data-cov-lines` + post-highlight glue.** Slide 6's
   payoff (the final code block highlighting the covered lines green) is reproduced
   by a small inline glue step that wraps each highlighted line and flags the
@@ -71,6 +76,15 @@ is faithful slide-for-slide; the mechanics changed as follows:
   are hand-ported to one `styles/deck.css` (custom properties; rems converted to
   deck-px at the framework 16px root, e.g. 4rem→64px). SCSS is dropped, not
   machine-compiled.
+- **Flex layouts live on inner wrappers, not the `<section>`.** The cover, pyramid
+  (slide 3), reactive (slide 8), Q&A and summary slides center/fill via an inner
+  wrapper (`.cover-inner`, `.slide2-inner`, `.slide7-inner`, `.content`) rather
+  than `display:flex` on the slotted `<section>`. The PDF export forces every
+  section to `display:block` for pagination, which would otherwise flatten a
+  section-level flex (title pinned to the top; the pyramid image losing its
+  `flex:1` bound and overflowing the slide). The on-screen deck is identical either
+  way — only the exported PDF cares. See the "Slide layout" note in
+  `static/deck-kit/README.md`.
 - **Background-image prefetch hack dropped.** `index.scss` used a `content:url(...)`
   pseudo-element to warm the image cache; deck-stage and local assets make it
   unnecessary.
