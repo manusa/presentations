@@ -1,0 +1,225 @@
+/* isotope-introduction — deck-kit port of the Gatsby deck.
+ *
+ * Hand-ported from the Gatsby SCSS (src/pages/presentations/isotope-introduction/*.scss
+ * plus the framework base src/styles/partials/_slide.scss). Sizes are deck-px on the
+ * 1920×1080 canvas (pt = px/2); the Gatsby rems are converted at the framework root
+ * size (16px), so 6rem→96px, 4rem→64px, 3.5rem→56px, 2.5rem→40px, 2rem→32px,
+ * 10rem→160px, 8rem→128px. This deck is code-free, so there is no highlight.js layer.
+ */
+:root {
+  /* Dark radial slide background (Gatsby rgb(40,44,52) → rgb(37,40,47)). */
+  --bg-from: #282c34;
+  --bg-to: #25282f;
+  --slide-bg: radial-gradient(circle, var(--bg-from) 90%, var(--bg-to) 100%);
+  --fg: #ffffff;
+
+  --font-body: 'Montserrat', sans-serif;     /* framework $base-font-family */
+  --font-roboto: 'Roboto', sans-serif;       /* cover title */
+  --font-oswald: 'Oswald', sans-serif;       /* cover subtitle */
+
+  --type-cover-title: 96px;     /* 6rem  */
+  --type-cover-subtitle: 56px;  /* 3.5rem */
+  --type-title: 64px;           /* 4rem  — slide title ($slide-title-font-size) */
+  --type-body: 40px;            /* 2.5rem — slide body ($slide-font-size) */
+  --type-row-title: 32px;       /* 2rem  — architecture row labels */
+  --type-hero: 160px;           /* 10rem — "Let's play!" link + "Q & A" */
+  --type-thanks: 128px;         /* 8rem  — summary "Thank you!" */
+
+  /* §3 Architecture box palette (slide2.scss). */
+  --green: #6db33f;       --light-green: #eafff6;
+  --red: #f26350;         --light-red: #ffe5e1;
+  --blue: #77a8da;        --light-blue: #f2f8ff;
+  --yellow: #f9c748;      --light-yellow: #f3f3f3;
+  --purple: #8b65ab;      --light-purple: #e0d7eb;
+  --blue2: #689bb9;       --light-blue2: #dbebf7;
+
+  /* §5 Storage-model palette (storage-model.scss). */
+  --sm-border: #77a8da;
+  --indexeddb-color: #e44d26;   --indexeddb-bg: #ffffff;
+  --redux-color: #764abc;       --redux-bg: #e0d7eb;
+  --imap-color: #ff2525;        --imap-bg: #000000;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #000; }
+
+deck-stage section { font-family: var(--font-body); color: var(--fg); }
+
+/* ── §1 Cover (was index.jsx / index.scss) ─────────────────────────────── */
+/* Gatsby centred the title block vertically (flex column, justify-center) with the
+ * <h1>/<h2> text-aligned centre; only margin-top was zeroed, so the browser-default
+ * heading bottom-margins keep the gap between title and subtitle. */
+.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--slide-bg);
+}
+.cover-title    { margin-top: 0; text-align: center; color: var(--fg); font-family: var(--font-roboto); font-size: var(--type-cover-title); }
+.cover-subtitle { margin-top: 0; text-align: center; color: var(--fg); font-family: var(--font-oswald); font-size: var(--type-cover-subtitle); }
+
+/* ── Interior slide base (was framework _slide.scss) ───────────────────── */
+.slide {
+  padding: 60px;
+  background: var(--slide-bg);
+  color: var(--fg);
+  overflow: hidden;
+  font-size: var(--type-body);
+}
+.slide .title { font-size: var(--type-title); }
+
+/* Reveals slide in from the right, reproducing the Gatsby `_slide.scss` reveal
+ * (`.hidden{margin-left:100%}` → `.visible{margin-left:0;transition:margin-left .3s}`).
+ * Composes with deck-stage's injected default-hide
+ * ([data-reveal*]:not([data-revealed]){opacity:0;pointer-events:none}): the element
+ * snaps opaque and slides in (transform only — opacity is not transitioned, matching
+ * the original's instant visibility + margin slide). Applies to the reveal lists/rows
+ * on slides 2, 3 and 6. */
+.slide [data-reveal] { transition: transform .3s; }
+.slide [data-reveal]:not([data-revealed]) { transform: translateX(100%); }
+
+/* Entrance fade-in, reproducing the Gatsby per-slide `animation: fade-in .5s linear`.
+ * Keyed off deck-stage's [data-deck-active] so it replays each time the slide is
+ * entered; the PDF export strips that attribute from its clones, so the static export
+ * renders at rest (opacity 1, no fill-mode needed). */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.cover[data-deck-active] { animation: fade-in .5s linear; }
+.slide3[data-deck-active] .content a { animation: fade-in .5s linear; }
+
+/* ── §2 Why? (slide1): chart above a nested reveal list ─────────────────── */
+.slide1 { display: flex; flex-direction: column; }
+.slide1 .webmail-trend { margin: 30px 0; max-width: 100%; }
+.slide1 .webmail-trend img { display: block; margin: 0 auto; max-width: 100%; }
+.slide1 .content { margin: 0; }
+.slide1 .content li { margin-top: 20px; }
+
+/* ── §3 Architecture (slide2): labelled, colour-coded logo rows ─────────── */
+.slide2 .title { margin-bottom: 90px; }
+.slide2 .spacer { margin-top: 32px; }
+.slide2 .row { display: flex; }
+.slide2 .row-title {
+  display: inline-block;
+  width: 300px;
+  font-size: var(--type-row-title);
+  height: 84px;        /* box-height (60) + 2× box border (12) — aligns with the box */
+  line-height: 84px;
+}
+.slide2 .multi-box { flex: 1; display: flex; }
+.slide2 .box {
+  /* content-box so the 12px border sits OUTSIDE the 60px box (Gatsby default box
+   * model): visual height 84px, matching the row-title — under the global border-box
+   * the bordered box would collapse to 60px and mis-align the label. */
+  box-sizing: content-box;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  line-height: 60px;
+  border: 12px solid transparent;
+  text-align: center;
+}
+.slide2 .box img { max-height: 80%; margin-right: 16px; }
+.slide2 .box.red    { color: var(--red);    border-color: var(--red);    background-color: var(--light-red); }
+.slide2 .box.green  { color: var(--green);  border-color: var(--green);  background-color: var(--light-green); }
+.slide2 .box.blue   { color: var(--blue);   border-color: var(--blue);   background-color: var(--light-blue); }
+.slide2 .box.blue2  { color: var(--blue2);  border-color: var(--blue2);  background-color: var(--light-blue2); }
+.slide2 .box.yellow { color: var(--yellow); border-color: var(--yellow); background-color: var(--light-yellow); }
+.slide2 .box.purple { color: var(--purple); border-color: var(--purple); background-color: var(--light-purple); }
+
+/* ── §4 Isotope Mail in Action! (slide3): centred live-demo link ────────── */
+.slide3 { display: flex; flex-direction: column; }
+.slide3 .content { flex: 1; display: flex; justify-content: center; align-items: center; }
+.slide3 .content a { text-decoration: none; font-size: var(--type-hero); color: var(--fg); }
+.slide3 .content a:hover { color: #cccccc; }   /* Gatsby darken(#fff, 20%) */
+
+/* ── §5 Isotope storage model (slide4 / storage-model.scss) ─────────────── */
+.slide-storage-model .content { display: flex; margin-top: 128px; }
+.slide-storage-model .group {
+  flex: 1;
+  position: relative;
+  border: 3px dashed var(--sm-border);
+  border-radius: 30px;
+  padding: 128px 30px;
+  display: flex;
+  justify-content: center;
+}
+.slide-storage-model .group:not(:last-child) { margin-right: 30px; }
+.slide-storage-model .group-title { position: absolute; top: 16px; left: 16px; }
+.slide-storage-model .box {
+  box-sizing: content-box;     /* 3px border outside the box, as Gatsby */
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+  height: 120px;
+  line-height: 120px;
+  max-width: 432px;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  text-align: center;
+}
+.slide-storage-model .box.indexed-db {
+  position: relative;
+  color: var(--indexeddb-color);
+  background: var(--indexeddb-bg);
+  border-color: var(--indexeddb-color);
+}
+.slide-storage-model .box.indexed-db .encrypted {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 32px;
+  height: 32px;
+  background: url('../assets/lock-64.webp') no-repeat 50% 50%;
+  background-size: contain;
+}
+.slide-storage-model .box.redux { color: var(--redux-color); background: var(--redux-bg); border-color: var(--redux-color); }
+.slide-storage-model .box.imap-server { color: var(--imap-color); background: var(--imap-bg); border-color: var(--imap-color); }
+.slide-storage-model .box img { max-height: 60%; margin-right: 16px; }
+
+/* ── §6 Back-end / Front-end Architecture (slide5): two stacked blocks ──── */
+.slide5 .content ul { margin-top: 16px; }
+.slide5 .content ul.columns-2 { columns: 2; }
+
+/* ── §7 Scaling Isotope Mail (slide6 / scaling.scss): contained illustration ─ */
+.slide-scaling { display: flex; flex-direction: column; justify-content: center; }
+.slide-scaling .content {
+  flex: 1;
+  margin-top: 48px;
+  min-height: 1px;
+  background: url('../assets/autoscaling.webp') no-repeat 50% 50%;
+  background-size: contain;
+}
+
+/* ── §8 Q&A (slide-q-and-a) ─────────────────────────────────────────────── */
+.slide-q-and-a { display: flex; flex-direction: column; }
+.slide-q-and-a .content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--type-hero);
+}
+
+/* ── §9 Summary (slide-summary) ─────────────────────────────────────────── */
+.slide-summary { display: flex; flex-direction: column; justify-content: center; }
+.slide-summary .content { flex: 1; display: flex; }
+.slide-summary .col { flex: 1; }
+.slide-summary .col.isotope-logo { background: url('../assets/isotope-logo-v.webp') no-repeat 50% 50%; }
+.slide-summary .col.links {
+  margin: 128px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.slide-summary .col.links .thank-you { flex: 1; font-size: var(--type-thanks); }
+.slide-summary .col.links a {
+  display: flex;
+  align-items: center;
+  color: var(--fg);
+  text-decoration: none;
+}
+.slide-summary .col.links a:not(:last-child) { margin-bottom: 24px; }
+.slide-summary .col.links a img { height: 40px; margin: 6px 16px 0 0; }
