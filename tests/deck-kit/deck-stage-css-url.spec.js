@@ -89,6 +89,8 @@ describe('deck-stage author-CSS url() rebasing', () => {
         // document.baseURI as the base; relative refs rebase against it.
         inlineDoc: rw('.k{background-image:url(scene.png)}', docBase),
         frag: rw('.d{clip-path:url("#clip")}'),
+        // External resource with a fragment — rebased, fragment preserved.
+        fileFrag: rw('.o{mask:url("sprite.svg#icon")}'),
         data: rw('.e{background-image:url("data:image/png;base64,AAAA")}'),
         // Chromium serializes inline-SVG data: URIs with backslash-escaped "
         dataEsc: rw('.m{background-image:url("data:image/svg+xml;utf8,<svg fill=\\"red\\"></svg>")}'),
@@ -114,6 +116,10 @@ describe('deck-stage author-CSS url() rebasing', () => {
     assert.match(out.inlineDoc, /url\("https:\/\/example\.com\/deck\/scene\.png"\)/);
     // Same-document fragment refs (SVG filter/mask) must stay relative.
     assert.match(out.frag, /url\("#clip"\)/);
+    // External-resource fragment is rebased to absolute AND keeps its fragment
+    // (distinct from the pure-#frag skip above — a future "skip any #" refactor
+    // would regress this).
+    assert.match(out.fileFrag, /url\("https:\/\/example\.com\/deck\/styles\/sprite\.svg#icon"\)/);
     // data: URIs are already absolute — untouched.
     assert.match(out.data, /url\("data:image\/png;base64,AAAA"\)/);
     // Escaped-quote data: URI preserved verbatim, NOT rebased (#62 regression).
