@@ -32,7 +32,7 @@ const VERSION = '11.11.1';
 const THEME = 'github-dark';
 const ROOT = `https://raw.githubusercontent.com/highlightjs/cdn-release/${VERSION}`;
 const BASE = `${ROOT}/build`;
-const DEST = path.resolve(__dirname, '..', 'tests', 'highlight', 'fixtures', 'vendor', 'highlight');
+const DEST = path.resolve(__dirname, '..', 'static', 'deck-kit', 'vendor', 'highlight');
 
 // Pinned files + their expected sha256. The hashes are recorded on the first
 // vendoring run (when `sha256` is empty the check is skipped and the computed

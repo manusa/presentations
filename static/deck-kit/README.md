@@ -10,6 +10,7 @@ build step. Loaded directly via `<script src=…>`.
 |---|---|
 | `deck-stage.js` | `<deck-stage>` custom element — slide host, keyboard nav, thumbnail rail, fullscreen, print pagination. |
 | `image-slot.js` | `<image-slot>` custom element — user-fillable image placeholder with shape/mask/fit/position attributes. |
+| `vendor/highlight/` | Vendored highlight.js (issue #59) — engine, the four non-common grammars, the `github-dark` theme, LICENSE + provenance README. The single served copy decks load at runtime (`../../deck-kit/vendor/highlight/highlight.js`); re-vendor via `npm run vendor:highlight`. Shared third-party *asset*, not deck glue — the per-deck highlight *init snippet* stays inline until a 2nd code deck (rule #4). |
 | `README.md` | This file. |
 
 ## What does **not** live here

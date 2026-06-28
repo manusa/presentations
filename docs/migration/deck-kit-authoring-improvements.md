@@ -161,11 +161,12 @@ does not scale to real source listings.
 - **Vendored** at an exact pin (11.11.1, non-minified engine), no CDN, with a
   provenance README + sha256 manifest. Source of truth + refresher:
   `scripts/vendor-highlight.js` (`npm run vendor:highlight`,
-  `… -- --verify`). Currently under `tests/highlight/fixtures/vendor/highlight/`;
-  the pilot (#61) consolidates it to a **single served copy** under
-  `static/deck-kit/vendor/highlight/` (via `git mv`, no duplication) so decks load
-  the same files the test uses. The vendored *asset* is shared infra; only the
-  init *glue* stays per-deck (rule #4 — see promotion trigger below).
+  `… -- --verify`). Vendored as a **single served copy** under
+  `static/deck-kit/vendor/highlight/` (consolidated there from
+  `tests/highlight/fixtures/vendor/highlight/` by the pilot #61, via `git mv`, no
+  duplication) so decks load the same files the test uses. The vendored *asset* is
+  shared infra; only the init *glue* stays per-deck (rule #4 — see promotion
+  trigger below).
 - **Authoring contract:** `<pre><code class="language-X">…</code></pre>` —
   `class="language-<lang>"` on the inner `<code>`, nothing else. Indentation is
   preserved (`<pre>` + `white-space: pre`).
@@ -175,7 +176,7 @@ does not scale to real source listings.
   `DOMContentLoaded` because `defer` is ignored on an *inline* script:
 
   ```html
-  <script src="vendor/highlight/highlight.js" defer></script>
+  <script src="../../deck-kit/vendor/highlight/highlight.js" defer></script>
   <!-- + one <script src> per non-common grammar (dockerfile, groovy, http, properties) -->
   <script>
     addEventListener('DOMContentLoaded', () => {
