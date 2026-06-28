@@ -1,0 +1,18 @@
+/* External stylesheet living one directory below index.html, so a relative
+   url('../assets/...') resolves against THIS file's directory — different from
+   the document's directory. Exercises issue #62: the rail thumbnails adopt a
+   constructed sheet based on the document, not this .css, so an un-rewritten
+   relative url() re-resolves against the document dir and 404s. */
+.bg-slide {
+  background-image: url('../assets/bg.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* A self-contained inline-SVG data: URI with literal double-quotes (authored
+   single-quoted). Chromium serializes this rule's cssText as double-quoted
+   with backslash-escaped inner quotes — it must be passed through UNCHANGED,
+   not rebased against the stylesheet dir (issue #62 escaped-quote regression). */
+.data-slide {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><rect x="16" y="16" width="48" height="48" fill="none" stroke="%23C5C8DC"/></svg>');
+}

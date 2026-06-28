@@ -111,8 +111,7 @@ deck-stage section { font-family: var(--font-body); color: var(--fg); }
 .slide3 .beer-wrapper {
   height: 100%;
   display: flex; flex-direction: column;
-  /* Root-absolute — see the note on .slide7 (rail-thumbnail stylesheet base). */
-  background: url('/presentations/mock-mvc-in-action/assets/beer-bg.webp') no-repeat 50% 50%;
+  background: url('../assets/beer-bg.webp') no-repeat 50% 50%;
 }
 .slide3 .beer-bottle {
   flex: 1; min-height: 1px;
@@ -142,10 +141,7 @@ deck-stage section { font-family: var(--font-body); color: var(--fg); }
 .slide7 {
   padding: 0;
   display: flex; flex-direction: column;
-  /* Root-absolute so it resolves both as the light-DOM slide background AND inside
-   * deck-stage's constructed rail-thumbnail stylesheet (whose base URL is the
-   * document, not styles/deck.css). The deck always deploys at this path. */
-  background: url('/presentations/mock-mvc-in-action/assets/reactor.webp') no-repeat 50% 50%;
+  background: url('../assets/reactor.webp') no-repeat 50% 50%;
   background-size: cover;
 }
 .slide7 .title {
@@ -180,8 +176,7 @@ deck-stage section { font-family: var(--font-body); color: var(--fg); }
 .slide-summary .content { flex: 1; display: flex; }
 .slide-summary .col { flex: 1; }
 .slide-summary .col.image {
-  /* Root-absolute — see the note on .slide7 (rail-thumbnail stylesheet base). */
-  background: url('/presentations/mock-mvc-in-action/assets/mockingbird-silhouette.webp') no-repeat 50% 50%;
+  background: url('../assets/mockingbird-silhouette.webp') no-repeat 50% 50%;
   background-size: contain;
   animation: colorize 4s linear infinite;
 }

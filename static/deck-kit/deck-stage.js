@@ -773,9 +773,17 @@
       // each thumb host (see _syncThumbHostAttrs) so the same selectors
       // match inside the thumbnail's shadow tree.
       const authorCss = Array.from(document.styleSheets).map((sh) => {
+        let css;
         try {
-          return Array.from(sh.cssRules).map((r) => r.cssText).join('\n');
+          css = Array.from(sh.cssRules).map((r) => r.cssText).join('\n');
         } catch (e) { return ''; }
+        // The constructed sheet every thumbnail adopts resolves relative
+        // url() against the DOCUMENT, not the originating .css — so rebase
+        // each sheet's relative url() to absolute against its own href
+        // (inline <style> has href === null → document base, already
+        // correct) before concatenating, or external-stylesheet
+        // backgrounds 404 inside the thumbnails. (#62)
+        return this._rewriteCssUrls(css, sh.href || document.baseURI);
       }).join('\n')
         // The shadow host is featureless outside the functional :host(...)
         // form, so any compound on :root — [attr], .class, #id, :pseudo —
@@ -816,6 +824,38 @@
         this._adoptedSheet = null;
         this._authorCss = authorCss;
       }
+    }
+
+    /** Rebase relative url(...) refs in a stylesheet's serialized text to
+     *  absolute against `base` (the sheet's own href, or the document for
+     *  inline <style>). The rail adopts all author CSS via a single
+     *  CONSTRUCTED CSSStyleSheet whose base URL is the document, not each
+     *  originating .css — so a relative url('../assets/x.webp') in an external
+     *  sheet would otherwise re-resolve against the document directory and 404
+     *  inside the thumbnails. Same-document fragment refs (url(#filter) for
+     *  SVG) and data: URIs are left untouched; already-absolute refs pass
+     *  through new URL() unchanged. (#62) */
+    _rewriteCssUrls(cssText, base) {
+      if (!cssText || !base) return cssText || '';
+      // Match url( "..." | '...' | unquoted ). The quoted branches are
+      // escape-aware ((?:[^"\\]|\\.)*) so a data: URI whose serialized form
+      // carries backslash-escaped inner quotes — Chromium emits inline-SVG
+      // backgrounds as url("data:…\"…\"…") — is captured whole and skipped
+      // below, not mangled. The unquoted branch excludes whitespace
+      // ([^)\s]*) — CSSOM never emits an unquoted url() with interior
+      // whitespace — which also keeps matching linear (a lazy [^)]*? would
+      // backtrack ~cubically on a url( with a long whitespace run and no
+      // closing paren).
+      return cssText.replace(
+        /url\(\s*(?:"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)'|([^)\s]*))\s*\)/gi,
+        (match, dq, sq, uq) => {
+          const raw = (dq != null ? dq : sq != null ? sq : uq || '').trim();
+          if (!raw || raw.startsWith('#') || /^data:/i.test(raw)) return match;
+          try {
+            return 'url("' + new URL(raw, base).href + '")';
+          } catch (e) { return match; }
+        },
+      );
     }
 
     _syncThumbHostAttrs(host, cs) {
