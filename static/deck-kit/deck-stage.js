@@ -833,8 +833,13 @@
      *  originating .css — so a relative url('../assets/x.webp') in an external
      *  sheet would otherwise re-resolve against the document directory and 404
      *  inside the thumbnails. Same-document fragment refs (url(#filter) for
-     *  SVG) and data: URIs are left untouched; already-absolute refs pass
-     *  through new URL() unchanged. (#62) */
+     *  SVG) are left untouched while external-with-fragment refs
+     *  (url(sprite.svg#icon)) are rebased and keep their fragment; data: URIs
+     *  pass through and already-absolute refs go through new URL() unchanged.
+     *  Assumes `url(` only ever appears as the CSS url() functional notation,
+     *  never as literal text inside a string value (e.g. content: "see url(x)") —
+     *  telling the two apart needs a full value tokenizer, and no deck CSS puts
+     *  url( inside a string. (#62) */
     _rewriteCssUrls(cssText, base) {
       if (!cssText || !base) return cssText || '';
       // Match url( "..." | '...' | unquoted ). The quoted branches are
