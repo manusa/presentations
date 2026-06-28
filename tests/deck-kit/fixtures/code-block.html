@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>code-block fixture</title>
+<!-- Vendored highlight theme (so .hljs token classes resolve) + a coverage colour. -->
+<link rel="stylesheet" href="../../../static/deck-kit/vendor/highlight/styles/github-dark.css" />
+<style>.hl-line.cov { background: rgba(30, 255, 0, 0.36); }</style>
+</head>
+<body>
+
+<!-- Authored with leading indentation + leading/trailing blank lines: the element
+     must dedent to column 0 while preserving relative indentation. -->
+<code-block id="indented" language="java">
+  @Test
+  void worksWithNaturalIndentation() {
+    if (x) {
+      doThing();
+    }
+  }
+</code-block>
+
+<!-- Single line, no surrounding whitespace: dedent is a no-op. -->
+<code-block id="single" language="java">System.out.println("hi");</code-block>
+
+<!-- Coverage stripe: 3 lines, lines 1 and 3 flagged covered. -->
+<code-block id="cov" language="java" cov-lines="1,3">
+  int a = 1;
+  int b = 2;
+  int c = 3;
+</code-block>
+
+<!-- Language via class= (issue #59 form) instead of the language attribute. -->
+<code-block id="viaclass" class="language-java">final int x = 1;</code-block>
+
+<!-- No language: renders plain dedented code, no highlight. -->
+<code-block id="nolang">
+  just plain text
+  no grammar here
+</code-block>
+
+<script src="../../../static/deck-kit/vendor/highlight/highlight.js" defer></script>
+<script src="../../../static/deck-kit/code-block.js" defer></script>
+</body>
+</html>

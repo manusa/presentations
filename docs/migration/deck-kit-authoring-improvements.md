@@ -214,16 +214,34 @@ deck-kit append-only contract (`tests/deck-kit/contract.spec.js`) — purely
 additive, per-deck glue. Verified by `tests/highlight/highlight.spec.js`
 (`npm run test:highlight`).
 
-### Promotion trigger (document, do not build yet — rule #4)
+### Promotion: done — `<code-block>` (rule #4)
 
-The highlight **init glue** ships as **per-deck inline glue now, NOT a deck-kit
-core module.** Once a **second** code-bearing deck adopts the same snippet,
-promote the init to a shared `static/deck-kit/code-highlight.js` (opt-in via
-attribute / `<script>`, per rules #1 and #4). (The vendored *library asset* is
-already consolidated under `deck-kit/vendor/` by the pilot — see above — since it
-is a shared dependency, not deck-specific glue.) The pilot
-(`pilot-mock-mvc-in-action.md`, #61) is the first consumer; the second triggers
-the glue promotion.
+The highlight **init glue is now promoted** to a shared deck-kit custom element,
+`static/deck-kit/code-block.js` (`<code-block language="…" cov-lines="…">`). It
+dedents the authored snippet, runs `hljs.highlightElement` over it (registered
+grammars only, no auto-detect), and paints the optional per-line coverage stripe —
+the per-deck inline glue collapses into markup. Decks load it after the engine and
+before `deck-stage.js`; it renders on element upgrade (so the engine must load
+first) and is idempotent + clone-safe via a `data-rendered` guard. The vendored
+*library asset* stays consolidated under `deck-kit/vendor/`.
+
+Promoted ahead of the original "wait for the 2nd code deck" plan because the
+remaining decks to migrate also carry code blocks, so reuse is a given rather than
+a maybe. The pilot (`pilot-mock-mvc-in-action.md`, #61) is the first consumer.
+Covered by `tests/deck-kit/code-block.spec.js` (dedent, highlight, coverage
+stripe, class-derived language, clone-safety).
+
+### PDF export: section-level flex/grid (fixed framework-side)
+
+A deck may set `display: flex`/`grid` directly on a `<section>`. The screen-media
+PDF export (`scripts/lib/deck.js` → `SCREEN_PAGINATE_SHADOW`) used to force
+`display: block !important` on every slotted section for pagination, silently
+flattening such slides in the exported PDF (cover title pinned to the top; a
+`flex:1`/`object-fit:contain` image losing its bound and overflowing) while the
+on-screen deck and deck-stage's own `@media print` path both rendered them
+correctly. Fixed by dropping that one declaration — `contain: size` +
+`break-after: page` give pagination without touching `display`. A reusable lesson
+for every deck (verified against the Romania and Valencia PDFs).
 
 ### Acceptance criteria — met by #59
 

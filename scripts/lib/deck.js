@@ -133,11 +133,19 @@ async function applyExportHidden(page) {
 // page.pdf() ignores descendant overflow and each section fills its page 1:1.
 // The section already has an explicit width/height, so size containment has no
 // visual effect on its contents — they still paint, clipped by overflow:hidden.
+//
+// Crucially this rule does NOT force `display` on the section: a deck may set
+// `display: flex/grid` directly on a `<section>` and that layout must survive into
+// the PDF. (An earlier version forced `display:block!important` here, which
+// silently flattened such slides — title pinned to the top, a `flex:1` image
+// losing its bound and overflowing — even though the on-screen deck and
+// deck-stage's own @media print path both render them correctly. `contain:size`
+// alone gives the off-screen-overflow protection without touching display.)
 const SCREEN_PAGINATE_SHADOW = `
   :host{position:static!important;inset:auto!important;height:auto!important;overflow:visible!important;background:none!important;}
   .stage{position:static!important;display:block!important;height:auto!important;width:auto!important;}
   .canvas{transform:none!important;position:static!important;width:auto!important;height:auto!important;will-change:auto!important;}
-  ::slotted(*){position:relative!important;inset:auto!important;left:auto!important;top:auto!important;width:var(--deck-design-w)!important;height:var(--deck-design-h)!important;box-sizing:border-box!important;display:block!important;opacity:1!important;visibility:visible!important;break-after:page;page-break-after:always;break-inside:avoid;overflow:hidden;contain:size!important;}
+  ::slotted(*){position:relative!important;inset:auto!important;left:auto!important;top:auto!important;width:var(--deck-design-w)!important;height:var(--deck-design-h)!important;box-sizing:border-box!important;opacity:1!important;visibility:visible!important;break-after:page;page-break-after:always;break-inside:avoid;overflow:hidden;contain:size!important;}
   ::slotted(*:last-child){break-after:auto;page-break-after:auto;}
   .overlay,.tapzones,.rail,.rail-resize,.ctxmenu,.confirm-backdrop,.skipwm{display:none!important;}
 `;

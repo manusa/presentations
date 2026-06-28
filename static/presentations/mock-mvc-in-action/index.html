@@ -23,13 +23,10 @@
 
 <deck-stage width="1920" height="1080">
 
-  <!-- §1 Cover (was index.jsx) — flex centering lives on .cover-inner, not the
-       <section> (the PDF export forces sections to display:block). -->
+  <!-- §1 Cover (was index.jsx) -->
   <section data-label="MockMVC in Action!" class="cover">
-    <div class="cover-inner">
-      <h1 class="cover-title">MockMVC in Action!</h1>
-      <h2 class="cover-subtitle">Marc Nuri</h2>
-    </div>
+    <h1 class="cover-title">MockMVC in Action!</h1>
+    <h2 class="cover-subtitle">Marc Nuri</h2>
   </section>
 
   <!-- §2 MockMVC (was slide1.jsx) — nested reveal list -->
@@ -55,13 +52,10 @@
     </ul>
   </section>
 
-  <!-- §3 Pyramid of testing and MockMVC (was slide2.jsx) — flex column on
-       .slide2-inner, not the <section> (PDF export forces sections to display:block). -->
+  <!-- §3 Pyramid of testing and MockMVC (was slide2.jsx) -->
   <section data-label="Pyramid of testing and MockMVC" class="slide slide2">
-    <div class="slide2-inner">
-      <div class="title">Pyramid of testing and MockMVC</div>
-      <img class="fill-image" src="assets/pyramid-of-testing.webp" alt="Pyramid of testing: Unit, Integration, E2E" />
-    </div>
+    <div class="title">Pyramid of testing and MockMVC</div>
+    <img class="fill-image" src="assets/pyramid-of-testing.webp" alt="Pyramid of testing: Unit, Integration, E2E" />
   </section>
 
   <!-- §4 Beer CRUD (was slide3.jsx) -->
@@ -76,9 +70,9 @@
   <section data-label="MockMVC Configuration types" class="slide slide4">
     <div class="title">MockMVC Configuration types</div>
     <div class="content">
-<pre data-reveal="1"><code class="language-java">@WebMvcTest annotation</code></pre>
-<pre data-reveal="2"><code class="language-java">MockMvcBuilders.webAppContextSetup(WebApplicationContext.class);</code></pre>
-<pre data-reveal="3"><code class="language-java">MockMvcBuilders.standaloneSetup(...);</code></pre>
+      <code-block language="java" data-reveal="1">@WebMvcTest annotation</code-block>
+      <code-block language="java" data-reveal="2">MockMvcBuilders.webAppContextSetup(WebApplicationContext.class);</code-block>
+      <code-block language="java" data-reveal="3">MockMvcBuilders.standaloneSetup(...);</code-block>
     </div>
   </section>
 
@@ -87,9 +81,7 @@
   <section data-label="100% Code Coverage" class="slide slide5">
     <div class="title">100% Code Coverage</div>
     <div class="content">
-      <!-- Code may be indented to match the markup; the init script dedents it
-           before highlighting (so the rendered snippet still starts at column 0). -->
-      <pre data-reveal-only="1"><code class="language-java">
+      <code-block language="java" data-reveal-only="1">
         @PutMapping(
             path = "/{externalId}",
             headers = {"Special-Header=XML Babel"},
@@ -102,16 +94,16 @@
 
           return beerService.updateBeer(externalId, beer);
         }
-      </code></pre>
-      <pre data-reveal-only="2"><code class="language-java">
+      </code-block>
+      <code-block language="java" data-reveal-only="2">
         @Test
         public void updateBeerAsXML_validBeer_shouldReturnUpdatedBeer(){
           beerResource.updateBeerAsXML("OST.01", new Beer());
           verify(mockBeerService, times(1))
               .updateBeer(Mockito.eq("OST.01"), Mockito.any(Beer.class));
         }
-      </code></pre>
-      <pre data-reveal-only="3"><code class="language-java">
+      </code-block>
+      <code-block language="java" data-reveal-only="3">
         @PutMapping(
             path = "/{externalId}",
             headers = {"Special-Header=XML Babel"},
@@ -124,8 +116,8 @@
 
           return beerService.updateBeer(externalId, beer);
         }
-      </code></pre>
-      <pre data-reveal-only="4"><code class="language-java" data-cov-lines="1,2,3,4,5,6,8,9">
+      </code-block>
+      <code-block language="java" data-reveal-only="4" cov-lines="1,2,3,4,5,6,8,9">
         @PutMapping(
             path = "/{externalId}",
             headers = {"Special-Header=XML Babel"},
@@ -138,7 +130,7 @@
 
           return beerService.updateBeer(externalId, beer);
         }
-      </code></pre>
+      </code-block>
     </div>
   </section>
 
@@ -157,13 +149,10 @@
     </ul>
   </section>
 
-  <!-- §8 Let's get Reactive (was slide7.jsx) — flex column on .slide7-inner, not
-       the <section> (PDF export forces sections to display:block). -->
+  <!-- §8 Let's get Reactive (was slide7.jsx) -->
   <section data-label="Let's get Reactive" class="slide slide7">
-    <div class="slide7-inner">
-      <div class="title">Let's get Reactive</div>
-      <img class="project-reactor" src="assets/project-reactor.webp" alt="Project Reactor" />
-    </div>
+    <div class="title">Let's get Reactive</div>
+    <img class="project-reactor" src="assets/project-reactor.webp" alt="Project Reactor" />
   </section>
 
   <!-- §9 Q&A (was slide-q-and-a.jsx) -->
@@ -187,71 +176,12 @@
 </deck-stage>
 
 <!-- Vendored highlight.js engine (java rides in on the common bundle) — single
-     shared copy under static/deck-kit/. -->
+     shared copy under static/deck-kit/. Loaded BEFORE code-block.js so the
+     <code-block> element can highlight on upgrade. -->
 <script src="../../deck-kit/vendor/highlight/highlight.js" defer></script>
-<!-- Per-deck highlight init (issue #59 canonical snippet) + coverage-line glue.
-     `defer` is ignored on inline scripts, so this waits on DOMContentLoaded, which
-     fires after the deferred engine and deck-stage.js have run. -->
-<script>
-  addEventListener('DOMContentLoaded', () => {
-    if (!window.hljs) {
-      console.warn('highlight.js failed to load — code blocks will not be highlighted');
-      return;
-    }
-    // Authoring convenience: a snippet may be indented in the HTML to match the
-    // surrounding markup (so the source file stays readable) instead of being
-    // written flush-left inside <pre>. dedent strips the common leading indent and
-    // any leading/trailing blank lines, so the *rendered* code still starts at
-    // column 0 — the line count is preserved, so data-cov-lines stays aligned.
-    const dedent = (text) => {
-      const lines = text.replace(/\t/g, '    ').split('\n');
-      while (lines.length && lines[0].trim() === '') lines.shift();
-      while (lines.length && lines[lines.length - 1].trim() === '') lines.pop();
-      const indents = lines.filter((l) => l.trim()).map((l) => l.match(/^ */)[0].length);
-      const min = indents.length ? Math.min(...indents) : 0;
-      return lines.map((l) => l.slice(min)).join('\n');
-    };
-    // Deterministic, no auto-detect: highlight only tagged blocks whose language
-    // resolves to a registered grammar.
-    document.querySelectorAll('pre code[class*="language-"]').forEach((el) => {
-      el.textContent = dedent(el.textContent);
-      const lang = (el.className.match(/(?:^|\s)language-([\w-]+)/) || [])[1];
-      if (lang && hljs.getLanguage(lang)) hljs.highlightElement(el);
-    });
-    // Port of the Gatsby `lineProps` coverage stripe (slide "100% Code Coverage"):
-    // wrap each source line in its own span and flag the covered ones. Covered line
-    // numbers are data (data-cov-lines), not pixel offsets. highlight.js groups
-    // multi-line constructs (Java annotations, parameter lists) into single token
-    // spans that contain newlines, so the HTML cannot be split on '\n' directly —
-    // linesOf walks the DOM and re-opens each straddling token span on every line it
-    // crosses, so every per-line wrapper stays balanced.
-    const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const linesOf = (node) => {
-      const lines = [''];
-      node.childNodes.forEach((child) => {
-        if (child.nodeType === Node.TEXT_NODE) {
-          child.data.split('\n').forEach((part, i) => {
-            if (i > 0) lines.push('');
-            lines[lines.length - 1] += esc(part);
-          });
-        } else {
-          const open = `<span class="${child.className}">`;
-          linesOf(child).forEach((html, i) => {
-            if (i > 0) lines.push('');
-            lines[lines.length - 1] += open + html + '</span>';
-          });
-        }
-      });
-      return lines;
-    };
-    document.querySelectorAll('code[data-cov-lines]').forEach((el) => {
-      const covered = new Set(el.dataset.covLines.split(',').map((n) => parseInt(n, 10)));
-      el.innerHTML = linesOf(el)
-        .map((html, i) => `<span class="hl-line${covered.has(i + 1) ? ' cov' : ''}">${html || ' '}</span>`)
-        .join('');
-    });
-  });
-</script>
+<!-- <code-block> custom element — dedents the authored snippet, highlights it,
+     and paints the per-line coverage stripe (cov-lines). -->
+<script src="../../deck-kit/code-block.js" defer></script>
 
 <!-- deck-kit core. -->
 <script src="../../deck-kit/deck-stage.js" defer></script>
