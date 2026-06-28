@@ -96,12 +96,14 @@ is faithful slide-for-slide; the mechanics changed as follows:
   (`?family=Oswald|Montserrat|Roboto`). The cover `<h1>`/`<h2>` request bold but get
   a synthesized (faux) bold of the 400 Roboto/Oswald face — reproducing the original
   title's lighter look rather than a heavier true-700 face.
-- **CSS background `url()`s are root-absolute** (`/presentations/mock-mvc-in-action/assets/…`).
-  deck-stage's rail thumbnails adopt a *constructed* stylesheet whose base URL is the
-  document, not `styles/deck.css`, so a `../assets/…` relative URL would 404 in the
-  thumbnails (this deck is the first with CSS-relative backgrounds). The deck always
-  deploys at this path. A deck-kit-side fix (rewriting relative `url()`s during the
-  rail CSS snapshot) is tracked as a follow-up so future decks can use relative URLs.
+- **CSS background `url()`s are relative** (`../assets/…`, resolved against
+  `styles/deck.css`). This deck is the first with CSS-relative backgrounds. deck-stage's
+  rail thumbnails adopt a *constructed* stylesheet whose base URL is the document, not
+  `styles/deck.css` — a relative URL used to 404 in the thumbnails, so this deck shipped
+  with a per-deck root-absolute workaround (`/presentations/mock-mvc-in-action/assets/…`).
+  That workaround is gone: deck-stage now rebases relative `url()`s against each source
+  sheet's own `href` during the rail CSS snapshot (issue #62), so ordinary relative
+  backgrounds resolve in both the live slides and the thumbnails.
 
 All the original animations are reproduced. The two infinite decorative loops — the
 Project Reactor logo pulse (slide 8) and the mockingbird silhouette colorize (slide
