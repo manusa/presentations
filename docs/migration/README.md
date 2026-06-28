@@ -1,9 +1,11 @@
 # Gatsby → deck-kit migration
 
-Status: **in progress**. Phase 0 (deck-kit foundations) is complete; Phase 1 (the
-pilot port) is filed. This directory is the design record for moving every
-historical Gatsby/React deck into the static `deck-kit` format so that **Gatsby
-can be removed from the project entirely**.
+Status: **in progress**. Phase 0 (deck-kit foundations) is complete; Phase 1
+(Tier-A ports) has started — the pilot is merged. This directory is the design
+record for moving every historical Gatsby/React deck into the static `deck-kit`
+format so that **Gatsby can be removed from the project entirely**. The reusable
+how-to-port recipe + gotchas live in
+[`porting-playbook.md`](./porting-playbook.md).
 
 ## Why
 
@@ -55,9 +57,9 @@ Plain `slideControls` HOC, per-slide SCSS, no runtime diagrams, 0–2 code block
 
 | Deck | Slides | Code blocks | Diagrams | Notes |
 |---|---|---|---|---|
-| `mock-mvc-in-action` | 10 | 2 | none | **Pilot.** Reveal lists, 2 `<Code>`, images, cover/summary/Q&A. |
-| `isotope-introduction` | ~7 | ~0 | none | Legacy, image-heavy. |
-| `eclipse-jkube-2021-cloud-tool-time` | 5 | 2 | 1 workflow diagram | Smallest, but uses a deck-local diagram + template pattern. |
+| `mock-mvc-in-action` | 10 | 2 | none | **Pilot — DONE (#61).** Reveal lists, 2 `<Code>`, images, cover/summary/Q&A. |
+| `isotope-introduction` | 9 | 0 | none | **Filed (#64).** Legacy, image-heavy; reveals on slides 1/2/5. |
+| `eclipse-jkube-2021-cloud-tool-time` | 5 | 2 | 1 workflow diagram | Next. Smallest, but a deck-local `react-archer` diagram + 2nd code deck. |
 
 ### Tier B — template-based, code-heavy, occasional diagram
 
@@ -116,10 +118,14 @@ how we will verify each port.
 - **Phase 0 — deck-kit foundations (blocks everything). ✅ DONE.** The two
   must-have authoring features shipped: declarative step reveals (#56) and
   build-less code highlighting (#59). See the improvements doc, items 1 & 3.
-- **Phase 1 — Tier A.** Port the 3 legacy decks. Pilot `mock-mvc-in-action`
-  filed as **#61**. Confirm the authoring model is comfortable before scaling.
-  Promote the slide-chrome template (improvement 2) if the second deck wants it
-  (rule #4).
+- **Phase 1 — Tier A. In progress.** Port the 3 legacy decks (follow
+  [`porting-playbook.md`](./porting-playbook.md)).
+  - `mock-mvc-in-action` — **DONE** (#61; Gatsby source removed). Follow-up bug
+    #62 (rail `url()` 404, worked around with root-absolute paths).
+  - `isotope-introduction` — **filed (#64)**; code-free & diagram-free.
+  - `eclipse-jkube-2021-cloud-tool-time` — next; the 2nd *code* deck (triggers the
+    highlight-glue promotion) and the first `react-archer` diagram.
+  Promote the slide-chrome template (improvement 2) if a second deck wants it (rule #4).
 - **Phase 2 — Tier B.** Port the template-based decks. Most effort is volume of
   code blocks (now cheap once highlighting exists) and per-deck theming.
 - **Phase 3 — Tier C.** Port the diagram-heavy decks using the captured-SVG
@@ -131,9 +137,9 @@ how we will verify each port.
 Each improvement (improvements doc) and each Phase/deck above is written to be
 issue-ready (title, scope, acceptance criteria). **Implementation** issues for a
 coding agent are filed in this code repo (`manusa/presentations`) so a PR closes
-them with `Fixes #N` — done so far: reveals #56, highlighting #59, pilot port #61.
-(Cross-repo *tracker* issues still live in `manusa/com.marcnuri.automated-tasks`,
-referenced by full coordinate.)
+them with `Fixes #N` — so far: reveals #56, highlighting #59, pilot port #61
+(merged), rail `url()` bug #62, isotope port #64. (Cross-repo *tracker* issues
+still live in `manusa/com.marcnuri.automated-tasks`, referenced by full coordinate.)
 
 ## Decisions (resolved)
 

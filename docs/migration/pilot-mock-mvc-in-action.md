@@ -1,5 +1,9 @@
 # Pilot port: `mock-mvc-in-action`
 
+> **Status: DONE — merged via #61** (Gatsby source removed). This doc is retained
+> as the port template; the reusable, deck-agnostic recipe + gotchas it produced
+> now live in [`porting-playbook.md`](./porting-playbook.md).
+
 The first deck to port, chosen to **drive the Phase-0 deck-kit improvements**,
 not to ship quickly. Verifies the authoring model end to end on a small, real
 deck before scaling to the rest.
