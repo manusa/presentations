@@ -43,7 +43,7 @@ export const LandingPage = () => {
           <Card onClick={() => navigate('/presentations/eclipse-jkube-2021-devconf-cz')} >Containerize your Java Applications using Eclipse JKube (DevConf.cz 2021)</Card>
           <Card onClick={() => {window.location.href = '/presentations/eclipse-jkube-2021-cloud-tool-time/';}} >Deploying a Quarkus application into Kubernetes using JKube (Eclipse Cloud Tool Time 2021)</Card>
           <Card onClick={() => navigate('/presentations/eclipse-jkube-2020-bcn-jug')} >Microservice Containerization made easy using Eclipse JKube (BarcelonaJUG 2020)</Card>
-          <Card onClick={() => navigate('/presentations/eclipse-jkube-introduction')} >Deploy your Java applications to the Cloud using Eclipse JKube (EclipseCon 2020)</Card>
+          <Card onClick={() => {window.location.href = '/presentations/eclipse-jkube-introduction/';}} >Deploy your Java applications to the Cloud using Eclipse JKube (EclipseCon 2020)</Card>
           <Card onClick={() => {window.location.href = '/presentations/mock-mvc-in-action/';}} >MockMVC in Action! (Valencia JUG 2019)</Card>
           <Card onClick={() => {window.location.href = '/presentations/isotope-introduction/';}} >Isotope Mail Client Introduction</Card>
         </div>
