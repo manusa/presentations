@@ -75,12 +75,12 @@ families cost nothing at runtime.
 ## Refreshing (deliberate updates only)
 
 ```bash
-npm run vendor:fontawesome              # re-download the pinned version, write + integrity-check
-npm run vendor:fontawesome -- --verify  # check committed files against pinned hashes, no writes/network
+npm run vendor -- fontawesome              # re-download the pinned version, write + integrity-check
+npm run vendor -- fontawesome --verify     # check committed files against pinned hashes, no writes/network
 ```
 
-To bump the version, edit `VERSION` (and the `sha256` pins) in
-`scripts/vendor-fontawesome.js`, re-run, eyeball the diff, and commit. Pinning the
-hashes means a silently changed upstream fails the run loudly. `npm run
-test:fontawesome` additionally asserts every webfont the CSS references is present
+To bump the version, edit the `fontawesome` entry's `tag` (and the `sha256`
+pins) in `scripts/vendor.manifest.js`, re-run, eyeball the diff, and commit.
+Pinning the hashes means a silently changed upstream fails the run loudly. `npm
+run test:vendor` additionally asserts every webfont the CSS references is present
 and that no deck has re-introduced a CDN `<link>`.
