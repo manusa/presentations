@@ -16,7 +16,7 @@
  */
 
 const path = require('node:path');
-const { vendorEntry } = require('./lib/vendor');
+const { vendorEntry, REPO_ROOT } = require('./lib/vendor');
 const manifest = require('./vendor.manifest');
 
 async function main() {
@@ -46,7 +46,7 @@ async function main() {
       const label = verifyOnly ? 'checked' : 'wrote  ';
       console.log(`${label} ${`${entry.name}/${r.rel}`.padEnd(48)} ${String(r.bytes).padStart(8)} bytes  sha256:${r.hash}${note}`);
     }
-    const where = path.relative(process.cwd(), path.resolve(require('./lib/vendor').REPO_ROOT, entry.dest));
+    const where = path.relative(process.cwd(), path.resolve(REPO_ROOT, entry.dest));
     console.log(`${entry.name} ${verifyOnly ? 'verified in' : 'vendored to'} ${where}\n`);
   }
 
