@@ -1,0 +1,336 @@
+/* eclipse-jkube-introduction — deck-kit port of the Gatsby deck.
+ *
+ * Hand-ported from the Gatsby SCSS
+ * (src/pages/presentations/eclipse-jkube-introduction/styles/*.scss). Sizes are
+ * deck-px on the 1920×1080 canvas (pt = px/2); the Gatsby rems are converted at the
+ * framework root size (16px), so 4rem→64px, 3.5rem→56px, 3rem→48px, 2.5rem→40px,
+ * 2rem→32px, 1.7rem→28px (bumped from 27.2 to clear the 28px legibility floor),
+ * 1rem→16px, 0.5rem→8px, 26rem→416px, 18rem→288px, 12rem→192px, 8rem→128px,
+ * 10rem→160px, 5rem→80px. Viewport units (vh) in the Gatsby title template are
+ * resolved against the fixed 1080-tall section instead (33vh→33.333%, 20vh→216px,
+ * 100vh→100%), since inside <deck-stage> vh would track the real window, not the
+ * scaled canvas. This deck is code-free, so there is no highlight.js layer. */
+:root {
+  --orange: #f79422;          /* $eclipse-orange — header bar, title-band, bullets, quotes */
+  --fg: #ffffff;
+
+  --font-header: 'Oswald', 'Roboto', sans-serif;   /* $eclipse-header-font-family */
+  --font-body: 'Montserrat', sans-serif;           /* framework $base-font-family */
+  --font-diagram: 'Roboto', sans-serif;            /* developer-workflow diagram text */
+
+  --type-header: 64px;        /* 4rem  — header bar title */
+  --type-content: 40px;       /* 2.5rem — slide body */
+  --type-h2: 56px;            /* 3.5rem */
+  --type-h3: 48px;            /* 3rem (normal weight) */
+  --type-h4: 40px;            /* 2.5rem */
+  --type-cover-title: 56px;   /* 3.5rem — cover/demo title-band title */
+  --type-cover-subtitle: 40px;/* 2.5rem — cover/demo title-band subtitle */
+  --type-thanks: 128px;       /* 8rem  — "Thank you!" */
+  --type-reach: 48px;         /* 3rem  — thank-you links */
+  --type-cite: 28px;          /* 1.7rem rounded up to the legibility floor */
+
+  --header-h: 90px;
+  --footer-h: 90px;
+  --logo-w: 160px;            /* 10rem — header JKube logo */
+}
+
+/* The Gatsby deck is content-box (only the framework's generic `.slide` class —
+ * which this deck does NOT use — and the title root opt into border-box). deck-stage
+ * forces border-box only on ::slotted(*) (the padding-free sections), and box-sizing
+ * does not inherit, so the padded descendants here (header/footer, the CNCF logo, the
+ * technology/framework tiles) are already content-box by default — matching the
+ * original sizing. No global `* { box-sizing }` reset, which is what previously
+ * shrank those padded boxes. */
+html, body { margin: 0; height: 100%; background: #000; }
+
+/* The EclipseCon cover photo behind every slide (black base + cover image) with a
+ * per-slide overlay. Gatsby's eclipse-background mixin used position:fixed for the
+ * overlay (single-slide-per-page model); scoped to the section here. */
+deck-stage section {
+  position: relative;
+  font-family: var(--font-body);
+  color: var(--fg);
+  background: #000 url('../assets/eclipsecon-bg.webp') no-repeat;
+  background-size: cover;
+}
+deck-stage section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+/* Title slides (cover / demos / thank-you) — the mixin's default 0.5 overlay. */
+deck-stage section.title-slide::before { background-color: rgba(0, 0, 0, 0.5); }
+/* Interior slides — slide-template.scss overrides the overlay with a radial gradient
+ * (over the mixin's rgba(0,0,0,0.9) base). */
+deck-stage section.slide::before {
+  background: radial-gradient(circle, rgba(35, 35, 35, 0.95) 10%, rgba(10, 10, 10, 0.9) 100%);
+}
+deck-stage section > * { position: relative; z-index: 1; }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* ══ §1 Cover + §8/§9 Demos + §11 Thank you (TitleTemplate) ════════════════ */
+.title-slide__content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.title-slide .logo {
+  height: 33.333%;            /* Gatsby 33vh of the slide */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.title-slide .logo img { max-height: 216px; }   /* 20vh of 1080 */
+.title-slide .title-band {
+  height: 33.333%;            /* 33vh */
+  align-self: stretch;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--orange);
+  color: var(--fg);
+  text-align: center;
+}
+/* No margin override here: the Gatsby title-template left .title/.subtitle (h1/h2)
+ * at the browser-default heading margins (it did NOT import _fonts, which only
+ * scoped its 1rem heading margins under the interior SlideTemplate). */
+.title-slide .title-band .title { font-size: var(--type-cover-title); }
+.title-slide .title-band .subtitle { font-size: var(--type-cover-subtitle); color: #000; }
+.cover[data-deck-active] { animation: fade-in 0.5s linear; }   /* index.scss entrance */
+
+/* §11 Thank you — reuses the TitleTemplate frame but hides the (empty) title-band
+ * (slide10.scss), stacking the thank-you headline + reach-out links under the logo. */
+.thank-you .thank-you-heading { margin: 0 0 64px; padding: 0; font-size: var(--type-thanks); color: var(--fg); }
+.thank-you .reach-out { display: flex; flex-direction: column; }
+.thank-you .reach-out a {
+  margin: 8px;
+  color: var(--fg);
+  text-decoration: none;
+  font-size: var(--type-reach);
+}
+.thank-you .reach-out .jkube-logo {
+  height: 128px;
+  margin: 16px;
+  --jkube-icon: var(--orange);
+  --jkube-text: #ffffff;
+}
+
+/* ══ §2–§7 + §10 Interior slides (SlideTemplate) ═══════════════════════════ */
+.slide { display: flex; flex-direction: column; height: 100%; }
+.slide-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: var(--header-h);
+  padding: 16px 32px;
+  background-color: var(--orange);
+  color: var(--fg);
+  font-family: var(--font-header);
+  font-size: var(--type-header);
+}
+.slide-header .title {
+  display: flex;
+  align-items: center;
+  min-width: 1px;
+  flex: 1;
+}
+.slide-header .jkube-logo {
+  width: var(--logo-w);
+  height: auto;
+  --jkube-icon: rgba(255, 255, 255, 0.65);   /* header logo: 0.65-white icon + text */
+  --jkube-text: rgba(255, 255, 255, 0.65);
+}
+.slide-content {
+  flex: 1;
+  min-height: 0;
+  padding: 16px 32px;
+  color: var(--fg);
+  font-size: var(--type-content);
+  overflow: hidden;
+}
+.slide-footer {
+  flex-shrink: 0;
+  height: var(--footer-h);
+  padding: 16px;
+  display: flex;
+}
+.slide-footer img { max-height: 100%; }
+.slide-footer .page-number {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  color: var(--fg);
+  font-size: 32px;            /* Gatsby left this unstyled (~16px); raised to clear the floor */
+}
+
+/* Slide-content typography (Gatsby styles/_fonts.scss, scoped under the slide) */
+.slide-content h2 { margin: 16px 0; font-size: var(--type-h2); }
+.slide-content h3 { margin: 16px 0; font-size: var(--type-h3); font-weight: normal; }
+.slide-content h4 { margin: 16px 0; font-size: var(--type-h4); }
+.slide-content p  { margin: 0 0 16px; }
+.slide-content ul {
+  position: relative;
+  list-style: none;
+  margin: 16px 0;
+  margin-left: 0.5em;
+  padding-left: 1em;
+  line-height: 60px;          /* 2.5rem × 1.5 */
+}
+.slide-content ul li::before {
+  content: '\2b22';
+  color: var(--orange);
+  font-size: 20px;            /* 2.5rem × 0.5 */
+  position: absolute;
+  display: inline-block;
+  margin-left: -2em;
+  width: 2em;
+}
+
+/* Blockquote (slide3 / Cloud Native definition), Gatsby styles/_fonts.scss */
+.slide-content blockquote {
+  position: relative;
+  font-style: italic;
+  margin: 0 auto;
+  padding: 16px;
+  color: var(--orange);
+}
+.slide-content blockquote p { margin: 0; color: var(--fg); }
+.slide-content blockquote p::before,
+.slide-content blockquote p::after {
+  color: var(--orange);
+  content: '\201C';
+  font-size: 120px;           /* 2.5rem × 3 */
+  margin: -40px 0 0 -60px;    /* -2.5rem 0 0 -3.75rem */
+  position: absolute;
+  opacity: 0.8;
+}
+.slide-content blockquote p::after { content: '\201D'; margin: 0 -60px 0 0; }
+.slide-content blockquote cite { font-size: var(--type-cite); }
+
+/* Reveals (slide3 technology rail + slide4 list) slide in from the right,
+ * reproducing the Gatsby reveal (slide-template.scss
+ * `.hidden{visibility:hidden;transform:translate(100vw)}` →
+ * `.visible{transform:translate(0);transition:transform .4s}`). Composes with
+ * deck-stage's injected default-hide ([data-reveal]:not([data-revealed]){opacity:0}):
+ * the element snaps opaque and slides in (transform only — opacity is not
+ * transitioned, matching the original's instant visibility + slide). The technology
+ * items keep their layout box while hidden (Gatsby `.item.hidden{display:block}`),
+ * so the flex rail doesn't reflow as they appear. */
+.what-is-jkube > li[data-reveal],
+.developer-workflow .technologies .item { transition: transform 0.4s; }
+.what-is-jkube > li[data-reveal]:not([data-revealed]),
+.developer-workflow .technologies .item:not([data-revealed]) { transform: translateX(100%); }
+
+/* ── §2 About me (slide1.scss) ─────────────────────────────────────────────── */
+.about-me {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.about-me .avatar { margin-right: 48px; width: 416px; }
+
+/* ── §4 Cloud Native Java (slide3.scss) ────────────────────────────────────── */
+/* The three top-level blocks swap via display:none (Gatsby `.hidden{display:none}`),
+ * so only the active phase occupies the content box. */
+.cloud-native-definition:not([data-revealed]),
+.microservice-architecture:not([data-revealed]),
+.developer-workflow:not([data-revealed]) { display: none; }
+
+.cloud-native-definition {
+  height: 100%;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+.cloud-native-definition .quote {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.cloud-native-definition .quote:not(:first-child) { margin-top: 32px; }
+.cloud-native-definition .quote .text { margin: 0; flex: 1; }
+.cloud-native-definition .quote .picture {
+  margin-left: 128px;
+  height: 288px;
+  border-radius: 50%;
+}
+.cloud-native-definition .quote .picture.cncf-logo {
+  border-radius: 0;
+  padding: 48px;
+  height: 192px;
+}
+
+.developer-workflow .technologies {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.developer-workflow .technologies .item { padding: 15px; height: 200px; width: 200px; }
+.developer-workflow .technologies .openshift { --openshift-text: #ffffff; }   /* OpenShiftLogo textColor='white' */
+/* The JKube logo overlay fades in over the technology rail (Gatsby
+ * `.jkube-logo{opacity:1;transition:opacity .3s} .jkube-logo.hidden{opacity:0}`).
+ * No explicit opacity here — deck-stage's reveal default hides it (opacity:0) until
+ * step 6, and this transition animates the fade. */
+.developer-workflow .technologies .jkube-logo {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.3s ease-in;
+}
+.developer-workflow .technologies .jkube-logo__image {
+  max-height: 100%;
+  background: radial-gradient(ellipse at center, rgba(10, 10, 10, 0.75) 90%, rgba(10, 10, 10, 0.01) 100%);
+  --jkube-text: rgba(255, 255, 255, 0.95);
+  --jkube-icon: #326ce5;
+}
+
+/* ── §6 What is Eclipse JKube? (2) — framework rail (slide4.scss) ───────────── */
+.framework-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.framework-container .item { padding: 32px; height: 80px; }
+
+/* ── §7 Simplified Developer Workflow (slide6.scss) ────────────────────────── */
+.workflow-container {
+  height: 100%;
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+}
+.workflow-container .rotated-logo {
+  height: 160px;
+  width: auto;
+  transform: rotate(270deg);
+  --jkube-text: #ffffff;       /* icon keeps its default #0A4E9B */
+}
+.workflow-container .jkube-developer-workflow {
+  height: 100%;
+  font-family: var(--font-diagram);
+}
+/* The diagram is <use>d from a <symbol> (kept out of the section markup), so its
+ * .k8s-text labels live in the use shadow tree where deck CSS can't target them.
+ * Drive their fade through an inherited, registered custom property: the animation
+ * runs on the host (document scope) and only the value crosses the <use> boundary
+ * — the same boundary-crossing the logo recolors rely on. The symbol's own <style>
+ * applies `opacity: var(--k8s-fade)` to .k8s-text. At rest --k8s-fade is 1 (and the
+ * PDF export strips [data-deck-active]), so the labels render fully opaque. */
+@property --k8s-fade {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+@keyframes k8s-fade-in { from { --k8s-fade: 0; } to { --k8s-fade: 1; } }
+.slide-workflow[data-deck-active] .rotated-logo { animation: fade-in 5s linear; }
+.slide-workflow[data-deck-active] .jkube-developer-workflow { animation: k8s-fade-in 5s linear; }
