@@ -221,7 +221,18 @@ deck-stage section > * { position: relative; z-index: 1; }
   height: 100%;
   font-family: var(--font-diagram);
 }
-.slide-workflow[data-deck-active] .jkube-logo,
-.slide-workflow[data-deck-active] .jkube-developer-workflow .k8s-text {
-  animation: fade-in 5s linear;
+/* The diagram is <use>d from a <symbol> (kept out of the section markup), so its
+ * .k8s-text labels live in the use shadow tree where deck CSS can't target them.
+ * Drive their fade through an inherited, registered custom property: the animation
+ * runs on the host (document scope) and only the value crosses the <use> boundary
+ * — the same boundary-crossing the logo recolors rely on. The symbol's own <style>
+ * applies `opacity: var(--k8s-fade)` to .k8s-text. At rest --k8s-fade is 1 (and
+ * the PDF export strips [data-deck-active]), so the labels render fully opaque. */
+@property --k8s-fade {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
 }
+@keyframes k8s-fade-in { from { --k8s-fade: 0; } to { --k8s-fade: 1; } }
+.slide-workflow[data-deck-active] .jkube-logo { animation: fade-in 5s linear; }
+.slide-workflow[data-deck-active] .jkube-developer-workflow { animation: k8s-fade-in 5s linear; }
