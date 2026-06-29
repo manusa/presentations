@@ -159,9 +159,11 @@ does not scale to real source listings.
 **highlight.js**, vendored — a static script, no build, runs in the browser.
 
 - **Vendored** at an exact pin (11.11.1, non-minified engine), no CDN, with a
-  provenance README + sha256 manifest. Source of truth + refresher:
-  `scripts/vendor-highlight.js` (`npm run vendor:highlight`,
-  `… -- --verify`). Vendored as a **single served copy** under
+  provenance README + sha256 manifest. Source of truth + refresher: the
+  `highlight` entry in `scripts/vendor.manifest.js`, driven by the shared
+  vendoring engine (`npm run vendor -- highlight`, `… --verify`; generalized
+  from the original per-library script in #68). Vendored as a **single served
+  copy** under
   `static/deck-kit/vendor/highlight/` (consolidated there from
   `tests/highlight/fixtures/vendor/highlight/` by the pilot #61, via `git mv`, no
   duplication) so decks load the same files the test uses. The vendored *asset* is

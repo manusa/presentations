@@ -7,10 +7,12 @@ on:
       - 'static/presentations/**'
       - 'tests/deck-kit/**'
       - 'tests/highlight/**'
-      - 'tests/fontawesome/**'
+      - 'tests/vendor/**'
       - 'scripts/lib/deck.js'
-      - 'scripts/vendor-highlight.js'
-      - 'scripts/vendor-fontawesome.js'
+      - 'scripts/lib/vendor.js'
+      - 'scripts/lib/fontsource-css.js'
+      - 'scripts/vendor.js'
+      - 'scripts/vendor.manifest.js'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/test-deck-kit.yml'
@@ -50,17 +52,17 @@ jobs:
 
       - run: npm run test:deck-kit
 
-      # Build-less syntax highlighting (issue #59) — per-deck glue, not part of
-      # the frozen deck-kit contract, but gated in this same required job so a
-      # highlight/vendoring regression can't merge green.
-      - name: Verify vendored highlight.js integrity (offline, no network)
-        run: npm run vendor:highlight -- --verify
-      - run: npm run test:highlight
+      # Vendored third-party libraries (issue #68) — Font Awesome, highlight.js,
+      # and the self-hosted Google Fonts, all driven by scripts/vendor.manifest.js.
+      # Not part of the frozen deck-kit JS contract, but gated in this same
+      # required job so a corrupted vendored file, a re-introduced CDN reference,
+      # or a missing asset can't merge green. A NEW vendored library needs no edit
+      # here — its manifest entry is picked up by both steps automatically.
+      - name: Verify all vendored libraries' integrity (offline, no network)
+        run: npm run vendor -- --verify
+      - run: npm run test:vendor
 
-      # Vendored Font Awesome (issue #67) — shared deck-kit infra, not part of the
-      # frozen deck-kit JS contract, but gated in this same required job so a
-      # corrupted vendored file, a missing webfont, or a re-introduced CDN <link>
-      # can't merge green.
-      - name: Verify vendored Font Awesome integrity (offline, no network)
-        run: npm run vendor:fontawesome -- --verify
-      - run: npm run test:fontawesome
+      # highlight.js behavioural suite (issue #59) — drives a real browser over
+      # the vendored engine + grammars; stays separate from the declarative
+      # posture spec above.
+      - run: npm run test:highlight

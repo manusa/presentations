@@ -106,12 +106,17 @@ the pilot, `mock-mvc-in-action` (#61).
     `prefix__*` ids are isolated so they can't collide.
   Verify the transcription visually — `screenshot:deck` surfaces any corrupted
   `d=` path or dropped attribute immediately.
-- **Font Awesome is vendored, not a CDN (#67).** Contact-icon decks load FA from
-  `static/deck-kit/vendor/fontawesome/css/all.min.css` (shared deck-kit infra,
-  pinned 6.5.2; `npm run vendor:fontawesome`, `npm run test:fontawesome`), not a
-  jsDelivr `<link>`. Keep the legacy `fab`/`fas` classes verbatim. (Self-hosting
-  the Google **fonts** the decks still load from the Google CDN is tracked
-  separately in **#68**, following this FA vendoring as the precedent.)
+- **Font Awesome and the Google fonts are vendored, not a CDN (#67, #68).**
+  Contact-icon decks load FA from
+  `static/deck-kit/vendor/fontawesome/css/all.min.css` (pinned 6.5.2); decks load
+  their text fonts from `static/deck-kit/vendor/fonts/<family>/<family>.css`
+  (self-hosted `@fontsource` woff2), not Google Fonts `<link>` + `preconnect`s.
+  Both are shared deck-kit infra driven by one manifest-based engine
+  (`scripts/vendor.manifest.js`; `npm run vendor [-- <name>]`, `npm run vendor --
+  --verify`, `npm run test:vendor`). Keep the legacy `fab`/`fas` classes verbatim.
+  **Faithful fonts:** the legacy Oswald/Montserrat/Roboto decks vendor **weight
+  400 only** — their bold cover headings are the browser's faux-bold of 400, and a
+  real 700 would render them heavier than the original.
 
 ## Verification checklist
 
