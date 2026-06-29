@@ -178,7 +178,7 @@ function fontEntry({ name, pkg, version, family, weights, subsets = ['latin', 'l
       source: { type: 'npm-tarball', pkg, version },
       dest: `static/deck-kit/vendor/fonts/${name}`,
       files: [
-        ...fontFiles(id, weights, subsets).map((path) => ({ path, sha256: sha[path] || '' })),
+        ...fontFiles(id, weights, subsets).map((rel) => ({ path: rel, sha256: sha[rel] || '' })),
         { path: cssName, sha256: sha[cssName] || '', bytes: (source) => buildFontCss(source, { id, family, weights, subsets }) },
         { path: 'LICENSE', sha256: sha.LICENSE || '' },
       ],
