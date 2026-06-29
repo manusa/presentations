@@ -85,11 +85,22 @@ the pilot, `mock-mvc-in-action` (#61).
     deck CSS as `.wrapper .cls { fill: … }` (0,2,0) or drive it via the `var()`
     default instead.
   - **Single-use but animated or page-font-dependent** (e.g. a diagram whose text
-    must use the deck's Roboto and whose labels fade in): inline **light-DOM** so
-    deck CSS can target its inner elements and it inherits document `@font-face`s.
-    An external `<img src=…svg>` is an isolated document — no page fonts, no CSS
-    piercing — so it can't do either. Give an absent font (`MyriadPro-Regular`) a
-    real fallback (`'…','Roboto',sans-serif`).
+    must use the deck's Roboto and whose labels fade in): an external `<img src=…svg>`
+    is an isolated document — no page fonts, no CSS piercing — so it's out. You do
+    **not** need to dump the whole thing inline in the `<section>`, though: define it
+    **once** as a `<symbol>` in the shared defs block and `<use>` it, same as the
+    logos, to keep the slide markup readable. It still resolves document
+    `@font-face`s (the symbol's own `<style>` clones into the `<use>` shadow tree and
+    Roboto is document-global). For per-element animation that deck CSS can't reach
+    across the shadow boundary (a `.k8s-text` fade), drive it with an **inherited,
+    registered custom property** (`@property --x { inherits: true }`): animate `--x`
+    on the host (document scope) and have the symbol's `<style>` read it
+    (`opacity: var(--x)`) — only the value crosses the boundary, exactly like the
+    recolor. Choose a resting `initial-value` that is correct when un-animated (e.g.
+    `1` for an opacity fade) so the static PDF export — which strips
+    `[data-deck-active]` — renders the final state. Give an absent font
+    (`MyriadPro-Regular`) a real fallback (`'…','Roboto',sans-serif`). (Plain inline
+    light-DOM also works, but buries the slide's content under the SVG.)
   - **Single-use, static, un-recolored** (an avatar/illustration): a standalone
     `assets/<name>.svg` via `<img>` is faithful and keeps `index.html` lean; its
     `prefix__*` ids are isolated so they can't collide.

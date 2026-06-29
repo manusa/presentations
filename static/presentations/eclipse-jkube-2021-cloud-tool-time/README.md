@@ -62,11 +62,19 @@ slide-for-slide; the mechanics changed as follows:
     what the Gatsby deck actually rendered.)
   - The **Avatar** (static, unanimated, un-recolored) is a standalone
     `assets/avatar.svg` referenced with a plain `<img>`, keeping `index.html` lean.
-  - The **developer-workflow diagram** is inlined **light-DOM** (not `<use>`/`<img>`)
-    because it needs the page's Roboto font and the `.k8s-text` fade-in, neither of
-    which an isolated SVG document gets. Its `MyriadPro-Regular` font (never loaded)
-    now falls back to `'Roboto', sans-serif` — the family the Gatsby slide CSS set
-    on the diagram container as the design intent, and legible at projector scale.
+  - The **developer-workflow diagram** is also defined **once** as a `<symbol>` in
+    the same defs block and `<use>`d in slide 5, so the section markup stays
+    readable. It can't be an `<img>` (an isolated SVG document gets none of the
+    page's fonts), so it keeps its own `<style>` — which clones into the `<use>`
+    shadow tree and still resolves Roboto from the document `@font-face`. Its
+    `MyriadPro-Regular` font (never loaded) falls back to `'Roboto', sans-serif` —
+    the family the Gatsby slide CSS set on the diagram container as the design
+    intent, and legible at projector scale. The `.k8s-text` fade-in can't be
+    targeted by deck CSS across the `<use>` boundary, so it is driven by an
+    inherited, registered custom property (`--k8s-fade`): the animation runs on the
+    host (document scope) and only the value crosses into the shadow tree, the same
+    way the logo recolors do. At rest `--k8s-fade` is `1` (and the PDF export strips
+    `[data-deck-active]`), so the labels render fully opaque in the static export.
 - **Reveals → declarative `data-reveal` (#56).** Slide 4's
   `visibleClassNameFromStep(2)`→`data-reveal="1"`, `(3)`→`data-reveal="2"`;
   deck-stage auto-derives `data-step-max = 2`, so the 3-step reveal fires on the
