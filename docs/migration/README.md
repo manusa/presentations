@@ -61,14 +61,17 @@ Plain `slideControls` HOC, per-slide SCSS, no runtime diagrams, 0–2 code block
 | `isotope-introduction` | 9 | 0 | none | **DONE (#66).** Legacy, image-heavy; reveals on slides 1/2/5. |
 | `eclipse-jkube-2021-cloud-tool-time` | 6 | 0 | 1 static-SVG workflow diagram | **DONE (#67).** Tier A complete. The planning note was wrong — **no** code blocks and **no** `react-archer` (the diagram is a hand-authored static `<svg>`). First deck-specific `SlideTemplate`/`TitleTemplate` chrome + first inline-React-SVG port. |
 
-### Tier B — template-based, code-heavy, occasional diagram
+### Tier B — template-based, deck-specific chrome (code volume varies)
 
 Deck-specific `SlideTemplate` wrapper (header/footer/branding), per-deck `styles/`,
-several `<Code>` blocks, sometimes one workflow diagram.
+and React SVG components to inline. Code volume **varies — verify per deck** (the
+"code-heavy" label is unreliable; the original tier counts conflated shared-barrel
+imports with `<Code>`).
 
-`eclipse-jkube-introduction`, `eclipse-jkube-2020-bcn-jug`,
-`eclipse-jkube-2021-devconf-cz`, `2021-eclipsecon-kubernetes-gradle-plugins`,
-`2022-eclipsecon-whats-up-doc`, `2023-madridjug-jkube-remote-dev`,
+`eclipse-jkube-introduction` (**filed #70**, code-free),
+`eclipse-jkube-2020-bcn-jug`, `eclipse-jkube-2021-devconf-cz` (2 code → triggers
+the highlight-glue promotion), `2021-eclipsecon-kubernetes-gradle-plugins`,
+`2022-eclipsecon-whats-up-doc` (code-free), `2023-madridjug-jkube-remote-dev`,
 `2023-eclipsecon-helm-for-java-developers`.
 
 ### Tier C — diagram-heavy + code-heavy (long pole)
@@ -131,8 +134,11 @@ how we will verify each port.
     light-DOM for animated/font-dependent SVG) and vendored Font Awesome into
     deck-kit (`vendor/fontawesome`, migrating the 2026 decks off the jsDelivr CDN).
   Promote the slide-chrome template (improvement 2) if a second deck wants it (rule #4).
-- **Phase 2 — Tier B.** Port the template-based decks. Most effort is volume of
-  code blocks (now cheap once highlighting exists) and per-deck theming.
+- **Phase 2 — Tier B. In progress.** Port the template-based decks (follow the
+  playbook). `eclipse-jkube-introduction` filed (**#70**, 1st Tier-B, code-free —
+  a scale test of the #67 inline-SVG recipe: 5 SVG components, 11 sections, a
+  7-step reveal). The **highlight-glue promotion** (improvement 3 → shared
+  `deck-kit/code-highlight.js`) lands with the first Tier-B *code* deck, not this one.
 - **Phase 3 — Tier C.** Port the diagram-heavy decks using the captured-SVG
   strategy.
 - **Phase 4 — cut Gatsby.** Execute the end-state checklist.
@@ -142,9 +148,11 @@ how we will verify each port.
 Each improvement (improvements doc) and each Phase/deck above is written to be
 issue-ready (title, scope, acceptance criteria). **Implementation** issues for a
 coding agent are filed in this code repo (`manusa/presentations`) so a PR closes
-them with `Fixes #N` — so far: reveals #56, highlighting #59, pilot port #61
-(merged), rail `url()` bug #62, isotope port #64. (Cross-repo *tracker* issues
-still live in `manusa/com.marcnuri.automated-tasks`, referenced by full coordinate.)
+them with `Fixes #N` — so far: reveals #56, highlighting #59, pilot port #61,
+rail `url()` fix #62, isotope port #64 (merged via #66), eclipse-jkube-2021 port
+#67, Google-fonts self-host #68, eclipse-jkube-introduction port #70. (Cross-repo
+*tracker* issues still live in `manusa/com.marcnuri.automated-tasks`, referenced by
+full coordinate.)
 
 ## Decisions (resolved)
 
