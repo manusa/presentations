@@ -7,8 +7,10 @@ on:
       - 'static/presentations/**'
       - 'tests/deck-kit/**'
       - 'tests/highlight/**'
+      - 'tests/fontawesome/**'
       - 'scripts/lib/deck.js'
       - 'scripts/vendor-highlight.js'
+      - 'scripts/vendor-fontawesome.js'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/test-deck-kit.yml'
@@ -54,3 +56,11 @@ jobs:
       - name: Verify vendored highlight.js integrity (offline, no network)
         run: npm run vendor:highlight -- --verify
       - run: npm run test:highlight
+
+      # Vendored Font Awesome (issue #67) — shared deck-kit infra, not part of the
+      # frozen deck-kit JS contract, but gated in this same required job so a
+      # corrupted vendored file, a missing webfont, or a re-introduced CDN <link>
+      # can't merge green.
+      - name: Verify vendored Font Awesome integrity (offline, no network)
+        run: npm run vendor:fontawesome -- --verify
+      - run: npm run test:fontawesome
