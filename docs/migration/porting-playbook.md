@@ -61,6 +61,46 @@ the pilot, `mock-mvc-in-action` (#61).
   not the deck's `.css`. Workaround: root-absolute
   `url('/presentations/<slug>/assets/…')`. Proper fix tracked in **#62**
   (deck-stage `_snapshotAuthorCss` rewriting relative `url()`).
+- **Inlining React SVG components as static SVG (#67).** A deck that renders SVG
+  React components (the shared `src/components/icons` barrel, deck-local
+  `components/*.jsx`) can't import them — inline each as plain SVG. JSX→HTML attr
+  fixes: `className`→`class`, `strokeWidth`→`stroke-width`,
+  `strokeMiterlimit`→`stroke-miterlimit`, `stopColor`→`stop-color`,
+  `stopOpacity`→`stop-opacity`, `fillRule`→`fill-rule`, `xmlSpace`→`xml:space`;
+  numeric braces `x={0}`→`x="0"`; text `{'…'}`→`…`; drop the `{...props}` spread
+  (put `class`/`transform` on the root); SVG-camelCase attrs (`viewBox`,
+  `gradientUnits`, `gradientTransform`, `clipPathUnits`, `spreadMethod`,
+  `maskUnits`) stay as-is. Choose the embedding by what the SVG needs, **not** "always
+  inline":
+  - **Repeated + CSS-recolored** (logos in headers/footers, on N slides): define
+    **once** as `<svg><symbol id>` and `<use href="#id">` it. Recolor per instance
+    with inherited **CSS custom properties** (and `currentColor`) read by the
+    glyph `fill`s — `fill="var(--x, default)"` — since custom properties (and
+    `color`) cross the `<use>` shadow boundary. This kills the duplicate-id
+    collisions you'd get from copy-pasting an Illustrator SVG (its `prefix__*`
+    gradient/clip ids would repeat) **and** handles two-tone recolors a single
+    `currentColor` can't. *Move the recolor out of any in-SVG `<style>`*: an
+    internal `.cls{fill:…}` rule (specificity 0,1,0) beats a presentation-attr
+    `fill` and the cascade favours the later (in-`<body>`) `<style>`, so scope the
+    deck CSS as `.wrapper .cls { fill: … }` (0,2,0) or drive it via the `var()`
+    default instead.
+  - **Single-use but animated or page-font-dependent** (e.g. a diagram whose text
+    must use the deck's Roboto and whose labels fade in): inline **light-DOM** so
+    deck CSS can target its inner elements and it inherits document `@font-face`s.
+    An external `<img src=…svg>` is an isolated document — no page fonts, no CSS
+    piercing — so it can't do either. Give an absent font (`MyriadPro-Regular`) a
+    real fallback (`'…','Roboto',sans-serif`).
+  - **Single-use, static, un-recolored** (an avatar/illustration): a standalone
+    `assets/<name>.svg` via `<img>` is faithful and keeps `index.html` lean; its
+    `prefix__*` ids are isolated so they can't collide.
+  Verify the transcription visually — `screenshot:deck` surfaces any corrupted
+  `d=` path or dropped attribute immediately.
+- **Font Awesome is vendored, not a CDN (#67).** Contact-icon decks load FA from
+  `static/deck-kit/vendor/fontawesome/css/all.min.css` (shared deck-kit infra,
+  pinned 6.5.2; `npm run vendor:fontawesome`, `npm run test:fontawesome`), not a
+  jsDelivr `<link>`. Keep the legacy `fab`/`fas` classes verbatim. (Self-hosting
+  the Google **fonts** the decks still load from the Google CDN is tracked
+  separately in **#68**, following this FA vendoring as the precedent.)
 
 ## Verification checklist
 
