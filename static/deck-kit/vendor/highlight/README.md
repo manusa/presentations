@@ -67,13 +67,15 @@ tag and add a `<script>` tag after the engine (see the fixture `index.html`).
 ## Refreshing (deliberate updates only)
 
 ```bash
-npm run vendor:highlight            # re-download the pinned version, write + integrity-check
-npm run vendor:highlight -- --verify   # check committed files against pinned hashes, no writes/network
+npm run vendor -- highlight            # re-download the pinned version, write + integrity-check
+npm run vendor -- highlight --verify   # check committed files against pinned hashes, no writes/network
 ```
 
-To bump the version, edit `VERSION` (and the `sha256` pins) in
-`scripts/vendor-highlight.js`, re-run, eyeball the diff, and commit. Pinning the
-hashes means a silently changed upstream fails the run loudly.
+To bump the version, edit the `highlight` entry's `tag` (and the `sha256` pins)
+in `scripts/vendor.manifest.js`, re-run, eyeball the diff, and commit. Pinning
+the hashes means a silently changed upstream fails the run loudly. `npm run
+test:vendor` additionally guards the vendored artifact's posture (manifest-driven,
+the same spec that covers Font Awesome and the fonts).
 
 ## Scope (rule #4)
 

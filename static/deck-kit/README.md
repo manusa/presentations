@@ -12,7 +12,8 @@ build step. Loaded directly via `<script src=…>`.
 | `image-slot.js` | `<image-slot>` custom element — user-fillable image placeholder with shape/mask/fit/position attributes. |
 | `code-block.js` | `<code-block>` custom element — dedents an indented snippet, runs vendored highlight.js over it, and paints an optional per-line coverage stripe. The reusable home for the issue #59 highlight init glue. |
 | `vendor/highlight/` | Vendored highlight.js (issue #59) — engine, the four non-common grammars, the `github-dark` theme, LICENSE + provenance README. The single served copy decks load at runtime (`../../deck-kit/vendor/highlight/highlight.js`); re-vendor via `npm run vendor:highlight`. Loaded before `code-block.js` so the element can highlight on upgrade. |
-| `vendor/fontawesome/` | Vendored Font Awesome Free 6.5.2 — the unedited `all.min.css` + every webfont it references, LICENSE + provenance README. The single served copy decks load at runtime (`../../deck-kit/vendor/fontawesome/css/all.min.css`), replacing the per-deck jsDelivr CDN `<link>`; re-vendor via `npm run vendor:fontawesome`. Pure CSS/fonts, no JS. |
+| `vendor/fontawesome/` | Vendored Font Awesome Free 6.5.2 — the unedited `all.min.css` + every webfont it references, LICENSE + provenance README. The single served copy decks load at runtime (`../../deck-kit/vendor/fontawesome/css/all.min.css`), replacing the per-deck jsDelivr CDN `<link>`; re-vendor via `npm run vendor -- fontawesome`. Pure CSS/fonts, no JS. |
+| `vendor/fonts/` | Self-hosted Google Fonts (issue #68) — per-family woff2 (`latin` + `latin-ext`) and a generated `@font-face` CSS each, LICENSE + provenance README. Decks `<link>` the families they use (`../../deck-kit/vendor/fonts/<family>/<family>.css`), replacing the per-deck Google Fonts CDN `<link>` + `preconnect`s; re-vendor via `npm run vendor -- <family>`. Pure CSS/fonts, no JS. |
 | `README.md` | This file. |
 
 ## What does **not** live here

@@ -26,11 +26,12 @@
     "audit:fit": "node scripts/audit-fit.js",
     "test:deck-kit": "node --test tests/deck-kit/*.spec.js",
     "test:highlight": "node --test tests/highlight/*.spec.js",
-    "test:fontawesome": "node --test tests/fontawesome/*.spec.js",
+    "test:vendor": "node --test tests/vendor/*.spec.js",
     "test:pdf-links": "node scripts/test-pdf-links.js",
     "test:pdf-frame": "node scripts/test-pdf-frame.js",
-    "vendor:highlight": "node scripts/vendor-highlight.js",
-    "vendor:fontawesome": "node scripts/vendor-fontawesome.js"
+    "vendor": "node scripts/vendor.js",
+    "vendor:highlight": "node scripts/vendor.js highlight",
+    "vendor:fontawesome": "node scripts/vendor.js fontawesome"
   },
   "publishConfig": {
     "access": "public"
