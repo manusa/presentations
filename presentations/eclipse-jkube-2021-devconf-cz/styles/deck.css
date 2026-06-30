@@ -1,0 +1,334 @@
+/* eclipse-jkube-2021-devconf-cz — deck-kit port of the Gatsby deck.
+ *
+ * Hand-ported from the Gatsby SCSS
+ * (src/pages/presentations/eclipse-jkube-2021-devconf-cz/styles/*.scss). Sizes are
+ * deck-px on the 1920×1080 canvas (pt = px/2); the Gatsby rems are converted at the
+ * framework root size (16px), so 4rem→64px, 3.5rem→56px, 3rem→48px, 2.5rem→40px,
+ * 2rem→32px, 1.7rem→28px (cite — already on the 28px floor), 1.75rem→28px, 1rem→16px,
+ * 0.5rem→8px, 31rem→496px, 30rem→480px, 20rem→320px, 10rem→160px, 8rem→128px,
+ * 5rem→80px. Viewport units (vh) in the Gatsby title template resolve against the
+ * fixed 1080-tall section instead (33vh→33.333%), since inside <deck-stage> vh would
+ * track the real window, not the scaled canvas.
+ *
+ * Loaded AFTER the vendored github-dark theme, so the --hl-* override layer at the
+ * bottom wins at equal specificity (slides 5 + 8 carry <code-block> code). */
+:root {
+  --purple: #8e83e4;            /* $color-highlight — header bar */
+  --magenta: #ff009a;           /* $color-highlight-alternative — bullets, title-band, JKube icon */
+  --arrow: #ff80cf;             /* lighten($color-highlight-alternative, 25%) — workflow Build/Deploy */
+  --fg: #ffffff;
+
+  --font-header: 'Oswald', 'Roboto', sans-serif;   /* $eclipse-header-font-family */
+  --font-body: 'Montserrat', sans-serif;           /* framework $base-font-family */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --type-header: 64px;          /* 4rem  — header bar title */
+  --type-content: 40px;         /* 2.5rem — slide body ($eclipse-content-font-size) */
+  --type-h1: 64px;              /* 4rem */
+  --type-h2: 56px;              /* 3.5rem */
+  --type-h3: 48px;              /* 3rem (normal weight) */
+  --type-h4: 40px;              /* 2.5rem */
+  --type-cover-title: 56px;     /* 3.5rem — cover/demo title-band title */
+  --type-cover-subtitle: 48px;  /* 3rem  — cover/demo title-band subtitle */
+  --type-thanks: 128px;         /* 8rem  — "Thank you!" */
+  --type-reach: 48px;           /* 3rem  — thank-you links */
+  --type-arrow: 28px;           /* 1.75rem (2.5rem × 0.7) — workflow Build/Deploy labels */
+  --type-mono: 36px;            /* code — near the Gatsby <Code> body size (2.5rem=40px),
+                                   trimmed so the dense Challenges slide fits; ≥28px floor */
+
+  --header-h: 90px;
+  --footer-h: 90px;
+  --logo-w: 160px;              /* 10rem — footer logos */
+
+  /* highlight.js palette. Defaults to vendored github-dark; --hl-bg/-border make the
+   * code card distinct from the slide background with a visible edge. */
+  --hl-bg: #161b22;
+  --hl-border: #30363d;
+  --hl-fg: #c9d1d9;
+  --hl-keyword: #ff7b72;
+  --hl-title: #d2a8ff;
+  --hl-constant: #79c0ff;
+  --hl-string: #a5d6ff;
+  --hl-built-in: #ffa657;
+  --hl-comment: #8b949e;
+  --hl-tag: #7ee787;
+}
+
+/* The Gatsby deck uses the custom eclipse-jkube-2021-devconf-cz-* slide classes (not
+ * the framework's border-box `.slide`), so its padded boxes are content-box. deck-stage
+ * forces border-box only on ::slotted(*) sections; box-sizing does not inherit, so the
+ * padded descendants here (header/footer/content) stay content-box, matching the
+ * original. No global `* { box-sizing }` reset. */
+html, body { margin: 0; height: 100%; background: #000; }
+
+/* The DevConf.cz gradient background behind every slide, with a per-slide overlay.
+ * Gatsby's slide-background mixin used position:fixed for the overlay (single-slide
+ * model); scoped to the section here. */
+deck-stage section {
+  position: relative;
+  font-family: var(--font-body);
+  color: var(--fg);
+  background: #000 url('../assets/devconf-landing-background.svg') no-repeat;
+  background-size: cover;
+}
+deck-stage section::before { content: ''; position: absolute; inset: 0; z-index: 0; }
+/* Title slides (cover / demo / thank-you) — the mixin's default 0.1 overlay. */
+deck-stage section.title-slide::before { background-color: rgba(0, 0, 0, 0.1); }
+/* Interior slides — the 0.7 overlay (slide-template.scss). */
+deck-stage section.slide::before { background-color: rgba(0, 0, 0, 0.7); }
+deck-stage section > * { position: relative; z-index: 1; }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* ══ §1 Cover + §9 Demo + §11 Thank you (TitleTemplate) ════════════════════ */
+.title-slide__content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.title-slide .logo {
+  height: 33.333%;             /* Gatsby 33vh of the slide */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.title-slide .logo svg { width: 560px; height: auto; }   /* native DevConf wordmark size */
+.title-slide .title-band {
+  height: 33.333%;             /* 33vh */
+  align-self: stretch;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(255, 0, 154, 0.8);   /* rgba($color-highlight-alternative, 0.8) */
+  color: var(--fg);
+  text-align: center;
+}
+/* The Gatsby title-template left .title/.subtitle (h1/h2) at the browser-default
+ * heading margins (it did not import _fonts, which scoped its heading margins under
+ * the interior slide). */
+.title-slide .title-band .title { font-size: var(--type-cover-title); }
+.title-slide .title-band .subtitle {
+  font-size: var(--type-cover-subtitle);
+  color: rgba(0, 0, 0, 0.8);
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+}
+.cover[data-deck-active] { animation: fade-in 0.5s linear; }   /* index.scss entrance */
+
+/* §11 Thank you — reuses the TitleTemplate frame but omits the (hidden) title-band,
+ * stacking the thank-you headline + reach-out links under the logo (slide-thank-you.scss). */
+.thank-you .thank-you-heading { margin: 0 0 64px; padding: 0; font-size: var(--type-thanks); color: var(--fg); }
+.thank-you .reach-out { display: flex; flex-direction: column; }
+.thank-you .reach-out a {
+  margin: 8px;
+  color: var(--fg);
+  text-decoration: none;
+  font-size: var(--type-reach);
+}
+.thank-you .reach-out .jkube-logo {
+  height: 128px;
+  margin: 16px;
+  --jkube-icon: var(--magenta);
+  --jkube-text: #ffffff;
+}
+
+/* ══ §2–§8 + §10 Interior slides (SlideTemplate) ═══════════════════════════ */
+.slide { display: flex; flex-direction: column; height: 100%; }
+.slide-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: var(--header-h);
+  padding: 16px 32px;
+  background-color: var(--purple);
+  color: var(--fg);
+  font-family: var(--font-header);
+  font-size: var(--type-header);
+}
+.slide-header .title { display: flex; align-items: center; min-width: 1px; flex: 1; }
+.slide-content {
+  flex: 1;
+  min-height: 0;
+  position: relative;          /* anchor for §4 .work-flow and §5 .challenge-jkube (inset:0) */
+  padding: 16px 32px;
+  color: var(--fg);
+  font-size: var(--type-content);
+  overflow: hidden;
+}
+.slide-footer {
+  flex-shrink: 0;
+  height: var(--footer-h);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+.slide-footer .devconf-cz-logo { width: var(--logo-w); height: auto; }
+.slide-footer .page-number {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: var(--fg);
+  font-size: 16px;             /* faithful to the Gatsby original (inherited 1rem); navigational
+                                  chrome, intentionally below the 28px must-read floor */
+}
+.slide-footer .jkube-logo {
+  width: var(--logo-w);
+  height: auto;
+  --jkube-icon: var(--magenta);
+  --jkube-text: rgba(255, 255, 255, 0.85);
+}
+
+/* Slide-content typography (Gatsby styles/_fonts.scss, scoped under the slide) */
+.slide-content h1 { margin: 16px 0; font-size: var(--type-h1); }
+.slide-content h2 { margin: 16px 0; font-size: var(--type-h2); }
+.slide-content h3 { margin: 16px 0; font-size: var(--type-h3); font-weight: normal; }
+.slide-content h4 { margin: 16px 0; font-size: var(--type-h4); }
+.slide-content p  { margin: 0 0 16px; }
+.slide-content ul {
+  position: relative;
+  list-style: none;
+  margin: 16px 0;
+  margin-left: 0.5em;
+  padding-left: 1em;
+  line-height: 60px;          /* 2.5rem × 1.5 */
+}
+.slide-content ul li::before {
+  content: '\2b22';
+  color: var(--magenta);
+  font-size: 20px;            /* 2.5rem × 0.5 */
+  position: absolute;
+  display: inline-block;
+  margin-left: -2em;
+  width: 2em;
+}
+/* Nested ordered list (§7 Zero Config steps): keep the native decimal markers and
+ * drop the inherited hexagon bullet (Gatsby _fonts.scss `ol li:before{content:''}`). */
+.slide-content ol { margin-left: 0.5em; }
+.slide-content ol li::before { content: ''; }
+
+/* ── §2 About me (slide-about-me.scss) ─────────────────────────────────────── */
+.about-me {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.about-me .avatar { margin-right: 48px; width: 496px; }   /* 31rem */
+.about-me h2 { margin-top: 0; }
+.about-me a { color: var(--fg); text-decoration: none; }
+
+/* ── §4 Introduction — developer workflow (slide-workflow.scss) ─────────────── */
+.work-flow {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.work-flow__content { display: flex; width: 100%; justify-content: space-around; }
+.work-flow__icon { max-height: 160px; height: 160px; }
+.work-flow__code    { display: flex; flex-direction: column; width: 320px; }
+.work-flow__package { display: flex; flex-direction: column; width: 480px; }
+.work-flow__server  { display: flex; flex-direction: column; width: 320px; }
+.work-flow .work-flow__description { margin-top: 80px; height: 160px; text-align: center; }
+.work-flow__arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--type-arrow);
+  font-style: italic;
+  color: var(--arrow);
+}
+.work-flow__arrow .arrow { width: 120px; height: 120px; }
+/* The workflow uls (package/server descriptions) drop the slide's list styling. */
+.work-flow ul.work-flow__description { padding: 0; list-style: none; line-height: normal; }
+.work-flow ul li::before { content: ''; position: static; margin: 0; width: auto; }
+/* Reveals fade IN only and snap OUT instantly, exactly as the Gatsby deck did
+ * (transition lives on `.visible`, not `.hidden` → the destination state's
+ * transition governs, so revealing animates and hiding is immediate). The
+ * transition is therefore scoped to [data-revealed]; the hidden state carries no
+ * transition, so an outgoing label/icon vanishes at once instead of cross-fading
+ * over the incoming one (which overlapped while both were collapsed). The icons
+ * also swap in place — the hidden one drops out of flow so the visible one keeps
+ * the slot (Gatsby .hidden{position:absolute;height:0}). opacity:0 comes from
+ * deck-stage's default-hide. */
+.work-flow [data-reveal][data-revealed],
+.work-flow [data-reveal-only][data-revealed],
+.work-flow [data-reveal-until][data-revealed] { transition: opacity 1s linear; }
+.work-flow [data-reveal]:not([data-revealed]),
+.work-flow [data-reveal-only]:not([data-revealed]),
+.work-flow [data-reveal-until]:not([data-revealed]) { position: absolute; height: 0; }
+
+/* ── §5 Deploying to Kubernetes — Challenges (slide-challenges.scss) ────────── */
+.kubernetes-challenges { position: relative; height: 100%; }
+.challenge-docker { display: flex; flex-direction: column; }
+.challenge-docker h2, .challenge-kubernetes h2 { margin: 8px 0; }
+.challenge-docker code-block { display: block; }
+.challenge-docker code-block + code-block { margin-top: 12px; }
+.yaml-files { display: flex; justify-content: space-between; gap: 16px; align-items: stretch; }
+/* The three YAML cards are equal height (Gatsby had `pre` as the flex child, so
+ * align-items:stretch sized them to the tallest). Here <code-block> wraps <pre><code>
+ * and the visible bordered card is the inner <code>, so the stretch has to reach all
+ * the way down: stretch the code-block, let its pre fill, and let the code fill the
+ * pre — otherwise the 7-line Deployment card stands a line taller than the others. */
+.yaml-files code-block { flex: 1; min-width: 0; display: flex; }
+.yaml-files code-block pre { flex: 1; display: flex; }
+.yaml-files code-block pre code { flex: 1; }
+.challenge-kubernetes > code-block { display: block; margin-top: 12px; }
+.challenge-jkube {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.challenge-jkube .jkube-logo { width: 100%; --jkube-text: #ffffff; }   /* icon keeps #0A4E9B */
+/* The challenge blocks swap one per step (data-reveal-only); each slides in from the
+ * right (Gatsby base reveal) and the hidden ones collapse so the visible one is at
+ * the top (Gatsby .kubernetes-challenges .hidden{height:0}). */
+.kubernetes-challenges [data-reveal-only] { transition: transform 0.4s; }
+.kubernetes-challenges [data-reveal-only]:not([data-revealed]) { transform: translateX(100%); height: 0; overflow: hidden; }
+
+/* ── §6/§7/§8 What is Eclipse JKube? (slide-what-is-jkube.scss) ─────────────── */
+/* §6 list reveals slide in from the right (Gatsby base reveal: translate(100vw)→0). */
+.what-is-jkube > li[data-reveal] { transition: transform 0.4s; }
+.what-is-jkube > li[data-reveal]:not([data-revealed]) { transform: translateX(100%); }
+/* §8 two stacked code blocks. */
+.what-is-jkube > code-block { display: block; }
+.what-is-jkube > code-block + code-block { margin-top: 32px; }
+
+/* ── Code cards: authoring contract <pre><code class="language-X"> ──────────── */
+pre { margin: 0; }
+pre code.hljs,
+pre code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);   /* ≥ 28px mono legibility floor */
+  line-height: 1.5;
+  white-space: pre;              /* preserve indentation; lines do not wrap */
+  padding: 16px 20px;
+  border: 1px solid var(--hl-border);
+  border-radius: 10px;
+  tab-size: 4;
+  background: var(--hl-bg);
+  color: var(--hl-fg);
+  overflow-x: auto;
+}
+
+/* ── highlight.js palette override layer (loaded after github-dark.css, so it wins
+ *    at equal specificity). Each rule reads a deck-overridable --hl-* token. */
+.hljs { background: var(--hl-bg); color: var(--hl-fg); }
+.hljs-doctag, .hljs-keyword, .hljs-meta .hljs-keyword, .hljs-template-tag,
+.hljs-template-variable, .hljs-type, .hljs-variable.language_ { color: var(--hl-keyword); }
+.hljs-title, .hljs-title.class_, .hljs-title.class_.inherited__,
+.hljs-title.function_ { color: var(--hl-title); }
+.hljs-attr, .hljs-attribute, .hljs-literal, .hljs-meta, .hljs-number, .hljs-operator,
+.hljs-variable, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-id { color: var(--hl-constant); }
+.hljs-regexp, .hljs-string, .hljs-meta .hljs-string { color: var(--hl-string); }
+.hljs-built_in, .hljs-symbol { color: var(--hl-built-in); }
+.hljs-comment, .hljs-code, .hljs-formula { color: var(--hl-comment); }
+.hljs-name, .hljs-quote, .hljs-selector-tag, .hljs-selector-pseudo { color: var(--hl-tag); }
