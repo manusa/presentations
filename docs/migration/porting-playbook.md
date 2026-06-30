@@ -13,9 +13,12 @@ the pilot, `mock-mvc-in-action` (#61).
 2. **One `<section data-label="…">` per slide.** Drop all `previousPage`/`nextPage`
    plumbing and the per-slide files — deck-stage owns ordering, rail, nav, numbering.
 3. **Reveals → `data-reveal*` (#56):** `classNameVisibleFrom(g)` → `data-reveal="g-1"`;
-   `-only`/`-until` likewise; deck-stage auto-derives `data-step-max`. **Code →**
-   `<pre><code class="language-*">` + the highlight init snippet (#59), only if the
-   deck has code.
+   `-only`/`-until` likewise; deck-stage auto-derives `data-step-max`. **Code →** the
+   `<code-block language="…" cov-lines="…">` element (`deck-kit/code-block.js`; it
+   dedents + highlights registered grammars only + paints the optional coverage
+   stripe). Load order: vendored engine → any non-common grammar script →
+   `code-block.js` → `deck-stage.js`. (Superseded the per-deck inline `<pre><code>`
+   snippet once the glue was promoted — see improvements doc item 3.)
 4. **Hand-port SCSS → plain modern CSS** (no SCSS; README decision). Restore the
    original animations (see gotchas).
 5. **Images:** `npm run optimize:images` → webp. Do not copy the raster originals.

@@ -135,10 +135,13 @@ how we will verify each port.
     deck-kit (`vendor/fontawesome`, migrating the 2026 decks off the jsDelivr CDN).
   Promote the slide-chrome template (improvement 2) if a second deck wants it (rule #4).
 - **Phase 2 — Tier B. In progress.** Port the template-based decks (follow the
-  playbook). `eclipse-jkube-introduction` filed (**#70**, 1st Tier-B, code-free —
-  a scale test of the #67 inline-SVG recipe: 5 SVG components, 11 sections, a
-  7-step reveal). The **highlight-glue promotion** (improvement 3 → shared
-  `deck-kit/code-highlight.js`) lands with the first Tier-B *code* deck, not this one.
+  playbook).
+  - `eclipse-jkube-introduction` — **DONE** (#70; code-free; a scale test of the
+    #67 inline-SVG recipe — 5 SVG components, 11 sections, a 7-step reveal).
+  - `eclipse-jkube-2021-devconf-cz` — **filed (#73)**; first code deck since the
+    pilot. The highlight-glue promotion already shipped as the `<code-block>`
+    element (improvement 3), so this deck just consumes it on real
+    dockerfile/shell/yaml/xml/bash code.
 - **Phase 3 — Tier C.** Port the diagram-heavy decks using the captured-SVG
   strategy.
 - **Phase 4 — cut Gatsby.** Execute the end-state checklist.
@@ -150,7 +153,8 @@ issue-ready (title, scope, acceptance criteria). **Implementation** issues for a
 coding agent are filed in this code repo (`manusa/presentations`) so a PR closes
 them with `Fixes #N` — so far: reveals #56, highlighting #59, pilot port #61,
 rail `url()` fix #62, isotope port #64 (merged via #66), eclipse-jkube-2021 port
-#67, Google-fonts self-host #68, eclipse-jkube-introduction port #70. (Cross-repo
+#67, Google-fonts self-host #68, eclipse-jkube-introduction port #70,
+devconf-cz port #73. (Cross-repo
 *tracker* issues still live in `manusa/com.marcnuri.automated-tasks`, referenced by
 full coordinate.)
 
