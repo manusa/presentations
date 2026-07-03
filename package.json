@@ -21,6 +21,7 @@
     "gen:landing": "node scripts/generate-landing.js",
     "gen:qr": "node scripts/gen-qr.js",
     "export:pdf": "node scripts/export-pdf.js",
+    "pptx:render": "node scripts/pptx-render.js",
     "snapshot:baseline": "node scripts/snapshot-baseline.js",
     "snapshot:diff": "node scripts/snapshot-diff.js",
     "audit:fit": "node scripts/audit-fit.js",

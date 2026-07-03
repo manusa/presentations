@@ -5,7 +5,8 @@
       "Bash(npm run screenshot:*)",
       "Bash(npm run audit:fit:*)",
       "Bash(npm run snapshot:*)",
-      "Bash(npm run export:pdf:*)"
+      "Bash(npm run export:pdf:*)",
+      "Bash(npm run pptx:render:*)"
     ]
   },
   "sandbox": {
@@ -18,7 +19,8 @@
       "npm run audit:fit *",
       "npm run snapshot:baseline *",
       "npm run snapshot:diff *",
-      "npm run export:pdf *"
+      "npm run export:pdf *",
+      "npm run pptx:render *"
     ]
   },
   "hooks": {
