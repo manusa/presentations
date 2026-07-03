@@ -46,6 +46,7 @@ function findWorktreeServers() {
       servers.push({
         pid: parseInt(pidMatch[1], 10),
         port: parseInt(portMatch[1], 10),
+        cmd: line, // full command line, so callers can check --mount= args
       });
     }
   }

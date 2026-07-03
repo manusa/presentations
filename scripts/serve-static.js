@@ -26,6 +26,7 @@
  *      never owned the server, so it must not tear it down.)
  */
 const fs = require('fs');
+const path = require('path');
 const net = require('net');
 const { spawn } = require('child_process');
 const {
@@ -51,9 +52,40 @@ function writeQuiet(file, contents) {
   try { fs.writeFileSync(file, contents); } catch {}
 }
 
+// A deck dir's URL slug: its own name, or its parent's when it is literally
+// "deck" (so `.../2026-foo/deck` mounts at /presentations/2026-foo/).
+function slugFor(dir) {
+  const abs = path.resolve(dir);
+  return path.basename(abs) === 'deck' ? path.basename(path.dirname(abs)) : path.basename(abs);
+}
+
+// `--deck <dir>` (repeatable): decks that live OUTSIDE static/ (e.g. a private
+// deck in a sibling repo). Each is mounted at /presentations/<slug>/ so its
+// ../../deck-kit/ + ../../deck-kit/vendor/fonts/ references resolve from the
+// public static/deck-kit. Nothing is written under static/ → never hits a build.
+function parseDecks(argv) {
+  const dirs = [];
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === '--deck') { if (argv[i + 1]) dirs.push(argv[++i]); }
+    else if (argv[i].startsWith('--deck=')) dirs.push(argv[i].slice('--deck='.length));
+  }
+  return dirs.map((d) => ({ route: `/presentations/${slugFor(d)}`, dir: path.resolve(d) }));
+}
+
+function logMounts(mounts) {
+  let port = '';
+  try { port = fs.readFileSync(PORT_FILE, 'utf8').trim(); } catch {}
+  for (const m of mounts) {
+    console.log(`  ↳ deck ${m.dir}  →  http://localhost:${port}${m.route}/`);
+  }
+}
+
 // If a live-server is already serving this worktree, adopt it and return true.
-function reuseExisting() {
-  const servers = findWorktreeServers();
+function reuseExisting(mountArgs = []) {
+  let servers = findWorktreeServers();
+  // Only adopt a running server that already carries the requested private-deck
+  // mounts; otherwise fall through and spawn a fresh one that does.
+  if (mountArgs.length) servers = servers.filter((s) => mountArgs.every((a) => (s.cmd || '').includes(a)));
   if (servers.length === 0) return false;
 
   // Prefer the PID already recorded in the sidecar, if it is still among the
@@ -85,14 +117,22 @@ function reuseExisting() {
 }
 
 async function main() {
-  // Idempotent: reuse a running server instead of spawning a duplicate.
-  if (reuseExisting()) return;
+  const mounts = parseDecks(process.argv.slice(2));
+  const mountArgs = mounts.map((m) => `--mount=${m.route}:${m.dir}`);
+  for (const m of mounts) {
+    if (!fs.existsSync(path.join(m.dir, 'index.html'))) {
+      console.warn(`⚠ --deck ${m.dir}: no index.html found (mounting ${m.route}/ anyway)`);
+    }
+  }
+
+  // Idempotent: reuse a running server (with the same mounts) instead of a dup.
+  if (reuseExisting(mountArgs)) { logMounts(mounts); return; }
 
   const port = await freePort();
 
   const child = spawn(
     'live-server',
-    ['static', `--port=${port}`, '--no-browser', `--middleware=${MIDDLEWARE}`],
+    ['static', `--port=${port}`, '--no-browser', `--middleware=${MIDDLEWARE}`, ...mountArgs],
     { stdio: ['ignore', 'pipe', 'pipe'] }
   );
 
@@ -111,6 +151,7 @@ async function main() {
   };
 
   console.log(`→ http://localhost:${port}/`);
+  logMounts(mounts);
   child.stdout.on('data', (b) => process.stdout.write(b));
   child.stderr.on('data', (b) => process.stderr.write(b));
 

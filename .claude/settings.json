@@ -12,6 +12,7 @@
   "sandbox": {
     "excludedCommands": [
       "npm run serve:static",
+      "npm run serve:static *",
       "npm run serve:static:stop",
       "npm run screenshot *",
       "npm run screenshot:deck *",
