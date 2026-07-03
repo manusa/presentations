@@ -292,6 +292,26 @@ Cloudflare Pages comments on PRs with the deployment's **root URL** (e.g. `https
   - Add a `meta.json` next to the deck's `README.md` with `{ "title": "...", "subtitle": "...", "date": "YYYY-MM-DD" }` — this populates the Cloudflare-Pages preview landing (`static/index.html`). `date` (the talk date, ISO) is the landing's sort key: decks are listed **newest first**, and any deck missing a `date` falls to the end. Title fallback chain is `meta.json` → first H1 of `README.md` → slug.
   - After adding (or renaming, or removing) a deck, run `npm run gen:landing` to regenerate `static/index.html` and commit the regenerated file alongside the deck change. The script is idempotent — re-runs only touch the file if its content would change, so it's safe to run anytime. The dev middleware (`scripts/serve-static-middleware.js`) auto-discovers decks at request time during `npm run serve:static`, so the regen step is only required for production (Cloudflare Pages serves the file directly).
 
+### Slide chrome — bake repeated header/footer bars into a `<deck-chrome>` web component
+
+The older static decks copy-paste their top/bottom **chrome bars** (the terminal-path header, the `name · Confidential` footer, page number, logo) into *every* `<section>` — a legibility floor's worth of markup duplicated N times, and a renumbering chore whenever slides move. The reusable pattern is to author the bars **once** as a small deck-local custom element and drop a single tag per slide:
+
+```html
+<section class="s-content" data-label="What it is">
+  <deck-chrome pill="act 01 · what it is"></deck-chrome>
+  <div class="body">…</div>
+</section>
+```
+
+`connectedCallback` injects both bars into the section's **light DOM** (no shadow DOM) so the deck's own `.chrome-top` / `.chrome-bottom` CSS styles them unchanged. Constants (path, name, `Confidential`, logo) live only in the component; per-slide bits stay as attributes (`pill`, falling back to the section's `data-label`), and the **page number auto-derives** from the slide's index among its sibling `<section>`s — no manual numbering, reorder-safe. Give the element `display: contents` so the wrapper generates no box and the absolutely-positioned bars still resolve their containing block against the `position: relative` `<section>`.
+
+**The load-bearing constraint is clone-safety.** `<deck-stage>` deep-clones slides in three paths — the thumbnail rail, step expansion, and the PDF export's `paginateForScreenExport` — and each re-runs `connectedCallback` on the clone (custom elements upgrade inside any document-connected tree, including nested shadow roots). So the component MUST:
+
+1. **Render idempotently** — a clone arrives with the rendered bars already copied in; early-return if it already contains a `.chrome-top` rather than injecting a second set.
+2. **Never recompute position-derived values after the first render** — a clone keeps the page number baked at authoring position. (This also matches the hardcoded decks: every step-page of one slide shares that slide's number, because the step clones copy its chrome.)
+
+Verify it like any refactor (Workflow #2): `snapshot:baseline` the hardcoded version, swap in the component, and `snapshot:diff` must be **zero**; then run `export:pdf` (which exercises the clone/paginate path) and confirm the chrome — including the auto page number — survives pagination. Keep it deck-local for now: each deck's chrome content is deck-specific, so the element is defined in the deck's own `deck-chrome.js` (first used by the internal *Claude Code for Beginners* deck), not in `deck-kit`. Promotion to a configurable shared `deck-kit` element is a later step once the shape settles.
+
 ## Repo Conventions
 
 - Commit messages use **gitmoji** (`✨` feature, `🐛` fix, `♻️` refactor, `👷` CI, etc.) plus a short imperative subject (see `git log`).
