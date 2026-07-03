@@ -47,6 +47,8 @@ vendor/fonts/<family>/
 | Oswald | `@fontsource/oswald` | **5.2.8** | **400 only** | SIL OFL 1.1 |
 | Montserrat | `@fontsource/montserrat` | **5.2.8** | **400 only** | SIL OFL 1.1 |
 | Roboto | `@fontsource/roboto` | **5.2.10** | **400 only** | SIL OFL 1.1 |
+| Red Hat Display | `@fontsource/red-hat-display` | **5.2.8** | 400, 500, 700, 900 | SIL OFL 1.1 |
+| Red Hat Text | `@fontsource/red-hat-text` | **5.2.8** | 400, 500, 700 | SIL OFL 1.1 |
 
 Versions are exact pins (deps in this repo are never `^`/`~`). Each family's
 license travels with it as `LICENSE`.
@@ -73,8 +75,8 @@ glyph selection matches Google exactly.
 ### Size budget
 
 **woff2 only** (no ttf — woff2 covers every target browser, and we control the
-`@font-face` CSS). 36 woff2 across the six families (each weight × {latin,
-latin-ext}) + 6 generated CSS files, ≈ **1.0 MB** committed total:
+`@font-face` CSS). 50 woff2 across the eight families (each weight × {latin,
+latin-ext}) + 8 generated CSS files, ≈ **1.15 MB** committed total:
 
 | Family | woff2 | size |
 |---|---|---|
@@ -84,12 +86,14 @@ latin-ext}) + 6 generated CSS files, ≈ **1.0 MB** committed total:
 | Montserrat (1 × 2) | 2 | ~64 KB |
 | Roboto (1 × 2) | 2 | ~52 KB |
 | Oswald (1 × 2) | 2 | ~36 KB |
+| Red Hat Display (4 × 2) | 8 | ~84 KB |
+| Red Hat Text (3 × 2) | 6 | ~63 KB |
 
 ### sha256
 
 Every committed file's sha256 is pinned in
 [`scripts/vendor.manifest.js`](../../../../scripts/vendor.manifest.js) — the
-integrity anchor `npm run vendor -- --verify` checks offline. The six generated
+integrity anchor `npm run vendor -- --verify` checks offline. The eight generated
 CSS files:
 
 ```
@@ -99,6 +103,8 @@ a9eaca8c5c75e8904fc3e70d3ff8c1d53afb3d6ab870c5c28f9d9df36f487588  inter/inter.cs
 db3da0e8659df666bf20fcfcdd0c96b214d76d70bf666514f15c131c07f48fab  oswald/oswald.css
 9150a545a7517f7c0766904388b1bdb9804b44b4e0154dda6e9c751efe96c4db  montserrat/montserrat.css
 c4d10f464c1ddfac39a4cf087dd5933ab12f004092439591df243371be7b483e  roboto/roboto.css
+c26f8f4b93572cbcff218dba2b949cafd0e17fb7336ea9c70ddf747bb5457307  red-hat-display/red-hat-display.css
+0423e15ec72c9f8bddecb563d5d291a45c4f5b6e23931436906d49f541c371e3  red-hat-text/red-hat-text.css
 ```
 
 ## How the CSS is generated
