@@ -214,14 +214,9 @@ npm run optimize:images -- ~/Downloads/ai-scene.png \
 
 Backed by `sharp` (libvips); no system dependencies beyond `npm install`.
 
-## PPTX / Google Slides decks (external & private talks)
+## Rendering a `.pptx` (utility)
 
-Not every talk is a web deck. **Internal/private talks** are authored as **Google Slides** and live *outside this repo* (a `presentations-private` sibling repo and/or a Google Workspace Drive folder), so they are never published to the public site. This repo carries no `.pptx` decks but does carry the reusable **tooling** for that workflow.
-
-- **Author** with PptxGenJS (in the private deck repo — intentionally *not* a dependency here) → `.pptx` → **drag into the Drive folder** → Google converts it to an editable Slides deck. Fidelity is high even for complex slides (Gantts, connector diagrams, terminal/monospace + diff, chrome bars). Use **Arial** / **Courier New** for clean conversion.
-- **Inspect** with `npm run pptx:render -- <deck.pptx> [--engine libreoffice|powerpoint] [--dpi 150]` → one PNG per slide under `screenshots/pptx-render/<deck>/` (gitignored). LibreOffice by default (fast, headless); PowerPoint for exact fidelity. Needs LibreOffice (`brew install --cask libreoffice`) + poppler; both engines run **outside** the sandbox (registered in `.claude/settings.json`, like `screenshot`/`export:pdf`).
-
-Full workflow, fidelity notes, caveats, and the iteration loop: **`docs/pptx-decks.md`**.
+`npm run pptx:render -- <deck.pptx> [--engine libreoffice|powerpoint] [--dpi 150]` rasterizes a PowerPoint file to one PNG per slide under `screenshots/pptx-render/<deck>/` (gitignored), so you can eyeball a `.pptx` without opening an app. **This repo has no `.pptx` decks** — it's a generic convenience. Needs LibreOffice (`brew install --cask libreoffice`) + poppler; runs **outside** the sandbox (registered in `.claude/settings.json`, like `screenshot`/`export:pdf`). Details: **`docs/pptx-render.md`**.
 
 ## Workflows
 

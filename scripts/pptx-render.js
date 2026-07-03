@@ -15,7 +15,7 @@
  * macOS note: BOTH engines must run OUTSIDE the Claude Code sandbox (Apple events / XPC
  * are blocked in-sandbox — soffice hangs, PowerPoint no-ops). This script is registered in
  * .claude/settings.json (sandbox.excludedCommands + permissions.allow) so it runs unsandboxed
- * and prompt-free. There are no .pptx decks in this repo; this tool serves external/Drive decks.
+ * and prompt-free. This repo has no .pptx decks; the tool is a generic convenience for inspecting a .pptx.
  */
 'use strict';
 const { execFileSync } = require('node:child_process');
