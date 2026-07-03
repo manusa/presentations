@@ -164,6 +164,38 @@ module.exports = [
       'LICENSE': '84044c09058803d87a241bd28abb4ce30a433d7db9c27a04da3efad6a0ca539c',
     },
   }),
+  // Red Hat brand fonts (SIL OFL 1.1) — Red Hat–themed decks. Display for
+  // headings/section numerals, Text for body. sha256 pins filled after first vendor.
+  ...fontEntry({
+    name: 'red-hat-display', pkg: '@fontsource/red-hat-display', version: '5.2.8', family: 'Red Hat Display',
+    weights: [400, 500, 700, 900],
+    sha: {
+      'files/red-hat-display-latin-400-normal.woff2': '131f293be2bb64d87a5ea2a90dadb934df94d976071e220dd685f2a036e5cf90',
+      'files/red-hat-display-latin-ext-400-normal.woff2': '08ee8f706c8a6db20d5cad26c992a970519504525881e16e9faadab3bac53c09',
+      'files/red-hat-display-latin-500-normal.woff2': '482366a12be7caca759ef249a9e793f295f5bb2df0b155f7f02b72daba00ef73',
+      'files/red-hat-display-latin-ext-500-normal.woff2': '7684d225f30c0af7b1070d9e959adcf101d7b109ea7f0dd640a5c30544dda67c',
+      'files/red-hat-display-latin-700-normal.woff2': '9abd8177653672bb520e522ed9796479d67d1e71f198695d790813c1a11933a6',
+      'files/red-hat-display-latin-ext-700-normal.woff2': '4e62513569bb41184e39fd017799a241aee8d0df034ce0a9c73f7546d2a994a2',
+      'files/red-hat-display-latin-900-normal.woff2': 'd8fc457b3cde366d0429808cbdc4cb1d26cb20a4803773b1156b656f971cb00a',
+      'files/red-hat-display-latin-ext-900-normal.woff2': '093ae1da5701b120dd504e49568c03b288ba27776cf755eaae0d8ac97a7e5f0d',
+      'red-hat-display.css': 'c26f8f4b93572cbcff218dba2b949cafd0e17fb7336ea9c70ddf747bb5457307',
+      'LICENSE': 'b0f9871d4d4b7b9919b5b8858ba47352284c982c3699c7b15d784846d4494140',
+    },
+  }),
+  ...fontEntry({
+    name: 'red-hat-text', pkg: '@fontsource/red-hat-text', version: '5.2.8', family: 'Red Hat Text',
+    weights: [400, 500, 700],
+    sha: {
+      'files/red-hat-text-latin-400-normal.woff2': '65129f71694b5b1ffcf50f1c9ab27fc5fe36b496f5e7c183a7ae7ca73876552c',
+      'files/red-hat-text-latin-ext-400-normal.woff2': '3bc003c1f3622a0226a99694a486d01f7618236c3e90e2aa8bd53575ebe4f6ec',
+      'files/red-hat-text-latin-500-normal.woff2': '1d573ccebe4e5f8a92cd21a14bb5e719b7fb7099237336e53a14f9872f8c851c',
+      'files/red-hat-text-latin-ext-500-normal.woff2': '32347df6160a22418defea995b8bc01ba0b01cd5189e4a42f449958b83790329',
+      'files/red-hat-text-latin-700-normal.woff2': '86a489ec00630b2eb08850ed7d87b8793d290e2a85e5a2205e5c283da5e98ece',
+      'files/red-hat-text-latin-ext-700-normal.woff2': 'e24a2d4f7af7de1858cf7800fd42c541adef7cca39578bbe55b647a79e84d5cd',
+      'red-hat-text.css': '0423e15ec72c9f8bddecb563d5d291a45c4f5b6e23931436906d49f541c371e3',
+      'LICENSE': '32275f2d99693c1bb995a8f1d334b1a6d8409406b2483f2174cba075c4aa7d8d',
+    },
+  }),
 ];
 
 // Build one font manifest entry from a compact spec. Returned as a 1-element
