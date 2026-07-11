@@ -16,11 +16,16 @@
  *      for an agent to call while the user has their own server running.
  *   2. Otherwise picks a free random port (no hard-coded 8080) and spawns
  *      `live-server static --port=<port> --no-browser`.
- *   3. Writes .live-server.port and .live-server.pid to the worktree root.
+ *   3. Writes .live-server.port and .live-server.pid to the state dir (the
+ *      worktree root by default; --state-dir <dir> relocates them, e.g. next to
+ *      an external deck served with --deck).
  *      Teardown is handled out-of-band: a SessionEnd hook (.claude/settings.json)
  *      runs `serve:static:stop` when the Claude session CLOSES — not per turn —
  *      and `npm run serve:static:stop` stops it manually. Either way it kills
- *      whatever is tracked, regardless of who started it.
+ *      whatever is tracked, regardless of who started it. NOTE: the hook runs
+ *      stop WITHOUT --state-dir, so it only reaps the cwd sidecar; a server
+ *      started with --state-dir must be stopped with the SAME --state-dir (its
+ *      launcher owns that lifecycle — the hook won't auto-clean it).
  *   4. On exit / SIGINT / SIGTERM of this wrapper: removes the sidecar files and
  *      terminates the live-server child. (Reuse path does none of this — it
  *      never owned the server, so it must not tear it down.)
@@ -30,11 +35,17 @@ const path = require('path');
 const net = require('net');
 const { spawn } = require('child_process');
 const {
-  PORT_FILE,
-  PID_FILE,
   MIDDLEWARE,
   findWorktreeServers,
+  resolveStateDir,
+  sidecarPaths,
 } = require('./lib/live-server');
+
+// Where .live-server.{port,pid} live for this run: the cwd by default, or the
+// dir passed via --state-dir / $MN_SERVE_STATE_DIR. Resolved once so every
+// read/write below agrees. (--state-dir is consumed here and never forwarded to
+// live-server, which only receives the args we construct in main().)
+const { portFile: PORT_PATH, pidFile: PID_PATH } = sidecarPaths(resolveStateDir(process.argv.slice(2)));
 
 function freePort() {
   return new Promise((resolve, reject) => {
@@ -74,7 +85,7 @@ function parseDecks(argv) {
 
 function logMounts(mounts) {
   let port = '';
-  try { port = fs.readFileSync(PORT_FILE, 'utf8').trim(); } catch {}
+  try { port = fs.readFileSync(PORT_PATH, 'utf8').trim(); } catch {}
   for (const m of mounts) {
     console.log(`  ↳ deck ${m.dir}  →  http://localhost:${port}${m.route}/`);
   }
@@ -92,7 +103,7 @@ function reuseExisting(mountArgs = []) {
   // running servers; otherwise adopt the first one found.
   let chosen = servers[0];
   try {
-    const trackedPid = parseInt(fs.readFileSync(PID_FILE, 'utf8').trim(), 10);
+    const trackedPid = parseInt(fs.readFileSync(PID_PATH, 'utf8').trim(), 10);
     const match = servers.find((s) => s.pid === trackedPid);
     if (match) chosen = match;
   } catch {}
@@ -103,8 +114,8 @@ function reuseExisting(mountArgs = []) {
   // actually running. Without the PID write, a stale/dead PID file (server
   // started outside the wrapper, or a PID file that went stale while the
   // process lived) would make stop no-op and leak the adopted server.
-  writeQuiet(PORT_FILE, String(chosen.port));
-  writeQuiet(PID_FILE, String(chosen.pid));
+  writeQuiet(PORT_PATH, String(chosen.port));
+  writeQuiet(PID_PATH, String(chosen.pid));
 
   console.log(`→ http://localhost:${chosen.port}/  (reusing running server, PID ${chosen.pid})`);
   if (servers.length > 1) {
@@ -136,15 +147,15 @@ async function main() {
     { stdio: ['ignore', 'pipe', 'pipe'] }
   );
 
-  fs.writeFileSync(PORT_FILE, String(port));
-  fs.writeFileSync(PID_FILE, String(child.pid));
+  fs.writeFileSync(PORT_PATH, String(port));
+  fs.writeFileSync(PID_PATH, String(child.pid));
 
   let cleaned = false;
   const cleanup = () => {
     if (cleaned) return;
     cleaned = true;
-    try { fs.unlinkSync(PORT_FILE); } catch {}
-    try { fs.unlinkSync(PID_FILE); } catch {}
+    try { fs.unlinkSync(PORT_PATH); } catch {}
+    try { fs.unlinkSync(PID_PATH); } catch {}
     if (child.exitCode === null && !child.killed) {
       try { child.kill('SIGTERM'); } catch {}
     }

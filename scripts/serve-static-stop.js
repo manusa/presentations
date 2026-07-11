@@ -14,12 +14,17 @@
  * Always exits 0. Best-effort; missing files are fine.
  */
 const fs = require('fs');
-const { PORT_FILE, PID_FILE, processIsLiveServer } = require('./lib/live-server');
+const { processIsLiveServer, resolveStateDir, sidecarPaths } = require('./lib/live-server');
+
+// Same resolution as serve-static.js: stop the server tracked in the state dir
+// (cwd by default, or --state-dir <dir> / $MN_SERVE_STATE_DIR), so an external
+// deck's `--state-dir`-tracked server is stopped where it was started.
+const { portFile: PORT_PATH, pidFile: PID_PATH } = sidecarPaths(resolveStateDir(process.argv.slice(2)));
 
 function unlinkQuiet(p) { try { fs.unlinkSync(p); } catch {} }
 function readQuiet(p) { try { return fs.readFileSync(p, 'utf8').trim(); } catch { return ''; } }
 
-const raw = readQuiet(PID_FILE);
+const raw = readQuiet(PID_PATH);
 if (/^\d+$/.test(raw)) {
   const pid = parseInt(raw, 10);
   if (processIsLiveServer(pid)) {
@@ -30,5 +35,5 @@ if (/^\d+$/.test(raw)) {
   }
 }
 
-unlinkQuiet(PORT_FILE);
-unlinkQuiet(PID_FILE);
+unlinkQuiet(PORT_PATH);
+unlinkQuiet(PID_PATH);
