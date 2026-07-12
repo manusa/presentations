@@ -1,0 +1,14 @@
+/*! Techover — self-hosted brand display face, used only for the footer wordmark
+    across Marc's decks. Hand-vendored: unlike the @fontsource families it has no
+    npm/GitHub upstream, so it is NOT in scripts/vendor.manifest.js and `npm run
+    vendor` does not manage it. Single weight 400 (do not request bold). Source
+    ttf: src/components/2025-devbcn-model-context-protocol-servers/assets/techover.ttf.
+    Provenance: ../README.md. */
+
+@font-face {
+  font-family: 'Techover';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(./files/techover.ttf) format('truetype');
+}
