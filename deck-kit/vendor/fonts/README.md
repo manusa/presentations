@@ -53,6 +53,25 @@ vendor/fonts/<family>/
 Versions are exact pins (deps in this repo are never `^`/`~`). Each family's
 license travels with it as `LICENSE`.
 
+### Techover (hand-vendored brand face — not @fontsource)
+
+`techover/` is the one exception to everything above. It is Marc's personal
+brand display face, used **only** for the footer wordmark (`.brand` / `.brand-mark`),
+and it has **no npm/GitHub upstream** — so `npm run vendor` can't fetch it and it
+is deliberately **absent from `scripts/vendor.manifest.js`** (no sha256 pin, not
+covered by `--verify`). It is committed by hand as `files/techover.ttf` (weight
+400 only) with a matching `@font-face` in `techover.css`. Decks link it exactly
+like any other family:
+
+```html
+<link rel="stylesheet" href="../../deck-kit/vendor/fonts/techover/techover.css" />
+```
+
+This is the **single** shared copy — decks must link it, never re-embed the font
+(earlier decks base64-inlined it in their own `tokens.css`, which duplicated the
+binary per deck; that has been removed in favour of this vendored copy). Source
+of truth for the binary: `src/components/2025-devbcn-model-context-protocol-servers/assets/techover.ttf`.
+
 > **Faithful weights (playbook gotcha).** The legacy Oswald/Montserrat/Roboto
 > decks (`isotope-introduction`, `eclipse-jkube-2021-cloud-tool-time`,
 > `mock-mvc-in-action`) load **weight 400 only** on purpose: their cover
