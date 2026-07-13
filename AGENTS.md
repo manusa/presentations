@@ -72,12 +72,13 @@ npm run screenshot -- http://localhost:8000/ landing
 npm run screenshot -- http://localhost:$(cat .live-server.port)/presentations/<slug>/ early-state --delay 200
 ```
 
-**Whole deck → PNG per (section, step)** — `screenshot:deck`. Walks a `<deck-stage>`-style deck via `ArrowRight` keypress, captures each (section, step) state after animations settle. Outputs `screenshots/<name>/slide-NN.png` for non-stepped sections and `screenshots/<name>/slide-NN-step-K.png` for sections with `data-step-max`.
+**Whole deck → PNG per (section, step)** — `screenshot:deck`. Walks a `<deck-stage>`-style deck via `ArrowRight` keypress, captures each (section, step) state after animations settle. Outputs `screenshots/<name>/slide-NN.png` for non-stepped sections and `screenshots/<name>/slide-NN-step-K.png` for sections with `data-step-max`. Add `--slide N [--step K]` to capture just one 1-indexed section — all its steps, or one — jumping straight there instead of walking the whole deck, with the same filenames. This is the "re-shoot one slide and its reveals" path (what `../deck shot --slide N` in the private repo calls).
 ```bash
 npm run screenshot:deck -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ devtalks-current
+npm run screenshot:deck -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ s04 --slide 4
 ```
 
-**Single slide at a specific step** — `screenshot --slide N [--step K]`. Loads the deck, jumps to section N (1-indexed), advances to step K, captures. Equivalent to loading the URL with the `#N` hash plus K manual `ArrowRight` presses, without the manual clicking.
+**Single slide at a specific step** — `screenshot --slide N [--step K]`. Loads the deck, jumps to section N (1-indexed), advances to step K, captures **one** frame to `<name>.png`. Equivalent to loading the URL with the `#N` hash plus K manual `ArrowRight` presses, without the manual clicking. For *all* of a slide's step states in one run (each to its own `slide-NN-step-K.png`), use `screenshot:deck --slide N` above instead.
 ```bash
 npm run screenshot -- http://localhost:$(cat .live-server.port)/presentations/2026-devtalks-romania/ s19-step1 --slide 19 --step 1
 ```
